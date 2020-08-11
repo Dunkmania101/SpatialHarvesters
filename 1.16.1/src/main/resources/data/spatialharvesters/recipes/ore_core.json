@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "cbc",
+    "bab",
+    "cbc"
+  ],
+  "key":
+  {
+    "a":
+    {
+      "item": "spatialharvesters:casing"
+    },
+    "b":
+    {
+      "tag": "forge:ores"
+    },
+    "c":
+    {
+      "item": "spatialharvesters:base_powder"
+    }
+  },
+  "result":
+  {
+    "item": "spatialharvesters:ore_core"
+  }
+}

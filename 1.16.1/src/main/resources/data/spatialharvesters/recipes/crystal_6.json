@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:shard_6"
+    }
+  },
+  "result":
+  {
+    "item": "spatialharvesters:crystal_6"
+  }
+}

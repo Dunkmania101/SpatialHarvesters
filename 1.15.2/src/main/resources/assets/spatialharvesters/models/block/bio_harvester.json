@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "spatialharvesters:block/bio_harvester_block"
+	}
+}
