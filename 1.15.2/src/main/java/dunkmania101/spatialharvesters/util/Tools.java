@@ -24,12 +24,23 @@ public class Tools {
         return count;
     }
 
-    public static ArrayList<Block> getLoadedOres() {
-        ArrayList<Block> ORES = new ArrayList<>();
-        for (Map.Entry<ResourceLocation, Block> check_block : ForgeRegistries.BLOCKS.getEntries()) {
-            Block block = check_block.getValue();
-            if (block.isIn(Tags.Blocks.ORES)) {
-                ORES.add(block);
+    public static ArrayList<Item> getLoadedOres() {
+
+
+        ArrayList<Item> ORES = new ArrayList<>();
+        for (Map.Entry<ResourceLocation, Item> check_item : ForgeRegistries.ITEMS.getEntries()) {
+            Item item = check_item.getValue();
+            ResourceLocation item_rn = item.getRegistryName();
+            if (
+                    item.isIn(Tags.Items.ORES)
+                    || (item_rn != null
+                            && item_rn.getNamespace().contentEquals("appliedenergistics2")
+                            && item_rn.getPath().contentEquals("quartz_ore"))
+                    || (item_rn != null
+                            && item_rn.getNamespace().contentEquals("appliedenergistics2")
+                            && item_rn.getPath().contentEquals("charged_quartz_ore"))
+            ) {
+                ORES.add(item);
             }
         }
         return ORES;
@@ -39,7 +50,14 @@ public class Tools {
         ArrayList<Item> PLANTS_DYES = new ArrayList<>();
         for (Map.Entry<ResourceLocation, Item> check_item : ForgeRegistries.ITEMS.getEntries()) {
             Item item = check_item.getValue();
-            if (item.isIn(Tags.Items.CROPS) || item.isIn(Tags.Items.SEEDS) || item.isIn(Tags.Items.DYES)) {
+            if (
+                    item.isIn(Tags.Items.CROPS)
+                    || item.isIn(Tags.Items.MUSHROOMS)
+                    || item.isIn(Tags.Items.LEATHER)
+                    || item.isIn(Tags.Items.FEATHERS)
+                    || item.isIn(Tags.Items.SEEDS)
+                    || item.isIn(Tags.Items.DYES)
+            ) {
                 PLANTS_DYES.add(item);
             }
         }

@@ -125,7 +125,9 @@ public class BioHarvesterTE extends TileEntity implements ITickableTileEntity {
                                 IItemHandler out_down_handler = out_down_inv.orElse(null);
                                 if (rand.nextInt(150) != 1) {
                                     ArrayList<Item> PLANTS_DYES = Tools.getLoadedPlantsAndDyes();
-                                    CHOSEN_PLANT = PLANTS_DYES.get(rand.nextInt(PLANTS_DYES.size()));
+                                    if (PLANTS_DYES.size() > 0) {
+                                        CHOSEN_PLANT = PLANTS_DYES.get(rand.nextInt(PLANTS_DYES.size()));
+                                    }
                                 }
                                 ItemHandlerHelper.insertItemStacked(out_down_handler, CHOSEN_PLANT.getDefaultInstance(), false);
                                 energyStorage.consumeEnergy(price);

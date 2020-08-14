@@ -134,8 +134,10 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
                             if (out_down_inv.isPresent()) {
                                 IItemHandler out_down_handler = out_down_inv.orElse(null);
                                 if (rand.nextInt(75) != 1) {
-                                    ArrayList<Block> ORES = Tools.getLoadedOres();
-                                    CHOSEN_ORE = ORES.get(rand.nextInt(ORES.size())).asItem();
+                                    ArrayList<Item> ORES = Tools.getLoadedOres();
+                                    if (ORES.size() > 0) {
+                                        CHOSEN_ORE = ORES.get(rand.nextInt(ORES.size()));
+                                    }
                                 }
                                 ItemHandlerHelper.insertItemStacked(out_down_handler, CHOSEN_ORE.getDefaultInstance(), false);
                                 energyStorage.consumeEnergy(price);

@@ -7,8 +7,6 @@ import net.minecraftforge.fml.config.ModConfig;
 
 @Mod.EventBusSubscriber
 public class Config {
-    public static final String CATEGORY_ORE = "Ore Harvesters";
-
     public static ForgeConfigSpec.IntValue ORE_1_SPEED;
     public static ForgeConfigSpec.IntValue ORE_2_SPEED;
     public static ForgeConfigSpec.IntValue ORE_3_SPEED;
@@ -48,7 +46,6 @@ public class Config {
     public static ForgeConfigSpec SERVER_CONFIG;
 
     static {
-
         ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
         SERVER_BUILDER.comment("Common settings").push("Common settings");
 
@@ -59,7 +56,7 @@ public class Config {
     }
 
     private static void setup(ForgeConfigSpec.Builder SERVER_BUILDER) {
-        SERVER_BUILDER.comment("Ore Harvesters:").push(CATEGORY_ORE);
+        SERVER_BUILDER.comment("Ore Harvesters:").push("Ore Harvesters (Speed)");
 
         ORE_1_SPEED = SERVER_BUILDER.comment("Speed for the tier 1 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_ore_1", 400, 0, Integer.MAX_VALUE);
@@ -77,7 +74,9 @@ public class Config {
                 .defineInRange("speed_ore_7", 100, 0, Integer.MAX_VALUE);
         ORE_8_SPEED = SERVER_BUILDER.comment("Speed for the tier 8 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_ore_8", 5, 0, Integer.MAX_VALUE);
+        SERVER_BUILDER.pop();
 
+        SERVER_BUILDER.comment("Ore Harvesters:").push("Bio Harvesters (Speed)");
         BIO_1_SPEED = SERVER_BUILDER.comment("Speed for the tier 1 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_bio_1", 400, 0, Integer.MAX_VALUE);
         BIO_2_SPEED = SERVER_BUILDER.comment("Speed for the tier 2 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -94,7 +93,9 @@ public class Config {
                 .defineInRange("speed_bio_7", 100, 0, Integer.MAX_VALUE);
         BIO_8_SPEED = SERVER_BUILDER.comment("Speed for the tier 8 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_bio_8", 5, 0, Integer.MAX_VALUE);
+        SERVER_BUILDER.pop();
 
+        SERVER_BUILDER.comment("Ore Harvesters:").push("Ore Harvesters (Price)");
         ORE_1_PRICE = SERVER_BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_1", 400, 0, Integer.MAX_VALUE);
         ORE_2_PRICE = SERVER_BUILDER.comment("Price for the tier 2 Ore Harvester (in FE per operation)")
@@ -111,7 +112,9 @@ public class Config {
                 .defineInRange("price_ore_7", 7500, 0, Integer.MAX_VALUE);
         ORE_8_PRICE = SERVER_BUILDER.comment("Price for the tier 8 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_8", 8000, 0, Integer.MAX_VALUE);
+        SERVER_BUILDER.pop();
 
+        SERVER_BUILDER.comment("Ore Harvesters:").push("Bio Harvesters (Price)");
         BIO_1_PRICE = SERVER_BUILDER.comment("Price for the tier 1 Bio Harvester (in FE per operation)")
                 .defineInRange("price_bio_1", 400, 0, Integer.MAX_VALUE);
         BIO_2_PRICE = SERVER_BUILDER.comment("Price for the tier 2 Bio Harvester (in FE per operation)")
@@ -128,7 +131,6 @@ public class Config {
                 .defineInRange("price_bio_7", 100, 0, Integer.MAX_VALUE);
         BIO_8_PRICE = SERVER_BUILDER.comment("Price for the tier 8 Bio Harvester (in FE per operation)")
                 .defineInRange("price_bio_8", 8000, 0, Integer.MAX_VALUE);
-
         SERVER_BUILDER.pop();
     }
 
