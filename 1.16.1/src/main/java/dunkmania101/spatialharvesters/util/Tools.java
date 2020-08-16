@@ -35,11 +35,17 @@ public class Tools {
                     item.isIn(Tags.Items.ORES)
                     || (item_rn != null
                             && item_rn.getNamespace().contentEquals("appliedenergistics2")
-                            && item_rn.getPath().contentEquals("quartz_ore"))
+                            && (
+                                    item_rn.getPath().contentEquals("quartz_ore")
+                                    || item_rn.getPath().contentEquals("charged_quartz_ore"))
+                    )
                     || (item_rn != null
-                            && item_rn.getNamespace().contentEquals("appliedenergistics2")
-                            && item_rn.getPath().contentEquals("charged_quartz_ore"))
-            ) {
+                            && item_rn.getNamespace().contentEquals("rftoolsbase")
+                            && (
+                                    item_rn.getPath().contentEquals("dimensionalshard_overworld")
+                                    || item_rn.getPath().contentEquals("dimensionalshard_nether")
+                                    || item_rn.getPath().contentEquals("dimensionalshard_end"))
+                    )) {
                 ORES.add(item);
             }
         }

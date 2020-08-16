@@ -245,4 +245,10 @@ public class ItemInit {
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
+    public static final RegistryObject<BlockItem> HEAT_GENERATOR = ITEMS.register("heat_generator",
+            () -> new BlockItem(
+                    BlockInit.HEAT_GENERATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
 }

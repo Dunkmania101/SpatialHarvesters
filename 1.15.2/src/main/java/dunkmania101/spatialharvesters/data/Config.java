@@ -43,6 +43,8 @@ public class Config {
     public static ForgeConfigSpec.IntValue BIO_7_PRICE;
     public static ForgeConfigSpec.IntValue BIO_8_PRICE;
 
+    public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
+
     public static ForgeConfigSpec SERVER_CONFIG;
 
     static {
@@ -132,6 +134,10 @@ public class Config {
         BIO_8_PRICE = SERVER_BUILDER.comment("Price for the tier 8 Bio Harvester (in FE per operation)")
                 .defineInRange("price_bio_8", 8000, 0, Integer.MAX_VALUE);
         SERVER_BUILDER.pop();
+
+        SERVER_BUILDER.comment("Heat Generator:").push("Heat Generator (Speed)");
+        HEAT_GENERATOR_SPEED = SERVER_BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
+                .defineInRange("speed_heat_generator", 10, 0, Integer.MAX_VALUE);
     }
 
     @SubscribeEvent

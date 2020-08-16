@@ -1,10 +1,7 @@
 package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
-import dunkmania101.spatialharvesters.objects.blocks.BioHarvesterBlock;
-import dunkmania101.spatialharvesters.objects.blocks.ChunkLoaderBlock;
-import dunkmania101.spatialharvesters.objects.blocks.OreHarvesterBlock;
-import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
+import dunkmania101.spatialharvesters.objects.blocks.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -161,6 +158,14 @@ public class BlockInit {
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_8 = BLOCKS.register("bio_harvester_8",
             () -> new BioHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<HeatGeneratorBlock> HEAT_GENERATOR = BLOCKS.register("heat_generator",
+            () -> new HeatGeneratorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)

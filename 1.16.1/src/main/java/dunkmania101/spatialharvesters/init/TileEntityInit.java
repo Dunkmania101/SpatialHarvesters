@@ -2,6 +2,7 @@ package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.objects.tile_entities.BioHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.HeatGeneratorTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.OreHarvesterTE;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
@@ -33,5 +34,10 @@ public class TileEntityInit {
                     BlockInit.BIO_HARVESTER_6.get(),
                     BlockInit.BIO_HARVESTER_7.get(),
                     BlockInit.BIO_HARVESTER_8.get()
+            ).build(null));
+
+    public static final RegistryObject<TileEntityType<HeatGeneratorTE>> HEAT_GENERATOR = TILE_ENTITIES.register("heat_generator",
+            () -> TileEntityType.Builder.create(HeatGeneratorTE::new,
+                    BlockInit.HEAT_GENERATOR.get()
             ).build(null));
 }
