@@ -25,8 +25,6 @@ public class Tools {
     }
 
     public static ArrayList<Item> getLoadedOres() {
-
-
         ArrayList<Item> ORES = new ArrayList<>();
         for (Map.Entry<ResourceLocation, Item> check_item : ForgeRegistries.ITEMS.getEntries()) {
             Item item = check_item.getValue();
@@ -37,15 +35,27 @@ public class Tools {
                             && item_rn.getNamespace().contentEquals("appliedenergistics2")
                             && (
                                     item_rn.getPath().contentEquals("quartz_ore")
-                                    || item_rn.getPath().contentEquals("charged_quartz_ore"))
-                    )
+                                    || item_rn.getPath().contentEquals("charged_quartz_ore")
+                    ))
                     || (item_rn != null
                             && item_rn.getNamespace().contentEquals("rftoolsbase")
                             && (
                                     item_rn.getPath().contentEquals("dimensionalshard_overworld")
                                     || item_rn.getPath().contentEquals("dimensionalshard_nether")
-                                    || item_rn.getPath().contentEquals("dimensionalshard_end"))
-                    )) {
+                                    || item_rn.getPath().contentEquals("dimensionalshard_end")
+                    ))
+                    || (item_rn != null
+                            && item_rn.getNamespace().contentEquals("rhodonite")
+                            && (
+                            item_rn.getPath().contentEquals("block_ore_fluorite")
+                                    || item_rn.getPath().contentEquals("block_ore_rhodonite")
+                    ))
+                    || (item_rn != null
+                            && item_rn.getNamespace().contentEquals("exp_ore")
+                            && (
+                            item_rn.getPath().contentEquals("block_exp_ore")
+                    ))
+            ) {
                 ORES.add(item);
             }
         }
@@ -63,6 +73,7 @@ public class Tools {
                     || item.isIn(Tags.Items.FEATHERS)
                     || item.isIn(Tags.Items.SEEDS)
                     || item.isIn(Tags.Items.DYES)
+                    || item.isIn(Tags.Items.BONES)
             ) {
                 PLANTS_DYES.add(item);
             }
