@@ -2,6 +2,7 @@
   "item.spatialharvesters.base_powder": "Base Powder",
   "item.spatialharvesters.ore_core": "Ore Core",
   "item.spatialharvesters.bio_core": "Bio Core",
+  "item.spatialharvesters.stone_core": "Stone Core",
 
   "item.spatialharvesters.chunk_loader": "Chunk Loader",
   "item.spatialharvesters.casing": "casing",
@@ -57,6 +58,14 @@
   "block.spatialharvesters.bio_harvester_6": "Bio Harvester 6",
   "block.spatialharvesters.bio_harvester_7": "Bio Harvester 7",
   "block.spatialharvesters.bio_harvester_8": "Bio Harvester 8",
+  "block.spatialharvesters.stone_harvester_1": "Stone Harvester 1",
+  "block.spatialharvesters.stone_harvester_2": "Stone Harvester 2",
+  "block.spatialharvesters.stone_harvester_3": "Stone Harvester 3",
+  "block.spatialharvesters.stone_harvester_4": "Stone Harvester 4",
+  "block.spatialharvesters.stone_harvester_5": "Stone Harvester 5",
+  "block.spatialharvesters.stone_harvester_6": "Stone Harvester 6",
+  "block.spatialharvesters.stone_harvester_7": "Stone Harvester 7",
+  "block.spatialharvesters.stone_harvester_8": "Stone Harvester 8",
   "block.spatialharvesters.heat_generator": "Heat Generator",
 
   "itemGroup.spatial_harvesters": "Spatial Harvesters"

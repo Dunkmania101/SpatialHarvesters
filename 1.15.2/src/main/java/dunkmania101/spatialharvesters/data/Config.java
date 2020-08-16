@@ -25,6 +25,15 @@ public class Config {
     public static ForgeConfigSpec.IntValue BIO_7_SPEED;
     public static ForgeConfigSpec.IntValue BIO_8_SPEED;
 
+    public static ForgeConfigSpec.IntValue STONE_1_SPEED;
+    public static ForgeConfigSpec.IntValue STONE_2_SPEED;
+    public static ForgeConfigSpec.IntValue STONE_3_SPEED;
+    public static ForgeConfigSpec.IntValue STONE_4_SPEED;
+    public static ForgeConfigSpec.IntValue STONE_5_SPEED;
+    public static ForgeConfigSpec.IntValue STONE_6_SPEED;
+    public static ForgeConfigSpec.IntValue STONE_7_SPEED;
+    public static ForgeConfigSpec.IntValue STONE_8_SPEED;
+
     public static ForgeConfigSpec.IntValue ORE_1_PRICE;
     public static ForgeConfigSpec.IntValue ORE_2_PRICE;
     public static ForgeConfigSpec.IntValue ORE_3_PRICE;
@@ -42,6 +51,15 @@ public class Config {
     public static ForgeConfigSpec.IntValue BIO_6_PRICE;
     public static ForgeConfigSpec.IntValue BIO_7_PRICE;
     public static ForgeConfigSpec.IntValue BIO_8_PRICE;
+
+    public static ForgeConfigSpec.IntValue STONE_1_PRICE;
+    public static ForgeConfigSpec.IntValue STONE_2_PRICE;
+    public static ForgeConfigSpec.IntValue STONE_3_PRICE;
+    public static ForgeConfigSpec.IntValue STONE_4_PRICE;
+    public static ForgeConfigSpec.IntValue STONE_5_PRICE;
+    public static ForgeConfigSpec.IntValue STONE_6_PRICE;
+    public static ForgeConfigSpec.IntValue STONE_7_PRICE;
+    public static ForgeConfigSpec.IntValue STONE_8_PRICE;
 
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
 
@@ -97,6 +115,25 @@ public class Config {
                 .defineInRange("speed_bio_8", 5, 0, Integer.MAX_VALUE);
         SERVER_BUILDER.pop();
 
+        SERVER_BUILDER.comment("Stone Harvesters:").push("Stone Harvesters (Speed)");
+        STONE_1_SPEED = SERVER_BUILDER.comment("Speed for the tier 1 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_stone_1", 400, 0, Integer.MAX_VALUE);
+        STONE_2_SPEED = SERVER_BUILDER.comment("Speed for the tier 2 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_stone_2", 350, 0, Integer.MAX_VALUE);
+        STONE_3_SPEED = SERVER_BUILDER.comment("Speed for the tier 3 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_stone_3", 300, 0, Integer.MAX_VALUE);
+        STONE_4_SPEED = SERVER_BUILDER.comment("Speed for the tier 4 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_stone_4", 250, 0, Integer.MAX_VALUE);
+        STONE_5_SPEED = SERVER_BUILDER.comment("Speed for the tier 5 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_stone_5", 200, 0, Integer.MAX_VALUE);
+        STONE_6_SPEED = SERVER_BUILDER.comment("Speed for the tier 6 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_stone_6", 150, 0, Integer.MAX_VALUE);
+        STONE_7_SPEED = SERVER_BUILDER.comment("Speed for the tier 7 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_stone_7", 100, 0, Integer.MAX_VALUE);
+        STONE_8_SPEED = SERVER_BUILDER.comment("Speed for the tier 8 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_stone_8", 5, 0, Integer.MAX_VALUE);
+        SERVER_BUILDER.pop();
+
         SERVER_BUILDER.comment("Ore Harvesters:").push("Ore Harvesters (Price)");
         ORE_1_PRICE = SERVER_BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_1", 400, 0, Integer.MAX_VALUE);
@@ -135,9 +172,29 @@ public class Config {
                 .defineInRange("price_bio_8", 8000, 0, Integer.MAX_VALUE);
         SERVER_BUILDER.pop();
 
+        SERVER_BUILDER.comment("Stone Harvesters:").push("Stone Harvesters (Price)");
+        STONE_1_PRICE = SERVER_BUILDER.comment("Price for the tier 1 Stone Harvester (in FE per operation)")
+                .defineInRange("price_stone_1", 400, 0, Integer.MAX_VALUE);
+        STONE_2_PRICE = SERVER_BUILDER.comment("Price for the tier 2 Stone Harvester (in FE per operation)")
+                .defineInRange("price_stone_2", 350, 0, Integer.MAX_VALUE);
+        STONE_3_PRICE = SERVER_BUILDER.comment("Price for the tier 3 Stone Harvester (in FE per operation)")
+                .defineInRange("price_stone_3", 300, 0, Integer.MAX_VALUE);
+        STONE_4_PRICE = SERVER_BUILDER.comment("Price for the tier 4 Stone Harvester (in FE per operation)")
+                .defineInRange("price_stone_4", 250, 0, Integer.MAX_VALUE);
+        STONE_5_PRICE = SERVER_BUILDER.comment("Price for the tier 5 Stone Harvester (in FE per operation)")
+                .defineInRange("price_stone_5", 200, 0, Integer.MAX_VALUE);
+        STONE_6_PRICE = SERVER_BUILDER.comment("Price for the tier 6 Stone Harvester (in FE per operation)")
+                .defineInRange("price_stone_6", 150, 0, Integer.MAX_VALUE);
+        STONE_7_PRICE = SERVER_BUILDER.comment("Price for the tier 7 Stone Harvester (in FE per operation)")
+                .defineInRange("price_stone_7", 100, 0, Integer.MAX_VALUE);
+        STONE_8_PRICE = SERVER_BUILDER.comment("Price for the tier 8 Stone Harvester (in FE per operation)")
+                .defineInRange("price_stone_8", 8000, 0, Integer.MAX_VALUE);
+        SERVER_BUILDER.pop();
+
         SERVER_BUILDER.comment("Heat Generator:").push("Heat Generator (Speed)");
         HEAT_GENERATOR_SPEED = SERVER_BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
                 .defineInRange("speed_heat_generator", 10, 0, Integer.MAX_VALUE);
+        SERVER_BUILDER.pop();
     }
 
     @SubscribeEvent

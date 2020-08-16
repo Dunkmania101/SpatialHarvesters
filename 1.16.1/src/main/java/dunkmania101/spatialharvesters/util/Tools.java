@@ -1,8 +1,6 @@
 package dunkmania101.spatialharvesters.util;
 
-import com.mojang.datafixers.types.templates.Tag;
 import net.minecraft.block.Block;
-import net.minecraft.block.SaplingBlock;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
@@ -63,6 +61,23 @@ public class Tools {
             }
         }
         return ORES;
+    }
+
+    public static ArrayList<Item> getLoadedStones() {
+        ArrayList<Item> STONES = new ArrayList<>();
+        for (Map.Entry<ResourceLocation, Item> check_item : ForgeRegistries.ITEMS.getEntries()) {
+            Item item = check_item.getValue();
+            if (
+                    item.isIn(Tags.Items.STONE)
+                            || item.isIn(Tags.Items.COBBLESTONE)
+                            || item.isIn(Tags.Items.SANDSTONE)
+                            || item.isIn(Tags.Items.END_STONES)
+                            || item.isIn(Tags.Items.NETHERRACK)
+            ) {
+                STONES.add(item);
+            }
+        }
+        return STONES;
     }
 
     public static ArrayList<Item> getLoadedPlantsAndDyes() {

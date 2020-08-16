@@ -4,6 +4,7 @@ import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.objects.tile_entities.BioHarvesterTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.HeatGeneratorTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.OreHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.StoneHarvesterTE;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -35,6 +36,19 @@ public class TileEntityInit {
                     BlockInit.BIO_HARVESTER_7.get(),
                     BlockInit.BIO_HARVESTER_8.get()
             ).build(null));
+
+    public static final RegistryObject<TileEntityType<StoneHarvesterTE>> STONE_HARVESTER = TILE_ENTITIES.register("stone_harvester",
+            () -> TileEntityType.Builder.create(StoneHarvesterTE::new,
+                    BlockInit.STONE_HARVESTER_1.get(),
+                    BlockInit.STONE_HARVESTER_2.get(),
+                    BlockInit.STONE_HARVESTER_3.get(),
+                    BlockInit.STONE_HARVESTER_4.get(),
+                    BlockInit.STONE_HARVESTER_5.get(),
+                    BlockInit.STONE_HARVESTER_6.get(),
+                    BlockInit.STONE_HARVESTER_7.get(),
+                    BlockInit.STONE_HARVESTER_8.get()
+            ).build(null));
+
 
     public static final RegistryObject<TileEntityType<HeatGeneratorTE>> HEAT_GENERATOR = TILE_ENTITIES.register("heat_generator",
             () -> TileEntityType.Builder.create(HeatGeneratorTE::new,

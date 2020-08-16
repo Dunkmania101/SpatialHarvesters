@@ -164,6 +164,70 @@ public class BlockInit {
                             .hardnessAndResistance(0.7f, 2f)
             ));
 
+    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_1 = BLOCKS.register("stone_harvester_1",
+            () -> new StoneHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_2 = BLOCKS.register("stone_harvester_2",
+            () -> new StoneHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_3 = BLOCKS.register("stone_harvester_3",
+            () -> new StoneHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_4 = BLOCKS.register("stone_harvester_4",
+            () -> new StoneHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_5 = BLOCKS.register("stone_harvester_5",
+            () -> new StoneHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_6 = BLOCKS.register("stone_harvester_6",
+            () -> new StoneHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_7 = BLOCKS.register("stone_harvester_7",
+            () -> new StoneHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_8 = BLOCKS.register("stone_harvester_8",
+            () -> new StoneHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
     public static final RegistryObject<HeatGeneratorBlock> HEAT_GENERATOR = BLOCKS.register("heat_generator",
             () -> new HeatGeneratorBlock(
                     Block.Properties
