@@ -18,6 +18,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -128,8 +131,9 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
                     if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
                         TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
                         if (out_down != null && !world.isRemote) {
-                            if (out_down instanceof IInventory) {
-                                IInventory out_down_inv = (IInventory) out_down;
+                            LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
+                            if (out_down_cap.isPresent()) {
+                                IItemHandler out_down_inv = out_down_cap.orElse(null);
                                 Random rand = world.rand;
                                 if (rand.nextInt(75) != 1) {
                                     ArrayList<Item> ORES = Tools.getLoadedOres();
@@ -137,27 +141,8 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
                                         CHOSEN_ORE = ORES.get(rand.nextInt(ORES.size()));
                                     }
                                 }
-                                ItemStack CHOSEN_ORE_STACK = CHOSEN_ORE.getDefaultInstance();
-                                int chosen_slot = -1;
-                                int empty_slot = -1;
-                                for(int i = 0; i < out_down_inv.getSizeInventory(); ++i) {
-                                    ItemStack stack = out_down_inv.getStackInSlot(i);
-                                    if (out_down_inv.getStackInSlot(i).getItem() == CHOSEN_ORE && (stack.getCount() < stack.getMaxStackSize())) {
-                                        chosen_slot = i;
-                                        break;
-                                    }
-                                    if (out_down_inv.getStackInSlot(i).isEmpty() && empty_slot < 0) {
-                                        empty_slot = i;
-                                    }
-                                }
-                                if (chosen_slot < 0) {
-                                    chosen_slot = empty_slot;
-                                }
-                                if (chosen_slot > -1) {
-                                    ItemStack stack = out_down_inv.getStackInSlot(chosen_slot);
-                                    CHOSEN_ORE_STACK.setCount(stack.getCount() + 1);
-                                    out_down_inv.setInventorySlotContents(chosen_slot, CHOSEN_ORE_STACK);
-                                }
+                                ItemStack CHOSEN_ORE_STACK = new ItemStack(CHOSEN_ORE);
+                                ItemHandlerHelper.insertItemStacked(out_down_inv, CHOSEN_ORE_STACK, false);
                                 energyStorage.consumeEnergy(price);
                             }
                         }

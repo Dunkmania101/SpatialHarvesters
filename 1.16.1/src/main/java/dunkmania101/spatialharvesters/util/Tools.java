@@ -11,7 +11,6 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Tools {
     public static int checkChunkBlocks(World worldIn, ChunkPos cpos, Block blockIn) {
@@ -27,11 +26,10 @@ public class Tools {
 
     public static ArrayList<Item> getLoadedOres() {
         ArrayList<Item> ORES = new ArrayList<>();
-        for (Map.Entry<ResourceLocation, Item> check_item : ForgeRegistries.ITEMS.getEntries()) {
-            Item item = check_item.getValue();
-            ResourceLocation item_rn = item.getRegistryName();
+        for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
+            ResourceLocation item_rn = check_item.getRegistryName();
             if (
-                    item.isIn(Tags.Items.ORES)
+                    check_item.isIn(Tags.Items.ORES)
                     || (item_rn != null
                             && item_rn.getNamespace().contentEquals("appliedenergistics2")
                             && (
@@ -57,7 +55,7 @@ public class Tools {
                             item_rn.getPath().contentEquals("block_exp_ore")
                     ))
             ) {
-                ORES.add(item);
+                ORES.add(check_item);
             }
         }
         return ORES;
@@ -65,16 +63,15 @@ public class Tools {
 
     public static ArrayList<Item> getLoadedStones() {
         ArrayList<Item> STONES = new ArrayList<>();
-        for (Map.Entry<ResourceLocation, Item> check_item : ForgeRegistries.ITEMS.getEntries()) {
-            Item item = check_item.getValue();
+        for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
             if (
-                    item.isIn(Tags.Items.STONE)
-                            || item.isIn(Tags.Items.COBBLESTONE)
-                            || item.isIn(Tags.Items.SANDSTONE)
-                            || item.isIn(Tags.Items.END_STONES)
-                            || item.isIn(Tags.Items.NETHERRACK)
+                    check_item.isIn(Tags.Items.STONE)
+                            || check_item.isIn(Tags.Items.COBBLESTONE)
+                            || check_item.isIn(Tags.Items.SANDSTONE)
+                            || check_item.isIn(Tags.Items.END_STONES)
+                            || check_item.isIn(Tags.Items.NETHERRACK)
             ) {
-                STONES.add(item);
+                STONES.add(check_item);
             }
         }
         return STONES;
@@ -82,23 +79,22 @@ public class Tools {
 
     public static ArrayList<Item> getLoadedPlantsAndDyes() {
         ArrayList<Item> PLANTS_DYES = new ArrayList<>();
-        for (Map.Entry<ResourceLocation, Item> check_item : ForgeRegistries.ITEMS.getEntries()) {
-            Item item = check_item.getValue();
+        for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
             if (
-                    item.isIn(Tags.Items.CROPS)
-                    || item.isIn(Tags.Items.MUSHROOMS)
-                    || item.isIn(Tags.Items.LEATHER)
-                    || item.isIn(Tags.Items.FEATHERS)
-                    || item.isIn(Tags.Items.SEEDS)
-                    || item.isIn(Tags.Items.DYES)
-                    || item.isIn(Tags.Items.BONES)
-                    || item.isIn(ItemTags.FLOWERS)
-                    || item.isIn(ItemTags.LOGS)
-                    || item.isIn(ItemTags.LEAVES)
-                    || item.isIn(ItemTags.PLANKS)
-                    || item.isIn(Tags.Items.RODS_WOODEN)
+                    check_item.isIn(Tags.Items.CROPS)
+                    || check_item.isIn(Tags.Items.MUSHROOMS)
+                    || check_item.isIn(Tags.Items.LEATHER)
+                    || check_item.isIn(Tags.Items.FEATHERS)
+                    || check_item.isIn(Tags.Items.SEEDS)
+                    || check_item.isIn(Tags.Items.DYES)
+                    || check_item.isIn(Tags.Items.BONES)
+                    || check_item.isIn(ItemTags.SMALL_FLOWERS)
+                    || check_item.isIn(ItemTags.LOGS)
+                    || check_item.isIn(ItemTags.LEAVES)
+                    || check_item.isIn(ItemTags.PLANKS)
+                    || check_item.isIn(Tags.Items.RODS_WOODEN)
             ) {
-                PLANTS_DYES.add(item);
+                PLANTS_DYES.add(check_item);
             }
         }
         return PLANTS_DYES;
