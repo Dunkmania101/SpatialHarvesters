@@ -29,43 +29,37 @@ public class Tools {
         ArrayList<Item> ORES = new ArrayList<>();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
             ResourceLocation item_rn = check_item.getRegistryName();
-            if (
-                    check_item.isIn(Tags.Items.ORES)
-                    || (item_rn != null
-                            && item_rn.getNamespace().contentEquals("appliedenergistics2")
-                            && (
+            if (item_rn != null) {
+                if (
+                        check_item.isIn(Tags.Items.ORES)
+                                || (item_rn.getNamespace().contentEquals("appliedenergistics2")
+                                && (
                                     item_rn.getPath().contentEquals("quartz_ore")
-                                    || item_rn.getPath().contentEquals("charged_quartz_ore")
-                    ))
-                    || (item_rn != null
-                            && item_rn.getNamespace().contentEquals("rftoolsbase")
-                            && (
+                                            || item_rn.getPath().contentEquals("charged_quartz_ore")
+                        ))
+                                || (item_rn.getNamespace().contentEquals("rftoolsbase")
+                                && (
                                     item_rn.getPath().contentEquals("dimensionalshard_overworld")
-                                    || item_rn.getPath().contentEquals("dimensionalshard_nether")
-                                    || item_rn.getPath().contentEquals("dimensionalshard_end")
-                    ))
-                    || (item_rn != null
-                            && item_rn.getNamespace().contentEquals("rhodonite")
-                            && (
-                            item_rn.getPath().contentEquals("block_ore_fluorite")
-                                    || item_rn.getPath().contentEquals("block_ore_rhodonite")
-                    ))
-                    || (item_rn != null
-                            && item_rn.getNamespace().contentEquals("exp_ore")
-                            && (
-                            item_rn.getPath().contentEquals("block_exp_ore")
-                    ))
-                    || (item_rn != null
-                            && item_rn.getNamespace().contentEquals("funores")
-                            && (
-                                !item_rn.getPath().contentEquals("ender_shard")
-                                && !item_rn.getPath().contentEquals("blaze_shard")
-                                && !item_rn.getPath().contentEquals("ghast_shard")
-                                && !item_rn.getPath().contentEquals("wither_skull_shard")
-                                && !item_rn.getPath().contentEquals("phantom_membrane_scrap")
-                    ))
-            ) {
-                ORES.add(check_item);
+                                            || item_rn.getPath().contentEquals("dimensionalshard_nether")
+                                            || item_rn.getPath().contentEquals("dimensionalshard_end")
+                        ))
+                                || (item_rn.getNamespace().contentEquals("rhodonite")
+                                && (
+                                    item_rn.getPath().contentEquals("block_ore_fluorite")
+                                            || item_rn.getPath().contentEquals("block_ore_rhodonite")
+                        ))
+                                || (item_rn.getNamespace().contentEquals("exp_ore")
+                                && (
+                                        item_rn.getPath().contentEquals("block_exp_ore")
+                        ))
+                                || (item_rn.getNamespace().contentEquals("funores")
+                                && (
+                                        !item_rn.getPath().contains("shard")
+                                                && !item_rn.getPath().contains("scrap")
+                        ))
+                ) {
+                    ORES.add(check_item);
+                }
             }
             for (Block check_block : ForgeRegistries.BLOCKS.getValues()) {
                 if (check_block.isIn(Tags.Blocks.ORES)) {
