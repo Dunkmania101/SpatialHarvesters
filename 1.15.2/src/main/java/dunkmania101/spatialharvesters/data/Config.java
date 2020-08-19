@@ -64,6 +64,7 @@ public class Config {
     public static ForgeConfigSpec.IntValue STONE_8_PRICE;
 
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
+    public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
@@ -201,6 +202,11 @@ public class Config {
         BUILDER.comment("Heat Generator:").push("Heat Generator (Speed)");
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
                 .defineInRange("speed_heat_generator", 10, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
+
+        BUILDER.comment("Dimensional Applicator:").push("Dimensional Applicator (Price)");
+        DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per tick)")
+                .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
         BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();

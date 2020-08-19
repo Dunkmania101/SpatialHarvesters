@@ -235,4 +235,84 @@ public class BlockInit {
                             .sound(SoundType.METAL)
                             .hardnessAndResistance(0.7f, 2f)
             ));
+
+    public static final RegistryObject<DimensionalApplicatorBlock> DIMENSIONAL_APPLICATOR = BLOCKS.register("dimensional_applicator",
+            () -> new DimensionalApplicatorBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> REGENERATION_ACTIVATOR = BLOCKS.register("regeneration_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> RESISTANCE_ACTIVATOR = BLOCKS.register("resistance_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> ABSORPTION_ACTIVATOR = BLOCKS.register("absorption_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> HASTE_ACTIVATOR = BLOCKS.register("haste_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> SPEED_ACTIVATOR = BLOCKS.register("speed_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> JUMP_BOOST_ACTIVATOR = BLOCKS.register("jump_boost_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> INVISIBILITY_ACTIVATOR = BLOCKS.register("invisibility_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> NIGHT_VISION_ACTIVATOR = BLOCKS.register("night_vision_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<Block> STRENGTH_ACTIVATOR = BLOCKS.register("strength_activator",
+            () -> new Block(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
 }

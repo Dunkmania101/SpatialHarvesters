@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class SpatialHarvesters {
     public static final String modid = "spatialharvesters";
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public SpatialHarvesters() {
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -50,7 +50,7 @@ public class SpatialHarvesters {
 
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ItemInit.BASE_POWDER.get());
+            return new ItemStack(ItemInit.ORE_HARVESTER_1.get());
         }
     }
 }

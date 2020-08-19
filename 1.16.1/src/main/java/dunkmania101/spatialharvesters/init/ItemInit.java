@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -12,6 +13,12 @@ public class ItemInit {
 
     public static final RegistryObject<Item> BASE_POWDER = ITEMS.register("base_powder",
             () -> new Item(
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<PlayerKeyItem> PLAYER_KEY = ITEMS.register("player_key",
+            () -> new PlayerKeyItem(
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
@@ -311,6 +318,76 @@ public class ItemInit {
     public static final RegistryObject<BlockItem> HEAT_GENERATOR = ITEMS.register("heat_generator",
             () -> new BlockItem(
                     BlockInit.HEAT_GENERATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> DIMENSIONAL_APPLICATOR = ITEMS.register("dimensional_applicator",
+            () -> new BlockItem(
+                    BlockInit.DIMENSIONAL_APPLICATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> REGENERATION_ACTIVATOR = ITEMS.register("regeneration_activator",
+            () -> new BlockItem(
+                    BlockInit.REGENERATION_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> RESISTANCE_ACTIVATOR = ITEMS.register("resistance_activator",
+            () -> new BlockItem(
+                    BlockInit.RESISTANCE_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> ABSORPTION_ACTIVATOR = ITEMS.register("absorption_activator",
+            () -> new BlockItem(
+                    BlockInit.ABSORPTION_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> HASTE_ACTIVATOR = ITEMS.register("haste_activator",
+            () -> new BlockItem(
+                    BlockInit.HASTE_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> SPEED_ACTIVATOR = ITEMS.register("speed_activator",
+            () -> new BlockItem(
+                    BlockInit.SPEED_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> JUMP_BOOST_ACTIVATOR = ITEMS.register("jump_boost_activator",
+            () -> new BlockItem(
+                    BlockInit.JUMP_BOOST_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> INVISIBILITY_ACTIVATOR = ITEMS.register("invisibility_activator",
+            () -> new BlockItem(
+                    BlockInit.INVISIBILITY_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> NIGHT_VISION_ACTIVATOR = ITEMS.register("night_vision_activator",
+            () -> new BlockItem(
+                    BlockInit.NIGHT_VISION_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> STRENGTH_ACTIVATOR = ITEMS.register("strength_activator",
+            () -> new BlockItem(
+                    BlockInit.STRENGTH_ACTIVATOR.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));

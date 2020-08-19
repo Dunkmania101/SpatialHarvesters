@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "bdb",
+    "cac",
+    "bdb"
+  ],
+  "key":
+  {
+    "a":
+    {
+      "item": "spatialharvesters:casing"
+    },
+    "b":
+    {
+      "tag": "forge:ingots/iron"
+    },
+    "c":
+    {
+      "tag": "forge:ingots/gold"
+    },
+    "d":
+    {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "result":
+  {
+    "item": "spatialharvesters:haste_activator"
+  }
+}

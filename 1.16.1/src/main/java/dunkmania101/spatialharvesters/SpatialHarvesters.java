@@ -50,7 +50,7 @@ public class SpatialHarvesters {
 
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ItemInit.BASE_POWDER.get());
+            return new ItemStack(ItemInit.ORE_HARVESTER_1.get());
         }
     }
 }
