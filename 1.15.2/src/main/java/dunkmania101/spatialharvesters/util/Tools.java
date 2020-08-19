@@ -1,10 +1,8 @@
 package dunkmania101.spatialharvesters.util;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -57,8 +55,25 @@ public class Tools {
                             && (
                             item_rn.getPath().contentEquals("block_exp_ore")
                     ))
+                    || (item_rn != null
+                            && item_rn.getNamespace().contentEquals("funores")
+                            && (
+                                !item_rn.getPath().contentEquals("ender_shard")
+                                && !item_rn.getPath().contentEquals("blaze_shard")
+                                && !item_rn.getPath().contentEquals("ghast_shard")
+                                && !item_rn.getPath().contentEquals("wither_skull_shard")
+                                && !item_rn.getPath().contentEquals("phantom_membrane_scrap")
+                    ))
             ) {
                 ORES.add(check_item);
+            }
+            for (Block check_block : ForgeRegistries.BLOCKS.getValues()) {
+                if (check_block.isIn(Tags.Blocks.ORES)) {
+                    Item item = check_block.asItem();
+                    if (!ORES.contains(item)) {
+                        ORES.add(item);
+                    }
+                }
             }
         }
         return ORES;
