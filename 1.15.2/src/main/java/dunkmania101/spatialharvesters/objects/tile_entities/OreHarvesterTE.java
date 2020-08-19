@@ -7,7 +7,6 @@ import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -84,6 +83,7 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         return super.getCapability(cap, side);
     }
 
+    private static final ArrayList<Item> ORES = Tools.getLoadedOres();
     private int ticks = 0;
     @Override
     public void tick() {
@@ -136,7 +136,6 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
                                 IItemHandler out_down_inv = out_down_cap.orElse(null);
                                 Random rand = world.rand;
                                 if (rand.nextInt(75) != 1) {
-                                    ArrayList<Item> ORES = Tools.getLoadedOres();
                                     if (ORES.size() > 0) {
                                         CHOSEN_ORE = ORES.get(rand.nextInt(ORES.size()));
                                     }

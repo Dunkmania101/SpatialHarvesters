@@ -74,6 +74,7 @@ public class BioHarvesterTE extends TileEntity implements ITickableTileEntity {
         return super.getCapability(cap, side);
     }
 
+    private static final ArrayList<Item> PLANTS = Tools.getLoadedPlantsAndDyes();
     private int ticks = 0;
     @Override
     public void tick() {
@@ -125,7 +126,6 @@ public class BioHarvesterTE extends TileEntity implements ITickableTileEntity {
                                 IItemHandler out_down_inv = out_down_cap.orElse(null);
                                 Random rand = world.rand;
                                 if (rand.nextInt(75) != 1) {
-                                    ArrayList<Item> PLANTS = Tools.getLoadedPlantsAndDyes();
                                     if (PLANTS.size() > 0) {
                                         CHOSEN_PLANT = PLANTS.get(rand.nextInt(PLANTS.size()));
                                     }

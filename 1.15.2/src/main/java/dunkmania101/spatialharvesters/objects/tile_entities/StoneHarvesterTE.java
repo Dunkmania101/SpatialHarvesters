@@ -7,9 +7,6 @@ import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
-import net.minecraft.block.ContainerBlock;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -23,7 +20,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -77,6 +73,7 @@ public class StoneHarvesterTE extends TileEntity implements ITickableTileEntity 
         return super.getCapability(cap, side);
     }
 
+    private static final ArrayList<Item> STONES = Tools.getLoadedStones();
     private int ticks = 0;
     @Override
     public void tick() {
@@ -128,7 +125,6 @@ public class StoneHarvesterTE extends TileEntity implements ITickableTileEntity 
                                 IItemHandler out_down_inv = out_down_cap.orElse(null);
                                 Random rand = world.rand;
                                 if (rand.nextInt(75) != 1) {
-                                    ArrayList<Item> STONES = Tools.getLoadedStones();
                                     if (STONES.size() > 0) {
                                         CHOSEN_STONE = STONES.get(rand.nextInt(STONES.size()));
                                     }
