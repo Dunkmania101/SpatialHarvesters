@@ -36,6 +36,15 @@ public class Config {
     public static ForgeConfigSpec.IntValue STONE_7_SPEED;
     public static ForgeConfigSpec.IntValue STONE_8_SPEED;
 
+    public static ForgeConfigSpec.IntValue SOIL_1_SPEED;
+    public static ForgeConfigSpec.IntValue SOIL_2_SPEED;
+    public static ForgeConfigSpec.IntValue SOIL_3_SPEED;
+    public static ForgeConfigSpec.IntValue SOIL_4_SPEED;
+    public static ForgeConfigSpec.IntValue SOIL_5_SPEED;
+    public static ForgeConfigSpec.IntValue SOIL_6_SPEED;
+    public static ForgeConfigSpec.IntValue SOIL_7_SPEED;
+    public static ForgeConfigSpec.IntValue SOIL_8_SPEED;
+
     public static ForgeConfigSpec.IntValue ORE_1_PRICE;
     public static ForgeConfigSpec.IntValue ORE_2_PRICE;
     public static ForgeConfigSpec.IntValue ORE_3_PRICE;
@@ -63,8 +72,19 @@ public class Config {
     public static ForgeConfigSpec.IntValue STONE_7_PRICE;
     public static ForgeConfigSpec.IntValue STONE_8_PRICE;
 
+    public static ForgeConfigSpec.IntValue SOIL_1_PRICE;
+    public static ForgeConfigSpec.IntValue SOIL_2_PRICE;
+    public static ForgeConfigSpec.IntValue SOIL_3_PRICE;
+    public static ForgeConfigSpec.IntValue SOIL_4_PRICE;
+    public static ForgeConfigSpec.IntValue SOIL_5_PRICE;
+    public static ForgeConfigSpec.IntValue SOIL_6_PRICE;
+    public static ForgeConfigSpec.IntValue SOIL_7_PRICE;
+    public static ForgeConfigSpec.IntValue SOIL_8_PRICE;
+
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
+
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
+    public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_AMPLIFIER;
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
@@ -142,6 +162,25 @@ public class Config {
                 .defineInRange("speed_stone_8", 5, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
+        BUILDER.comment("Stone Harvesters:").push("Stone Harvesters (Speed)");
+        SOIL_1_SPEED = BUILDER.comment("Speed for the tier 1 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_soil_1", 400, 0, Integer.MAX_VALUE);
+        SOIL_2_SPEED = BUILDER.comment("Speed for the tier 2 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_soil_2", 350, 0, Integer.MAX_VALUE);
+        SOIL_3_SPEED = BUILDER.comment("Speed for the tier 3 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_soil_3", 300, 0, Integer.MAX_VALUE);
+        SOIL_4_SPEED = BUILDER.comment("Speed for the tier 4 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_soil_4", 250, 0, Integer.MAX_VALUE);
+        SOIL_5_SPEED = BUILDER.comment("Speed for the tier 5 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_soil_5", 200, 0, Integer.MAX_VALUE);
+        SOIL_6_SPEED = BUILDER.comment("Speed for the tier 6 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_soil_6", 150, 0, Integer.MAX_VALUE);
+        SOIL_7_SPEED = BUILDER.comment("Speed for the tier 7 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_soil_7", 100, 0, Integer.MAX_VALUE);
+        SOIL_8_SPEED = BUILDER.comment("Speed for the tier 8 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_soil_8", 5, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
+
         BUILDER.comment("Ore Harvesters:").push("Ore Harvesters (Price)");
         ORE_1_PRICE = BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_1", 400, 0, Integer.MAX_VALUE);
@@ -199,14 +238,38 @@ public class Config {
                 .defineInRange("price_stone_8", 8000, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
+        BUILDER.comment("Stone Harvesters:").push("Stone Harvesters (Price)");
+        SOIL_1_PRICE = BUILDER.comment("Price for the tier 1 Soil Harvester (in FE per operation)")
+                .defineInRange("price_soil_1", 400, 0, Integer.MAX_VALUE);
+        SOIL_2_PRICE = BUILDER.comment("Price for the tier 2 Soil Harvester (in FE per operation)")
+                .defineInRange("price_soil_2", 350, 0, Integer.MAX_VALUE);
+        SOIL_3_PRICE = BUILDER.comment("Price for the tier 3 Soil Harvester (in FE per operation)")
+                .defineInRange("price_soil_3", 300, 0, Integer.MAX_VALUE);
+        SOIL_4_PRICE = BUILDER.comment("Price for the tier 4 Soil Harvester (in FE per operation)")
+                .defineInRange("price_soil_4", 250, 0, Integer.MAX_VALUE);
+        SOIL_5_PRICE = BUILDER.comment("Price for the tier 5 Soil Harvester (in FE per operation)")
+                .defineInRange("price_soil_5", 200, 0, Integer.MAX_VALUE);
+        SOIL_6_PRICE = BUILDER.comment("Price for the tier 6 Soil Harvester (in FE per operation)")
+                .defineInRange("price_soil_6", 150, 0, Integer.MAX_VALUE);
+        SOIL_7_PRICE = BUILDER.comment("Price for the tier 7 Soil Harvester (in FE per operation)")
+                .defineInRange("price_soil_7", 100, 0, Integer.MAX_VALUE);
+        SOIL_8_PRICE = BUILDER.comment("Price for the tier 8 Soil Harvester (in FE per operation)")
+                .defineInRange("price_soil_8", 8000, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
+
         BUILDER.comment("Heat Generator:").push("Heat Generator (Speed)");
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
                 .defineInRange("speed_heat_generator", 10, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
         BUILDER.comment("Dimensional Applicator:").push("Dimensional Applicator (Price)");
-        DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per tick)")
+        DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
                 .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
+
+        BUILDER.comment("Dimensional Applicator:").push("Dimensional Applicator (Amplifier)");
+        DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final level will be this + 1.)")
+                .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
         BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();

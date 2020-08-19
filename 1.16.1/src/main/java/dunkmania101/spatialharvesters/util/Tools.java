@@ -1,7 +1,10 @@
 package dunkmania101.spatialharvesters.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -61,6 +64,29 @@ public class Tools {
         return ORES;
     }
 
+    public static ArrayList<Item> getLoadedPlantsAndDyes() {
+        ArrayList<Item> PLANTS_DYES = new ArrayList<>();
+        for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
+            if (
+                    check_item.isIn(Tags.Items.CROPS)
+                            || check_item.isIn(Tags.Items.MUSHROOMS)
+                            || check_item.isIn(Tags.Items.LEATHER)
+                            || check_item.isIn(Tags.Items.FEATHERS)
+                            || check_item.isIn(Tags.Items.SEEDS)
+                            || check_item.isIn(Tags.Items.DYES)
+                            || check_item.isIn(Tags.Items.BONES)
+                            || check_item.isIn(ItemTags.SMALL_FLOWERS)
+                            || check_item.isIn(ItemTags.LOGS)
+                            || check_item.isIn(ItemTags.LEAVES)
+                            || check_item.isIn(ItemTags.PLANKS)
+                            || check_item.isIn(Tags.Items.RODS_WOODEN)
+            ) {
+                PLANTS_DYES.add(check_item);
+            }
+        }
+        return PLANTS_DYES;
+    }
+
     public static ArrayList<Item> getLoadedStones() {
         ArrayList<Item> STONES = new ArrayList<>();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
@@ -77,26 +103,18 @@ public class Tools {
         return STONES;
     }
 
-    public static ArrayList<Item> getLoadedPlantsAndDyes() {
-        ArrayList<Item> PLANTS_DYES = new ArrayList<>();
-        for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
+    public static ArrayList<Item> getLoadedSoils() {
+        ArrayList<Item> SOILS = new ArrayList<>();
+        SOILS.add(Items.CLAY);
+        for (Block block : ForgeRegistries.BLOCKS.getValues()) {
             if (
-                    check_item.isIn(Tags.Items.CROPS)
-                    || check_item.isIn(Tags.Items.MUSHROOMS)
-                    || check_item.isIn(Tags.Items.LEATHER)
-                    || check_item.isIn(Tags.Items.FEATHERS)
-                    || check_item.isIn(Tags.Items.SEEDS)
-                    || check_item.isIn(Tags.Items.DYES)
-                    || check_item.isIn(Tags.Items.BONES)
-                    || check_item.isIn(ItemTags.SMALL_FLOWERS)
-                    || check_item.isIn(ItemTags.LOGS)
-                    || check_item.isIn(ItemTags.LEAVES)
-                    || check_item.isIn(ItemTags.PLANKS)
-                    || check_item.isIn(Tags.Items.RODS_WOODEN)
+                    block.isIn(Tags.Blocks.DIRT)
+                            || block.isIn(Tags.Blocks.SAND)
+                            || block.isIn(Tags.Blocks.GRAVEL)
             ) {
-                PLANTS_DYES.add(check_item);
+                SOILS.add(block.asItem());
             }
         }
-        return PLANTS_DYES;
+        return SOILS;
     }
 }

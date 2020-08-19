@@ -18,7 +18,7 @@ public class PlayerKeyItem extends Item {
         super(properties);
     }
 
-    private static final String key = SpatialHarvesters.modid + "DimensionalApplicatorEntity";
+    private static final String key = SpatialHarvesters.modid + "_DimensionalApplicatorEntity";
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();

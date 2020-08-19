@@ -228,6 +228,70 @@ public class BlockInit {
                             .hardnessAndResistance(0.7f, 2f)
             ));
 
+    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_1 = BLOCKS.register("soil_harvester_1",
+            () -> new SoilHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_2 = BLOCKS.register("soil_harvester_2",
+            () -> new SoilHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_3 = BLOCKS.register("soil_harvester_3",
+            () -> new SoilHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_4 = BLOCKS.register("soil_harvester_4",
+            () -> new SoilHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_5 = BLOCKS.register("soil_harvester_5",
+            () -> new SoilHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_6 = BLOCKS.register("soil_harvester_6",
+            () -> new SoilHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_7 = BLOCKS.register("soil_harvester_7",
+            () -> new SoilHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
+    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_8 = BLOCKS.register("soil_harvester_8",
+            () -> new SoilHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(0.7f, 2f)
+            ));
+
     public static final RegistryObject<HeatGeneratorBlock> HEAT_GENERATOR = BLOCKS.register("heat_generator",
             () -> new HeatGeneratorBlock(
                     Block.Properties

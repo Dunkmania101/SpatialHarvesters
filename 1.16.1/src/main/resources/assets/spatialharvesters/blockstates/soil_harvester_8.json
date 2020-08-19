@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "spatialharvesters:block/soil_harvester"
+    }
+  }
+}

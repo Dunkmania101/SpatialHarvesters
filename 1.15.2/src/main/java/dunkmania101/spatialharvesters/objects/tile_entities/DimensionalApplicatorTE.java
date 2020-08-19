@@ -73,14 +73,16 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
         return super.getCapability(cap, side);
     }
 
-    private static final String key = SpatialHarvesters.modid + "DimensionalApplicatorEntity";
+    private static final String key = SpatialHarvesters.modid + "_DimensionalApplicatorEntity";
     private static String entity = null;
+    private static int ticks = 0;
     @Override
     public void tick() {
-        if (world != null && !world.isRemote) {
-            if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
-                if (entity != null) {
-                    if (!entity.isEmpty()) {
+        if (ticks >= 100) {
+            ticks = 0;
+            if (world != null && !world.isRemote) {
+                if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
+                    if (entity != null && !entity.isEmpty()) {
                         UUID uuid = UUIDTypeAdapter.fromString(entity);
                         PlayerEntity player = null;
                         if (world.getServer() != null) {
@@ -104,13 +106,15 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
                     }
                 }
             }
+        } else {
+            ticks++;
         }
     }
 
     private ArrayList<EffectInstance> getEffects(World worldIn, BlockPos pos) {
         ArrayList<EffectInstance> EFFECTS = new ArrayList<>();
-        int amplifier = 2;
-        int duration = 100;
+        int amplifier = Config.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
+        int duration = 500;
         for (Direction check_direction : Direction.values()) {
             if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.REGENERATION_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.REGENERATION, duration, amplifier);
