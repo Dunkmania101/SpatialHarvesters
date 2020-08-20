@@ -76,21 +76,26 @@ public class Tools {
     public static ArrayList<Item> getLoadedPlantsAndDyes() {
         ArrayList<Item> PLANTS_DYES = new ArrayList<>();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
-            if (
-                    check_item.isIn(Tags.Items.CROPS)
-                            || check_item.isIn(Tags.Items.MUSHROOMS)
-                            || check_item.isIn(Tags.Items.LEATHER)
-                            || check_item.isIn(Tags.Items.FEATHERS)
-                            || check_item.isIn(Tags.Items.SEEDS)
-                            || check_item.isIn(Tags.Items.DYES)
-                            || check_item.isIn(Tags.Items.BONES)
-                            || check_item.isIn(ItemTags.SMALL_FLOWERS)
-                            || check_item.isIn(ItemTags.LOGS)
-                            || check_item.isIn(ItemTags.LEAVES)
-                            || check_item.isIn(ItemTags.PLANKS)
-                            || check_item.isIn(Tags.Items.RODS_WOODEN)
-            ) {
-                PLANTS_DYES.add(check_item);
+            if (check_item.getRegistryName() != null) {
+                if (
+                        !check_item.getRegistryName().getNamespace().contentEquals("botania")
+                                && (
+                                        check_item.isIn(Tags.Items.CROPS)
+                                                || check_item.isIn(Tags.Items.MUSHROOMS)
+                                                || check_item.isIn(Tags.Items.LEATHER)
+                                                || check_item.isIn(Tags.Items.FEATHERS)
+                                                || check_item.isIn(Tags.Items.SEEDS)
+                                                || check_item.isIn(Tags.Items.DYES)
+                                                || check_item.isIn(Tags.Items.BONES)
+                                                || check_item.isIn(ItemTags.SMALL_FLOWERS)
+                                                || check_item.isIn(ItemTags.LOGS)
+                                                || check_item.isIn(ItemTags.LEAVES)
+                                                || check_item.isIn(ItemTags.PLANKS)
+                                                || check_item.isIn(Tags.Items.RODS_WOODEN)
+                        )
+                ) {
+                    PLANTS_DYES.add(check_item);
+                }
             }
         }
         return PLANTS_DYES;
