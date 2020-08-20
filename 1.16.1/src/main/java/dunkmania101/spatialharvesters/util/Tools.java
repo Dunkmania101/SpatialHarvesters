@@ -57,6 +57,10 @@ public class Tools {
                                         !item_rn.getPath().contains("shard")
                                                 && !item_rn.getPath().contains("scrap")
                         ))
+                                || (item_rn.getNamespace().contentEquals("rockcandy")
+                                && (
+                                item_rn.getPath().contentEquals("candy_ore")
+                        ))
                 ) {
                     ORES.add(check_item);
                 }

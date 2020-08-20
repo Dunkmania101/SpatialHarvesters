@@ -86,6 +86,10 @@ public class Config {
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_AMPLIFIER;
 
+    public static ForgeConfigSpec.DoubleValue BLOCK_HARDNESS;
+    public static ForgeConfigSpec.DoubleValue BLOCK_RESISTANCE;
+
+
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     public static void init(Path file) {
@@ -100,11 +104,11 @@ public class Config {
 
     static {
         BUILDER.push("Config:").push("Common settings");
-        setup(BUILDER);
+        setup();
         BUILDER.pop();
     }
 
-    private static void setup(ForgeConfigSpec.Builder BUILDER) {
+    private static void setup() {
         BUILDER.comment("Ore Harvesters:").push("Ore Harvesters (Speed)");
         ORE_1_SPEED = BUILDER.comment("Speed for the tier 1 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_ore_1", 400, 0, Integer.MAX_VALUE);
@@ -262,14 +266,18 @@ public class Config {
                 .defineInRange("speed_heat_generator", 10, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
-        BUILDER.comment("Dimensional Applicator:").push("Dimensional Applicator (Price)");
+        BUILDER.comment("Dimensional Applicator:").push("Dimensional Applicator (Price & Amplifier)");
         DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
                 .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
+        DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this + 1.)")
+                .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
-        BUILDER.comment("Dimensional Applicator:").push("Dimensional Applicator (Amplifier)");
-        DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final level will be this + 1.)")
-                .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
+        BUILDER.comment("Block Values:").push("Block Values (Hardness & Resistance)");
+        BLOCK_HARDNESS = BUILDER.comment("Hardness for the blocks (Iron Block is 5.)")
+                .defineInRange("block_hardness", 5.0f, 0, Float.MAX_VALUE);
+        BLOCK_RESISTANCE = BUILDER.comment("Resistance for the blocks (Iron Block is 6.)")
+                .defineInRange("block_resistance", 6.0f, 0, Float.MAX_VALUE);
         BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();

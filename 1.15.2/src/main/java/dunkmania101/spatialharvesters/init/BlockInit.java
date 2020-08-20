@@ -1,15 +1,20 @@
 package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.data.Config;
 import dunkmania101.spatialharvesters.objects.blocks.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockInit {
+    private static final float block_hardness = Config.BLOCK_HARDNESS.get().floatValue();
+    private static final float block_resistance = Config.BLOCK_RESISTANCE.get().floatValue();
+
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SpatialHarvesters.modid);
 
     public static final RegistryObject<ChunkLoaderBlock> CHUNK_LOADER = BLOCKS.register("chunk_loader",
@@ -17,7 +22,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.3f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> CASING = BLOCKS.register("casing",
@@ -25,7 +31,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.3f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SpaceRipperBlock> SPACE_RIPPER = BLOCKS.register("space_ripper",
@@ -33,7 +40,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_1 = BLOCKS.register("ore_harvester_1",
@@ -41,7 +49,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_2 = BLOCKS.register("ore_harvester_2",
@@ -49,7 +58,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_3 = BLOCKS.register("ore_harvester_3",
@@ -57,7 +67,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_4 = BLOCKS.register("ore_harvester_4",
@@ -65,7 +76,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_5 = BLOCKS.register("ore_harvester_5",
@@ -73,7 +85,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_6 = BLOCKS.register("ore_harvester_6",
@@ -81,7 +94,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_7 = BLOCKS.register("ore_harvester_7",
@@ -89,7 +103,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_8 = BLOCKS.register("ore_harvester_8",
@@ -97,7 +112,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_1 = BLOCKS.register("bio_harvester_1",
@@ -105,7 +121,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_2 = BLOCKS.register("bio_harvester_2",
@@ -113,7 +130,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_3 = BLOCKS.register("bio_harvester_3",
@@ -121,7 +139,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_4 = BLOCKS.register("bio_harvester_4",
@@ -129,7 +148,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_5 = BLOCKS.register("bio_harvester_5",
@@ -137,7 +157,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_6 = BLOCKS.register("bio_harvester_6",
@@ -145,7 +166,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_7 = BLOCKS.register("bio_harvester_7",
@@ -153,7 +175,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_8 = BLOCKS.register("bio_harvester_8",
@@ -161,7 +184,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_1 = BLOCKS.register("stone_harvester_1",
@@ -169,7 +193,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_2 = BLOCKS.register("stone_harvester_2",
@@ -177,7 +202,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_3 = BLOCKS.register("stone_harvester_3",
@@ -185,7 +211,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_4 = BLOCKS.register("stone_harvester_4",
@@ -193,7 +220,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_5 = BLOCKS.register("stone_harvester_5",
@@ -201,7 +229,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_6 = BLOCKS.register("stone_harvester_6",
@@ -209,7 +238,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_7 = BLOCKS.register("stone_harvester_7",
@@ -217,7 +247,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_8 = BLOCKS.register("stone_harvester_8",
@@ -225,7 +256,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_1 = BLOCKS.register("soil_harvester_1",
@@ -233,7 +265,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_2 = BLOCKS.register("soil_harvester_2",
@@ -241,7 +274,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_3 = BLOCKS.register("soil_harvester_3",
@@ -249,7 +283,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_4 = BLOCKS.register("soil_harvester_4",
@@ -257,7 +292,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_5 = BLOCKS.register("soil_harvester_5",
@@ -265,7 +301,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_6 = BLOCKS.register("soil_harvester_6",
@@ -273,7 +310,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_7 = BLOCKS.register("soil_harvester_7",
@@ -281,7 +319,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_8 = BLOCKS.register("soil_harvester_8",
@@ -289,7 +328,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<HeatGeneratorBlock> HEAT_GENERATOR = BLOCKS.register("heat_generator",
@@ -297,7 +337,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<DimensionalApplicatorBlock> DIMENSIONAL_APPLICATOR = BLOCKS.register("dimensional_applicator",
@@ -305,7 +346,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> REGENERATION_ACTIVATOR = BLOCKS.register("regeneration_activator",
@@ -313,7 +355,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> RESISTANCE_ACTIVATOR = BLOCKS.register("resistance_activator",
@@ -321,7 +364,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> ABSORPTION_ACTIVATOR = BLOCKS.register("absorption_activator",
@@ -329,7 +373,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> HASTE_ACTIVATOR = BLOCKS.register("haste_activator",
@@ -337,7 +382,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> SPEED_ACTIVATOR = BLOCKS.register("speed_activator",
@@ -345,7 +391,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> JUMP_BOOST_ACTIVATOR = BLOCKS.register("jump_boost_activator",
@@ -353,7 +400,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> INVISIBILITY_ACTIVATOR = BLOCKS.register("invisibility_activator",
@@ -361,7 +409,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> NIGHT_VISION_ACTIVATOR = BLOCKS.register("night_vision_activator",
@@ -369,7 +418,8 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 
     public static final RegistryObject<Block> STRENGTH_ACTIVATOR = BLOCKS.register("strength_activator",
@@ -377,6 +427,7 @@ public class BlockInit {
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
-                            .hardnessAndResistance(0.7f, 2f)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
             ));
 }
