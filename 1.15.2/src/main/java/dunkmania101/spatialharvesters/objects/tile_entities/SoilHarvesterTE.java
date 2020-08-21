@@ -35,12 +35,13 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
         this(TileEntityInit.SOIL_HARVESTER.get());
     }
 
-    private CustomEnergyStorage energyStorage = createEnergy();
+    private final CustomEnergyStorage energyStorage = createEnergy();
 
-    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+    private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private CustomEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(10000, 10000) {
+        int capacity = Config.SOIL_1_PRICE.get() * 2;
+        return new CustomEnergyStorage(capacity, capacity) {
             @Override
             protected void onEnergyChanged() {
                 markDirty();
@@ -77,45 +78,14 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
     private int ticks = 0;
     @Override
     public void tick() {
-        Item CHOSEN_SOIL = ItemInit.CRYSTAL_1.get();
-        int delay = Config.SOIL_1_SPEED.get();
-        int price = Config.SOIL_1_PRICE.get();
         Block this_block = getBlockState().getBlock();
-        if (this_block == BlockInit.SOIL_HARVESTER_1.get()) {
-            CHOSEN_SOIL = ItemInit.SHARD_1.get();
-            price = Config.SOIL_1_PRICE.get();
-            delay = Config.SOIL_1_SPEED.get();
-        } else if (this_block == BlockInit.SOIL_HARVESTER_2.get()) {
-            CHOSEN_SOIL = ItemInit.SHARD_2.get();
-            price = Config.SOIL_2_PRICE.get();
-            delay = Config.SOIL_2_SPEED.get();
-        } else if (this_block == BlockInit.SOIL_HARVESTER_3.get()) {
-            CHOSEN_SOIL = ItemInit.SHARD_3.get();
-            price = Config.SOIL_3_PRICE.get();
-            delay = Config.SOIL_3_SPEED.get();
-        } else if (this_block == BlockInit.SOIL_HARVESTER_4.get()) {
-            CHOSEN_SOIL = ItemInit.SHARD_4.get();
-            price = Config.SOIL_4_PRICE.get();
-            delay = Config.SOIL_4_SPEED.get();
-        } else if (this_block == BlockInit.SOIL_HARVESTER_5.get()) {
-            CHOSEN_SOIL = ItemInit.SHARD_5.get();
-            price = Config.SOIL_5_PRICE.get();
-            delay = Config.SOIL_5_SPEED.get();
-        } else if (this_block == BlockInit.SOIL_HARVESTER_6.get()) {
-            CHOSEN_SOIL = ItemInit.SHARD_6.get();
-            price = Config.SOIL_6_PRICE.get();
-            delay = Config.SOIL_6_SPEED.get();
-        } else if (this_block == BlockInit.SOIL_HARVESTER_7.get()) {
-            CHOSEN_SOIL = ItemInit.SHARD_7.get();
-            price = Config.SOIL_7_PRICE.get();
-            delay = Config.SOIL_7_SPEED.get();
-        } else if (this_block == BlockInit.SOIL_HARVESTER_8.get()) {
-            CHOSEN_SOIL = ItemInit.SHARD_7.get();
-            price = Config.SOIL_8_PRICE.get();
-            delay = Config.SOIL_8_SPEED.get();
-        }
-        if (ticks >= delay) {
+        int speed = getSpeed(this_block);
+        if (ticks >= speed) {
             if (world != null && !world.isRemote) {
+                int price = getPrice(this_block);
+                int set_capacity = price * 2;
+                energyStorage.setMaxEnergy(set_capacity);
+                energyStorage.setMaxTransfer(set_capacity);
                 if (energyStorage.getEnergyStored() >= price) {
                     if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
                         TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
@@ -123,14 +93,14 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
                             LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
                             if (out_down_cap.isPresent()) {
                                 IItemHandler out_down_inv = out_down_cap.orElse(null);
+                                Item CHOSEN_SOIL = getShard(this_block);
                                 Random rand = world.rand;
                                 if (rand.nextInt(75) != 1) {
                                     if (SOILS.size() > 0) {
                                         CHOSEN_SOIL = SOILS.get(rand.nextInt(SOILS.size()));
                                     }
                                 }
-                                ItemStack CHOSEN_SOIL_STACK = new ItemStack(CHOSEN_SOIL);
-                                ItemHandlerHelper.insertItemStacked(out_down_inv, CHOSEN_SOIL_STACK, false);
+                                ItemHandlerHelper.insertItemStacked(out_down_inv, new ItemStack(CHOSEN_SOIL), false);
                                 energyStorage.consumeEnergy(price);
                             }
                         }
@@ -140,5 +110,71 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
         } else {
             ticks++;
         }
+    }
+
+    private int getPrice(Block block) {
+        int price = Config.SOIL_1_PRICE.get();
+        if (block == BlockInit.SOIL_HARVESTER_1.get()) {
+            price = Config.SOIL_1_PRICE.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_2.get()) {
+            price = Config.SOIL_2_PRICE.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_3.get()) {
+            price = Config.SOIL_3_PRICE.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_4.get()) {
+            price = Config.SOIL_4_PRICE.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_5.get()) {
+            price = Config.SOIL_5_PRICE.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_6.get()) {
+            price = Config.SOIL_6_PRICE.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_7.get()) {
+            price = Config.SOIL_7_PRICE.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_8.get()) {
+            price = Config.SOIL_8_PRICE.get();
+        }
+        return price;
+    }
+
+    private int getSpeed(Block block) {
+        int speed = Config.SOIL_1_SPEED.get();
+        if (block == BlockInit.SOIL_HARVESTER_1.get()) {
+            speed = Config.SOIL_1_SPEED.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_2.get()) {
+            speed = Config.SOIL_2_SPEED.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_3.get()) {
+            speed = Config.SOIL_3_SPEED.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_4.get()) {
+            speed = Config.SOIL_4_SPEED.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_5.get()) {
+            speed = Config.SOIL_5_SPEED.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_6.get()) {
+            speed = Config.SOIL_6_SPEED.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_7.get()) {
+            speed = Config.SOIL_7_SPEED.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_8.get()) {
+            speed = Config.SOIL_8_SPEED.get();
+        }
+        return speed;
+    }
+
+    private Item getShard(Block block) {
+        Item CHOSEN_SHARD = ItemInit.SHARD_1.get();
+        if (block == BlockInit.SOIL_HARVESTER_1.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_1.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_2.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_2.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_3.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_3.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_4.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_4.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_5.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_5.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_6.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_6.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_7.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_7.get();
+        } else if (block == BlockInit.SOIL_HARVESTER_8.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_7.get();
+        }
+        return CHOSEN_SHARD;
     }
 }

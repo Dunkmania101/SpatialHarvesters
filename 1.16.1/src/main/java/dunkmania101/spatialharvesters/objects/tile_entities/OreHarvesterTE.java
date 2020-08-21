@@ -35,12 +35,13 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         this(TileEntityInit.ORE_HARVESTER.get());
     }
 
-    private CustomEnergyStorage energyStorage = createEnergy();
+    private final CustomEnergyStorage energyStorage = createEnergy();
 
-    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+    private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private CustomEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(10000, 10000) {
+        int capacity = Config.ORE_1_PRICE.get() * 2;
+        return new CustomEnergyStorage(capacity, capacity) {
             @Override
             protected void onEnergyChanged() {
                 markDirty();
@@ -48,22 +49,12 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
 
             @Override
             public boolean canExtract() {
-                return true;
+                return false;
             }
 
             @Override
             public boolean canReceive() {
                 return true;
-            }
-
-            @Override
-            public int receiveEnergy(int maxReceive, boolean simulate) {
-                return super.receiveEnergy(maxReceive, simulate);
-            }
-
-            @Override
-            public int extractEnergy(int maxExtract, boolean simulate) {
-                return super.extractEnergy(maxExtract, simulate);
             }
         };
     }
@@ -87,46 +78,14 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
     private int ticks = 0;
     @Override
     public void tick() {
-        Item CHOSEN_ORE = ItemInit.CRYSTAL_1.get();
         Block this_block = getBlockState().getBlock();
-        int price = Config.ORE_1_PRICE.get();
-        int delay = Config.ORE_1_SPEED.get();
-        if (this_block == BlockInit.ORE_HARVESTER_1.get()) {
-            CHOSEN_ORE = ItemInit.SHARD_1.get();
-            price = Config.ORE_1_PRICE.get();
-            delay = Config.ORE_1_SPEED.get();
-        } else if (this_block == BlockInit.ORE_HARVESTER_2.get()) {
-            CHOSEN_ORE = ItemInit.SHARD_2.get();
-            price = Config.ORE_2_PRICE.get();
-            delay = Config.ORE_2_SPEED.get();
-        } else if (this_block == BlockInit.ORE_HARVESTER_3.get()) {
-            CHOSEN_ORE = ItemInit.SHARD_3.get();
-            price = Config.ORE_3_PRICE.get();
-            delay = Config.ORE_3_SPEED.get();
-        } else if (this_block == BlockInit.ORE_HARVESTER_4.get()) {
-            CHOSEN_ORE = ItemInit.SHARD_4.get();
-            price = Config.ORE_4_PRICE.get();
-            delay = Config.ORE_4_SPEED.get();
-        } else if (this_block == BlockInit.ORE_HARVESTER_5.get()) {
-            CHOSEN_ORE = ItemInit.SHARD_5.get();
-            price = Config.ORE_5_PRICE.get();
-            delay = Config.ORE_5_SPEED.get();
-        } else if (this_block == BlockInit.ORE_HARVESTER_6.get()) {
-            CHOSEN_ORE = ItemInit.SHARD_6.get();
-            price = Config.ORE_6_PRICE.get();
-            delay = Config.ORE_6_SPEED.get();
-        } else if (this_block == BlockInit.ORE_HARVESTER_7.get()) {
-            CHOSEN_ORE = ItemInit.SHARD_7.get();
-            price = Config.ORE_1_PRICE.get();
-            delay = Config.ORE_7_SPEED.get();
-        } else if (this_block == BlockInit.ORE_HARVESTER_8.get()) {
-            CHOSEN_ORE = ItemInit.SHARD_7.get();
-            price = Config.ORE_8_PRICE.get();
-            delay = Config.ORE_8_SPEED.get();
-        }
-        if (ticks >= delay) {
-            ticks = 0;
+        int speed = getSpeed(this_block);
+        if (ticks >= speed) {
             if (world != null && !world.isRemote) {
+                int price = getPrice(this_block);
+                int set_capacity = price * 2;
+                energyStorage.setMaxEnergy(set_capacity);
+                energyStorage.setMaxTransfer(set_capacity);
                 if (energyStorage.getEnergyStored() >= price) {
                     if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
                         TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
@@ -134,14 +93,14 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
                             LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
                             if (out_down_cap.isPresent()) {
                                 IItemHandler out_down_inv = out_down_cap.orElse(null);
+                                Item CHOSEN_ORE = getShard(this_block);
                                 Random rand = world.rand;
                                 if (rand.nextInt(75) != 1) {
                                     if (ORES.size() > 0) {
                                         CHOSEN_ORE = ORES.get(rand.nextInt(ORES.size()));
                                     }
                                 }
-                                ItemStack CHOSEN_ORE_STACK = new ItemStack(CHOSEN_ORE);
-                                ItemHandlerHelper.insertItemStacked(out_down_inv, CHOSEN_ORE_STACK, false);
+                                ItemHandlerHelper.insertItemStacked(out_down_inv, new ItemStack(CHOSEN_ORE), false);
                                 energyStorage.consumeEnergy(price);
                             }
                         }
@@ -151,5 +110,71 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         } else {
             ticks++;
         }
+    }
+
+    private int getPrice(Block block) {
+        int price = Config.ORE_1_PRICE.get();
+        if (block == BlockInit.ORE_HARVESTER_1.get()) {
+            price = Config.ORE_1_PRICE.get();
+        } else if (block == BlockInit.ORE_HARVESTER_2.get()) {
+            price = Config.ORE_2_PRICE.get();
+        } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
+            price = Config.ORE_3_PRICE.get();
+        } else if (block == BlockInit.ORE_HARVESTER_4.get()) {
+            price = Config.ORE_4_PRICE.get();
+        } else if (block == BlockInit.ORE_HARVESTER_5.get()) {
+            price = Config.ORE_5_PRICE.get();
+        } else if (block == BlockInit.ORE_HARVESTER_6.get()) {
+            price = Config.ORE_6_PRICE.get();
+        } else if (block == BlockInit.ORE_HARVESTER_7.get()) {
+            price = Config.ORE_7_PRICE.get();
+        } else if (block == BlockInit.ORE_HARVESTER_8.get()) {
+            price = Config.ORE_8_PRICE.get();
+        }
+        return price;
+    }
+
+    private int getSpeed(Block block) {
+        int speed = Config.ORE_1_SPEED.get();
+        if (block == BlockInit.ORE_HARVESTER_1.get()) {
+            speed = Config.ORE_1_SPEED.get();
+        } else if (block == BlockInit.ORE_HARVESTER_2.get()) {
+            speed = Config.ORE_2_SPEED.get();
+        } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
+            speed = Config.ORE_3_SPEED.get();
+        } else if (block == BlockInit.ORE_HARVESTER_4.get()) {
+            speed = Config.ORE_4_SPEED.get();
+        } else if (block == BlockInit.ORE_HARVESTER_5.get()) {
+            speed = Config.ORE_5_SPEED.get();
+        } else if (block == BlockInit.ORE_HARVESTER_6.get()) {
+            speed = Config.ORE_6_SPEED.get();
+        } else if (block == BlockInit.ORE_HARVESTER_7.get()) {
+            speed = Config.ORE_7_SPEED.get();
+        } else if (block == BlockInit.ORE_HARVESTER_8.get()) {
+            speed = Config.ORE_8_SPEED.get();
+        }
+        return speed;
+    }
+
+    private Item getShard(Block block) {
+        Item CHOSEN_SHARD = ItemInit.SHARD_1.get();
+        if (block == BlockInit.ORE_HARVESTER_1.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_1.get();
+        } else if (block == BlockInit.ORE_HARVESTER_2.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_2.get();
+        } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_3.get();
+        } else if (block == BlockInit.ORE_HARVESTER_4.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_4.get();
+        } else if (block == BlockInit.ORE_HARVESTER_5.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_5.get();
+        } else if (block == BlockInit.ORE_HARVESTER_6.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_6.get();
+        } else if (block == BlockInit.ORE_HARVESTER_7.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_7.get();
+        } else if (block == BlockInit.ORE_HARVESTER_8.get()) {
+            CHOSEN_SHARD = ItemInit.SHARD_7.get();
+        }
+        return CHOSEN_SHARD;
     }
 }

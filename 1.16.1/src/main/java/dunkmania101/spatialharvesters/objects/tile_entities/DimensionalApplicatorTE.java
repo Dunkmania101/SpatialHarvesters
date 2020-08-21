@@ -40,7 +40,8 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
     private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private CustomEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(1000000, 1000000) {
+        int capacity = Config.DIMENSIONAL_APPLICATOR_PRICE.get() * 2;
+        return new CustomEnergyStorage(capacity, capacity) {
             @Override
             protected void onEnergyChanged() {
                 markDirty();
@@ -161,5 +162,6 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
         if (entity.isEmpty()) {
             entity = null;
         }
+        markDirty();
     }
 }

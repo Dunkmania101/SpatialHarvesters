@@ -82,6 +82,8 @@ public class Config {
     public static ForgeConfigSpec.IntValue SOIL_8_PRICE;
 
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
+    public static ForgeConfigSpec.IntValue HEAT_GENERATOR_CAPACITY;
+    public static ForgeConfigSpec.IntValue HEAT_GENERATOR_TRANSFER;
 
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_AMPLIFIER;
@@ -261,9 +263,13 @@ public class Config {
                 .defineInRange("price_soil_8", 8000, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
-        BUILDER.comment("Heat Generator:").push("Heat Generator (Speed)");
+        BUILDER.comment("Heat Generator:").push("Heat Generator (Speed, Capacity, & Transfer)");
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
-                .defineInRange("speed_heat_generator", 10, 0, Integer.MAX_VALUE);
+                .defineInRange("speed_heat_generator", 3, 0, Integer.MAX_VALUE);
+        HEAT_GENERATOR_CAPACITY = BUILDER.comment("Capacity for the Heat Generator (in FE)")
+                .defineInRange("capacity_heat_generator", 100, 0, Integer.MAX_VALUE);
+        HEAT_GENERATOR_TRANSFER = BUILDER.comment("Transfer rate for the Heat Generator (in FE per tick)")
+                .defineInRange("transfer_heat_generator", 100, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
         BUILDER.comment("Dimensional Applicator:").push("Dimensional Applicator (Price & Amplifier)");

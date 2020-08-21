@@ -31,7 +31,7 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private CustomEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(1000, 1000) {
+        return new CustomEnergyStorage(Config.HEAT_GENERATOR_CAPACITY.get(), Config.HEAT_GENERATOR_TRANSFER.get()) {
             @Override
             protected void onEnergyChanged() {
                 markDirty();
@@ -73,7 +73,7 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
                 if (energy + speed <= energyStorage.getMaxEnergyStored()) {
                     Block block = world.getBlockState(pos.offset(direction)).getBlock();
                     if (block == Blocks.MAGMA_BLOCK || block == Blocks.LAVA) {
-                        energyStorage.receiveEnergy(speed, false);
+                        energyStorage.addEnergy(speed);
                     }
                 }
                 if (energy > 0) {
@@ -82,7 +82,11 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
                         LazyOptional<IEnergyStorage> te_energy = te.getCapability(CapabilityEnergy.ENERGY, direction);
                         if (te_energy.isPresent()) {
                             IEnergyStorage te_energy_handler = te_energy.orElse(null);
-                            te_energy_handler.receiveEnergy(energy, false);
+                            int te_available = te_energy_handler.getMaxEnergyStored() - te_energy_handler.getEnergyStored();
+                            int te_received = te_energy_handler.receiveEnergy(energy - te_available, false);
+                            if (te_received > 0) {
+                                energyStorage.consumeEnergy(te_received);
+                            }
                         }
                     }
                 }
