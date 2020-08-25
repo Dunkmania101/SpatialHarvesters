@@ -81,6 +81,7 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         Block this_block = getBlockState().getBlock();
         int speed = getSpeed(this_block);
         if (ticks >= speed) {
+            ticks = 0;
             if (world != null && !world.isRemote) {
                 int price = getPrice(this_block);
                 int set_capacity = price * 2;
