@@ -10,11 +10,11 @@
   {
     "a":
     {
-      "item": "spatialharvesters:casing"
+      "tag": "forge:gems/diamond"
     },
     "b":
     {
-      "tag": "forge:crops"
+      "tag": "forge:ores"
     },
     "c":
     {
@@ -23,6 +23,6 @@
   },
   "result":
   {
-    "item": "spatialharvesters:bio_core"
+    "item": "spatialharvesters:ore_core"
   }
 }
