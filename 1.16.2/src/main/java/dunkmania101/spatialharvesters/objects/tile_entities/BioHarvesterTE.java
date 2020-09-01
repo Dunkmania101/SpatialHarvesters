@@ -74,7 +74,7 @@ public class BioHarvesterTE extends TileEntity implements ITickableTileEntity {
         return super.getCapability(cap, side);
     }
 
-    private static final ArrayList<Item> PLANTS = Tools.getLoadedPlantsAndDyes();
+    private static final ArrayList<Item> PLANTS = Tools.loadedPlantsAndDyes;
     private int ticks = 0;
     @Override
     public void tick() {

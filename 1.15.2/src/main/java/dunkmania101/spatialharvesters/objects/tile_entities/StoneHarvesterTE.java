@@ -74,7 +74,7 @@ public class StoneHarvesterTE extends TileEntity implements ITickableTileEntity 
         return super.getCapability(cap, side);
     }
 
-    private static final ArrayList<Item> STONES = Tools.getLoadedStones();
+    private static final ArrayList<Item> STONES = Tools.loadedStones;
     private int ticks = 0;
     @Override
     public void tick() {

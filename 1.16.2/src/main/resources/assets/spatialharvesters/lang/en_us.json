@@ -67,5 +67,8 @@
   "block.spatialharvesters.night_vision_activator": "Night Vision Activator",
   "block.spatialharvesters.strength_activator": "Strength Activator",
 
-  "itemGroup.spatial_harvesters": "Spatial Harvesters"
+  "itemGroup.spatial_harvesters": "Spatial Harvesters",
+
+  "msg.set_dimensional_applicator": "Set Dimensional Applicator to you!",
+  "msg.remove_dimensional_applicator": "Cleared Dimensional Applicator!"
 }

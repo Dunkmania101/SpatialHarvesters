@@ -74,7 +74,7 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         return super.getCapability(cap, side);
     }
 
-    private static final ArrayList<Item> ORES = Tools.getLoadedOres();
+    private static final ArrayList<Item> ORES = Tools.loadedOres;
     private int ticks = 0;
     @Override
     public void tick() {

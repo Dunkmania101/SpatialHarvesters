@@ -26,8 +26,8 @@ public class ChunkLoaderBlock extends Block {
             ServerWorld sworld = (ServerWorld) worldIn;
             ChunkPos cpos = worldIn.getChunk(pos).getPos();
             ChunkLoaderData data = ChunkLoaderData.get(sworld);
-            sworld.forceChunk(cpos.x, cpos.z, true);
             data.addChunk(cpos);
+            sworld.forceChunk(cpos.x, cpos.z, true);
         }
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     }
@@ -39,8 +39,8 @@ public class ChunkLoaderBlock extends Block {
             if (!(Tools.checkChunkBlocks(worldIn, cpos, BlockInit.CHUNK_LOADER.get().getBlock()) > 1)) {
                 ServerWorld sworld = (ServerWorld) worldIn;
                 ChunkLoaderData data = ChunkLoaderData.get(sworld);
-                sworld.forceChunk(cpos.x, cpos.z, false);
                 data.removeChunk(cpos);
+                sworld.forceChunk(cpos.x, cpos.z, false);
             }
         }
         super.onBlockHarvested(worldIn, pos, state, player);

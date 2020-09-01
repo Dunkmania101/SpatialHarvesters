@@ -25,6 +25,7 @@ public class Tools {
         return count;
     }
 
+    public static ArrayList<Item> loadedOres = getLoadedOres();
     public static ArrayList<Item> getLoadedOres() {
         ArrayList<Item> ORES = new ArrayList<>();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
@@ -77,6 +78,7 @@ public class Tools {
         return ORES;
     }
 
+    public static ArrayList<Item> loadedPlantsAndDyes = getLoadedPlantsAndDyes();
     public static ArrayList<Item> getLoadedPlantsAndDyes() {
         ArrayList<Item> PLANTS_DYES = new ArrayList<>();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
@@ -105,6 +107,7 @@ public class Tools {
         return PLANTS_DYES;
     }
 
+    public static ArrayList<Item> loadedStones = getLoadedStones();
     public static ArrayList<Item> getLoadedStones() {
         ArrayList<Item> STONES = new ArrayList<>();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
@@ -121,6 +124,7 @@ public class Tools {
         return STONES;
     }
 
+    public static ArrayList<Item> loadedSoils = getLoadedSoils();
     public static ArrayList<Item> getLoadedSoils() {
         ArrayList<Item> SOILS = new ArrayList<>();
         SOILS.add(Items.CLAY);

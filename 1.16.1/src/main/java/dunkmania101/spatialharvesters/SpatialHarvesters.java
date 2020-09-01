@@ -26,7 +26,7 @@ public class SpatialHarvesters {
     public SpatialHarvesters() {
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        modBus.addListener(this::setup);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.CONFIG);
         Config.init(FMLPaths.CONFIGDIR.get().resolve(SpatialHarvesters.modid + "-common.toml"));
@@ -50,7 +50,7 @@ public class SpatialHarvesters {
 
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ItemInit.ORE_HARVESTER_8.get());
+            return new ItemStack(ItemInit.ORE_HARVESTER_1.get());
         }
     }
 }

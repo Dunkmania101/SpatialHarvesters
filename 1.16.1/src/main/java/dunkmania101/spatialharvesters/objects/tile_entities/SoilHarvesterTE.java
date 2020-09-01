@@ -74,7 +74,7 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
         return super.getCapability(cap, side);
     }
 
-    private static final ArrayList<Item> SOILS = Tools.getLoadedSoils();
+    private static final ArrayList<Item> SOILS = Tools.loadedSoils;
     private int ticks = 0;
     @Override
     public void tick() {

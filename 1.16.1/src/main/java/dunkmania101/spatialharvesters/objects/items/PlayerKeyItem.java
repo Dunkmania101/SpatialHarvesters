@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class PlayerKeyItem extends Item {
@@ -31,10 +32,10 @@ public class PlayerKeyItem extends Item {
                     if (player != null) {
                         CompoundNBT nbt = new CompoundNBT();
                         if (player.isCrouching()) {
-                            player.sendStatusMessage(new StringTextComponent("Cleared Dimensional Applicator!"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("msg.remove_dimensional_applicator"), true);
                         } else {
                             nbt.putString(key, UUIDTypeAdapter.fromUUID(player.getUniqueID()));
-                            player.sendStatusMessage(new StringTextComponent("Set Dimensional Applicator to you!"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("msg.set_dimensional_applicator"), true);
                         }
                         tile.deserializeNBT(nbt);
                         tile.markDirty();
