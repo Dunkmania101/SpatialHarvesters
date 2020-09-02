@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 issueTrackerURL="https://github.com/Dunkmania101/SpatialHarvesters/issues" #optional
 [[mods]] #mandatory
 modId = "spatialharvesters" #mandatory
-version = "0.4.12" #mandatory
+version = "0.4.13" #mandatory
 displayName = "Spatial Harvesters" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 #displayURL="http://example.com/" #optional

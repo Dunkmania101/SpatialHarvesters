@@ -74,35 +74,27 @@ public class BioHarvesterTE extends TileEntity implements ITickableTileEntity {
         energy.invalidate();
     }
 
-    private int price = Config.BIO_1_PRICE.get();
-    private int speed = Config.BIO_1_SPEED.get();
-    Item THIS_SHARD = ItemInit.SHARD_1.get();
-    @Override
-    public void onLoad() {
-        Block this_block = getBlockState().getBlock();
-        THIS_SHARD = getShard(this_block);
-        speed = getSpeed(this_block);
-        price = getPrice(this_block);
-        int set_capacity = price * 2;
-        energyStorage.setMaxEnergy(set_capacity);
-        energyStorage.setMaxTransfer(set_capacity);
-    }
-
-    private static final ArrayList<Item> PLANTS = Tools.loadedPlantsAndDyes;
+    private static final ArrayList<Item> PLANTS = Tools.getLoadedPlantsAndDyes();
     private int ticks = 0;
     @Override
     public void tick() {
+        Block this_block = getBlockState().getBlock();
+        int speed = getSpeed(this_block);
         if (ticks >= speed) {
             ticks = 0;
             if (world != null && !world.isRemote) {
-                if (energyStorage.getEnergyStored() >= price) {
+                int price = getPrice(this_block);
+                int set_capacity = price * 2;
+                energyStorage.setMaxEnergy(set_capacity);
+                energyStorage.setMaxTransfer(set_capacity);
+                if (energyStorage.getMaxEnergyStored() >= price) {
                     if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
                         TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
                         if (out_down != null && !world.isRemote) {
                             LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
                             if (out_down_cap.isPresent()) {
                                 IItemHandler out_down_inv = out_down_cap.orElse(null);
-                                Item CHOSEN_PLANT = THIS_SHARD;
+                                Item CHOSEN_PLANT = getShard(this_block);
                                 Random rand = world.rand;
                                 if (rand.nextInt(75) != 1) {
                                     if (PLANTS.size() > 0) {

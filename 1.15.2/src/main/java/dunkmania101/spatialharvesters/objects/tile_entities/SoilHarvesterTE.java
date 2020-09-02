@@ -59,12 +59,6 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
         };
     }
 
-    @Override
-    public void remove() {
-        super.remove();
-        energy.invalidate();
-    }
-
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
@@ -72,6 +66,12 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
             return energy.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        energy.invalidate();
     }
 
     private static final ArrayList<Item> SOILS = Tools.loadedSoils;
@@ -87,7 +87,7 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
                 int set_capacity = price * 2;
                 energyStorage.setMaxEnergy(set_capacity);
                 energyStorage.setMaxTransfer(set_capacity);
-                if (energyStorage.getEnergyStored() >= price) {
+                if (energyStorage.getMaxEnergyStored() >= price) {
                     if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
                         TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
                         if (out_down != null && !world.isRemote) {
