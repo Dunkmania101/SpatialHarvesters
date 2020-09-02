@@ -66,27 +66,23 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
 
     @Override
     public void tick() {
-        if (world != null) {
+        if (world != null && !world.isRemote) {
             int speed = Config.HEAT_GENERATOR_SPEED.get();
             for (Direction direction : Direction.values()) {
                 int energy = energyStorage.getEnergyStored();
                 if (energy + speed <= energyStorage.getMaxEnergyStored()) {
                     Block block = world.getBlockState(pos.offset(direction)).getBlock();
-                    if (block == Blocks.MAGMA_BLOCK || block == Blocks.LAVA) {
+                    if (block == Blocks.MAGMA_BLOCK || block == Blocks.LAVA || block == Blocks.FIRE) {
                         energyStorage.addEnergy(speed);
                     }
                 }
                 if (energy > 0) {
-                    TileEntity te = world.getTileEntity(pos.offset(direction));
-                    if (te != null) {
-                        LazyOptional<IEnergyStorage> te_energy = te.getCapability(CapabilityEnergy.ENERGY, direction);
-                        if (te_energy.isPresent()) {
-                            IEnergyStorage te_energy_handler = te_energy.orElse(null);
-                            int te_available = te_energy_handler.getMaxEnergyStored() - te_energy_handler.getEnergyStored();
-                            int te_received = te_energy_handler.receiveEnergy(energy - te_available, false);
-                            if (te_received > 0) {
-                                energyStorage.consumeEnergy(te_received);
-                            }
+                    TileEntity tile = world.getTileEntity(pos.offset(direction));
+                    if (tile != null) {
+                        LazyOptional<IEnergyStorage> tile_energy = tile.getCapability(CapabilityEnergy.ENERGY, direction);
+                        if (tile_energy.isPresent()) {
+                            int tile_received = tile_energy.orElse(null).receiveEnergy(energy, false);
+                            energyStorage.consumeEnergy(tile_received);
                         }
                     }
                 }

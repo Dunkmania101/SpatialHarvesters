@@ -59,12 +59,6 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         };
     }
 
-    @Override
-    public void remove() {
-        super.remove();
-        energy.invalidate();
-    }
-
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
@@ -74,19 +68,33 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         return super.getCapability(cap, side);
     }
 
+    @Override
+    public void remove() {
+        super.remove();
+        energy.invalidate();
+    }
+
+    private int price = Config.ORE_1_PRICE.get();
+    private int speed = Config.ORE_1_SPEED.get();
+    Item THIS_SHARD = ItemInit.SHARD_1.get();
+    @Override
+    public void onLoad() {
+        Block this_block = getBlockState().getBlock();
+        THIS_SHARD = getShard(this_block);
+        speed = getSpeed(this_block);
+        price = getPrice(this_block);
+        int set_capacity = price * 2;
+        energyStorage.setMaxEnergy(set_capacity);
+        energyStorage.setMaxTransfer(set_capacity);
+    }
+
     private static final ArrayList<Item> ORES = Tools.loadedOres;
     private int ticks = 0;
     @Override
     public void tick() {
-        Block this_block = getBlockState().getBlock();
-        int speed = getSpeed(this_block);
         if (ticks >= speed) {
             ticks = 0;
             if (world != null && !world.isRemote) {
-                int price = getPrice(this_block);
-                int set_capacity = price * 2;
-                energyStorage.setMaxEnergy(set_capacity);
-                energyStorage.setMaxTransfer(set_capacity);
                 if (energyStorage.getEnergyStored() >= price) {
                     if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
                         TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
@@ -94,7 +102,7 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
                             LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
                             if (out_down_cap.isPresent()) {
                                 IItemHandler out_down_inv = out_down_cap.orElse(null);
-                                Item CHOSEN_ORE = getShard(this_block);
+                                Item CHOSEN_ORE = THIS_SHARD;
                                 Random rand = world.rand;
                                 if (rand.nextInt(75) != 1) {
                                     if (ORES.size() > 0) {

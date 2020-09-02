@@ -6,6 +6,7 @@ import dunkmania101.spatialharvesters.data.Config;
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
@@ -117,31 +118,32 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
         int amplifier = Config.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
         int duration = 500;
         for (Direction check_direction : Direction.values()) {
-            if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.REGENERATION_ACTIVATOR.get()) {
+            Block block = worldIn.getBlockState(pos.offset(check_direction)).getBlock();
+            if (block == BlockInit.REGENERATION_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.REGENERATION, duration, amplifier);
                 EFFECTS.add(effect);
-            } else if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.RESISTANCE_ACTIVATOR.get()) {
+            } else if (block == BlockInit.RESISTANCE_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.RESISTANCE, duration, amplifier);
                 EFFECTS.add(effect);
-            } else if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.ABSORPTION_ACTIVATOR.get()) {
+            } else if (block == BlockInit.ABSORPTION_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.ABSORPTION, duration, amplifier);
                 EFFECTS.add(effect);
-            } else if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.HASTE_ACTIVATOR.get()) {
+            } else if (block == BlockInit.HASTE_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.HASTE, duration, amplifier);
                 EFFECTS.add(effect);
-            } else if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.SPEED_ACTIVATOR.get()) {
+            } else if (block == BlockInit.SPEED_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.SPEED, duration, amplifier);
                 EFFECTS.add(effect);
-            } else if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.JUMP_BOOST_ACTIVATOR.get()) {
+            } else if (block == BlockInit.JUMP_BOOST_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.JUMP_BOOST, duration, amplifier);
                 EFFECTS.add(effect);
-            } else if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.INVISIBILITY_ACTIVATOR.get()) {
+            } else if (block == BlockInit.INVISIBILITY_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.INVISIBILITY, duration, amplifier);
                 EFFECTS.add(effect);
-            } else if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.NIGHT_VISION_ACTIVATOR.get()) {
+            } else if (block == BlockInit.NIGHT_VISION_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.NIGHT_VISION, duration, amplifier);
                 EFFECTS.add(effect);
-            } else if (worldIn.getBlockState(pos.offset(check_direction)).getBlock() == BlockInit.STRENGTH_ACTIVATOR.get()) {
+            } else if (block == BlockInit.STRENGTH_ACTIVATOR.get()) {
                 EffectInstance effect = new EffectInstance(Effects.STRENGTH, duration, amplifier);
                 EFFECTS.add(effect);
             }

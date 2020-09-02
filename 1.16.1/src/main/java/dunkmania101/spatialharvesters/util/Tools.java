@@ -96,6 +96,7 @@ public class Tools {
                                                 || check_item.isIn(ItemTags.SMALL_FLOWERS)
                                                 || check_item.isIn(ItemTags.LOGS)
                                                 || check_item.isIn(ItemTags.LEAVES)
+                                                || check_item.isIn(ItemTags.SAPLINGS)
                                                 || check_item.isIn(ItemTags.PLANKS)
                                                 || check_item.isIn(Tags.Items.RODS_WOODEN)
                         )
