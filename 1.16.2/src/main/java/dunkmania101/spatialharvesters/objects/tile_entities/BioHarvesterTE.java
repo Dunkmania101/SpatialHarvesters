@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
-import dunkmania101.spatialharvesters.data.Config;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
@@ -40,7 +40,7 @@ public class BioHarvesterTE extends TileEntity implements ITickableTileEntity {
     private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private CustomEnergyStorage createEnergy() {
-        int capacity = Config.BIO_1_PRICE.get() * 2;
+        int capacity = CommonConfig.BIO_1_PRICE.get() * 2;
         return new CustomEnergyStorage(capacity, capacity) {
             @Override
             protected void onEnergyChanged() {
@@ -74,7 +74,7 @@ public class BioHarvesterTE extends TileEntity implements ITickableTileEntity {
         energy.invalidate();
     }
 
-    private static final ArrayList<Item> PLANTS = Tools.getLoadedPlantsAndDyes();
+    private static final ArrayList<Item> PLANTS = Tools.loadedPlantsAndDyes;
     private int ticks = 0;
     @Override
     public void tick() {
@@ -114,45 +114,45 @@ public class BioHarvesterTE extends TileEntity implements ITickableTileEntity {
     }
 
     private int getPrice(Block block) {
-        int price = Config.BIO_1_PRICE.get();
+        int price = CommonConfig.BIO_1_PRICE.get();
         if (block == BlockInit.BIO_HARVESTER_1.get()) {
-            price = Config.BIO_1_PRICE.get();
+            price = CommonConfig.BIO_1_PRICE.get();
         } else if (block == BlockInit.BIO_HARVESTER_2.get()) {
-            price = Config.BIO_2_PRICE.get();
+            price = CommonConfig.BIO_2_PRICE.get();
         } else if (block == BlockInit.BIO_HARVESTER_3.get()) {
-            price = Config.BIO_3_PRICE.get();
+            price = CommonConfig.BIO_3_PRICE.get();
         } else if (block == BlockInit.BIO_HARVESTER_4.get()) {
-            price = Config.BIO_4_PRICE.get();
+            price = CommonConfig.BIO_4_PRICE.get();
         } else if (block == BlockInit.BIO_HARVESTER_5.get()) {
-            price = Config.BIO_5_PRICE.get();
+            price = CommonConfig.BIO_5_PRICE.get();
         } else if (block == BlockInit.BIO_HARVESTER_6.get()) {
-            price = Config.BIO_6_PRICE.get();
+            price = CommonConfig.BIO_6_PRICE.get();
         } else if (block == BlockInit.BIO_HARVESTER_7.get()) {
-            price = Config.BIO_7_PRICE.get();
+            price = CommonConfig.BIO_7_PRICE.get();
         } else if (block == BlockInit.BIO_HARVESTER_8.get()) {
-            price = Config.BIO_8_PRICE.get();
+            price = CommonConfig.BIO_8_PRICE.get();
         }
         return price;
     }
 
     private int getSpeed(Block block) {
-        int speed = Config.BIO_1_SPEED.get();
+        int speed = CommonConfig.BIO_1_SPEED.get();
         if (block == BlockInit.BIO_HARVESTER_1.get()) {
-            speed = Config.BIO_1_SPEED.get();
+            speed = CommonConfig.BIO_1_SPEED.get();
         } else if (block == BlockInit.BIO_HARVESTER_2.get()) {
-            speed = Config.BIO_2_SPEED.get();
+            speed = CommonConfig.BIO_2_SPEED.get();
         } else if (block == BlockInit.BIO_HARVESTER_3.get()) {
-            speed = Config.BIO_3_SPEED.get();
+            speed = CommonConfig.BIO_3_SPEED.get();
         } else if (block == BlockInit.BIO_HARVESTER_4.get()) {
-            speed = Config.BIO_4_SPEED.get();
+            speed = CommonConfig.BIO_4_SPEED.get();
         } else if (block == BlockInit.BIO_HARVESTER_5.get()) {
-            speed = Config.BIO_5_SPEED.get();
+            speed = CommonConfig.BIO_5_SPEED.get();
         } else if (block == BlockInit.BIO_HARVESTER_6.get()) {
-            speed = Config.BIO_6_SPEED.get();
+            speed = CommonConfig.BIO_6_SPEED.get();
         } else if (block == BlockInit.BIO_HARVESTER_7.get()) {
-            speed = Config.BIO_7_SPEED.get();
+            speed = CommonConfig.BIO_7_SPEED.get();
         } else if (block == BlockInit.BIO_HARVESTER_8.get()) {
-            speed = Config.BIO_8_SPEED.get();
+            speed = CommonConfig.BIO_8_SPEED.get();
         }
         return speed;
     }

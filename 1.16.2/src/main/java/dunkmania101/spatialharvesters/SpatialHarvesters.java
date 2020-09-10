@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters;
 
-import dunkmania101.spatialharvesters.data.Config;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
@@ -28,8 +28,8 @@ public class SpatialHarvesters {
 
         modBus.addListener(this::setup);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.CONFIG);
-        Config.init(FMLPaths.CONFIGDIR.get().resolve(SpatialHarvesters.modid + "-common.toml"));
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CommonConfig.CONFIG);
+        CommonConfig.init(FMLPaths.CONFIGDIR.get().resolve(SpatialHarvesters.modid + "-common.toml"));
 
         ItemInit.ITEMS.register(modBus);
         BlockInit.BLOCKS.register(modBus);

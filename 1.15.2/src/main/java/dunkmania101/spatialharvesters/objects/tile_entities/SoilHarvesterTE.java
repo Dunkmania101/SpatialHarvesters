@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
-import dunkmania101.spatialharvesters.data.Config;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
@@ -40,7 +40,7 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
     private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private CustomEnergyStorage createEnergy() {
-        int capacity = Config.SOIL_1_PRICE.get() * 2;
+        int capacity = CommonConfig.SOIL_1_PRICE.get() * 2;
         return new CustomEnergyStorage(capacity, capacity) {
             @Override
             protected void onEnergyChanged() {
@@ -114,45 +114,45 @@ public class SoilHarvesterTE extends TileEntity implements ITickableTileEntity {
     }
 
     private int getPrice(Block block) {
-        int price = Config.SOIL_1_PRICE.get();
+        int price = CommonConfig.SOIL_1_PRICE.get();
         if (block == BlockInit.SOIL_HARVESTER_1.get()) {
-            price = Config.SOIL_1_PRICE.get();
+            price = CommonConfig.SOIL_1_PRICE.get();
         } else if (block == BlockInit.SOIL_HARVESTER_2.get()) {
-            price = Config.SOIL_2_PRICE.get();
+            price = CommonConfig.SOIL_2_PRICE.get();
         } else if (block == BlockInit.SOIL_HARVESTER_3.get()) {
-            price = Config.SOIL_3_PRICE.get();
+            price = CommonConfig.SOIL_3_PRICE.get();
         } else if (block == BlockInit.SOIL_HARVESTER_4.get()) {
-            price = Config.SOIL_4_PRICE.get();
+            price = CommonConfig.SOIL_4_PRICE.get();
         } else if (block == BlockInit.SOIL_HARVESTER_5.get()) {
-            price = Config.SOIL_5_PRICE.get();
+            price = CommonConfig.SOIL_5_PRICE.get();
         } else if (block == BlockInit.SOIL_HARVESTER_6.get()) {
-            price = Config.SOIL_6_PRICE.get();
+            price = CommonConfig.SOIL_6_PRICE.get();
         } else if (block == BlockInit.SOIL_HARVESTER_7.get()) {
-            price = Config.SOIL_7_PRICE.get();
+            price = CommonConfig.SOIL_7_PRICE.get();
         } else if (block == BlockInit.SOIL_HARVESTER_8.get()) {
-            price = Config.SOIL_8_PRICE.get();
+            price = CommonConfig.SOIL_8_PRICE.get();
         }
         return price;
     }
 
     private int getSpeed(Block block) {
-        int speed = Config.SOIL_1_SPEED.get();
+        int speed = CommonConfig.SOIL_1_SPEED.get();
         if (block == BlockInit.SOIL_HARVESTER_1.get()) {
-            speed = Config.SOIL_1_SPEED.get();
+            speed = CommonConfig.SOIL_1_SPEED.get();
         } else if (block == BlockInit.SOIL_HARVESTER_2.get()) {
-            speed = Config.SOIL_2_SPEED.get();
+            speed = CommonConfig.SOIL_2_SPEED.get();
         } else if (block == BlockInit.SOIL_HARVESTER_3.get()) {
-            speed = Config.SOIL_3_SPEED.get();
+            speed = CommonConfig.SOIL_3_SPEED.get();
         } else if (block == BlockInit.SOIL_HARVESTER_4.get()) {
-            speed = Config.SOIL_4_SPEED.get();
+            speed = CommonConfig.SOIL_4_SPEED.get();
         } else if (block == BlockInit.SOIL_HARVESTER_5.get()) {
-            speed = Config.SOIL_5_SPEED.get();
+            speed = CommonConfig.SOIL_5_SPEED.get();
         } else if (block == BlockInit.SOIL_HARVESTER_6.get()) {
-            speed = Config.SOIL_6_SPEED.get();
+            speed = CommonConfig.SOIL_6_SPEED.get();
         } else if (block == BlockInit.SOIL_HARVESTER_7.get()) {
-            speed = Config.SOIL_7_SPEED.get();
+            speed = CommonConfig.SOIL_7_SPEED.get();
         } else if (block == BlockInit.SOIL_HARVESTER_8.get()) {
-            speed = Config.SOIL_8_SPEED.get();
+            speed = CommonConfig.SOIL_8_SPEED.get();
         }
         return speed;
     }

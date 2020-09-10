@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
-import dunkmania101.spatialharvesters.data.Config;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import net.minecraft.block.Block;
@@ -31,7 +31,7 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private CustomEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(Config.HEAT_GENERATOR_CAPACITY.get(), Config.HEAT_GENERATOR_TRANSFER.get()) {
+        return new CustomEnergyStorage(CommonConfig.HEAT_GENERATOR_CAPACITY.get(), CommonConfig.HEAT_GENERATOR_TRANSFER.get()) {
             @Override
             protected void onEnergyChanged() {
                 markDirty();
@@ -67,7 +67,7 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
     @Override
     public void tick() {
         if (world != null && !world.isRemote) {
-            int speed = Config.HEAT_GENERATOR_SPEED.get();
+            int speed = CommonConfig.HEAT_GENERATOR_SPEED.get();
             for (Direction direction : Direction.values()) {
                 int energy = energyStorage.getEnergyStored();
                 if (energy + speed <= energyStorage.getMaxEnergyStored()) {

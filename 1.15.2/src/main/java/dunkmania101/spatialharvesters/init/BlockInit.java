@@ -1,7 +1,7 @@
 package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
-import dunkmania101.spatialharvesters.data.Config;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.objects.blocks.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -12,8 +12,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockInit {
-    private static final float block_hardness = Config.BLOCK_HARDNESS.get().floatValue();
-    private static final float block_resistance = Config.BLOCK_RESISTANCE.get().floatValue();
+    private static final float block_hardness = CommonConfig.BLOCK_HARDNESS.get().floatValue();
+    private static final float block_resistance = CommonConfig.BLOCK_RESISTANCE.get().floatValue();
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SpatialHarvesters.modid);
 

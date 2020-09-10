@@ -6,9 +6,20 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 @Mod.EventBusSubscriber
-public class Config {
+public class CommonConfig {
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_ORES;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_PLANTS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONES;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOILS;
+
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_PLANTS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_SOILS;
+
     public static ForgeConfigSpec.IntValue ORE_1_SPEED;
     public static ForgeConfigSpec.IntValue ORE_2_SPEED;
     public static ForgeConfigSpec.IntValue ORE_3_SPEED;
@@ -91,7 +102,6 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue BLOCK_HARDNESS;
     public static ForgeConfigSpec.DoubleValue BLOCK_RESISTANCE;
 
-
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     public static void init(Path file) {
@@ -105,13 +115,299 @@ public class Config {
     }
 
     static {
-        BUILDER.push("Config:").push("Common settings");
+        BUILDER.push("Common Config:");
         setup();
         BUILDER.pop();
     }
 
     private static void setup() {
-        BUILDER.comment("Ore Harvesters:").push("Ore Harvesters (Speed)");
+        ArrayList<ArrayList<String>> ores = new ArrayList<>();
+
+        String mod = "appliedenergistics2";
+        String ore = "quartz_ore";
+        ArrayList<String> oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "appliedenergistics2";
+        ore = "charged_quartz_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "rftoolsbase";
+        ore = "dimensionalshard_overworld";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "rftoolsbase";
+
+        ore = "dimensionalshard_nether";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "rftoolsbase";
+        ore = "dimensionalshard_end";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "rhodonite";
+        ore = "block_ore_fluorite";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "rhodonite";
+        ore = "block_ore_rhodonite";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "exp_ore";
+        ore = "block_exp_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "rockcandy";
+        ore = "candy_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "lightestlamp";
+        ore = "boron_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "zombie_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "blaze_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "ghast_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "magma_cube_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "wither_skeleton_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "zombie_pigman_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "salmon_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "squid_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "cod_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "sheep_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "rabbit_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "pig_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "cow_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "chicken_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "bat_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "witch_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "spider_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "slime_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "phantom_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "skeleton_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "enderman_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "guardian_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "pufferfish_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "funores";
+        ore = "creeper_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        CUSTOM_ORES = BUILDER.comment("Custom outputs for the Ore Harvester.")
+                .define("custom_ores", ores);
+        ArrayList<ArrayList<String>> custom_plants = new ArrayList<>();
+        CUSTOM_PLANTS = BUILDER.comment("Custom outputs for the Bio Harvester.")
+                .define("custom_plants", custom_plants);
+        ArrayList<ArrayList<String>> custom_stones = new ArrayList<>();
+        CUSTOM_STONES = BUILDER.comment("Custom outputs for the Stone Harvester.")
+                .define("custom_stones", custom_stones);
+        ArrayList<ArrayList<String>> custom_soils = new ArrayList<>();
+        CUSTOM_SOILS = BUILDER.comment("Custom outputs for the Soil Harvester.")
+                .define("custom_soils", custom_soils);
+
+        ArrayList<ArrayList<String>> blacklist_ores = new ArrayList<>();
+        BLACKLIST_ORES = BUILDER.comment("Blacklist for the Ore Harvesters")
+                .define("blacklist_ores", blacklist_ores);
+        ArrayList<ArrayList<String>> blacklist_plants = new ArrayList<>();
+        BLACKLIST_PLANTS = BUILDER.comment("Blacklist for the Bio Harvesters")
+                .define("blacklist_plants", blacklist_plants);
+        ArrayList<ArrayList<String>> blacklist_stones = new ArrayList<>();
+        BLACKLIST_STONES = BUILDER.comment("Blacklist for the Stone Harvesters")
+                .define("blacklist_stones", blacklist_stones);
+        ArrayList<ArrayList<String>> blacklist_soils = new ArrayList<>();
+        BLACKLIST_SOILS = BUILDER.comment("Blacklist for the Soil Harvesters")
+                .define("blacklist_soils", blacklist_soils);
+
         ORE_1_SPEED = BUILDER.comment("Speed for the tier 1 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_ore_1", 400, 0, Integer.MAX_VALUE);
         ORE_2_SPEED = BUILDER.comment("Speed for the tier 2 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -128,9 +424,7 @@ public class Config {
                 .defineInRange("speed_ore_7", 100, 0, Integer.MAX_VALUE);
         ORE_8_SPEED = BUILDER.comment("Speed for the tier 8 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_ore_8", 5, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Ore Harvesters:").push("Bio Harvesters (Speed)");
         BIO_1_SPEED = BUILDER.comment("Speed for the tier 1 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_bio_1", 400, 0, Integer.MAX_VALUE);
         BIO_2_SPEED = BUILDER.comment("Speed for the tier 2 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -147,9 +441,7 @@ public class Config {
                 .defineInRange("speed_bio_7", 100, 0, Integer.MAX_VALUE);
         BIO_8_SPEED = BUILDER.comment("Speed for the tier 8 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_bio_8", 5, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Stone Harvesters:").push("Stone Harvesters (Speed)");
         STONE_1_SPEED = BUILDER.comment("Speed for the tier 1 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_stone_1", 400, 0, Integer.MAX_VALUE);
         STONE_2_SPEED = BUILDER.comment("Speed for the tier 2 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -166,9 +458,7 @@ public class Config {
                 .defineInRange("speed_stone_7", 100, 0, Integer.MAX_VALUE);
         STONE_8_SPEED = BUILDER.comment("Speed for the tier 8 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_stone_8", 5, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Stone Harvesters:").push("Stone Harvesters (Speed)");
         SOIL_1_SPEED = BUILDER.comment("Speed for the tier 1 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_soil_1", 400, 0, Integer.MAX_VALUE);
         SOIL_2_SPEED = BUILDER.comment("Speed for the tier 2 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -185,9 +475,7 @@ public class Config {
                 .defineInRange("speed_soil_7", 100, 0, Integer.MAX_VALUE);
         SOIL_8_SPEED = BUILDER.comment("Speed for the tier 8 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_soil_8", 5, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Ore Harvesters:").push("Ore Harvesters (Price)");
         ORE_1_PRICE = BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_1", 400, 0, Integer.MAX_VALUE);
         ORE_2_PRICE = BUILDER.comment("Price for the tier 2 Ore Harvester (in FE per operation)")
@@ -204,9 +492,7 @@ public class Config {
                 .defineInRange("price_ore_7", 7500, 0, Integer.MAX_VALUE);
         ORE_8_PRICE = BUILDER.comment("Price for the tier 8 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_8", 8000, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Ore Harvesters:").push("Bio Harvesters (Price)");
         BIO_1_PRICE = BUILDER.comment("Price for the tier 1 Bio Harvester (in FE per operation)")
                 .defineInRange("price_bio_1", 400, 0, Integer.MAX_VALUE);
         BIO_2_PRICE = BUILDER.comment("Price for the tier 2 Bio Harvester (in FE per operation)")
@@ -223,9 +509,7 @@ public class Config {
                 .defineInRange("price_bio_7", 100, 0, Integer.MAX_VALUE);
         BIO_8_PRICE = BUILDER.comment("Price for the tier 8 Bio Harvester (in FE per operation)")
                 .defineInRange("price_bio_8", 8000, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Stone Harvesters:").push("Stone Harvesters (Price)");
         STONE_1_PRICE = BUILDER.comment("Price for the tier 1 Stone Harvester (in FE per operation)")
                 .defineInRange("price_stone_1", 400, 0, Integer.MAX_VALUE);
         STONE_2_PRICE = BUILDER.comment("Price for the tier 2 Stone Harvester (in FE per operation)")
@@ -242,9 +526,7 @@ public class Config {
                 .defineInRange("price_stone_7", 100, 0, Integer.MAX_VALUE);
         STONE_8_PRICE = BUILDER.comment("Price for the tier 8 Stone Harvester (in FE per operation)")
                 .defineInRange("price_stone_8", 8000, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Stone Harvesters:").push("Stone Harvesters (Price)");
         SOIL_1_PRICE = BUILDER.comment("Price for the tier 1 Soil Harvester (in FE per operation)")
                 .defineInRange("price_soil_1", 400, 0, Integer.MAX_VALUE);
         SOIL_2_PRICE = BUILDER.comment("Price for the tier 2 Soil Harvester (in FE per operation)")
@@ -261,30 +543,23 @@ public class Config {
                 .defineInRange("price_soil_7", 100, 0, Integer.MAX_VALUE);
         SOIL_8_PRICE = BUILDER.comment("Price for the tier 8 Soil Harvester (in FE per operation)")
                 .defineInRange("price_soil_8", 8000, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Heat Generator:").push("Heat Generator (Speed, Capacity, & Transfer)");
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
                 .defineInRange("speed_heat_generator", 3, 0, Integer.MAX_VALUE);
         HEAT_GENERATOR_CAPACITY = BUILDER.comment("Capacity for the Heat Generator (in FE)")
                 .defineInRange("capacity_heat_generator", 100, 0, Integer.MAX_VALUE);
         HEAT_GENERATOR_TRANSFER = BUILDER.comment("Transfer rate for the Heat Generator (in FE per tick)")
                 .defineInRange("transfer_heat_generator", 100, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Dimensional Applicator:").push("Dimensional Applicator (Price & Amplifier)");
         DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
                 .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this + 1.)")
                 .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
-        BUILDER.pop();
 
-        BUILDER.comment("Block Values:").push("Block Values (Hardness & Resistance)");
         BLOCK_HARDNESS = BUILDER.comment("Hardness for the blocks (Iron Block is 5.)")
                 .defineInRange("block_hardness", 5.0f, 0, Float.MAX_VALUE);
         BLOCK_RESISTANCE = BUILDER.comment("Resistance for the blocks (Iron Block is 6.)")
                 .defineInRange("block_resistance", 6.0f, 0, Float.MAX_VALUE);
-        BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();
 }

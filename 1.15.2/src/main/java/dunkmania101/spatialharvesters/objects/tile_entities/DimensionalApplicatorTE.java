@@ -2,7 +2,7 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import com.mojang.util.UUIDTypeAdapter;
 import dunkmania101.spatialharvesters.SpatialHarvesters;
-import dunkmania101.spatialharvesters.data.Config;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
@@ -41,7 +41,7 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
     private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private CustomEnergyStorage createEnergy() {
-        int capacity = Config.DIMENSIONAL_APPLICATOR_PRICE.get() * 10;
+        int capacity = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get() * 10;
         return new CustomEnergyStorage(capacity, capacity) {
             @Override
             protected void onEnergyChanged() {
@@ -97,7 +97,7 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
                             if (player != null) {
                                 ArrayList<EffectInstance> EFFECTS = getEffects(world, pos);
                                 for (EffectInstance effect : EFFECTS) {
-                                    int price = Config.DIMENSIONAL_APPLICATOR_PRICE.get();
+                                    int price = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get();
                                     if (energyStorage.getEnergyStored() >= price) {
                                         player.addPotionEffect(effect);
                                         energyStorage.consumeEnergy(price);
@@ -115,7 +115,7 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
 
     private ArrayList<EffectInstance> getEffects(World worldIn, BlockPos pos) {
         ArrayList<EffectInstance> EFFECTS = new ArrayList<>();
-        int amplifier = Config.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
+        int amplifier = CommonConfig.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
         int duration = 500;
         for (Direction check_direction : Direction.values()) {
             Block block = worldIn.getBlockState(pos.offset(check_direction)).getBlock();
