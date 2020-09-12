@@ -93,8 +93,6 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue SOIL_8_PRICE;
 
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
-    public static ForgeConfigSpec.IntValue HEAT_GENERATOR_CAPACITY;
-    public static ForgeConfigSpec.IntValue HEAT_GENERATOR_TRANSFER;
 
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_AMPLIFIER;
@@ -546,10 +544,6 @@ public class CommonConfig {
 
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
                 .defineInRange("speed_heat_generator", 3, 0, Integer.MAX_VALUE);
-        HEAT_GENERATOR_CAPACITY = BUILDER.comment("Capacity for the Heat Generator (in FE)")
-                .defineInRange("capacity_heat_generator", 100, 0, Integer.MAX_VALUE);
-        HEAT_GENERATOR_TRANSFER = BUILDER.comment("Transfer rate for the Heat Generator (in FE per tick)")
-                .defineInRange("transfer_heat_generator", 100, 0, Integer.MAX_VALUE);
 
         DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
                 .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);

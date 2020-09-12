@@ -26,12 +26,14 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
         this(TileEntityInit.HEAT_GENERATOR.get());
     }
 
-    private CustomEnergyStorage energyStorage = createEnergy();
+    private final CustomEnergyStorage energyStorage = createEnergy();
 
-    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+    private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
+    private final int speed = CommonConfig.HEAT_GENERATOR_SPEED.get();
     private CustomEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(CommonConfig.HEAT_GENERATOR_CAPACITY.get(), CommonConfig.HEAT_GENERATOR_TRANSFER.get()) {
+        int capacity = speed * 1000;
+        return new CustomEnergyStorage(capacity, capacity) {
             @Override
             protected void onEnergyChanged() {
                 markDirty();
@@ -67,7 +69,6 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
     @Override
     public void tick() {
         if (world != null && !world.isRemote) {
-            int speed = CommonConfig.HEAT_GENERATOR_SPEED.get();
             for (Direction direction : Direction.values()) {
                 int energy = energyStorage.getEnergyStored();
                 if (energy + speed <= energyStorage.getMaxEnergyStored()) {

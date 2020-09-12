@@ -80,27 +80,29 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
     private static int ticks = 0;
     @Override
     public void tick() {
-        if (ticks >= 100) {
-            ticks = 0;
-            if (world != null && !world.isRemote) {
-                if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
-                    if (entity != null && !entity.isEmpty()) {
-                        UUID uuid = UUIDTypeAdapter.fromString(entity);
-                        PlayerEntity player = null;
-                        if (world.getServer() != null) {
-                            for (World check_world : world.getServer().getWorlds()) {
-                                player = check_world.getPlayerByUuid(uuid);
-                                if (player != null) {
-                                    break;
+        if (world != null && !world.isRemote) {
+            if (!world.isBlockPowered(pos)) {
+                if (ticks >= 100) {
+                    ticks = 0;
+                    if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
+                        if (entity != null && !entity.isEmpty()) {
+                            UUID uuid = UUIDTypeAdapter.fromString(entity);
+                            PlayerEntity player = null;
+                            if (world.getServer() != null) {
+                                for (World check_world : world.getServer().getWorlds()) {
+                                    player = check_world.getPlayerByUuid(uuid);
+                                    if (player != null) {
+                                        break;
+                                    }
                                 }
-                            }
-                            if (player != null) {
-                                ArrayList<EffectInstance> EFFECTS = getEffects(world, pos);
-                                for (EffectInstance effect : EFFECTS) {
-                                    int price = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get();
-                                    if (energyStorage.getEnergyStored() >= price) {
-                                        player.addPotionEffect(effect);
-                                        energyStorage.consumeEnergy(price);
+                                if (player != null) {
+                                    ArrayList<EffectInstance> EFFECTS = getEffects(world, pos);
+                                    for (EffectInstance effect : EFFECTS) {
+                                        int price = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get();
+                                        if (energyStorage.getEnergyStored() >= price) {
+                                            player.addPotionEffect(effect);
+                                            energyStorage.consumeEnergy(price);
+                                        }
                                     }
                                 }
                             }

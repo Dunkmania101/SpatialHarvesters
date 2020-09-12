@@ -78,31 +78,33 @@ public class StoneHarvesterTE extends TileEntity implements ITickableTileEntity 
     private int ticks = 0;
     @Override
     public void tick() {
-        Block this_block = getBlockState().getBlock();
-        int speed = getSpeed(this_block);
-        if (ticks >= speed) {
-            ticks = 0;
-            if (world != null && !world.isRemote) {
-                int price = getPrice(this_block);
-                int set_capacity = price * 2;
-                energyStorage.setMaxEnergy(set_capacity);
-                energyStorage.setMaxTransfer(set_capacity);
-                if (energyStorage.getMaxEnergyStored() >= price) {
-                    if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
-                        TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
-                        if (out_down != null && !world.isRemote) {
-                            LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
-                            if (out_down_cap.isPresent()) {
-                                IItemHandler out_down_inv = out_down_cap.orElse(null);
-                                Item CHOSEN_STONE = getShard(this_block);
-                                Random rand = world.rand;
-                                if (rand.nextInt(75) != 1) {
-                                    if (STONES.size() > 0) {
-                                        CHOSEN_STONE = STONES.get(rand.nextInt(STONES.size()));
+        if (world != null && !world.isRemote) {
+            if (!world.isBlockPowered(pos)) {
+                Block this_block = getBlockState().getBlock();
+                int speed = getSpeed(this_block);
+                if (ticks >= speed) {
+                    ticks = 0;
+                    int price = getPrice(this_block);
+                    int set_capacity = price * 2;
+                    energyStorage.setMaxEnergy(set_capacity);
+                    energyStorage.setMaxTransfer(set_capacity);
+                    if (energyStorage.getMaxEnergyStored() >= price) {
+                        if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
+                            TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
+                            if (out_down != null && !world.isRemote) {
+                                LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
+                                if (out_down_cap.isPresent()) {
+                                    IItemHandler out_down_inv = out_down_cap.orElse(null);
+                                    Item CHOSEN_STONE = getShard(this_block);
+                                    Random rand = world.rand;
+                                    if (rand.nextInt(75) != 1) {
+                                        if (STONES.size() > 0) {
+                                            CHOSEN_STONE = STONES.get(rand.nextInt(STONES.size()));
+                                        }
                                     }
+                                    ItemHandlerHelper.insertItemStacked(out_down_inv, new ItemStack(CHOSEN_STONE), false);
+                                    energyStorage.consumeEnergy(price);
                                 }
-                                ItemHandlerHelper.insertItemStacked(out_down_inv, new ItemStack(CHOSEN_STONE), false);
-                                energyStorage.consumeEnergy(price);
                             }
                         }
                     }
