@@ -70,13 +70,11 @@ public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
     public void tick() {
         if (world != null && !world.isRemote) {
             for (Direction direction : Direction.values()) {
-                int energy = energyStorage.getEnergyStored();
-                if (energy + speed <= energyStorage.getMaxEnergyStored()) {
-                    Block block = world.getBlockState(pos.offset(direction)).getBlock();
-                    if (block == Blocks.MAGMA_BLOCK || block == Blocks.LAVA || block == Blocks.FIRE) {
-                        energyStorage.addEnergy(speed);
-                    }
+                Block block = world.getBlockState(pos.offset(direction)).getBlock();
+                if (block == Blocks.MAGMA_BLOCK || block == Blocks.LAVA || block == Blocks.FIRE) {
+                    energyStorage.addEnergy(speed);
                 }
+                int energy = energyStorage.getEnergyStored();
                 if (energy > 0) {
                     TileEntity tile = world.getTileEntity(pos.offset(direction));
                     if (tile != null) {

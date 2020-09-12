@@ -1,5 +1,6 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.init.BlockInit;
@@ -79,19 +80,19 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
     @Override
     public void tick() {
         if (world != null && !world.isRemote) {
+            Block this_block = getBlockState().getBlock();
+            int price = getPrice(this_block);
+            int set_capacity = price * 2;
+            energyStorage.setMaxEnergy(set_capacity);
+            energyStorage.setMaxTransfer(set_capacity);
             if (!world.isBlockPowered(pos)) {
-                Block this_block = getBlockState().getBlock();
                 int speed = getSpeed(this_block);
                 if (ticks >= speed) {
                     ticks = 0;
-                    int price = getPrice(this_block);
-                    int set_capacity = price * 2;
-                    energyStorage.setMaxEnergy(set_capacity);
-                    energyStorage.setMaxTransfer(set_capacity);
                     if (energyStorage.getEnergyStored() >= price) {
                         if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
                             TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
-                            if (out_down != null && !world.isRemote) {
+                            if (out_down != null) {
                                 LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
                                 if (out_down_cap.isPresent()) {
                                     IItemHandler out_down_inv = out_down_cap.orElse(null);
@@ -108,10 +109,10 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
                             }
                         }
                     }
+                } else {
+                    ticks++;
                 }
             }
-        } else {
-            ticks++;
         }
     }
 

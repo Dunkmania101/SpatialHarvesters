@@ -108,10 +108,10 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
                             }
                         }
                     }
+                } else {
+                    ticks++;
                 }
             }
-        } else {
-            ticks++;
         }
     }
 

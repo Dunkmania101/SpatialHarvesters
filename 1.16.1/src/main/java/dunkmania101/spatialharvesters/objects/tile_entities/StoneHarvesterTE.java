@@ -79,15 +79,15 @@ public class StoneHarvesterTE extends TileEntity implements ITickableTileEntity 
     @Override
     public void tick() {
         if (world != null && !world.isRemote) {
+            Block this_block = getBlockState().getBlock();
+            int price = getPrice(this_block);
+            int set_capacity = price * 2;
+            energyStorage.setMaxEnergy(set_capacity);
+            energyStorage.setMaxTransfer(set_capacity);
             if (!world.isBlockPowered(pos)) {
-                Block this_block = getBlockState().getBlock();
                 int speed = getSpeed(this_block);
                 if (ticks >= speed) {
                     ticks = 0;
-                    int price = getPrice(this_block);
-                    int set_capacity = price * 2;
-                    energyStorage.setMaxEnergy(set_capacity);
-                    energyStorage.setMaxTransfer(set_capacity);
                     if (energyStorage.getMaxEnergyStored() >= price) {
                         if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
                             TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
@@ -108,10 +108,10 @@ public class StoneHarvesterTE extends TileEntity implements ITickableTileEntity 
                             }
                         }
                     }
+                } else {
+                    ticks++;
                 }
             }
-        } else {
-            ticks++;
         }
     }
 
