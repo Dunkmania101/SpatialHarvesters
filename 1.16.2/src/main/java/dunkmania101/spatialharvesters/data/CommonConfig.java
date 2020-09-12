@@ -207,13 +207,6 @@ public class CommonConfig {
         ores.add(oreMod);
 
         mod = "funores";
-        ore = "";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
-
-        mod = "funores";
         ore = "ghast_ore";
         oreMod = new ArrayList<>();
         oreMod.add(mod);
@@ -250,20 +243,6 @@ public class CommonConfig {
 
         mod = "funores";
         ore = "squid_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
-
-        mod = "funores";
-        ore = "";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
-
-        mod = "funores";
-        ore = "";
         oreMod = new ArrayList<>();
         oreMod.add(mod);
         oreMod.add(ore);
@@ -485,7 +464,7 @@ public class CommonConfig {
         ORE_5_PRICE = BUILDER.comment("Price for the tier 5 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_5", 4000, 0, Integer.MAX_VALUE);
         ORE_6_PRICE = BUILDER.comment("Price for the tier 6 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_16", 7000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_6", 7000, 0, Integer.MAX_VALUE);
         ORE_7_PRICE = BUILDER.comment("Price for the tier 7 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_7", 7500, 0, Integer.MAX_VALUE);
         ORE_8_PRICE = BUILDER.comment("Price for the tier 8 Ore Harvester (in FE per operation)")
