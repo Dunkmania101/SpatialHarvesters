@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "cec",
+    "bab",
+    "bdb"
+  ],
+  "key":
+  {
+    "a":
+    {
+      "item": "spatialharvesters:bio_harvester_6"
+    },
+    "b":
+    {
+      "tag": "forge:ingots/iron"
+    },
+    "c":
+    {
+      "item": "spatialharvesters:base_powder"
+    },
+    "d":
+    {
+      "item": "spatialharvesters:crystal_6"
+    },
+  "e":
+    {
+      "item": "spatialharvesters:bio_core"
+    }
+  },
+  "result":
+  {
+    "item": "spatialharvesters:bio_harvester_7"
+  }
+}
