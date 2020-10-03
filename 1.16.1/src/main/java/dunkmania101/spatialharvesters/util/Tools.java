@@ -6,6 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -66,11 +68,15 @@ public class Tools {
         return count;
     }
 
-    public static CompoundNBT reduceTileNBT(CompoundNBT nbt) {
-        nbt.remove("id");
-        nbt.remove("x");
-        nbt.remove("y");
-        nbt.remove("z");
+    public static CompoundNBT correctTileNBT(TileEntity tile, CompoundNBT nbt) {
+        ResourceLocation id = TileEntityType.getId(tile.getType());
+        if (id != null) {
+            nbt.putString("id", id.toString());
+        }
+        BlockPos pos = tile.getPos();
+        nbt.putInt("x", pos.getX());
+        nbt.putInt("y", pos.getY());
+        nbt.putInt("z", pos.getZ());
         return nbt;
     }
 

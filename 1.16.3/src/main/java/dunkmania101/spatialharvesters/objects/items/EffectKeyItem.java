@@ -1,7 +1,8 @@
 package dunkmania101.spatialharvesters.objects.items;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -32,7 +33,7 @@ public class EffectKeyItem extends Item {
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(context.getPos());
             if (tile != null) {
-                if (tile.getType() == TileEntityInit.DIMENSIONAL_APPLICATOR.get()) {
+                if (tile instanceof DimensionalApplicatorTE) {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {
                         CompoundNBT potionsNBT = new CompoundNBT();
@@ -41,7 +42,7 @@ public class EffectKeyItem extends Item {
                         if (player.isCrouching()) {
                             player.sendStatusMessage(new TranslationTextComponent("msg.remove_dimensional_applicator_nbt_effects"), true);
                         } else {
-                            for (EffectInstance effectInstance : context.getPlayer().getActivePotionEffects()) {
+                            for (EffectInstance effectInstance : player.getActivePotionEffects()) {
                                 effects.add(Effect.getId(effectInstance.getPotion()));
                             }
                             if (effects.size() > 0) {
@@ -53,7 +54,7 @@ public class EffectKeyItem extends Item {
                         }
                         if (doContinue) {
                             potionsNBT.putIntArray(potionsNBTKey, effects);
-                            tile.deserializeNBT(potionsNBT);
+                            tile.deserializeNBT(Tools.correctTileNBT(tile, potionsNBT));
                         }
                     }
                 }

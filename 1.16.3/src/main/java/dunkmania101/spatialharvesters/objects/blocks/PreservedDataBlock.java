@@ -25,13 +25,13 @@ public class PreservedDataBlock extends Block {
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
         List<ItemStack> drops = super.getDrops(state, builder);
-        TileEntity tileEntity = builder.get(LootParameters.BLOCK_ENTITY);
-        if (tileEntity != null) {
+        TileEntity tile = builder.get(LootParameters.BLOCK_ENTITY);
+        if (tile != null) {
             for (ItemStack stack : drops) {
                 if (stack.getItem() == state.getBlock().asItem()) {
                     int i = drops.indexOf(stack);
-                    CompoundNBT tileNBT = tileEntity.serializeNBT();
-                    stack.getOrCreateTag().put(stackTileNBTKey, Tools.reduceTileNBT(tileNBT));
+                    CompoundNBT tileNBT = tile.serializeNBT();
+                    stack.getOrCreateTag().put(stackTileNBTKey, Tools.correctTileNBT(tile, tileNBT));
                     drops.set(i, stack);
                     break;
                 }

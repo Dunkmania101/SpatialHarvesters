@@ -1,8 +1,8 @@
 package dunkmania101.spatialharvesters.objects.items;
 
-import com.mojang.util.UUIDTypeAdapter;
 import dunkmania101.spatialharvesters.SpatialHarvesters;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -23,25 +23,26 @@ public class PlayerKeyItem extends Item {
     }
 
     public static final String playerNBTKey = SpatialHarvesters.modid + "_DimensionalApplicatorEntity";
+    public static final String removePlayerNBTKey = SpatialHarvesters.modid + "removePlayer";
+
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(context.getPos());
             if (tile != null) {
-                if (tile.getType() == TileEntityInit.DIMENSIONAL_APPLICATOR.get()) {
+                if (tile instanceof DimensionalApplicatorTE) {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {
                         CompoundNBT nbt = new CompoundNBT();
-                        String playerUUID = "";
                         if (player.isCrouching()) {
+                            nbt.putString(removePlayerNBTKey, "");
                             player.sendStatusMessage(new TranslationTextComponent("msg.remove_dimensional_applicator"), true);
                         } else {
-                            playerUUID = UUIDTypeAdapter.fromUUID(player.getUniqueID());
+                            nbt.putInt(playerNBTKey, player.getEntityId());
                             player.sendStatusMessage(new TranslationTextComponent("msg.set_dimensional_applicator"), true);
                         }
-                        nbt.putString(playerNBTKey, playerUUID);
-                        tile.deserializeNBT(nbt);
+                        tile.deserializeNBT(Tools.correctTileNBT(tile, nbt));
                         tile.markDirty();
                     }
                 }

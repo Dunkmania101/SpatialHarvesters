@@ -1,6 +1,5 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
-import com.mojang.util.UUIDTypeAdapter;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
@@ -8,6 +7,7 @@ import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
 import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
@@ -18,16 +18,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     public DimensionalApplicatorTE() {
         super(TileEntityInit.DIMENSIONAL_APPLICATOR.get(), false, true, true);
     }
 
-    private String entity = null;
+    private Integer player_id = null;
     private ArrayList<Integer> NBTEffects = new ArrayList<>();
-    private final int duration = 25;
+    private final int duration = 40;
     private final int amplifier = CommonConfig.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
     private final int price = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get();
     @Override
@@ -43,7 +42,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             if (getEnergyStorage().getMaxExtract() != set_capacity) {
                 getEnergyStorage().setMaxExtract(set_capacity);
             }
-            if (getCountedTicks() >= duration - 1) {
+            if (getCountedTicks() >= duration / 2) {
                 resetCountedTicks();
                 boolean has_space_ripper = false;
                 for (Direction side : Direction.values()) {
@@ -52,18 +51,18 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                         break;
                     }
                 }
-                if (has_space_ripper) {
-                    if (entity != null && !entity.isEmpty()) {
-                        UUID uuid = UUIDTypeAdapter.fromString(entity);
-                        PlayerEntity player = null;
-                        if (world.getServer() != null) {
-                            for (World check_world : world.getServer().getWorlds()) {
-                                player = check_world.getPlayerByUuid(uuid);
-                                if (player != null) {
-                                    break;
-                                }
+                if (has_space_ripper && this.player_id != null) {
+                    Entity entity = null;
+                    if (world.getServer() != null) {
+                        for (World check_world : world.getServer().getWorlds()) {
+                            entity = check_world.getEntityByID(this.player_id);
+                            if (entity != null) {
+                                break;
                             }
-                            if (player != null) {
+                        }
+                        if (entity != null) {
+                            if (entity instanceof PlayerEntity) {
+                                PlayerEntity player = (PlayerEntity) entity;
                                 ArrayList<EffectInstance> effects = getEffects(world, pos);
                                 for (EffectInstance effect : effects) {
                                     if (getEnergyStorage().getEnergyStored() >= price) {
@@ -121,8 +120,8 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = super.serializeNBT();
 
-        if (entity != null) {
-            nbt.putString(PlayerKeyItem.playerNBTKey, entity);
+        if (player_id != null) {
+            nbt.putInt(PlayerKeyItem.playerNBTKey, player_id);
         }
 
         if (NBTEffects.size() > 0){
@@ -136,11 +135,11 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     public void deserializeNBT(CompoundNBT nbt) {
         super.deserializeNBT(nbt);
 
+        if (nbt.contains(PlayerKeyItem.removePlayerNBTKey)) {
+            this.player_id = null;
+        }
         if (nbt.contains(PlayerKeyItem.playerNBTKey)) {
-            this.entity = nbt.getString(PlayerKeyItem.playerNBTKey);
-            if (this.entity.isEmpty()) {
-                this.entity = null;
-            }
+            this.player_id = nbt.getInt(PlayerKeyItem.playerNBTKey);
         }
 
         if (nbt.contains(EffectKeyItem.potionsNBTKey)) {
