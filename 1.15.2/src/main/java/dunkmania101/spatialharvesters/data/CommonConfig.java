@@ -11,12 +11,12 @@ import java.util.ArrayList;
 @Mod.EventBusSubscriber
 public class CommonConfig {
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_ORES;
-    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_PLANTS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOILS;
 
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES;
-    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_PLANTS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_SOILS;
 
@@ -363,7 +363,7 @@ public class CommonConfig {
         CUSTOM_ORES = BUILDER.comment("Custom outputs for the Ore Harvester.")
                 .define("custom_ores", ores);
         ArrayList<ArrayList<String>> custom_plants = new ArrayList<>();
-        CUSTOM_PLANTS = BUILDER.comment("Custom outputs for the Bio Harvester.")
+        CUSTOM_BIOS = BUILDER.comment("Custom outputs for the Bio Harvester.")
                 .define("custom_plants", custom_plants);
         ArrayList<ArrayList<String>> custom_stones = new ArrayList<>();
         CUSTOM_STONES = BUILDER.comment("Custom outputs for the Stone Harvester.")
@@ -375,9 +375,9 @@ public class CommonConfig {
         ArrayList<ArrayList<String>> blacklist_ores = new ArrayList<>();
         BLACKLIST_ORES = BUILDER.comment("Blacklist for the Ore Harvesters")
                 .define("blacklist_ores", blacklist_ores);
-        ArrayList<ArrayList<String>> blacklist_plants = new ArrayList<>();
-        BLACKLIST_PLANTS = BUILDER.comment("Blacklist for the Bio Harvesters")
-                .define("blacklist_plants", blacklist_plants);
+        ArrayList<ArrayList<String>> blacklist_bios = new ArrayList<>();
+        BLACKLIST_BIOS = BUILDER.comment("Blacklist for the Bio Harvesters")
+                .define("blacklist_bios", blacklist_bios);
         ArrayList<ArrayList<String>> blacklist_stones = new ArrayList<>();
         BLACKLIST_STONES = BUILDER.comment("Blacklist for the Stone Harvesters")
                 .define("blacklist_stones", blacklist_stones);

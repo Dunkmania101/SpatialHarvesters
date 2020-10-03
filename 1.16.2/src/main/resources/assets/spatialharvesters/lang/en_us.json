@@ -1,6 +1,7 @@
 {
   "item.spatialharvesters.base_powder": "Base Powder",
   "item.spatialharvesters.player_key": "Player Key",
+  "item.spatialharvesters.effect_key": "Effect Key",
   "item.spatialharvesters.ore_core": "Ore Core",
   "item.spatialharvesters.bio_core": "Bio Core",
   "item.spatialharvesters.stone_core": "Stone Core",
@@ -70,5 +71,10 @@
   "itemGroup.spatial_harvesters": "Spatial Harvesters",
 
   "msg.set_dimensional_applicator": "Set Dimensional Applicator to you!",
-  "msg.remove_dimensional_applicator": "Cleared Dimensional Applicator!"
+  "msg.remove_dimensional_applicator": "Cleared Dimensional Applicator!",
+  "msg.player_key_description": "Right-Click a Dimensional Applicator to bind it to you;\nSneak-Right-Click to unbind it.",
+  "msg.set_dimensional_applicator_nbt_effects": "Set Dimensional Applicator Effects!",
+  "msg.remove_dimensional_applicator_nbt_effects": "Removed saved effects from Dimensional Applicator!",
+  "msg.remove_dimensional_applicator_nbt_effects_failed": "You don't have any active effects!",
+  "msg.effect_key_description": "Right-Click a Dimensional Applicator to set its internally saved effects to yours;\nSneak-Right-Click it to clear them."
 }

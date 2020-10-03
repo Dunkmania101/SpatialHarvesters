@@ -1,122 +1,20 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
-import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Random;
-
-public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
-    public OreHarvesterTE(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
-    }
-
+public class OreHarvesterTE extends SpatialHarvesterTE {
     public OreHarvesterTE() {
-        this(TileEntityInit.ORE_HARVESTER.get());
-    }
-
-    private final CustomEnergyStorage energyStorage = createEnergy();
-
-    private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
-
-    private CustomEnergyStorage createEnergy() {
-        int capacity = CommonConfig.ORE_1_PRICE.get() * 2;
-        return new CustomEnergyStorage(capacity, capacity) {
-            @Override
-            protected void onEnergyChanged() {
-                markDirty();
-            }
-
-            @Override
-            public boolean canExtract() {
-                return false;
-            }
-
-            @Override
-            public boolean canReceive() {
-                return true;
-            }
-        };
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityEnergy.ENERGY) {
-            return energy.cast();
-        }
-        return super.getCapability(cap, side);
+        super(TileEntityInit.ORE_HARVESTER.get(), Tools.getLoadedOres());
     }
 
     @Override
-    public void remove() {
-        super.remove();
-        energy.invalidate();
-    }
-
-    private static final ArrayList<Item> ORES = Tools.loadedOres;
-    private int ticks = 0;
-    @Override
-    public void tick() {
-        if (world != null && !world.isRemote) {
-            Block this_block = getBlockState().getBlock();
-            int price = getPrice(this_block);
-            int set_capacity = price * 2;
-            energyStorage.setMaxEnergy(set_capacity);
-            energyStorage.setMaxTransfer(set_capacity);
-            if (!world.isBlockPowered(pos)) {
-                int speed = getSpeed(this_block);
-                if (ticks >= speed) {
-                    ticks = 0;
-                    if (energyStorage.getEnergyStored() >= price) {
-                        if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
-                            TileEntity out_down = world.getTileEntity(pos.offset(Direction.DOWN));
-                            if (out_down != null) {
-                                LazyOptional<IItemHandler> out_down_cap = out_down.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
-                                if (out_down_cap.isPresent()) {
-                                    IItemHandler out_down_inv = out_down_cap.orElse(null);
-                                    Item CHOSEN_ORE = getShard(this_block);
-                                    Random rand = world.rand;
-                                    if (rand.nextInt(75) != 1) {
-                                        if (ORES.size() > 0) {
-                                            CHOSEN_ORE = ORES.get(rand.nextInt(ORES.size()));
-                                        }
-                                    }
-                                    ItemHandlerHelper.insertItemStacked(out_down_inv, new ItemStack(CHOSEN_ORE), false);
-                                    energyStorage.consumeEnergy(price);
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    ticks++;
-                }
-            }
-        }
-    }
-
-    private int getPrice(Block block) {
+    public int getPrice(Block block) {
         int price = CommonConfig.ORE_1_PRICE.get();
         if (block == BlockInit.ORE_HARVESTER_1.get()) {
             price = CommonConfig.ORE_1_PRICE.get();
@@ -138,7 +36,8 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         return price;
     }
 
-    private int getSpeed(Block block) {
+    @Override
+    public int getSpeed(Block block) {
         int speed = CommonConfig.ORE_1_SPEED.get();
         if (block == BlockInit.ORE_HARVESTER_1.get()) {
             speed = CommonConfig.ORE_1_SPEED.get();
@@ -160,7 +59,8 @@ public class OreHarvesterTE extends TileEntity implements ITickableTileEntity {
         return speed;
     }
 
-    private Item getShard(Block block) {
+    @Override
+    public Item getShard(Block block) {
         Item CHOSEN_SHARD = ItemInit.SHARD_1.get();
         if (block == BlockInit.ORE_HARVESTER_1.get()) {
             CHOSEN_SHARD = ItemInit.SHARD_1.get();

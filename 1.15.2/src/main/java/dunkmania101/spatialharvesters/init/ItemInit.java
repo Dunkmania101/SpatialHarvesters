@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
 import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -21,6 +22,14 @@ public class ItemInit {
             () -> new PlayerKeyItem(
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .maxStackSize(1)
+            ));
+
+    public static final RegistryObject<EffectKeyItem> EFFECT_KEY = ITEMS.register("effect_key",
+            () -> new EffectKeyItem(
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .maxStackSize(1)
             ));
 
     public static final RegistryObject<Item> ORE_CORE = ITEMS.register("ore_core",

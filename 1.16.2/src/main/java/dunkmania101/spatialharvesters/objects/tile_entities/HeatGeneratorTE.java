@@ -1,89 +1,56 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
+import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.objects.blocks.ActivePreservedDataShapedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.block.FireBlock;
+import net.minecraft.block.MagmaBlock;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.util.ArrayList;
 
-public class HeatGeneratorTE extends TileEntity implements ITickableTileEntity {
-    public HeatGeneratorTE(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
-    }
-
+public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     public HeatGeneratorTE() {
-        this(TileEntityInit.HEAT_GENERATOR.get());
+        super(TileEntityInit.HEAT_GENERATOR.get(), true, true);
     }
-
-    private final CustomEnergyStorage energyStorage = createEnergy();
-
-    private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private final int speed = CommonConfig.HEAT_GENERATOR_SPEED.get();
-    private CustomEnergyStorage createEnergy() {
-        int capacity = speed * 1000;
-        return new CustomEnergyStorage(capacity, capacity) {
-            @Override
-            protected void onEnergyChanged() {
-                markDirty();
-            }
-
-            @Override
-            public boolean canExtract() {
-                return true;
-            }
-
-            @Override
-            public boolean canReceive() {
-                return true;
-            }
-        };
-    }
-
     @Override
-    public void remove() {
-        super.remove();
-        energy.invalidate();
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityEnergy.ENERGY) {
-            return energy.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    @Override
-    public void tick() {
+    public void customTickActions() {
         if (world != null && !world.isRemote) {
-            for (Direction direction : Direction.values()) {
-                Block block = world.getBlockState(pos.offset(direction)).getBlock();
-                if (block == Blocks.MAGMA_BLOCK || block == Blocks.LAVA || block == Blocks.FIRE) {
-                    energyStorage.addEnergy(speed);
+            int setCapacity = speed * 10;
+            if (getEnergyStorage().getMaxEnergyStored() != setCapacity) {
+                getEnergyStorage().setMaxEnergy(setCapacity);
+            }
+            boolean hot = false;
+            ArrayList<IEnergyStorage> out_batteries = new ArrayList<>();
+            for (Direction side : Direction.values()) {
+                Block block = world.getBlockState(pos.offset(side)).getBlock();
+                if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
+                    getEnergyStorage().addEnergy(speed);
+                    hot = true;
                 }
-                int energy = energyStorage.getEnergyStored();
+                TileEntity out = world.getTileEntity(pos.offset(side));
+                if (out != null) {
+                    LazyOptional<IEnergyStorage> out_cap = out.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
+                    out_cap.ifPresent(out_batteries::add);
+                }
+            }
+            if (getBlockState().getBlock() instanceof ActivePreservedDataShapedBlock) {
+                world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, hot));
+            }
+            for (IEnergyStorage out_battery : out_batteries) {
+                int energy = getEnergyStorage().getEnergyStored();
                 if (energy > 0) {
-                    TileEntity tile = world.getTileEntity(pos.offset(direction));
-                    if (tile != null) {
-                        LazyOptional<IEnergyStorage> tile_energy = tile.getCapability(CapabilityEnergy.ENERGY, direction);
-                        if (tile_energy.isPresent()) {
-                            int tile_received = tile_energy.orElse(null).receiveEnergy(energy, false);
-                            energyStorage.consumeEnergy(tile_received);
-                        }
-                    }
+                    int out_received = out_battery.receiveEnergy(energy, false);
+                    getEnergyStorage().consumeEnergy(out_received);
                 }
             }
         }

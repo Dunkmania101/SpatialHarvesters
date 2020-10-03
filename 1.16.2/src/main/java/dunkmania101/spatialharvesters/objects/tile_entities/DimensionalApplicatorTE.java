@@ -1,115 +1,79 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import com.mojang.util.UUIDTypeAdapter;
-import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
+import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
+import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class DimensionalApplicatorTE extends TileEntity implements ITickableTileEntity {
-    public DimensionalApplicatorTE(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
-    }
-
+public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     public DimensionalApplicatorTE() {
-        this(TileEntityInit.DIMENSIONAL_APPLICATOR.get());
+        super(TileEntityInit.DIMENSIONAL_APPLICATOR.get(), false, true, true);
     }
 
-    private final CustomEnergyStorage energyStorage = createEnergy();
-
-    private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
-
-    private CustomEnergyStorage createEnergy() {
-        int capacity = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get() * 10;
-        return new CustomEnergyStorage(capacity, capacity) {
-            @Override
-            protected void onEnergyChanged() {
-                markDirty();
-            }
-
-            @Override
-            public boolean canExtract() {
-                return false;
-            }
-
-            @Override
-            public boolean canReceive() {
-                return true;
-            }
-        };
-    }
-
+    private String entity = null;
+    private ArrayList<Integer> NBTEffects = new ArrayList<>();
+    private final int duration = 25;
+    private final int amplifier = CommonConfig.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
+    private final int price = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get();
     @Override
-    public void remove() {
-        super.remove();
-        energy.invalidate();
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityEnergy.ENERGY) {
-            return energy.cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    private static final String key = SpatialHarvesters.modid + "_DimensionalApplicatorEntity";
-    private static String entity = null;
-    private static int ticks = 0;
-    @Override
-    public void tick() {
+    public void customTickActions() {
         if (world != null && !world.isRemote) {
-            if (!world.isBlockPowered(pos)) {
-                if (ticks >= 100) {
-                    ticks = 0;
-                    if (world.getBlockState(pos.offset(Direction.UP)).getBlock() == BlockInit.SPACE_RIPPER.get()) {
-                        if (entity != null && !entity.isEmpty()) {
-                            UUID uuid = UUIDTypeAdapter.fromString(entity);
-                            PlayerEntity player = null;
-                            if (world.getServer() != null) {
-                                for (World check_world : world.getServer().getWorlds()) {
-                                    player = check_world.getPlayerByUuid(uuid);
-                                    if (player != null) {
-                                        break;
-                                    }
-                                }
+            int set_capacity = price * 10;
+            if (getEnergyStorage().getMaxEnergyStored() != set_capacity) {
+                getEnergyStorage().setMaxEnergy(set_capacity);
+            }
+            if (getEnergyStorage().getMaxInput() != set_capacity) {
+                getEnergyStorage().setMaxInput(set_capacity);
+            }
+            if (getEnergyStorage().getMaxExtract() != set_capacity) {
+                getEnergyStorage().setMaxExtract(set_capacity);
+            }
+            if (getCountedTicks() >= duration - 1) {
+                resetCountedTicks();
+                boolean has_space_ripper = false;
+                for (Direction side : Direction.values()) {
+                    if (world.getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                        has_space_ripper = true;
+                        break;
+                    }
+                }
+                if (has_space_ripper) {
+                    if (entity != null && !entity.isEmpty()) {
+                        UUID uuid = UUIDTypeAdapter.fromString(entity);
+                        PlayerEntity player = null;
+                        if (world.getServer() != null) {
+                            for (World check_world : world.getServer().getWorlds()) {
+                                player = check_world.getPlayerByUuid(uuid);
                                 if (player != null) {
-                                    ArrayList<EffectInstance> EFFECTS = getEffects(world, pos);
-                                    for (EffectInstance effect : EFFECTS) {
-                                        int price = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get();
-                                        if (energyStorage.getEnergyStored() >= price) {
-                                            player.addPotionEffect(effect);
-                                            energyStorage.consumeEnergy(price);
-                                        }
+                                    break;
+                                }
+                            }
+                            if (player != null) {
+                                ArrayList<EffectInstance> effects = getEffects(world, pos);
+                                for (EffectInstance effect : effects) {
+                                    if (getEnergyStorage().getEnergyStored() >= price) {
+                                        player.addPotionEffect(effect);
+                                        getEnergyStorage().consumeEnergy(price);
                                     }
                                 }
                             }
                         }
                     }
-                } else {
-                    ticks++;
                 }
             }
         }
@@ -117,37 +81,37 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
 
     private ArrayList<EffectInstance> getEffects(World worldIn, BlockPos pos) {
         ArrayList<EffectInstance> EFFECTS = new ArrayList<>();
-        int amplifier = CommonConfig.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
-        int duration = 500;
+        for (int i : NBTEffects) {
+            Effect effect = Effect.get(i);
+            if (effect != null) {
+                EffectInstance effectInstance = new EffectInstance(effect, this.duration, this.amplifier);
+                EFFECTS.add(effectInstance);
+            }
+        }
         for (Direction check_direction : Direction.values()) {
             Block block = worldIn.getBlockState(pos.offset(check_direction)).getBlock();
+            Effect effect = null;
             if (block == BlockInit.REGENERATION_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.REGENERATION, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.REGENERATION;
             } else if (block == BlockInit.RESISTANCE_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.RESISTANCE, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.RESISTANCE;
             } else if (block == BlockInit.ABSORPTION_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.ABSORPTION, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.ABSORPTION;
             } else if (block == BlockInit.HASTE_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.HASTE, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.HASTE;
             } else if (block == BlockInit.SPEED_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.SPEED, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.SPEED;
             } else if (block == BlockInit.JUMP_BOOST_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.JUMP_BOOST, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.JUMP_BOOST;
             } else if (block == BlockInit.INVISIBILITY_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.INVISIBILITY, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.INVISIBILITY;
             } else if (block == BlockInit.NIGHT_VISION_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.NIGHT_VISION, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.NIGHT_VISION;
             } else if (block == BlockInit.STRENGTH_ACTIVATOR.get()) {
-                EffectInstance effect = new EffectInstance(Effects.STRENGTH, duration, amplifier);
-                EFFECTS.add(effect);
+                effect = Effects.STRENGTH;
+            }
+            if (effect != null) {
+                EFFECTS.add(new EffectInstance(effect, this.duration, this.amplifier));
             }
         }
         return EFFECTS;
@@ -155,17 +119,39 @@ public class DimensionalApplicatorTE extends TileEntity implements ITickableTile
 
     @Override
     public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.putString(key, entity);
+        CompoundNBT nbt = super.serializeNBT();
+
+        if (entity != null) {
+            nbt.putString(PlayerKeyItem.playerNBTKey, entity);
+        }
+
+        if (NBTEffects.size() > 0){
+            nbt.putIntArray(EffectKeyItem.potionsNBTKey, NBTEffects);
+        }
+
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        entity = nbt.getString(key);
-        if (entity.isEmpty()) {
-            entity = null;
+        super.deserializeNBT(nbt);
+
+        if (nbt.contains(PlayerKeyItem.playerNBTKey)) {
+            this.entity = nbt.getString(PlayerKeyItem.playerNBTKey);
+            if (this.entity.isEmpty()) {
+                this.entity = null;
+            }
         }
+
+        if (nbt.contains(EffectKeyItem.potionsNBTKey)) {
+            NBTEffects = new ArrayList<>();
+            for (int potion : nbt.getIntArray(EffectKeyItem.potionsNBTKey)) {
+                if (!NBTEffects.contains(potion)) {
+                    NBTEffects.add(potion);
+                }
+            }
+        }
+
         markDirty();
     }
 }

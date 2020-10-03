@@ -1,7 +1,47 @@
 {
   "variants": {
-    "": {
-      "model": "spatialharvesters:block/heat_generator"
+    "facing=up,active=true": {
+      "model": "spatialharvesters:block/heat_generator_active"
+    },
+    "facing=down,active=true": {
+      "model": "spatialharvesters:block/heat_generator_active"
+    },
+    "facing=north,active=true": {
+      "model": "spatialharvesters:block/heat_generator_active"
+    },
+    "facing=south,active=true": {
+      "model": "spatialharvesters:block/heat_generator_active",
+      "y": 180
+    },
+    "facing=west,active=true": {
+      "model": "spatialharvesters:block/heat_generator_active",
+      "y": 270
+    },
+    "facing=east,active=true": {
+      "model": "spatialharvesters:block/heat_generator_active",
+      "y": 90
+    },
+
+    "facing=up,active=false": {
+      "model": "spatialharvesters:block/heat_generator_inactive"
+    },
+    "facing=down,active=false": {
+      "model": "spatialharvesters:block/heat_generator_inactive"
+    },
+    "facing=north,active=false": {
+      "model": "spatialharvesters:block/heat_generator_inactive"
+    },
+    "facing=south,active=false": {
+      "model": "spatialharvesters:block/heat_generator_inactive",
+      "y": 180
+    },
+    "facing=west,active=false": {
+      "model": "spatialharvesters:block/heat_generator_inactive",
+      "y": 270
+    },
+    "facing=east,active=false": {
+      "model": "spatialharvesters:block/heat_generator_inactive",
+      "y": 90
     }
   }
 }

@@ -13,15 +13,13 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-import javax.annotation.Nullable;
-
 public class ChunkLoaderBlock extends Block {
     public ChunkLoaderBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         if (!worldIn.isRemote) {
             ServerWorld sworld = (ServerWorld) worldIn;
             ChunkPos cpos = worldIn.getChunk(pos).getPos();
