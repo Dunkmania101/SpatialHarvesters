@@ -69,6 +69,7 @@ public class Tools {
     }
 
     public static CompoundNBT correctTileNBT(TileEntity tile, CompoundNBT nbt) {
+        nbt.remove("id");
         ResourceLocation id = TileEntityType.getId(tile.getType());
         if (id != null) {
             nbt.putString("id", id.toString());
@@ -84,13 +85,15 @@ public class Tools {
         ArrayList<Item> ORES = new ArrayList<>();
         ArrayList<ArrayList<String>> config_ores = CommonConfig.CUSTOM_ORES.get();
         ArrayList<ArrayList<String>> blacklist_ores = CommonConfig.BLACKLIST_ORES.get();
+        ArrayList<String> blacklist_ores_mod = CommonConfig.BLACKLIST_ORES_MOD.get();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
             ResourceLocation item_rn = check_item.getRegistryName();
             if (item_rn != null) {
                 ArrayList<String> modOre = new ArrayList<>();
-                modOre.add(item_rn.getNamespace());
+                String modid = item_rn.getNamespace();
+                modOre.add(modid);
                 modOre.add(item_rn.getPath());
-                if (!blacklist_ores.contains(modOre)) {
+                if (!blacklist_ores.contains(modOre) && !blacklist_ores_mod.contains(modid)) {
                     if (check_item.isIn(Tags.Items.ORES) || config_ores.contains(modOre)) {
                         ORES.add(check_item);
                     }
@@ -104,16 +107,16 @@ public class Tools {
         ArrayList<Item> BIOS = new ArrayList<>();
         ArrayList<ArrayList<String>> config_bios = CommonConfig.CUSTOM_BIOS.get();
         ArrayList<ArrayList<String>> blacklist_bios = CommonConfig.BLACKLIST_BIOS.get();
+        ArrayList<String> blacklist_bios_mod = CommonConfig.BLACKLIST_BIOS_MOD.get();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
             ResourceLocation item_rn = check_item.getRegistryName();
             if (item_rn != null) {
                 ArrayList<String> modBio = new ArrayList<>();
-                modBio.add(item_rn.getNamespace());
+                String modid = item_rn.getNamespace();
+                modBio.add(modid);
                 modBio.add(item_rn.getPath());
-                if (!blacklist_bios.contains(modBio)) {
-                    if ((!check_item.getRegistryName().getNamespace().contentEquals("botania")
-                            && (
-                            check_item.isIn(Tags.Items.CROPS)
+                if (!blacklist_bios.contains(modBio) && !blacklist_bios_mod.contains(modid)) {
+                    if (check_item.isIn(Tags.Items.CROPS)
                                     || check_item.isIn(Tags.Items.MUSHROOMS)
                                     || check_item.isIn(Tags.Items.LEATHER)
                                     || check_item.isIn(Tags.Items.FEATHERS)
@@ -126,7 +129,7 @@ public class Tools {
                                     || check_item.isIn(ItemTags.SAPLINGS)
                                     || check_item.isIn(ItemTags.PLANKS)
                                     || check_item.isIn(Tags.Items.RODS_WOODEN)
-                    )) || config_bios.contains(modBio)) {
+                     || config_bios.contains(modBio)) {
                         BIOS.add(check_item);
                     }
                 }
@@ -139,13 +142,15 @@ public class Tools {
         ArrayList<Item> STONES = new ArrayList<>();
         ArrayList<ArrayList<String>> config_stones = CommonConfig.CUSTOM_STONES.get();
         ArrayList<ArrayList<String>> blacklist_stones = CommonConfig.BLACKLIST_STONES.get();
+        ArrayList<String> blacklist_stones_mod = CommonConfig.BLACKLIST_ORES_MOD.get();
         for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
             ResourceLocation item_rn = check_item.getRegistryName();
             if (item_rn != null) {
                 ArrayList<String> modStone = new ArrayList<>();
-                modStone.add(item_rn.getNamespace());
+                String modid = item_rn.getNamespace();
+                modStone.add(modid);
                 modStone.add(item_rn.getPath());
-                if (!blacklist_stones.contains(modStone)) {
+                if (!blacklist_stones.contains(modStone) && !blacklist_stones_mod.contains(modid)) {
                     if ((
                             check_item.isIn(Tags.Items.STONE)
                                     || check_item.isIn(Tags.Items.COBBLESTONE)
@@ -165,19 +170,21 @@ public class Tools {
         ArrayList<Item> SOILS = new ArrayList<>();
         ArrayList<ArrayList<String>> config_soils = CommonConfig.CUSTOM_SOILS.get();
         ArrayList<ArrayList<String>> blacklist_soils = CommonConfig.BLACKLIST_SOILS.get();
+        ArrayList<String> blacklist_soils_mod = CommonConfig.BLACKLIST_ORES_MOD.get();
         SOILS.add(Items.CLAY);
         for (Block block : ForgeRegistries.BLOCKS.getValues()) {
             Item check_item = block.asItem();
             ResourceLocation item_rn = check_item.getRegistryName();
             if (item_rn != null) {
-                ArrayList<String> modOre = new ArrayList<>();
-                modOre.add(item_rn.getNamespace());
-                modOre.add(item_rn.getPath());
-                if (!blacklist_soils.contains(modOre)) {
+                ArrayList<String> modSoil = new ArrayList<>();
+                String modid = item_rn.getNamespace();
+                modSoil.add(modid);
+                modSoil.add(item_rn.getPath());
+                if (!blacklist_soils.contains(modSoil) && !blacklist_soils_mod.contains(modid)) {
                     if ((block.isIn(Tags.Blocks.DIRT)
                             || block.isIn(Tags.Blocks.SAND)
                             || block.isIn(Tags.Blocks.GRAVEL)
-                    ) || config_soils.contains(modOre)) {
+                    ) || config_soils.contains(modSoil)) {
                         SOILS.add(check_item);
                     }
                 }

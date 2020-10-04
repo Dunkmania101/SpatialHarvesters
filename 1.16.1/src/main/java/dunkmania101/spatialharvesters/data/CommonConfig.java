@@ -20,6 +20,12 @@ public class CommonConfig {
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_SOILS;
 
+    public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_ORES_MOD;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_BIOS_MOD;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_STONES_MOD;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_SOILS_MOD;
+
+
     public static ForgeConfigSpec.IntValue ORE_1_SPEED;
     public static ForgeConfigSpec.IntValue ORE_2_SPEED;
     public static ForgeConfigSpec.IntValue ORE_3_SPEED;
@@ -364,6 +370,27 @@ public class CommonConfig {
         oreMod.add(ore);
         ores.add(oreMod);
 
+        mod = "gobber2";
+        ore = "gobber2_ore";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "gobber2";
+        ore = "gobber2_ore_nether";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
+        mod = "gobber2";
+        ore = "gobber2_ore_end";
+        oreMod = new ArrayList<>();
+        oreMod.add(mod);
+        oreMod.add(ore);
+        ores.add(oreMod);
+
         CUSTOM_ORES = BUILDER.comment("Custom outputs for the Ore Harvester.")
                 .define("custom_ores", ores);
         ArrayList<ArrayList<String>> custom_plants = new ArrayList<>();
@@ -388,6 +415,20 @@ public class CommonConfig {
         ArrayList<ArrayList<String>> blacklist_soils = new ArrayList<>();
         BLACKLIST_SOILS = BUILDER.comment("Blacklist for the Soil Harvesters")
                 .define("blacklist_soils", blacklist_soils);
+
+        ArrayList<String> blacklist_ores_mod = new ArrayList<>();
+        BLACKLIST_ORES_MOD = BUILDER.comment("Blacklist for the Soil Harvesters")
+                .define("blacklist_ores_mod", blacklist_ores_mod);
+        ArrayList<String> blacklist_bios_mod = new ArrayList<>();
+        blacklist_bios_mod.add("botania");
+        BLACKLIST_BIOS_MOD = BUILDER.comment("Blacklist for the Soil Harvesters")
+                .define("blacklist_bios_mod", blacklist_bios_mod);
+        ArrayList<String> blacklist_stones_mod = new ArrayList<>();
+        BLACKLIST_STONES_MOD = BUILDER.comment("Blacklist for the Soil Harvesters")
+                .define("blacklist_stones_mod", blacklist_stones_mod);
+        ArrayList<String> blacklist_soils_mod = new ArrayList<>();
+        BLACKLIST_SOILS_MOD = BUILDER.comment("Blacklist for the Soil Harvesters")
+                .define("blacklist_soils_mod", blacklist_soils_mod);
 
         ORE_1_SPEED = BUILDER.comment("Speed for the tier 1 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_ore_1", 400, 0, Integer.MAX_VALUE);

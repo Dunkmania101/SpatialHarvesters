@@ -13,7 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.StringUtils;
@@ -59,9 +58,17 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = super.serializeNBT();
-        nbt.put(MobKeyItem.entityNBTKey, this.livingEntity.serializeNBT());
-        nbt.putString(MobKeyItem.playerNameNBTKey, this.player.getName().getString());
-        nbt.put(MobKeyItem.weaponNBTKey, this.weapon.serializeNBT());
+        if (this.livingEntity != null) {
+            nbt.put(MobKeyItem.entityNBTKey, this.livingEntity.serializeNBT());
+        }
+        if (this.player != null) {
+            nbt.putString(MobKeyItem.playerNameNBTKey, this.player.getName().getString());
+        }
+        if (this.weapon != null) {
+            if (!this.weapon.isEmpty()) {
+                nbt.put(MobKeyItem.weaponNBTKey, this.weapon.serializeNBT());
+            }
+        }
         return nbt;
     }
 
@@ -112,8 +119,12 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     @Override
     public void remove() {
         super.remove();
-        this.livingEntity.remove();
-        this.player.remove();
+        if (this.livingEntity != null) {
+            this.livingEntity.remove();
+        }
+        if (this.player != null) {
+            this.player.remove();
+        }
     }
 
     @Override
