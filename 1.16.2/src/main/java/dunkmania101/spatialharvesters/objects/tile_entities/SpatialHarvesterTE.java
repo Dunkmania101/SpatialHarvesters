@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
-    private final ArrayList<Item> OUTPUTS;
+    private ArrayList<ItemStack> OUTPUTS;
 
     public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn, ArrayList<Item> OUTPUTS) {
         super(tileEntityTypeIn, false, true, true);
 
-        this.OUTPUTS = OUTPUTS;
+        setOutputs(OUTPUTS);
     }
 
     @Override
@@ -54,19 +54,16 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                         out_cap.ifPresent(out_inventories::add);
                     }
                 }
-                if (space_rippers.size() > 0 && out_inventories.size() > 0) {
+                if (space_rippers.size() > 0 && out_inventories.size() > 0 && this.OUTPUTS.size() > 0) {
                     Random rand = world.rand;
                     for (Direction ignored : space_rippers) {
                         if (getEnergyStorage().getEnergyStored() >= price) {
-                            Item CHOSEN_OUTPUT = getShard(this_block);
+                            ItemStack CHOSEN_OUTPUT = new ItemStack(getShard(this_block));
                             if (rand.nextInt(75) != 1) {
-                                if (OUTPUTS.size() > 0) {
-                                    CHOSEN_OUTPUT = OUTPUTS.get(rand.nextInt(OUTPUTS.size()));
-                                }
+                                CHOSEN_OUTPUT = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size()));
                             }
-                            ItemStack output_stack = new ItemStack(CHOSEN_OUTPUT);
-                            ItemStack result_stack = ItemHandlerHelper.insertItemStacked(out_inventories.get(rand.nextInt(out_inventories.size())), output_stack, false);
-                            if (result_stack.getCount() < output_stack.getCount()) {
+                            ItemStack result_stack = ItemHandlerHelper.insertItemStacked(out_inventories.get(rand.nextInt(out_inventories.size())), CHOSEN_OUTPUT, false);
+                            if (result_stack.getCount() < CHOSEN_OUTPUT.getCount()) {
                                 getEnergyStorage().consumeEnergy(price);
                             }
                         }
@@ -74,6 +71,16 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                 }
             }
         }
+    }
+
+    public void setOutputs(ArrayList<Item> OUTPUTS) {
+        for (Item item : OUTPUTS) {
+            this.OUTPUTS.add(new ItemStack(item));
+        }
+    }
+
+    public void setOutputStacks(ArrayList<ItemStack> OUTPUTS) {
+        this.OUTPUTS = OUTPUTS;
     }
 
     public int getPrice(Block block) {

@@ -47,6 +47,8 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue STONE_7_SPEED;
     public static ForgeConfigSpec.IntValue STONE_8_SPEED;
 
+    public static ForgeConfigSpec.IntValue MOB_SPEED;
+
     public static ForgeConfigSpec.IntValue SOIL_1_SPEED;
     public static ForgeConfigSpec.IntValue SOIL_2_SPEED;
     public static ForgeConfigSpec.IntValue SOIL_3_SPEED;
@@ -91,6 +93,8 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue SOIL_6_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_7_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_8_PRICE;
+
+    public static ForgeConfigSpec.IntValue MOB_PRICE;
 
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
 
@@ -453,6 +457,9 @@ public class CommonConfig {
         SOIL_8_SPEED = BUILDER.comment("Speed for the tier 8 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_soil_8", 5, 0, Integer.MAX_VALUE);
 
+        MOB_SPEED = BUILDER.comment("Speed for the Mob Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("speed_mob", 100, 0, Integer.MAX_VALUE);
+
         ORE_1_PRICE = BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_1", 400, 0, Integer.MAX_VALUE);
         ORE_2_PRICE = BUILDER.comment("Price for the tier 2 Ore Harvester (in FE per operation)")
@@ -520,6 +527,9 @@ public class CommonConfig {
                 .defineInRange("price_soil_7", 100, 0, Integer.MAX_VALUE);
         SOIL_8_PRICE = BUILDER.comment("Price for the tier 8 Soil Harvester (in FE per operation)")
                 .defineInRange("price_soil_8", 8000, 0, Integer.MAX_VALUE);
+
+        MOB_PRICE = BUILDER.comment("Price for the Mob Harvester (in FE per operation)")
+                .defineInRange("price_mob", 8000, 0, Integer.MAX_VALUE);
 
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
                 .defineInRange("speed_heat_generator", 3, 0, Integer.MAX_VALUE);

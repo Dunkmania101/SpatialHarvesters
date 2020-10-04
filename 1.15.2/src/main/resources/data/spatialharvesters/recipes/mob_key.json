@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "  b",
+    " b ",
+    "a  "
+  ],
+  "key":
+  {
+    "a":
+    {
+      "item": "spatialharvesters:player_key"
+    },
+    "b":
+    {
+      "tag": "forge:eggs"
+    }
+  },
+  "result":
+  {
+    "item": "spatialharvesters:mob_key"
+  }
+}

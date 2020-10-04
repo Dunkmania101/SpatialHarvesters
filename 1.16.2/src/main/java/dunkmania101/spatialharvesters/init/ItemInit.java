@@ -56,6 +56,12 @@ public class ItemInit {
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
+    public static final RegistryObject<Item> MOB_CORE = ITEMS.register("mob_core",
+            () -> new Item(
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
     public static final RegistryObject<Item> SHARD_1 = ITEMS.register("shard_1",
             () -> new Item(
                     new Item.Properties()
@@ -382,6 +388,13 @@ public class ItemInit {
     public static final RegistryObject<BlockItem> SOIL_HARVESTER_8 = ITEMS.register("soil_harvester_8",
             () -> new BlockItem(
                     BlockInit.SOIL_HARVESTER_8.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> MOB_HARVESTER = ITEMS.register("mob_harvester",
+            () -> new BlockItem(
+                    BlockInit.MOB_HARVESTER.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));

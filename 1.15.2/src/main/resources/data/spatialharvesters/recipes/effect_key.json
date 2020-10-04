@@ -10,11 +10,11 @@
   {
     "a":
     {
-      "item": "spatialharvesters:base_powder"
+      "item": "spatialharvesters:player_key"
     },
     "b":
     {
-      "item": "spatialharvesters:player_key"
+      "item": "minecraft:glass_bottle"
     }
   },
   "result":

@@ -19,6 +19,10 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
         }
     }
 
+    public void setEnergyStoredNoCheck(int energy) {
+        this.energy = energy;
+    }
+
     public void setEnergyStored(int energy) {
         this.energy = energy;
         onEnergyChanged();
@@ -86,7 +90,7 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         if (nbt.contains(energyKey)) {
-            setEnergyStored(nbt.getInt(energyKey));
+            setEnergyStoredNoCheck(nbt.getInt(energyKey));
         }
     }
 }

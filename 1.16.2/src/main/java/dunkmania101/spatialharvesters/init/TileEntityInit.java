@@ -58,6 +58,11 @@ public class TileEntityInit {
                     BlockInit.SOIL_HARVESTER_8.get()
             ).build(null));
 
+    public static final RegistryObject<TileEntityType<MobHarvesterTE>> MOB_HARVESTER = TILE_ENTITIES.register("mob_harvester",
+            () -> TileEntityType.Builder.create(MobHarvesterTE::new,
+                    BlockInit.MOB_HARVESTER.get()
+            ).build(null));
+
     public static final RegistryObject<TileEntityType<HeatGeneratorTE>> HEAT_GENERATOR = TILE_ENTITIES.register("heat_generator",
             () -> TileEntityType.Builder.create(HeatGeneratorTE::new,
                     BlockInit.HEAT_GENERATOR.get()

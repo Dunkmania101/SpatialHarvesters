@@ -2,10 +2,12 @@
   "item.spatialharvesters.base_powder": "Base Powder",
   "item.spatialharvesters.player_key": "Player Key",
   "item.spatialharvesters.effect_key": "Effect Key",
+  "item.spatialharvesters.mob_key": "Mob Key",
   "item.spatialharvesters.ore_core": "Ore Core",
   "item.spatialharvesters.bio_core": "Bio Core",
   "item.spatialharvesters.stone_core": "Stone Core",
   "item.spatialharvesters.soil_core": "Soil Core",
+  "item.spatialharvesters.mob_core": "Mob Core",
   "item.spatialharvesters.shard_1": "Shard 1",
   "item.spatialharvesters.shard_2": "Shard 2",
   "item.spatialharvesters.shard_3": "Shard 3",
@@ -56,6 +58,7 @@
   "block.spatialharvesters.soil_harvester_6": "Soil Harvester 6",
   "block.spatialharvesters.soil_harvester_7": "Soil Harvester 7",
   "block.spatialharvesters.soil_harvester_8": "Soil Harvester 8",
+  "block.spatialharvesters.mob_harvester": "Mob Harvester",
   "block.spatialharvesters.heat_generator": "Heat Generator",
   "block.spatialharvesters.dimensional_applicator": "Dimensional Applicator",
   "block.spatialharvesters.regeneration_activator": "Regeneration Activator",
@@ -76,5 +79,6 @@
   "msg.set_dimensional_applicator_nbt_effects": "Set Dimensional Applicator Effects!",
   "msg.remove_dimensional_applicator_nbt_effects": "Removed saved effects from Dimensional Applicator!",
   "msg.remove_dimensional_applicator_nbt_effects_failed": "You don't have any active effects!",
-  "msg.effect_key_description": "Right-Click a Dimensional Applicator to set its internally saved effects to yours;\nSneak-Right-Click it to clear them."
+  "msg.effect_key_description": "Right-Click a Dimensional Applicator to set its internally saved effects to yours;\nSneak-Right-Click it to clear them.",
+  "msg.mob_key_description": "Attack an entity with this to bind;\nSneak-Left-Click a block with a weapon in your offhand to bind it;\nRight-Click a Mob Harvester to bind;\nSneak-Right-Click it to clear its configuration;"
 }

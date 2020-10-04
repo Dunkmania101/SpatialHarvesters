@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "spatialharvesters:block/mob_harvester"
+    }
+  }
+}
