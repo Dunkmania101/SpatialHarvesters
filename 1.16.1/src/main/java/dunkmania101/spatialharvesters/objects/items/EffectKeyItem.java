@@ -40,16 +40,16 @@ public class EffectKeyItem extends Item {
                         ArrayList<Integer> effects = new ArrayList<>();
                         boolean doContinue = true;
                         if (player.isCrouching()) {
-                            player.sendStatusMessage(new TranslationTextComponent("msg.remove_dimensional_applicator_nbt_effects"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.remove_dimensional_applicator_nbt_effects"), true);
                         } else {
                             for (EffectInstance effectInstance : player.getActivePotionEffects()) {
                                 effects.add(Effect.getId(effectInstance.getPotion()));
                             }
                             if (effects.size() > 0) {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.set_dimensional_applicator_nbt_effects"), true);
+                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_dimensional_applicator_nbt_effects"), true);
                             } else {
                                 doContinue = false;
-                                player.sendStatusMessage(new TranslationTextComponent("msg.remove_dimensional_applicator_nbt_effects_failed"), true);
+                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.remove_dimensional_applicator_nbt_effects_failed"), true);
                             }
                         }
                         if (doContinue) {
@@ -65,7 +65,7 @@ public class EffectKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("msg.effect_key_description"));
+        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.effect_key_description"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

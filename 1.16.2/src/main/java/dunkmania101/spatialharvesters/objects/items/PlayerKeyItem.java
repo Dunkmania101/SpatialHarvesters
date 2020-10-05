@@ -37,10 +37,10 @@ public class PlayerKeyItem extends Item {
                         CompoundNBT nbt = new CompoundNBT();
                         if (player.isCrouching()) {
                             nbt.putString(removePlayerNBTKey, "");
-                            player.sendStatusMessage(new TranslationTextComponent("msg.remove_dimensional_applicator"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.remove_dimensional_applicator"), true);
                         } else {
                             nbt.putInt(playerNBTKey, player.getEntityId());
-                            player.sendStatusMessage(new TranslationTextComponent("msg.set_dimensional_applicator"), true);
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_dimensional_applicator"), true);
                         }
                         tile.deserializeNBT(Tools.correctTileNBT(tile, nbt));
                         tile.markDirty();
@@ -53,7 +53,7 @@ public class PlayerKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("msg.player_key_description"));
+        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.player_key_description"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

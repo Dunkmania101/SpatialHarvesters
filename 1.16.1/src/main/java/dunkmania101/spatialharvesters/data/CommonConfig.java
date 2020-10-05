@@ -499,7 +499,7 @@ public class CommonConfig {
                 .defineInRange("speed_soil_8", 5, 0, Integer.MAX_VALUE);
 
         MOB_SPEED = BUILDER.comment("Speed for the Mob Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
-                .defineInRange("speed_mob", 100, 0, Integer.MAX_VALUE);
+                .defineInRange("speed_mob", 50, 0, Integer.MAX_VALUE);
 
         ORE_1_PRICE = BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_1", 400, 0, Integer.MAX_VALUE);

@@ -30,7 +30,9 @@ public class MobKeyItem extends Item {
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.getOrCreateTag().put(entityNBTKey, target.serializeNBT());
+        if (attacker.isCrouching()) {
+            stack.getOrCreateTag().putString(entityNBTKey, target.serializeNBT().getString("id"));
+        }
         return super.hitEntity(stack, target, attacker);
     }
 
@@ -53,13 +55,13 @@ public class MobKeyItem extends Item {
                     CompoundNBT harvesterNBT = new CompoundNBT();
                     if (player.isCrouching()) {
                         harvesterNBT.putString(removeEntityNBTKey, "");
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.remove_mob_harvester"), true);
                     } else {
-                        harvesterNBT.putUniqueId(playerNameNBTKey, player.getUniqueID());
                         harvesterNBT.putString(playerNameNBTKey, player.getName().getString());
                         CompoundNBT itemNBT = context.getItem().getTag();
                         if (itemNBT != null) {
                             if (itemNBT.contains(entityNBTKey)) {
-                                harvesterNBT.put(entityNBTKey, itemNBT.getCompound(entityNBTKey));
+                                harvesterNBT.putString(entityNBTKey, itemNBT.getString(entityNBTKey));
                             }
                             if (itemNBT.contains(weaponNBTKey)) {
                                 harvesterNBT.put(weaponNBTKey, itemNBT.getCompound(weaponNBTKey));
@@ -67,6 +69,7 @@ public class MobKeyItem extends Item {
                         }
                     }
                     tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
+                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
                 }
             }
         }
@@ -75,7 +78,7 @@ public class MobKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("msg.mob_key_description"));
+        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_description"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }
