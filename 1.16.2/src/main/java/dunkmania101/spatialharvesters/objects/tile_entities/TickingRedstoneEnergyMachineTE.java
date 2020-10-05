@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntityType;
 public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implements ITickableTileEntity {
     private static final String countedTicksKey = "countedTicks";
     private final boolean countTicks;
+    private int energyCapacity = 0;
     public TickingRedstoneEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive, boolean countTicks) {
         super(tileEntityTypeIn, canExtract, canReceive);
 
@@ -22,6 +23,15 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     @Override
     public void tick() {
         if (world != null) {
+            if (getEnergyStorage().getMaxEnergyStored() != this.energyCapacity) {
+                getEnergyStorage().setMaxEnergy(this.energyCapacity);
+            }
+            if (getEnergyStorage().getMaxInput() != this.energyCapacity) {
+                getEnergyStorage().setMaxInput(this.energyCapacity);
+            }
+            if (getEnergyStorage().getMaxExtract() != this.energyCapacity) {
+                getEnergyStorage().setMaxExtract(this.energyCapacity);
+            }
             if (world.isBlockPowered(pos)) {
                 world.addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX(), pos.getY(), pos.getZ(), 5, 5, 5);
             } else {
@@ -42,6 +52,10 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
 
     public void resetCountedTicks() {
         this.ticks = 0;
+    }
+
+    protected void setEnergyCapacity(int energyCapacity) {
+        this.energyCapacity = energyCapacity;
     }
 
     @Override

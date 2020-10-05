@@ -29,19 +29,16 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private final int duration = 40;
     private final int amplifier = CommonConfig.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
     private final int price = CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get();
+
+    @Override
+    public void tick() {
+        setEnergyCapacity(this.price * 10);
+        super.tick();
+    }
+
     @Override
     public void customTickActions() {
         if (world != null && !world.isRemote) {
-            int set_capacity = price * 10;
-            if (getEnergyStorage().getMaxEnergyStored() != set_capacity) {
-                getEnergyStorage().setMaxEnergy(set_capacity);
-            }
-            if (getEnergyStorage().getMaxInput() != set_capacity) {
-                getEnergyStorage().setMaxInput(set_capacity);
-            }
-            if (getEnergyStorage().getMaxExtract() != set_capacity) {
-                getEnergyStorage().setMaxExtract(set_capacity);
-            }
             if (getCountedTicks() >= duration / 2) {
                 resetCountedTicks();
                 boolean has_space_ripper = false;

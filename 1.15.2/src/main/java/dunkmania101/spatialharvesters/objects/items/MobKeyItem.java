@@ -2,6 +2,7 @@ package dunkmania101.spatialharvesters.objects.items;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,9 +30,7 @@ public class MobKeyItem extends Item {
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (stack.getTag() != null) {
-            stack.getTag().put(entityNBTKey, target.serializeNBT());
-        }
+        stack.getOrCreateTag().put(entityNBTKey, target.serializeNBT());
         return super.hitEntity(stack, target, attacker);
     }
 
@@ -39,9 +38,7 @@ public class MobKeyItem extends Item {
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
         if (player.isCrouching()) {
             ItemStack other_stack = player.getHeldItemOffhand();
-            if (itemstack.getTag() != null) {
-                itemstack.getTag().put(weaponNBTKey, other_stack.serializeNBT());
-            }
+            itemstack.getOrCreateTag().put(weaponNBTKey, other_stack.serializeNBT());
         }
         return super.onBlockStartBreak(itemstack, pos, player);
     }
@@ -69,7 +66,7 @@ public class MobKeyItem extends Item {
                             }
                         }
                     }
-                    tile.deserializeNBT(harvesterNBT);
+                    tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
                 }
             }
         }

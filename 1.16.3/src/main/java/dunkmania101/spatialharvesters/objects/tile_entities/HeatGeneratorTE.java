@@ -22,13 +22,16 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     private final int speed = CommonConfig.HEAT_GENERATOR_SPEED.get();
+
+    @Override
+    public void tick() {
+        setEnergyCapacity(this.speed * 10);
+        super.tick();
+    }
+
     @Override
     public void customTickActions() {
         if (world != null && !world.isRemote) {
-            int setCapacity = speed * 10;
-            if (getEnergyStorage().getMaxEnergyStored() != setCapacity) {
-                getEnergyStorage().setMaxEnergy(setCapacity);
-            }
             boolean hot = false;
             ArrayList<IEnergyStorage> out_batteries = new ArrayList<>();
             for (Direction side : Direction.values()) {

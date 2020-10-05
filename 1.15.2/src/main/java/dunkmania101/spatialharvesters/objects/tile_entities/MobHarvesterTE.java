@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import com.mojang.authlib.GameProfile;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.items.MobKeyItem;
@@ -25,7 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class MobHarvesterTE extends SpatialHarvesterTE {
-    private LivingEntity livingEntity = null;
+    private CompoundNBT entity = null;
     private PlayerEntity player = null;
     private ItemStack weapon = ItemStack.EMPTY;
 
@@ -41,13 +42,16 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     public void setEntityDrops() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
-        if (this.player != null && this.livingEntity != null) {
-            LivingEntity newLivingEntity = livingEntity;
+        if (this.player != null && this.entity != null) {
+            LivingEntity newLivingEntity = getLivingEntity();
             newLivingEntity.onDeath(DamageSource.causePlayerDamage(this.player));
-            Collection<ItemEntity> drops = livingEntity.captureDrops();
+            Collection<ItemEntity> drops = newLivingEntity.captureDrops();
             if (drops != null) {
                 for (ItemEntity item : drops) {
-                    newOutputs.add(item.getItem());
+                    if (item != null) {
+                        newOutputs.add(item.getItem());
+                        item.remove();
+                    }
                 }
             }
             newLivingEntity.remove();
@@ -55,11 +59,54 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         setOutputStacks(newOutputs);
     }
 
+    public LivingEntity getLivingEntity() {
+        if (world != null) {
+            if (world instanceof ServerWorld) {
+                ServerWorld serverWorld = (ServerWorld) world;
+                if (this.entity.contains("id")) {
+                    Optional<EntityType<?>> optionalEntityType = EntityType.byKey(this.entity.getString("id"));
+                    if (optionalEntityType.isPresent()) {
+                        EntityType<?> entityType = optionalEntityType.get();
+                        Entity entity = entityType.create(serverWorld);
+                        if (entity != null) {
+                            entity.deserializeNBT(this.entity);
+                            if (entity instanceof LivingEntity) {
+                                return (LivingEntity) entity;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public void removeEntities() {
+        removeLivingEntity();
+        removePlayer();
+        removeWeapon();
+    }
+
+    public void removeLivingEntity() {
+        this.entity = null;
+    }
+
+    public void removePlayer() {
+        if (this.player != null) {
+            this.player.remove();
+            this.player = null;
+        }
+    }
+
+    public void removeWeapon() {
+        this.weapon = ItemStack.EMPTY;
+    }
+
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = super.serializeNBT();
-        if (this.livingEntity != null) {
-            nbt.put(MobKeyItem.entityNBTKey, this.livingEntity.serializeNBT());
+        if (this.entity != null) {
+            nbt.put(MobKeyItem.entityNBTKey, this.entity);
         }
         if (this.player != null) {
             nbt.putString(MobKeyItem.playerNameNBTKey, this.player.getName().getString());
@@ -76,42 +123,29 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     public void deserializeNBT(CompoundNBT nbt) {
         super.deserializeNBT(nbt);
         if (nbt.contains(MobKeyItem.removeEntityNBTKey)) {
-            this.livingEntity = null;
-            this.player = null;
-            this.weapon = ItemStack.EMPTY;
+            removeEntities();
         }
         if (world != null) {
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) world;
-                if (nbt.contains(MobKeyItem.entityNBTKey)) {
-                    CompoundNBT mobNBT = nbt.getCompound(MobKeyItem.entityNBTKey);
-                    if (mobNBT.contains("id")) {
-                        Optional<EntityType<?>> optionalEntityType = EntityType.byKey(mobNBT.getString("id"));
-                        if (optionalEntityType.isPresent()) {
-                            EntityType<?> entityType = optionalEntityType.get();
-                            Entity entity = entityType.create(serverWorld);
-                            if (entity != null) {
-                                entity.deserializeNBT(mobNBT);
-                                if (entity instanceof LivingEntity) {
-                                    this.livingEntity = (LivingEntity) entity;
-                                }
-                            }
-                        }
-                    }
-                    if (nbt.contains(MobKeyItem.playerNameNBTKey)) {
-                        String name = nbt.getString(MobKeyItem.playerNameNBTKey);
-                        if (!StringUtils.isNullOrEmpty(name)) {
-                            GameProfile profile = new GameProfile(UUID.randomUUID(), name);
-                            this.player = FakePlayerFactory.get(serverWorld, profile);
-                        }
-                    }
-                    if (nbt.contains(MobKeyItem.weaponNBTKey) && this.player != null) {
-                        ItemStack weapon = ItemStack.EMPTY;
-                        weapon.deserializeNBT(nbt.getCompound(MobKeyItem.weaponNBTKey));
-                        this.player.setHeldItem(Hand.MAIN_HAND, weapon);
+                if (nbt.contains(MobKeyItem.playerNameNBTKey)) {
+                    removePlayer();
+                    String name = nbt.getString(MobKeyItem.playerNameNBTKey);
+                    if (!StringUtils.isNullOrEmpty(name)) {
+                        GameProfile profile = new GameProfile(UUID.randomUUID(), name);
+                        this.player = FakePlayerFactory.get(serverWorld, profile);
                     }
                 }
             }
+        }
+        if (nbt.contains(MobKeyItem.entityNBTKey)) {
+            removeLivingEntity();
+            this.entity = nbt.getCompound(MobKeyItem.entityNBTKey);
+        }
+        if (nbt.contains(MobKeyItem.weaponNBTKey) && this.player != null) {
+            removeWeapon();
+            this.weapon.deserializeNBT(nbt.getCompound(MobKeyItem.weaponNBTKey));
+            this.player.setHeldItem(Hand.MAIN_HAND, this.weapon);
         }
         markDirty();
     }
@@ -119,12 +153,18 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     @Override
     public void remove() {
         super.remove();
-        if (this.livingEntity != null) {
-            this.livingEntity.remove();
-        }
-        if (this.player != null) {
-            this.player.remove();
-        }
+        removeEntities();
+        this.weapon = null;
+    }
+
+    @Override
+    public int getPrice(Block block) {
+        return CommonConfig.MOB_PRICE.get();
+    }
+
+    @Override
+    public int getSpeed(Block block) {
+        return CommonConfig.MOB_SPEED.get();
     }
 
     @Override
