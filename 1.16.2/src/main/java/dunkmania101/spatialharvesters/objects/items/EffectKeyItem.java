@@ -14,6 +14,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -65,7 +66,8 @@ public class EffectKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.effect_key_description"));
+        ArrayList<StringTextComponent> textComponents = Tools.getSplitStringTextComponent(new TranslationTextComponent("msg.spatialharvesters.effect_key_description").getString(), "splithere");
+        tooltip.addAll(textComponents);
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

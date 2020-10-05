@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,6 +22,15 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.ArrayList;
 
 public class Tools {
+    public static ArrayList<StringTextComponent> getSplitStringTextComponent(String textComponent, String splitOn) {
+        String[] splitText = textComponent.split(splitOn);
+        ArrayList<StringTextComponent> splitTextComponent = new ArrayList<>();
+        for (String text : splitText) {
+            splitTextComponent.add(new StringTextComponent(text));
+        }
+        return splitTextComponent;
+    }
+
     public static VoxelShape getRotatedVoxelShape(VoxelShape shape, Direction from, Direction to) {
         if (from == to) {
             return shape;

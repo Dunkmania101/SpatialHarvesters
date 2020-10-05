@@ -14,9 +14,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MobKeyItem extends Item {
@@ -32,6 +34,10 @@ public class MobKeyItem extends Item {
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.isCrouching()) {
             stack.getOrCreateTag().putString(entityNBTKey, target.serializeNBT().getString("id"));
+            if (attacker instanceof PlayerEntity) {
+                PlayerEntity player =  (PlayerEntity) attacker;
+                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_entity"), true);
+            }
         }
         return super.hitEntity(stack, target, attacker);
     }
@@ -41,6 +47,11 @@ public class MobKeyItem extends Item {
         if (player.isCrouching()) {
             ItemStack other_stack = player.getHeldItemOffhand();
             itemstack.getOrCreateTag().put(weaponNBTKey, other_stack.serializeNBT());
+            if (other_stack.isEmpty()) {
+                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_key_weapon"), true);
+            } else {
+                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_weapon"), true);
+            }
         }
         return super.onBlockStartBreak(itemstack, pos, player);
     }
@@ -55,16 +66,24 @@ public class MobKeyItem extends Item {
                     CompoundNBT harvesterNBT = new CompoundNBT();
                     if (player.isCrouching()) {
                         harvesterNBT.putString(removeEntityNBTKey, "");
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.remove_mob_harvester"), true);
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
                     } else {
                         harvesterNBT.putString(playerNameNBTKey, player.getName().getString());
                         CompoundNBT itemNBT = context.getItem().getTag();
                         if (itemNBT != null) {
+                            boolean empty = true;
                             if (itemNBT.contains(entityNBTKey)) {
+                                empty = false;
                                 harvesterNBT.putString(entityNBTKey, itemNBT.getString(entityNBTKey));
                             }
                             if (itemNBT.contains(weaponNBTKey)) {
+                                empty = false;
                                 harvesterNBT.put(weaponNBTKey, itemNBT.getCompound(weaponNBTKey));
+                            }
+                            if (empty) {
+                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
+                            } else {
+                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
                             }
                         }
                     }
@@ -78,7 +97,8 @@ public class MobKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_description"));
+        ArrayList<StringTextComponent> textComponents = Tools.getSplitStringTextComponent(new TranslationTextComponent("msg.spatialharvesters.mob_key_description").getString(), "splithere");
+        tooltip.addAll(textComponents);
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

@@ -73,12 +73,18 @@
 
   "itemGroup.spatial_harvesters": "Spatial Harvesters",
 
-  "msg.set_dimensional_applicator": "Set Dimensional Applicator to you!",
-  "msg.remove_dimensional_applicator": "Cleared Dimensional Applicator!",
-  "msg.player_key_description": "Right-Click a Dimensional Applicator to bind it to you;\nSneak-Right-Click to unbind it.",
-  "msg.set_dimensional_applicator_nbt_effects": "Set Dimensional Applicator Effects!",
-  "msg.remove_dimensional_applicator_nbt_effects": "Removed saved effects from Dimensional Applicator!",
-  "msg.remove_dimensional_applicator_nbt_effects_failed": "You don't have any active effects!",
-  "msg.effect_key_description": "Right-Click a Dimensional Applicator to set its internally saved effects to yours;\nSneak-Right-Click it to clear them.",
-  "msg.mob_key_description": "Attack an entity with this to bind;\nSneak-Left-Click a block with a weapon in your offhand to bind it;\nRight-Click a Mob Harvester to bind;\nSneak-Right-Click it to clear its configuration;"
+  "msg.spatialharvesters.player_key_description": "Right-Click a Dimensional Applicator to bind it to you;splithereSneak-Right-Click to unbind it.",
+  "msg.spatialharvesters.set_dimensional_applicator": "Set Dimensional Applicator to you!",
+  "msg.spatialharvesters.clear_dimensional_applicator": "Cleared Dimensional Applicator!",
+  "msg.spatialharvesters.effect_key_description": "Right-Click a Dimensional Applicator to set its internally saved effects to yours;splithereSneak-Right-Click it to clear them.",
+  "msg.spatialharvesters.set_dimensional_applicator_nbt_effects": "Set Dimensional Applicator Effects!",
+  "msg.spatialharvesters.remove_dimensional_applicator_nbt_effects_failed": "You don't have any active effects!",
+  "msg.spatialharvesters.remove_dimensional_applicator_nbt_effects": "Removed saved effects from Dimensional Applicator!",
+  "msg.spatialharvesters.mob_key_description": "Attack an entity with this to bind; Sneak-Left-Click a block with a weapon in your offhand to bind it;splithereRight-Click a Mob Harvester to configure it;splithereSneak-Right-Click it to clear its configuration;",
+  "msg.spatialharvesters.set_mob_key_entity": "Set Mob Key to entity!",
+  "msg.spatialharvesters.set_mob_key_weapon": "Set Mob Key to weapon!",
+  "msg.spatialharvesters.clear_mob_key_weapon": "Cleared Mob Key to weapon!",
+  "msg.spatialharvesters.set_mob_harvester": "Set Mob Harvester!",
+  "msg.spatialharvesters.set_mob_harvester_failed": "This Key is unbound!",
+  "msg.spatialharvesters.clear_mob_harvester": "Cleared Mob Harvester!"
 }
