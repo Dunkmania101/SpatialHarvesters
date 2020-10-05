@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
-    private ArrayList<ItemStack> OUTPUTS;
+    private ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
 
     public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn, ArrayList<Item> OUTPUTS) {
         super(tileEntityTypeIn, false, true, true);
@@ -71,7 +71,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public void setOutputs(ArrayList<Item> OUTPUTS) {
-        this.OUTPUTS.clear();
+        this.OUTPUTS = new ArrayList<>();
         for (Item item : OUTPUTS) {
             this.OUTPUTS.add(new ItemStack(item));
         }
