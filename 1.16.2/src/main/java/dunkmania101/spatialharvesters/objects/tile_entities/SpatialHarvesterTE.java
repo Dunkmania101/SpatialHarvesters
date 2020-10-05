@@ -71,6 +71,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public void setOutputs(ArrayList<Item> OUTPUTS) {
+        this.OUTPUTS.clear();
         for (Item item : OUTPUTS) {
             this.OUTPUTS.add(new ItemStack(item));
         }
