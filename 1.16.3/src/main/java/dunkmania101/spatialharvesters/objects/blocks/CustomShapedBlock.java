@@ -35,7 +35,7 @@ public class CustomShapedBlock extends Block {
         this.DOWN_SHAPE = Tools.getRotatedVoxelShape(shape, base_direction, Direction.DOWN);
     }
 
-    public CustomShapedBlock(Properties properties, VoxelShape shape, boolean horizontal) {
+    public CustomShapedBlock(Properties properties, VoxelShape shape) {
         this(properties, shape, Direction.DOWN);
     }
 

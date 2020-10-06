@@ -2,13 +2,11 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomProperties;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
-import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomCustomShapedBlock;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
-import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
-import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -77,7 +75,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                     }
                 }
                 Block this_block = getBlockState().getBlock();
-                if (this_block instanceof ActiveCustomCustomShapedBlock || this_block instanceof ActiveCustomHorizontalShapedBlock) {
+                if (this_block instanceof ActiveCustomHorizontalShapedBlock) {
                     world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
                 }
             }
@@ -127,11 +125,11 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         CompoundNBT nbt = super.serializeNBT();
 
         if (player_id != null) {
-            nbt.putInt(PlayerKeyItem.playerNBTKey, player_id);
+            nbt.putInt(CustomValues.playerNBTKey, player_id);
         }
 
         if (NBTEffects.size() > 0){
-            nbt.putIntArray(EffectKeyItem.potionsNBTKey, NBTEffects);
+            nbt.putIntArray(CustomValues.potionsNBTKey, NBTEffects);
         }
 
         return nbt;
@@ -141,16 +139,16 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     public void deserializeNBT(CompoundNBT nbt) {
         super.deserializeNBT(nbt);
 
-        if (nbt.contains(PlayerKeyItem.removePlayerNBTKey)) {
+        if (nbt.contains(CustomValues.removePlayerNBTKey)) {
             this.player_id = null;
         }
-        if (nbt.contains(PlayerKeyItem.playerNBTKey)) {
-            this.player_id = nbt.getInt(PlayerKeyItem.playerNBTKey);
+        if (nbt.contains(CustomValues.playerNBTKey)) {
+            this.player_id = nbt.getInt(CustomValues.playerNBTKey);
         }
 
-        if (nbt.contains(EffectKeyItem.potionsNBTKey)) {
+        if (nbt.contains(CustomValues.potionsNBTKey)) {
             NBTEffects = new ArrayList<>();
-            for (int potion : nbt.getIntArray(EffectKeyItem.potionsNBTKey)) {
+            for (int potion : nbt.getIntArray(CustomValues.potionsNBTKey)) {
                 if (!NBTEffects.contains(potion)) {
                     NBTEffects.add(potion);
                 }

@@ -2,10 +2,10 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import com.mojang.authlib.GameProfile;
 import dunkmania101.spatialharvesters.data.CommonConfig;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.entities.FakeMobEntity;
-import dunkmania101.spatialharvesters.objects.items.MobKeyItem;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -107,14 +107,14 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = super.serializeNBT();
         if (this.entity != null) {
-            nbt.putString(MobKeyItem.entityNBTKey, this.entity);
+            nbt.putString(CustomValues.entityNBTKey, this.entity);
         }
         if (this.player != null) {
-            nbt.putString(MobKeyItem.playerNameNBTKey, this.player.getName().getString());
+            nbt.putString(CustomValues.playerNameNBTKey, this.player.getName().getString());
         }
         if (this.weapon != null) {
             if (!this.weapon.isEmpty()) {
-                nbt.put(MobKeyItem.weaponNBTKey, this.weapon.serializeNBT());
+                nbt.put(CustomValues.weaponNBTKey, this.weapon.serializeNBT());
             }
         }
         return nbt;
@@ -123,15 +123,15 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         super.deserializeNBT(nbt);
-        if (nbt.contains(MobKeyItem.removeEntityNBTKey)) {
+        if (nbt.contains(CustomValues.removeEntityNBTKey)) {
             removeAll();
         }
         if (world != null) {
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) world;
-                if (nbt.contains(MobKeyItem.playerNameNBTKey)) {
+                if (nbt.contains(CustomValues.playerNameNBTKey)) {
                     removePlayer();
-                    String name = nbt.getString(MobKeyItem.playerNameNBTKey);
+                    String name = nbt.getString(CustomValues.playerNameNBTKey);
                     if (!StringUtils.isNullOrEmpty(name)) {
                         GameProfile profile = new GameProfile(UUID.randomUUID(), name);
                         this.player = FakePlayerFactory.get(serverWorld, profile);
@@ -139,13 +139,13 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                 }
             }
         }
-        if (nbt.contains(MobKeyItem.entityNBTKey)) {
+        if (nbt.contains(CustomValues.entityNBTKey)) {
             removeLivingEntity();
-            this.entity = nbt.getString(MobKeyItem.entityNBTKey);
+            this.entity = nbt.getString(CustomValues.entityNBTKey);
         }
-        if (nbt.contains(MobKeyItem.weaponNBTKey) && this.player != null) {
+        if (nbt.contains(CustomValues.weaponNBTKey) && this.player != null) {
             removeWeapon();
-            this.weapon.deserializeNBT(nbt.getCompound(MobKeyItem.weaponNBTKey));
+            this.weapon.deserializeNBT(nbt.getCompound(CustomValues.weaponNBTKey));
         }
         markDirty();
     }

@@ -2,22 +2,27 @@ package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.util.Tools;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameters;
 
 import java.util.List;
 
-public class PreservedDataBlock extends Block {
-    public PreservedDataBlock(Properties properties) {
-        super(properties);
+public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalShapedBlock {
+    public PreservedDataCustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction front_direction) {
+        super(properties, shape, front_direction);
+    }
+
+    public PreservedDataCustomHorizontalShapedBlock(Properties properties, VoxelShape shape) {
+        this(properties, shape, Direction.NORTH);
     }
 
     @Override

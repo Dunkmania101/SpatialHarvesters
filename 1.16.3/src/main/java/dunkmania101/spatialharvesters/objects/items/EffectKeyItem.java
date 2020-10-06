@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.objects.items;
 
-import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EffectKeyItem extends Item {
-    public static final String potionsNBTKey = SpatialHarvesters.modid + "potionsNBTKey";
-
     public EffectKeyItem(Properties properties) {
         super(properties);
     }
@@ -54,7 +52,7 @@ public class EffectKeyItem extends Item {
                             }
                         }
                         if (doContinue) {
-                            potionsNBT.putIntArray(potionsNBTKey, effects);
+                            potionsNBT.putIntArray(CustomValues.potionsNBTKey, effects);
                             tile.deserializeNBT(Tools.correctTileNBT(tile, potionsNBT));
                         }
                     }

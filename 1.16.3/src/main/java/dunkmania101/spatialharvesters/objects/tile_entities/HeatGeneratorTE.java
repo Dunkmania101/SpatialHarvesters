@@ -4,7 +4,6 @@ import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
-import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomCustomShapedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
@@ -48,7 +47,7 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
                 }
             }
             Block this_block = getBlockState().getBlock();
-            if (this_block instanceof ActiveCustomCustomShapedBlock || this_block instanceof ActiveCustomHorizontalShapedBlock) {
+            if (this_block instanceof ActiveCustomHorizontalShapedBlock) {
                 world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
             }
             for (IEnergyStorage out_battery : out_batteries) {

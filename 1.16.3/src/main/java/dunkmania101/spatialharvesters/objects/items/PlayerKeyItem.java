@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.objects.items;
 
-import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,9 +24,6 @@ public class PlayerKeyItem extends Item {
         super(properties);
     }
 
-    public static final String playerNBTKey = SpatialHarvesters.modid + "_DimensionalApplicatorEntity";
-    public static final String removePlayerNBTKey = SpatialHarvesters.modid + "removePlayer";
-
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
@@ -38,10 +35,10 @@ public class PlayerKeyItem extends Item {
                     if (player != null) {
                         CompoundNBT nbt = new CompoundNBT();
                         if (player.isCrouching()) {
-                            nbt.putString(removePlayerNBTKey, "");
+                            nbt.putString(CustomValues.playerNBTKey, "");
                             player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_dimensional_applicator"), true);
                         } else {
-                            nbt.putInt(playerNBTKey, player.getEntityId());
+                            nbt.putInt(CustomValues.playerNBTKey, player.getEntityId());
                             player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_dimensional_applicator"), true);
                         }
                         tile.deserializeNBT(Tools.correctTileNBT(tile, nbt));

@@ -10,16 +10,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-public class ActiveCustomCustomShapedBlock extends PreservedDataCustomShapedBlock {
-    public ActiveCustomCustomShapedBlock(Properties properties, VoxelShape shape, Direction base_direction) {
-        super(properties, shape, base_direction);
+public class ActiveCustomHorizontalShapedBlock extends PreservedDataCustomHorizontalShapedBlock {
+    public ActiveCustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction front_direction) {
+        super(properties, shape, front_direction);
 
         BlockState this_state = this.getStateContainer().getBaseState();
         this.setDefaultState(this_state.with(ACTIVE, false));
     }
 
-    public ActiveCustomCustomShapedBlock(Properties properties, VoxelShape shape) {
-        this(properties, shape, Direction.DOWN);
+    public ActiveCustomHorizontalShapedBlock(Properties properties, VoxelShape shape) {
+        this(properties, shape, Direction.NORTH);
     }
 
     public static final BooleanProperty ACTIVE = CustomProperties.ACTIVE;

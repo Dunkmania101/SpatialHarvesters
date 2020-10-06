@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.objects.items;
 
-import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,10 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MobKeyItem extends Item {
-    public static final String removeEntityNBTKey = SpatialHarvesters.modid + "_removeEntityNBT";
-    public static final String entityNBTKey = SpatialHarvesters.modid + "_entityNBT";
-    public static final String playerNameNBTKey = SpatialHarvesters.modid + "_playerNameNBT";
-    public static final String weaponNBTKey = SpatialHarvesters.modid + "_weaponNBT";
     public MobKeyItem(Properties properties) {
         super(properties);
     }
@@ -33,7 +29,7 @@ public class MobKeyItem extends Item {
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.isCrouching()) {
-            stack.getOrCreateTag().putString(entityNBTKey, target.serializeNBT().getString("id"));
+            stack.getOrCreateTag().putString(CustomValues.entityNBTKey, target.serializeNBT().getString("id"));
             if (attacker instanceof PlayerEntity) {
                 PlayerEntity player =  (PlayerEntity) attacker;
                 player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_entity"), true);
@@ -46,7 +42,7 @@ public class MobKeyItem extends Item {
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
         if (player.isCrouching()) {
             ItemStack other_stack = player.getHeldItemOffhand();
-            itemstack.getOrCreateTag().put(weaponNBTKey, other_stack.serializeNBT());
+            itemstack.getOrCreateTag().put(CustomValues.weaponNBTKey, other_stack.serializeNBT());
             if (other_stack.isEmpty()) {
                 player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_key_weapon"), true);
             } else {
@@ -65,20 +61,20 @@ public class MobKeyItem extends Item {
                 if (tile instanceof MobHarvesterTE) {
                     CompoundNBT harvesterNBT = new CompoundNBT();
                     if (player.isCrouching()) {
-                        harvesterNBT.putString(removeEntityNBTKey, "");
+                        harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
                     } else {
-                        harvesterNBT.putString(playerNameNBTKey, player.getName().getString());
+                        harvesterNBT.putString(CustomValues.playerNameNBTKey, player.getName().getString());
                         CompoundNBT itemNBT = context.getItem().getTag();
                         if (itemNBT != null) {
                             boolean empty = true;
-                            if (itemNBT.contains(entityNBTKey)) {
+                            if (itemNBT.contains(CustomValues.entityNBTKey)) {
                                 empty = false;
-                                harvesterNBT.putString(entityNBTKey, itemNBT.getString(entityNBTKey));
+                                harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
                             }
-                            if (itemNBT.contains(weaponNBTKey)) {
+                            if (itemNBT.contains(CustomValues.weaponNBTKey)) {
                                 empty = false;
-                                harvesterNBT.put(weaponNBTKey, itemNBT.getCompound(weaponNBTKey));
+                                harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
                             }
                             if (empty) {
                                 player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
