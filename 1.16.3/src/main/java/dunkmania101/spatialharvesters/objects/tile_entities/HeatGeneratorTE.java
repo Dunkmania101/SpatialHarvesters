@@ -21,11 +21,13 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
         super(TileEntityInit.HEAT_GENERATOR.get(), true, true);
     }
 
-    private final int speed = CommonConfig.HEAT_GENERATOR_SPEED.get();
+    public static int getSpeed() {
+        return CommonConfig.HEAT_GENERATOR_SPEED.get();
+    }
 
     @Override
     public void tick() {
-        setEnergyCapacity(this.speed * 10);
+        setEnergyCapacity(getSpeed() * 10);
         super.tick();
     }
 
@@ -33,28 +35,28 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     public void customTickActions() {
         if (world != null && !world.isRemote) {
             boolean active = false;
-            ArrayList<IEnergyStorage> out_batteries = new ArrayList<>();
+            ArrayList<IEnergyStorage> outBatteries = new ArrayList<>();
             for (Direction side : Direction.values()) {
                 Block block = world.getBlockState(pos.offset(side)).getBlock();
                 if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
-                    getEnergyStorage().addEnergy(speed);
+                    getEnergyStorage().addEnergy(getSpeed());
                     active = true;
                 }
                 TileEntity out = world.getTileEntity(pos.offset(side));
                 if (out != null) {
-                    LazyOptional<IEnergyStorage> out_cap = out.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
-                    out_cap.ifPresent(out_batteries::add);
+                    LazyOptional<IEnergyStorage> outCap = out.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
+                    outCap.ifPresent(outBatteries::add);
                 }
             }
             Block this_block = getBlockState().getBlock();
             if (this_block instanceof ActiveCustomHorizontalShapedBlock) {
                 world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
             }
-            for (IEnergyStorage out_battery : out_batteries) {
+            for (IEnergyStorage outBattery : outBatteries) {
                 int energy = getEnergyStorage().getEnergyStored();
                 if (energy > 0) {
-                    int out_received = out_battery.receiveEnergy(energy, false);
-                    getEnergyStorage().consumeEnergy(out_received);
+                    int outReceived = outBattery.receiveEnergy(energy, false);
+                    getEnergyStorage().consumeEnergy(outReceived);
                 }
             }
         }

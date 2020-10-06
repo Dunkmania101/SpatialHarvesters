@@ -17,21 +17,21 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalShapedBlock {
-    public PreservedDataCustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction front_direction) {
-        super(properties, shape, front_direction);
+    public PreservedDataCustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction frontDirection) {
+        super(properties, shape, frontDirection);
     }
 
     public PreservedDataCustomHorizontalShapedBlock(Properties properties, VoxelShape shape) {
         this(properties, shape, Direction.NORTH);
     }
 
-    private CompoundNBT this_tileNBT = null;
+    private CompoundNBT thisTileNBT = null;
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile != null) {
-            this.this_tileNBT = tile.serializeNBT();
+            this.thisTileNBT = tile.serializeNBT();
         }
         super.onBlockHarvested(worldIn, pos, state, player);
     }
@@ -39,8 +39,8 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
         List<ItemStack> drops = super.getDrops(state, builder);
-        if (this_tileNBT != null) {
-            return Tools.getPreservedDataBlockDrops(drops, state, this.this_tileNBT);
+        if (this.thisTileNBT != null) {
+            return Tools.getPreservedDataBlockDrops(drops, state, this.thisTileNBT);
         }
         return drops;
     }

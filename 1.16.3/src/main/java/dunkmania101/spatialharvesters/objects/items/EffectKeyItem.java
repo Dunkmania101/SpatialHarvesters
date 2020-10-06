@@ -39,6 +39,7 @@ public class EffectKeyItem extends Item {
                         ArrayList<Integer> effects = new ArrayList<>();
                         boolean doContinue = true;
                         if (player.isCrouching()) {
+                            potionsNBT.putString(CustomValues.removePlayerNBTKey, "");
                             player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.remove_dimensional_applicator_nbt_effects"), true);
                         } else {
                             for (EffectInstance effectInstance : player.getActivePotionEffects()) {

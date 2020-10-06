@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
-    private ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
+    protected ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
 
     public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn, ArrayList<Item> OUTPUTS) {
         super(tileEntityTypeIn, false, true, true);
@@ -29,49 +29,49 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public void tick() {
-        Block this_block = getBlockState().getBlock();
-        setEnergyCapacity(this.getPrice(this_block) * 10);
+        Block thisBlock = getBlockState().getBlock();
+        setEnergyCapacity(this.getPrice(thisBlock) * 10);
         super.tick();
     }
 
     @Override
     public void customTickActions() {
-        if (world != null && !world.isRemote) {
-            Block this_block = getBlockState().getBlock();
-            if (getCountedTicks() >= getSpeed(this_block)) {
+        if (getWorld() != null && !getWorld().isRemote) {
+            Block thisBlock = getBlockState().getBlock();
+            if (getCountedTicks() >= getSpeed(thisBlock)) {
                 resetCountedTicks();
                 boolean active = false;
-                int price = getPrice(this_block);
-                ArrayList<Direction> space_rippers = new ArrayList<>();
-                ArrayList<IItemHandler> out_inventories = new ArrayList<>();
+                int price = getPrice(thisBlock);
+                ArrayList<Direction> spaceRippers = new ArrayList<>();
+                ArrayList<IItemHandler> outInventories = new ArrayList<>();
                 for (Direction side : Direction.values()) {
-                    if (world.getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
-                        space_rippers.add(side);
+                    if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                        spaceRippers.add(side);
                     }
-                    TileEntity out = world.getTileEntity(pos.offset(side));
+                    TileEntity out = getWorld().getTileEntity(pos.offset(side));
                     if (out != null) {
                         LazyOptional<IItemHandler> out_cap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                        out_cap.ifPresent(out_inventories::add);
+                        out_cap.ifPresent(outInventories::add);
                     }
                 }
-                if (space_rippers.size() > 0 && out_inventories.size() > 0 && this.OUTPUTS.size() > 0) {
-                    active = true;
-                    Random rand = world.rand;
-                    for (Direction ignored : space_rippers) {
+                if (spaceRippers.size() > 0 && outInventories.size() > 0 && this.OUTPUTS.size() > 0) {
+                    for (Direction ignored : spaceRippers) {
                         if (getEnergyStorage().getEnergyStored() >= price) {
-                            ItemStack CHOSEN_OUTPUT = new ItemStack(getShard(this_block));
+                            ItemStack chosenOutput = new ItemStack(getShard(thisBlock));
+                            Random rand = getWorld().rand;
                             if (rand.nextInt(75) != 1) {
-                                CHOSEN_OUTPUT = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size()));
+                                chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size()));
                             }
-                            ItemStack result_stack = ItemHandlerHelper.insertItemStacked(out_inventories.get(rand.nextInt(out_inventories.size())), CHOSEN_OUTPUT, false);
-                            if (result_stack.getCount() < CHOSEN_OUTPUT.getCount()) {
+                            ItemStack resultStack = ItemHandlerHelper.insertItemStacked(outInventories.get(rand.nextInt(outInventories.size())), chosenOutput, false);
+                            if (resultStack != chosenOutput) {
                                 getEnergyStorage().consumeEnergy(price);
+                                active = true;
                             }
                         }
                     }
                 }
-                if (this_block instanceof ActiveCustomHorizontalShapedBlock) {
-                    world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
+                if (thisBlock instanceof ActiveCustomHorizontalShapedBlock) {
+                    getWorld().setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
                 }
             }
         }

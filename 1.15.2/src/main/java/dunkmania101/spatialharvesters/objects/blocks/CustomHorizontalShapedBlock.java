@@ -19,16 +19,16 @@ public class CustomHorizontalShapedBlock extends Block {
     private final VoxelShape EAST_SHAPE;
     private final VoxelShape WEST_SHAPE;
 
-    public CustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction front_direction) {
+    public CustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction frontDirection) {
         super(properties);
 
-        BlockState this_state = this.getStateContainer().getBaseState();
-        this.setDefaultState(this_state.with(FACING, front_direction));
+        BlockState thisState = this.getStateContainer().getBaseState();
+        this.setDefaultState(thisState.with(FACING, frontDirection));
 
-        this.NORTH_SHAPE = Tools.getRotatedVoxelShape(shape, front_direction, Direction.NORTH);
-        this.SOUTH_SHAPE = Tools.getRotatedVoxelShape(shape, front_direction, Direction.SOUTH);
-        this.EAST_SHAPE = Tools.getRotatedVoxelShape(shape, front_direction, Direction.EAST);
-        this.WEST_SHAPE = Tools.getRotatedVoxelShape(shape, front_direction, Direction.WEST);
+        this.NORTH_SHAPE = Tools.getRotatedVoxelShape(shape, frontDirection, Direction.NORTH);
+        this.SOUTH_SHAPE = Tools.getRotatedVoxelShape(shape, frontDirection, Direction.SOUTH);
+        this.EAST_SHAPE = Tools.getRotatedVoxelShape(shape, frontDirection, Direction.EAST);
+        this.WEST_SHAPE = Tools.getRotatedVoxelShape(shape, frontDirection, Direction.WEST);
     }
 
     public CustomHorizontalShapedBlock(Properties properties, VoxelShape shape) {

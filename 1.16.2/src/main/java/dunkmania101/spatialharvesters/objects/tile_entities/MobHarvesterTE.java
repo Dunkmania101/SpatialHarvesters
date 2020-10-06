@@ -45,9 +45,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         if (this.player != null && this.entity != null) {
             FakeMobEntity fakeMobEntity = getFakeMobEntity();
             if (fakeMobEntity != null) {
-                if (this.player.getHeldItemMainhand() != this.weapon) {
-                    updateWeapon();
-                }
+                updateWeapon();
                 DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
                 fakeMobEntity.publicSpawnDrops(playerDamage);
                 newOutputs = fakeMobEntity.getDrops();
@@ -107,7 +105,9 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     protected void updateWeapon() {
         if (this.player != null && this.weapon != null) {
-            this.player.setHeldItem(Hand.MAIN_HAND, this.weapon);
+            if (this.player.getHeldItemMainhand() != this.weapon) {
+                this.player.setHeldItem(Hand.MAIN_HAND, this.weapon);
+            }
         }
     }
 

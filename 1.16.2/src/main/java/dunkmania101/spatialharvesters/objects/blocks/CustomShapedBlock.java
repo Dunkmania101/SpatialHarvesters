@@ -21,18 +21,18 @@ public class CustomShapedBlock extends Block {
     private final VoxelShape UP_SHAPE;
     private final VoxelShape DOWN_SHAPE;
 
-    public CustomShapedBlock(Properties properties, VoxelShape shape, Direction base_direction) {
+    public CustomShapedBlock(Properties properties, VoxelShape shape, Direction baseDirection) {
         super(properties);
 
         BlockState this_state = this.getStateContainer().getBaseState();
-        this.setDefaultState(this_state.with(FACING, base_direction));
+        this.setDefaultState(this_state.with(FACING, baseDirection));
 
-        this.NORTH_SHAPE = Tools.getRotatedVoxelShape(shape, base_direction, Direction.NORTH);
-        this.SOUTH_SHAPE = Tools.getRotatedVoxelShape(shape, base_direction, Direction.SOUTH);
-        this.EAST_SHAPE = Tools.getRotatedVoxelShape(shape, base_direction, Direction.EAST);
-        this.WEST_SHAPE = Tools.getRotatedVoxelShape(shape, base_direction, Direction.WEST);
-        this.UP_SHAPE = Tools.getRotatedVoxelShape(shape, base_direction, Direction.UP);
-        this.DOWN_SHAPE = Tools.getRotatedVoxelShape(shape, base_direction, Direction.DOWN);
+        this.NORTH_SHAPE = Tools.getRotatedVoxelShape(shape, baseDirection, Direction.NORTH);
+        this.SOUTH_SHAPE = Tools.getRotatedVoxelShape(shape, baseDirection, Direction.SOUTH);
+        this.EAST_SHAPE = Tools.getRotatedVoxelShape(shape, baseDirection, Direction.EAST);
+        this.WEST_SHAPE = Tools.getRotatedVoxelShape(shape, baseDirection, Direction.WEST);
+        this.UP_SHAPE = Tools.getRotatedVoxelShape(shape, baseDirection, Direction.UP);
+        this.DOWN_SHAPE = Tools.getRotatedVoxelShape(shape, baseDirection, Direction.DOWN);
     }
 
     public CustomShapedBlock(Properties properties, VoxelShape shape) {

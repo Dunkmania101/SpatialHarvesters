@@ -42,18 +42,18 @@ public class Tools {
 
         VoxelShape[] buffer = new VoxelShape[]{shape, VoxelShapes.empty()};
 
-        int vertical_times = 0;
+        int verticalTimes = 0;
         if (from.getHorizontalIndex() == -1) {
             if (from == to.getOpposite()) {
-                vertical_times = 2;
+                verticalTimes = 2;
             } else {
-                vertical_times = 1;
+                verticalTimes = 1;
             }
         } else if (to.getHorizontalIndex() == -1) {
-            vertical_times = 1;
+            verticalTimes = 1;
         }
 
-        for (int i = 0; i < vertical_times; i++) {
+        for (int i = 0; i < verticalTimes; i++) {
             buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(minX, 1-maxZ, minY, maxX, 1-minZ, maxY)));
             if (from.getAxis() == Direction.Axis.Z || from.getAxis() == Direction.Axis.Y) {
                 from = Direction.byIndex(from.getIndex() + 2);
@@ -62,8 +62,8 @@ public class Tools {
             buffer[1] = VoxelShapes.empty();
         }
 
-        int horizontal_times = (to.getHorizontalIndex() - from.getHorizontalIndex() + 4) % 4;
-        for (int i = 0; i < horizontal_times; i++) {
+        int horizontalTimes = (to.getHorizontalIndex() - from.getHorizontalIndex() + 4) % 4;
+        for (int i = 0; i < horizontalTimes; i++) {
             buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(1-maxZ, minY, minX, 1-minZ, maxY, maxX)));
             buffer[0] = buffer[1];
             buffer[1] = VoxelShapes.empty();
@@ -74,8 +74,8 @@ public class Tools {
     public static int checkChunkBlocks(World worldIn, ChunkPos cpos, Block blockIn) {
         int count = 0;
         int height = worldIn.getChunk(cpos.asBlockPos()).getHeight();
-        for (BlockPos check_pos : BlockPos.getAllInBoxMutable(cpos.getXStart(), 0, cpos.getZStart(), cpos.getXEnd(), height, cpos.getZEnd())) {
-            if (worldIn.getBlockState(check_pos).getBlock() == blockIn.getBlock()) {
+        for (BlockPos checkPos : BlockPos.getAllInBoxMutable(cpos.getXStart(), 0, cpos.getZStart(), cpos.getXEnd(), height, cpos.getZEnd())) {
+            if (worldIn.getBlockState(checkPos).getBlock() == blockIn.getBlock()) {
                 count++;
             }
         }
@@ -114,16 +114,16 @@ public class Tools {
         ArrayList<ArrayList<String>> config_ores = CommonConfig.CUSTOM_ORES.get();
         ArrayList<ArrayList<String>> blacklist_ores = CommonConfig.BLACKLIST_ORES.get();
         ArrayList<String> blacklist_ores_mod = CommonConfig.BLACKLIST_ORES_MOD.get();
-        for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
-            ResourceLocation item_rn = check_item.getRegistryName();
-            if (item_rn != null) {
+        for (Item checkItem : ForgeRegistries.ITEMS.getValues()) {
+            ResourceLocation itemRN = checkItem.getRegistryName();
+            if (itemRN != null) {
                 ArrayList<String> modOre = new ArrayList<>();
-                String modid = item_rn.getNamespace();
+                String modid = itemRN.getNamespace();
                 modOre.add(modid);
-                modOre.add(item_rn.getPath());
+                modOre.add(itemRN.getPath());
                 if (!blacklist_ores.contains(modOre) && !blacklist_ores_mod.contains(modid)) {
-                    if (check_item.isIn(Tags.Items.ORES) || config_ores.contains(modOre)) {
-                        ORES.add(check_item);
+                    if (checkItem.isIn(Tags.Items.ORES) || config_ores.contains(modOre)) {
+                        ORES.add(checkItem);
                     }
                 }
             }
@@ -136,29 +136,29 @@ public class Tools {
         ArrayList<ArrayList<String>> config_bios = CommonConfig.CUSTOM_BIOS.get();
         ArrayList<ArrayList<String>> blacklist_bios = CommonConfig.BLACKLIST_BIOS.get();
         ArrayList<String> blacklist_bios_mod = CommonConfig.BLACKLIST_BIOS_MOD.get();
-        for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
-            ResourceLocation item_rn = check_item.getRegistryName();
-            if (item_rn != null) {
+        for (Item checkItem : ForgeRegistries.ITEMS.getValues()) {
+            ResourceLocation itemRN = checkItem.getRegistryName();
+            if (itemRN != null) {
                 ArrayList<String> modBio = new ArrayList<>();
-                String modid = item_rn.getNamespace();
+                String modid = itemRN.getNamespace();
                 modBio.add(modid);
-                modBio.add(item_rn.getPath());
+                modBio.add(itemRN.getPath());
                 if (!blacklist_bios.contains(modBio) && !blacklist_bios_mod.contains(modid)) {
-                    if (check_item.isIn(Tags.Items.CROPS)
-                                    || check_item.isIn(Tags.Items.MUSHROOMS)
-                                    || check_item.isIn(Tags.Items.LEATHER)
-                                    || check_item.isIn(Tags.Items.FEATHERS)
-                                    || check_item.isIn(Tags.Items.SEEDS)
-                                    || check_item.isIn(Tags.Items.DYES)
-                                    || check_item.isIn(Tags.Items.BONES)
-                                    || check_item.isIn(ItemTags.SMALL_FLOWERS)
-                                    || check_item.isIn(ItemTags.LOGS)
-                                    || check_item.isIn(ItemTags.LEAVES)
-                                    || check_item.isIn(ItemTags.SAPLINGS)
-                                    || check_item.isIn(ItemTags.PLANKS)
-                                    || check_item.isIn(Tags.Items.RODS_WOODEN)
+                    if (checkItem.isIn(Tags.Items.CROPS)
+                                    || checkItem.isIn(Tags.Items.MUSHROOMS)
+                                    || checkItem.isIn(Tags.Items.LEATHER)
+                                    || checkItem.isIn(Tags.Items.FEATHERS)
+                                    || checkItem.isIn(Tags.Items.SEEDS)
+                                    || checkItem.isIn(Tags.Items.DYES)
+                                    || checkItem.isIn(Tags.Items.BONES)
+                                    || checkItem.isIn(ItemTags.SMALL_FLOWERS)
+                                    || checkItem.isIn(ItemTags.LOGS)
+                                    || checkItem.isIn(ItemTags.LEAVES)
+                                    || checkItem.isIn(ItemTags.SAPLINGS)
+                                    || checkItem.isIn(ItemTags.PLANKS)
+                                    || checkItem.isIn(Tags.Items.RODS_WOODEN)
                      || config_bios.contains(modBio)) {
-                        BIOS.add(check_item);
+                        BIOS.add(checkItem);
                     }
                 }
             }
@@ -171,22 +171,22 @@ public class Tools {
         ArrayList<ArrayList<String>> config_stones = CommonConfig.CUSTOM_STONES.get();
         ArrayList<ArrayList<String>> blacklist_stones = CommonConfig.BLACKLIST_STONES.get();
         ArrayList<String> blacklist_stones_mod = CommonConfig.BLACKLIST_ORES_MOD.get();
-        for (Item check_item : ForgeRegistries.ITEMS.getValues()) {
-            ResourceLocation item_rn = check_item.getRegistryName();
-            if (item_rn != null) {
+        for (Item checkItem : ForgeRegistries.ITEMS.getValues()) {
+            ResourceLocation itemRN = checkItem.getRegistryName();
+            if (itemRN != null) {
                 ArrayList<String> modStone = new ArrayList<>();
-                String modid = item_rn.getNamespace();
+                String modid = itemRN.getNamespace();
                 modStone.add(modid);
-                modStone.add(item_rn.getPath());
+                modStone.add(itemRN.getPath());
                 if (!blacklist_stones.contains(modStone) && !blacklist_stones_mod.contains(modid)) {
                     if ((
-                            check_item.isIn(Tags.Items.STONE)
-                                    || check_item.isIn(Tags.Items.COBBLESTONE)
-                                    || check_item.isIn(Tags.Items.SANDSTONE)
-                                    || check_item.isIn(Tags.Items.END_STONES)
-                                    || check_item.isIn(Tags.Items.NETHERRACK)
+                            checkItem.isIn(Tags.Items.STONE)
+                                    || checkItem.isIn(Tags.Items.COBBLESTONE)
+                                    || checkItem.isIn(Tags.Items.SANDSTONE)
+                                    || checkItem.isIn(Tags.Items.END_STONES)
+                                    || checkItem.isIn(Tags.Items.NETHERRACK)
                     ) || config_stones.contains(modStone)) {
-                        STONES.add(check_item);
+                        STONES.add(checkItem);
                     }
                 }
             }
@@ -201,19 +201,19 @@ public class Tools {
         ArrayList<String> blacklist_soils_mod = CommonConfig.BLACKLIST_ORES_MOD.get();
         SOILS.add(Items.CLAY);
         for (Block block : ForgeRegistries.BLOCKS.getValues()) {
-            Item check_item = block.asItem();
-            ResourceLocation item_rn = check_item.getRegistryName();
-            if (item_rn != null) {
+            Item checkItem = block.asItem();
+            ResourceLocation itemRN = checkItem.getRegistryName();
+            if (itemRN != null) {
                 ArrayList<String> modSoil = new ArrayList<>();
-                String modid = item_rn.getNamespace();
+                String modid = itemRN.getNamespace();
                 modSoil.add(modid);
-                modSoil.add(item_rn.getPath());
+                modSoil.add(itemRN.getPath());
                 if (!blacklist_soils.contains(modSoil) && !blacklist_soils_mod.contains(modid)) {
                     if ((block.isIn(Tags.Blocks.DIRT)
                             || block.isIn(Tags.Blocks.SAND)
                             || block.isIn(Tags.Blocks.GRAVEL)
                     ) || config_soils.contains(modSoil)) {
-                        SOILS.add(check_item);
+                        SOILS.add(checkItem);
                     }
                 }
             }

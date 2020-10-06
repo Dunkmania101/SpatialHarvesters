@@ -11,11 +11,11 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 public class ActiveCustomHorizontalShapedBlock extends PreservedDataCustomHorizontalShapedBlock {
-    public ActiveCustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction front_direction) {
-        super(properties, shape, front_direction);
+    public ActiveCustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction frontDirection) {
+        super(properties, shape, frontDirection);
 
-        BlockState this_state = this.getStateContainer().getBaseState();
-        this.setDefaultState(this_state.with(ACTIVE, false));
+        BlockState thisState = this.getStateContainer().getBaseState();
+        this.setDefaultState(thisState.with(ACTIVE, false));
     }
 
     public ActiveCustomHorizontalShapedBlock(Properties properties, VoxelShape shape) {
