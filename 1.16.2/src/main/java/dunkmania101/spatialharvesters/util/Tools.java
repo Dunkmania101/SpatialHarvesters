@@ -95,13 +95,12 @@ public class Tools {
         return nbt;
     }
 
-    public static List<ItemStack> getPreservedDataBlockDrops(List<ItemStack> drops, BlockState state, TileEntity tile) {
-        if (tile != null) {
+    public static List<ItemStack> getPreservedDataBlockDrops(List<ItemStack> drops, BlockState state, CompoundNBT tileNBT) {
+        if (tileNBT != null) {
             for (ItemStack stack : drops) {
                 if (stack.getItem() == state.getBlock().asItem()) {
                     int i = drops.indexOf(stack);
-                    CompoundNBT tileNBT = tile.serializeNBT();
-                    stack.getOrCreateTag().put(CustomValues.stackTileNBTKey, correctTileNBT(tile, tileNBT));
+                    stack.getOrCreateTag().put(CustomValues.stackTileNBTKey, tileNBT);
                     drops.set(i, stack);
                     break;
                 }

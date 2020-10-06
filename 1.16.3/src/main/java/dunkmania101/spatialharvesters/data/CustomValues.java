@@ -58,4 +58,7 @@ public class CustomValues {
     public static final String entityNBTKey = SpatialHarvesters.modid + "_entityNBT";
     public static final String playerNameNBTKey = SpatialHarvesters.modid + "_playerNameNBT";
     public static final String weaponNBTKey = SpatialHarvesters.modid + "_weaponNBT";
+    public static final String chunkLoaderDataKey = SpatialHarvesters.modid + "_ChunkLoaders";
+    public static final String tileEnergyKey = "tileEnergy";
+    public static final String energyStorageKey = "energyStorage";
 }

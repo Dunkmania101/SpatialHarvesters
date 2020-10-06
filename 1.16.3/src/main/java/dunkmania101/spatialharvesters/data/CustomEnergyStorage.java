@@ -5,7 +5,6 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage implements INBTSerializable<CompoundNBT> {
-    private static final String energyKey = "energy";
     public CustomEnergyStorage(int capacity, int maxInput, int maxOutput) {
         super(capacity, maxInput, maxOutput);
     }
@@ -35,6 +34,7 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
 
     public void setMaxEnergy(int energy) {
         this.capacity = energy;
+        onEnergyChanged();
     }
 
     @Override
@@ -44,6 +44,7 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
 
     public void setMaxInput(int energy) {
         this.maxReceive = energy;
+        onEnergyChanged();
     }
 
     public int getMaxInput() {
@@ -52,6 +53,7 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
 
     public void setMaxExtract(int energy) {
         this.maxExtract = energy;
+        onEnergyChanged();
     }
 
     public int getMaxExtract() {
@@ -83,14 +85,14 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT tag = new CompoundNBT();
-        tag.putInt(energyKey, getEnergyStored());
+        tag.putInt(CustomValues.energyStorageKey, getEnergyStored());
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        if (nbt.contains(energyKey)) {
-            setEnergyStoredNoCheck(nbt.getInt(energyKey));
+        if (nbt.contains(CustomValues.energyStorageKey)) {
+            setEnergyStoredNoCheck(nbt.getInt(CustomValues.energyStorageKey));
         }
     }
 }

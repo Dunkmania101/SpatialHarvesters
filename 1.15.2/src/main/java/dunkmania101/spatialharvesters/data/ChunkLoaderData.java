@@ -1,6 +1,5 @@
 package dunkmania101.spatialharvesters.data;
 
-import dunkmania101.spatialharvesters.SpatialHarvesters;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.LongArrayNBT;
 import net.minecraft.util.math.ChunkPos;
@@ -10,15 +9,14 @@ import net.minecraft.world.storage.WorldSavedData;
 import java.util.ArrayList;
 
 public class ChunkLoaderData extends WorldSavedData {
-    private static final String key = SpatialHarvesters.modid + "_ChunkLoaders";
     private final ArrayList<Long> CHUNK_LOADERS;
     public ChunkLoaderData() {
-        super(key);
+        super(CustomValues.chunkLoaderDataKey);
         this.CHUNK_LOADERS = new ArrayList<>();
     }
 
     public static ChunkLoaderData get(ServerWorld worldIn) {
-        return worldIn.getSavedData().getOrCreate(ChunkLoaderData::new, key);
+        return worldIn.getSavedData().getOrCreate(ChunkLoaderData::new, CustomValues.chunkLoaderDataKey);
     }
 
     public ArrayList<Long> getChunkLoaders() {
@@ -39,7 +37,7 @@ public class ChunkLoaderData extends WorldSavedData {
 
     @Override
     public void read(CompoundNBT nbt) {
-        long[] CHUNK_LOADERS_NBT = nbt.getLongArray(key);
+        long[] CHUNK_LOADERS_NBT = nbt.getLongArray(CustomValues.chunkLoaderDataKey);
         for (long check_pos : CHUNK_LOADERS_NBT) {
             this.CHUNK_LOADERS.add(check_pos);
         }
@@ -48,7 +46,7 @@ public class ChunkLoaderData extends WorldSavedData {
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         LongArrayNBT CHUNK_LOADERS_NBT = new LongArrayNBT(CHUNK_LOADERS);
-        compound.put(key, CHUNK_LOADERS_NBT);
+        compound.put(CustomValues.chunkLoaderDataKey, CHUNK_LOADERS_NBT);
         return compound;
     }
 }

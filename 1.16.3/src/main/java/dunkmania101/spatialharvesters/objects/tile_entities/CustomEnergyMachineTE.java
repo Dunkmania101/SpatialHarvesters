@@ -1,6 +1,8 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
+import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -14,7 +16,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CustomEnergyMachineTE extends TileEntity {
-    public static final String energyKey = "tileEnergy";
     public CustomEnergyMachineTE(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
     }
@@ -74,15 +75,15 @@ public class CustomEnergyMachineTE extends TileEntity {
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = super.serializeNBT();
-        nbt.put(energyKey, getEnergyStorage().serializeNBT());
+        nbt.put(CustomValues.tileEnergyKey, getEnergyStorage().serializeNBT());
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        super.deserializeNBT(nbt);
-        if (nbt.contains(energyKey)) {
-            CompoundNBT energyNBT = nbt.getCompound(energyKey);
+        super.deserializeNBT(Tools.correctTileNBT(getTileEntity(), nbt));
+        if (nbt.contains(CustomValues.tileEnergyKey)) {
+            CompoundNBT energyNBT = nbt.getCompound(CustomValues.tileEnergyKey);
             getEnergyStorage().deserializeNBT(energyNBT);
         }
         markDirty();

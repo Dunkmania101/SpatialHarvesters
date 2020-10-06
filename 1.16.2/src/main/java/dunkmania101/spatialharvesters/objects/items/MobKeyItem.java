@@ -31,7 +31,7 @@ public class MobKeyItem extends Item {
         if (attacker.isCrouching()) {
             stack.getOrCreateTag().putString(CustomValues.entityNBTKey, target.serializeNBT().getString("id"));
             if (attacker instanceof PlayerEntity) {
-                PlayerEntity player =  (PlayerEntity) attacker;
+                PlayerEntity player = (PlayerEntity) attacker;
                 player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_entity"), true);
             }
         }
@@ -42,14 +42,15 @@ public class MobKeyItem extends Item {
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
         if (player.isCrouching()) {
             ItemStack other_stack = player.getHeldItemOffhand();
-            itemstack.getOrCreateTag().put(CustomValues.weaponNBTKey, other_stack.serializeNBT());
             if (other_stack.isEmpty()) {
                 player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_key_weapon"), true);
+                itemstack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
             } else {
                 player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_weapon"), true);
+                itemstack.getOrCreateTag().put(CustomValues.weaponNBTKey, other_stack.serializeNBT());
             }
         }
-        return super.onBlockStartBreak(itemstack, pos, player);
+        return true;
     }
 
     @Override
@@ -62,29 +63,28 @@ public class MobKeyItem extends Item {
                     CompoundNBT harvesterNBT = new CompoundNBT();
                     if (player.isCrouching()) {
                         harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
                     } else {
-                        harvesterNBT.putString(CustomValues.playerNameNBTKey, player.getName().getString());
                         CompoundNBT itemNBT = context.getItem().getTag();
                         if (itemNBT != null) {
-                            boolean empty = true;
                             if (itemNBT.contains(CustomValues.entityNBTKey)) {
-                                empty = false;
                                 harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
                             }
                             if (itemNBT.contains(CustomValues.weaponNBTKey)) {
-                                empty = false;
                                 harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
-                            }
-                            if (empty) {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
-                            } else {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
                             }
                         }
                     }
-                    tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
+                    if (harvesterNBT.isEmpty()) {
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
+                    } else {
+                        if (harvesterNBT.contains(CustomValues.removeEntityNBTKey)) {
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
+                        } else {
+                            harvesterNBT.putString(CustomValues.playerNameNBTKey, player.getName().getString());
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
+                        }
+                        tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
+                    }
                 }
             }
         }

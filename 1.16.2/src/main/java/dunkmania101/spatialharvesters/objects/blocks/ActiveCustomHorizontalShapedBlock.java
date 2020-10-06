@@ -33,7 +33,7 @@ public class ActiveCustomHorizontalShapedBlock extends PreservedDataCustomHorizo
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
         if (state.get(ACTIVE)) {
-            return 7;
+            return 15;
         }
         return 0;
     }

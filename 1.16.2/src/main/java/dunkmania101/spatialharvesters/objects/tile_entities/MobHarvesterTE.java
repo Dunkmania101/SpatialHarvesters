@@ -45,9 +45,11 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         if (this.player != null && this.entity != null) {
             FakeMobEntity fakeMobEntity = getFakeMobEntity();
             if (fakeMobEntity != null) {
-                this.player.setHeldItem(Hand.MAIN_HAND, this.weapon);
+                if (this.player.getHeldItemMainhand() != this.weapon) {
+                    updateWeapon();
+                }
                 DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
-                fakeMobEntity.onDeath(playerDamage);
+                fakeMobEntity.publicSpawnDrops(playerDamage);
                 newOutputs = fakeMobEntity.getDrops();
                 fakeMobEntity.remove();
             }
@@ -82,13 +84,13 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     protected void removeAll() {
-        removeLivingEntity();
+        removeMobEntity();
         removePlayer();
         removeWeapon();
         this.weapon = null;
     }
 
-    protected void removeLivingEntity() {
+    protected void removeMobEntity() {
         this.entity = null;
     }
 
@@ -101,6 +103,12 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     protected void removeWeapon() {
         this.weapon = ItemStack.EMPTY;
+    }
+
+    protected void updateWeapon() {
+        if (this.player != null && this.weapon != null) {
+            this.player.setHeldItem(Hand.MAIN_HAND, this.weapon);
+        }
     }
 
     @Override
@@ -126,26 +134,27 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         if (nbt.contains(CustomValues.removeEntityNBTKey)) {
             removeAll();
         }
-        if (world != null) {
-            if (world instanceof ServerWorld) {
-                ServerWorld serverWorld = (ServerWorld) world;
-                if (nbt.contains(CustomValues.playerNameNBTKey)) {
-                    removePlayer();
+        if (nbt.contains(CustomValues.entityNBTKey)) {
+            removeMobEntity();
+            this.entity = nbt.getString(CustomValues.entityNBTKey);
+        }
+        if (nbt.contains(CustomValues.playerNameNBTKey)) {
+            if (world != null) {
+                if (world instanceof ServerWorld) {
+                    ServerWorld serverWorld = (ServerWorld) world;
                     String name = nbt.getString(CustomValues.playerNameNBTKey);
                     if (!StringUtils.isNullOrEmpty(name)) {
+                        removePlayer();
                         GameProfile profile = new GameProfile(UUID.randomUUID(), name);
                         this.player = FakePlayerFactory.get(serverWorld, profile);
+                        this.player.setSilent(true);
                     }
                 }
             }
         }
-        if (nbt.contains(CustomValues.entityNBTKey)) {
-            removeLivingEntity();
-            this.entity = nbt.getString(CustomValues.entityNBTKey);
-        }
-        if (nbt.contains(CustomValues.weaponNBTKey) && this.player != null) {
+        if (nbt.contains(CustomValues.weaponNBTKey)) {
             removeWeapon();
-            this.weapon.deserializeNBT(nbt.getCompound(CustomValues.weaponNBTKey));
+            this.weapon = ItemStack.read(nbt.getCompound(CustomValues.weaponNBTKey));
         }
         markDirty();
     }
