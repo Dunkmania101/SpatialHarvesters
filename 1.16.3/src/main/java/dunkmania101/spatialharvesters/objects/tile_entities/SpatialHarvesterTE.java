@@ -1,6 +1,9 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.init.ItemInit;
+import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
+import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomCustomShapedBlock;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -38,6 +41,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             Block this_block = getBlockState().getBlock();
             if (getCountedTicks() >= getSpeed(this_block)) {
                 resetCountedTicks();
+                boolean active = false;
                 int price = getPrice(this_block);
                 ArrayList<Direction> space_rippers = new ArrayList<>();
                 ArrayList<IItemHandler> out_inventories = new ArrayList<>();
@@ -52,6 +56,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                     }
                 }
                 if (space_rippers.size() > 0 && out_inventories.size() > 0 && this.OUTPUTS.size() > 0) {
+                    active = true;
                     Random rand = world.rand;
                     for (Direction ignored : space_rippers) {
                         if (getEnergyStorage().getEnergyStored() >= price) {
@@ -65,6 +70,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                             }
                         }
                     }
+                }
+                if (this_block instanceof ActiveCustomCustomShapedBlock || this_block instanceof ActiveCustomHorizontalShapedBlock) {
+                    world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
                 }
             }
         }

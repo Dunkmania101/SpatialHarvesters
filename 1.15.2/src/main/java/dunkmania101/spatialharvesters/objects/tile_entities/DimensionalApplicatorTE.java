@@ -1,8 +1,11 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
+import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
+import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomCustomShapedBlock;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
 import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
@@ -41,6 +44,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         if (world != null && !world.isRemote) {
             if (getCountedTicks() >= duration / 2) {
                 resetCountedTicks();
+                boolean active = false;
                 boolean has_space_ripper = false;
                 for (Direction side : Direction.values()) {
                     if (world.getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
@@ -62,6 +66,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                                 PlayerEntity player = (PlayerEntity) entity;
                                 ArrayList<EffectInstance> effects = getEffects(world, pos);
                                 for (EffectInstance effect : effects) {
+                                    active = true;
                                     if (getEnergyStorage().getEnergyStored() >= price) {
                                         player.addPotionEffect(effect);
                                         getEnergyStorage().consumeEnergy(price);
@@ -70,6 +75,10 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                             }
                         }
                     }
+                }
+                Block this_block = getBlockState().getBlock();
+                if (this_block instanceof ActiveCustomCustomShapedBlock || this_block instanceof ActiveCustomHorizontalShapedBlock) {
+                    world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
                 }
             }
         }

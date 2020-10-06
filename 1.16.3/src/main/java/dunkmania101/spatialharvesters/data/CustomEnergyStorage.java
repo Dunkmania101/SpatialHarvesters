@@ -24,7 +24,7 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
     }
 
     public void setEnergyStored(int energy) {
-        this.energy = energy;
+        setEnergyStoredNoCheck(energy);
         onEnergyChanged();
     }
 

@@ -1,8 +1,11 @@
 package dunkmania101.spatialharvesters.util;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ItemTags;
@@ -20,6 +23,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tools {
     public static ArrayList<StringTextComponent> getSplitStringTextComponent(String textComponent, String splitOn) {
@@ -89,6 +93,21 @@ public class Tools {
         nbt.putInt("y", pos.getY());
         nbt.putInt("z", pos.getZ());
         return nbt;
+    }
+
+    public static List<ItemStack> getPreservedDataBlockDrops(List<ItemStack> drops, BlockState state, TileEntity tile) {
+        if (tile != null) {
+            for (ItemStack stack : drops) {
+                if (stack.getItem() == state.getBlock().asItem()) {
+                    int i = drops.indexOf(stack);
+                    CompoundNBT tileNBT = tile.serializeNBT();
+                    stack.getOrCreateTag().put(CustomValues.stackTileNBTKey, correctTileNBT(tile, tileNBT));
+                    drops.set(i, stack);
+                    break;
+                }
+            }
+        }
+        return drops;
     }
 
     public static ArrayList<Item> getLoadedOres() {

@@ -1,6 +1,0 @@
-{
-	"parent": "block/cube_all",
-	"textures": {
-		"all": "spatialharvesters:block/stone_harvester_block"
-	}
-}

@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
-import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,8 +16,6 @@ import net.minecraft.world.storage.loot.LootParameters;
 import java.util.List;
 
 public class PreservedDataBlock extends Block {
-    private static final String stackTileNBTKey = SpatialHarvesters.modid + "_stackTileNBT";
-
     public PreservedDataBlock(Properties properties) {
         super(properties);
     }
@@ -27,15 +25,7 @@ public class PreservedDataBlock extends Block {
         List<ItemStack> drops = super.getDrops(state, builder);
         TileEntity tile = builder.get(LootParameters.BLOCK_ENTITY);
         if (tile != null) {
-            for (ItemStack stack : drops) {
-                if (stack.getItem() == state.getBlock().asItem()) {
-                    int i = drops.indexOf(stack);
-                    CompoundNBT tileNBT = tile.serializeNBT();
-                    stack.getOrCreateTag().put(stackTileNBTKey, Tools.correctTileNBT(tile, tileNBT));
-                    drops.set(i, stack);
-                    break;
-                }
-            }
+            return Tools.getPreservedDataBlockDrops(drops, state, tile);
         }
         return drops;
     }
@@ -45,7 +35,7 @@ public class PreservedDataBlock extends Block {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         if (!worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            CompoundNBT stackTileNBT = stack.getChildTag(stackTileNBTKey);
+            CompoundNBT stackTileNBT = stack.getChildTag(CustomValues.stackTileNBTKey);
             if (tileEntity != null && stackTileNBT != null) {
                 tileEntity.deserializeNBT(stackTileNBT);
             }

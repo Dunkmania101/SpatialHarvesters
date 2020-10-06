@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockReader;
 
 import java.util.stream.Stream;
 
-public class HeatGeneratorBlock extends ActivePreservedDataShapedBlock {
+public class HeatGeneratorBlock extends ActiveCustomHorizontalShapedBlock {
     public HeatGeneratorBlock(Properties properties) {
         super(properties,
                 Stream.of(
@@ -44,8 +44,7 @@ public class HeatGeneratorBlock extends ActivePreservedDataShapedBlock {
                         Block.makeCuboidShape(2, 6, 1, 14, 7, 2),
                         Block.makeCuboidShape(2, 4, 1, 14, 5, 2),
                         Block.makeCuboidShape(7, 2, 15, 9, 4, 16)
-                ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get(),
-                true);
+                ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get());
     }
 
     @Override

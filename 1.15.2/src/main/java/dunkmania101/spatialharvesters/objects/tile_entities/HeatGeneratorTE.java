@@ -3,7 +3,8 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
-import dunkmania101.spatialharvesters.objects.blocks.ActivePreservedDataShapedBlock;
+import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
+import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomCustomShapedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
@@ -32,13 +33,13 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     @Override
     public void customTickActions() {
         if (world != null && !world.isRemote) {
-            boolean hot = false;
+            boolean active = false;
             ArrayList<IEnergyStorage> out_batteries = new ArrayList<>();
             for (Direction side : Direction.values()) {
                 Block block = world.getBlockState(pos.offset(side)).getBlock();
                 if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
                     getEnergyStorage().addEnergy(speed);
-                    hot = true;
+                    active = true;
                 }
                 TileEntity out = world.getTileEntity(pos.offset(side));
                 if (out != null) {
@@ -46,8 +47,9 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
                     out_cap.ifPresent(out_batteries::add);
                 }
             }
-            if (getBlockState().getBlock() instanceof ActivePreservedDataShapedBlock) {
-                world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, hot));
+            Block this_block = getBlockState().getBlock();
+            if (this_block instanceof ActiveCustomCustomShapedBlock || this_block instanceof ActiveCustomHorizontalShapedBlock) {
+                world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
             }
             for (IEnergyStorage out_battery : out_batteries) {
                 int energy = getEnergyStorage().getEnergyStored();

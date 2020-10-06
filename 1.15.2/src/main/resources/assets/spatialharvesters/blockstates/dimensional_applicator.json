@@ -1,7 +1,35 @@
 {
   "variants": {
-    "": {
+    "facing=north,active=true": {
       "model": "spatialharvesters:block/dimensional_applicator"
+    },
+    "facing=south,active=true": {
+      "model": "spatialharvesters:block/dimensional_applicator",
+      "y": 180
+    },
+    "facing=west,active=true": {
+      "model": "spatialharvesters:block/dimensional_applicator",
+      "y": 270
+    },
+    "facing=east,active=true": {
+      "model": "spatialharvesters:block/dimensional_applicator",
+      "y": 90
+    },
+
+    "facing=north,active=false": {
+      "model": "spatialharvesters:block/dimensional_applicator"
+    },
+    "facing=south,active=false": {
+      "model": "spatialharvesters:block/dimensional_applicator",
+      "y": 180
+    },
+    "facing=west,active=false": {
+      "model": "spatialharvesters:block/dimensional_applicator",
+      "y": 270
+    },
+    "facing=east,active=false": {
+      "model": "spatialharvesters:block/dimensional_applicator",
+      "y": 90
     }
   }
 }

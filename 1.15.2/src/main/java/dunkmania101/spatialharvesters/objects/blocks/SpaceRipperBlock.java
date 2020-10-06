@@ -6,7 +6,7 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 
 import java.util.stream.Stream;
 
-public class SpaceRipperBlock extends PreservedDataShapedBlock {
+public class SpaceRipperBlock extends CustomShapedBlock {
     public SpaceRipperBlock(Properties properties) {
         super(properties,
                 Stream.of(
