@@ -1,5 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import dunkmania101.spatialharvesters.data.CustomProperties;
+import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -8,7 +10,6 @@ import net.minecraft.tileentity.TileEntityType;
 public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implements ITickableTileEntity {
     private static final String countedTicksKey = "countedTicks";
     private final boolean countTicks;
-    private int energyCapacity = 0;
     public TickingRedstoneEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive, boolean countTicks) {
         super(tileEntityTypeIn, canExtract, canReceive);
 
@@ -19,25 +20,24 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
         this(tileEntityTypeIn, canExtract, canReceive, false);
     }
 
+    protected boolean active = false;
     protected int ticks = 0;
     @Override
     public void tick() {
-        if (world != null) {
-            if (getEnergyStorage().getMaxEnergyStored() != this.energyCapacity) {
-                getEnergyStorage().setMaxEnergy(this.energyCapacity);
-            }
-            if (getEnergyStorage().getMaxInput() != this.energyCapacity) {
-                getEnergyStorage().setMaxInput(this.energyCapacity);
-            }
-            if (getEnergyStorage().getMaxExtract() != this.energyCapacity) {
-                getEnergyStorage().setMaxExtract(this.energyCapacity);
-            }
-            if (world.isBlockPowered(pos)) {
-                world.addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX(), pos.getY(), pos.getZ(), 5, 5, 5);
+        if (getWorld() != null) {
+            if (getWorld().isBlockPowered(pos)) {
+                setActive(false);
+                getWorld().addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX(), pos.getY(), pos.getZ(), 5, 5, 5);
             } else {
+                setActive(true);
                 customTickActions();
                 if (this.countTicks) {
                     this.ticks++;
+                }
+            }
+            if (getBlockState().getBlock() instanceof ActiveCustomHorizontalShapedBlock) {
+                if (getBlockState().get(CustomProperties.ACTIVE) != getActive()) {
+                    getWorld().setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, getActive()));
                 }
             }
         }
@@ -46,21 +46,25 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     public void customTickActions() {
     }
 
-    public int getCountedTicks() {
-        return this.ticks;
-    }
-
     public void resetCountedTicks() {
         this.ticks = 0;
     }
 
-    protected void setEnergyCapacity(int energyCapacity) {
-        this.energyCapacity = energyCapacity;
+    public int getCountedTicks() {
+        return this.ticks;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean getActive() {
+        return this.active;
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
+    public CompoundNBT saveSerializedValues() {
+        CompoundNBT nbt = super.saveSerializedValues();
         if (countTicks) {
             nbt.putInt(countedTicksKey, getCountedTicks());
         }
@@ -68,8 +72,8 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        super.deserializeNBT(nbt);
+    public void setDeserializedValues(CompoundNBT nbt) {
+        super.setDeserializedValues(nbt);
         if (nbt.contains(countedTicksKey)) {
             this.ticks = nbt.getInt(countedTicksKey);
         }

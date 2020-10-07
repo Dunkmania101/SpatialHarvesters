@@ -2,7 +2,7 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.util.Tools;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -29,12 +29,11 @@ public class CustomEnergyMachineTE extends TileEntity {
         this.setCanReceive = canReceive;
     }
 
-    private final CustomEnergyStorage energyStorage = createEnergyStorage();
-    private final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+    private final CustomEnergyStorage energyStorage = createEnergyStorage(getCapacity(), getMaxInput(), getMaxExtract());
+    private final LazyOptional<IEnergyStorage> energy = createEnergy();
 
-    private CustomEnergyStorage createEnergyStorage() {
-        int capacity = 500;
-        return new CustomEnergyStorage(capacity, capacity, capacity) {
+    protected CustomEnergyStorage createEnergyStorage(int capacity, int maxInput, int maxExtract) {
+        return new CustomEnergyStorage(capacity, maxInput, maxExtract, 0) {
             @Override
             protected void onEnergyChanged() {
                 super.onEnergyChanged();
@@ -51,6 +50,22 @@ public class CustomEnergyMachineTE extends TileEntity {
                 return super.canReceive() && setCanReceive;
             }
         };
+    }
+
+    protected LazyOptional<IEnergyStorage> createEnergy() {
+        return LazyOptional.of(() -> this.energyStorage);
+    }
+
+    protected void updateEnergyStorage() {
+        if (getEnergyStorage().getMaxEnergyStored() != getCapacity()) {
+            getEnergyStorage().setMaxEnergyStored(getCapacity());
+        }
+        if (getEnergyStorage().getMaxInput() != getMaxInput()) {
+            getEnergyStorage().setMaxInput(getMaxInput());
+        }
+        if (getEnergyStorage().getMaxExtract() != getMaxExtract()) {
+            getEnergyStorage().setMaxExtract(getMaxExtract());
+        }
     }
 
     @Override
@@ -72,20 +87,43 @@ public class CustomEnergyMachineTE extends TileEntity {
         return super.getCapability(cap, side);
     }
 
-    @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
-        nbt.put(CustomValues.tileEnergyKey, getEnergyStorage().serializeNBT());
+    public CompoundNBT saveSerializedValues() {
+        CompoundNBT nbt = new CompoundNBT();
+        int energyNBT = getEnergyStorage().getEnergyStored();
+        nbt.putInt(CustomValues.energyStorageKey, energyNBT);
         return nbt;
     }
 
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        super.deserializeNBT(Tools.correctTileNBT(getTileEntity(), nbt));
-        if (nbt.contains(CustomValues.tileEnergyKey)) {
-            CompoundNBT energyNBT = nbt.getCompound(CustomValues.tileEnergyKey);
-            getEnergyStorage().deserializeNBT(energyNBT);
+    public void setDeserializedValues(CompoundNBT nbt) {
+        if (nbt.contains(CustomValues.energyStorageKey)) {
+            updateEnergyStorage();
+            int energy = nbt.getInt(CustomValues.energyStorageKey);
+            getEnergyStorage().setEnergyStored(energy);
         }
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {
+        CompoundNBT nbt = super.write(compound);
+        return nbt.merge(saveSerializedValues());
+    }
+
+    @Override
+    public void func_230337_a_(BlockState state, CompoundNBT nbt) {
+        super.func_230337_a_(state, nbt);
+        setDeserializedValues(nbt);
         markDirty();
+    }
+
+    protected int getCapacity() {
+        return Integer.MAX_VALUE;
+    }
+
+    protected int getMaxInput() {
+        return 0;
+    }
+
+    protected int getMaxExtract() {
+        return 0;
     }
 }

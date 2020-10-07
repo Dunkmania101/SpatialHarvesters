@@ -1,9 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
-import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
@@ -26,31 +24,23 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public void tick() {
-        setEnergyCapacity(getSpeed() * 10);
-        super.tick();
-    }
-
-    @Override
     public void customTickActions() {
+        super.customTickActions();
         if (world != null && !world.isRemote) {
-            boolean active = false;
             ArrayList<IEnergyStorage> outBatteries = new ArrayList<>();
             for (Direction side : Direction.values()) {
                 Block block = world.getBlockState(pos.offset(side)).getBlock();
                 if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
                     getEnergyStorage().addEnergy(getSpeed());
-                    active = true;
+                    setActive(true);
+                } else {
+                    setActive(false);
                 }
                 TileEntity out = world.getTileEntity(pos.offset(side));
                 if (out != null) {
                     LazyOptional<IEnergyStorage> outCap = out.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
                     outCap.ifPresent(outBatteries::add);
                 }
-            }
-            Block this_block = getBlockState().getBlock();
-            if (this_block instanceof ActiveCustomHorizontalShapedBlock) {
-                world.setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, active));
             }
             for (IEnergyStorage outBattery : outBatteries) {
                 int energy = getEnergyStorage().getEnergyStored();
@@ -60,5 +50,20 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
                 }
             }
         }
+    }
+
+    @Override
+    protected int getCapacity() {
+        return getSpeed() * 100;
+    }
+
+    @Override
+    protected int getMaxInput() {
+        return getCapacity();
+    }
+
+    @Override
+    protected int getMaxExtract() {
+        return getCapacity();
     }
 }

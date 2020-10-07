@@ -1,12 +1,10 @@
 package dunkmania101.spatialharvesters.data;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.EnergyStorage;
 
-public class CustomEnergyStorage extends EnergyStorage implements INBTSerializable<CompoundNBT> {
-    public CustomEnergyStorage(int capacity, int maxInput, int maxOutput) {
-        super(capacity, maxInput, maxOutput);
+public class CustomEnergyStorage extends EnergyStorage {
+    public CustomEnergyStorage(int capacity, int maxInput, int maxOutput, int energy) {
+        super(capacity, maxInput, maxOutput, energy);
     }
 
     protected void onEnergyChanged() {
@@ -18,12 +16,8 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
         }
     }
 
-    public void setEnergyStoredNoCheck(int energy) {
-        this.energy = energy;
-    }
-
     public void setEnergyStored(int energy) {
-        setEnergyStoredNoCheck(energy);
+        this.energy = energy;
         onEnergyChanged();
     }
 
@@ -32,7 +26,7 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
         return this.energy;
     }
 
-    public void setMaxEnergy(int energy) {
+    public void setMaxEnergyStored(int energy) {
         this.capacity = energy;
         onEnergyChanged();
     }
@@ -80,19 +74,5 @@ public class CustomEnergyStorage extends EnergyStorage implements INBTSerializab
 
     public void consumeEnergy(int energy) {
         extractEnergy(energy, false);
-    }
-
-    @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = new CompoundNBT();
-        tag.putInt(CustomValues.energyStorageKey, getEnergyStored());
-        return tag;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        if (nbt.contains(CustomValues.energyStorageKey)) {
-            setEnergyStoredNoCheck(nbt.getInt(CustomValues.energyStorageKey));
-        }
     }
 }

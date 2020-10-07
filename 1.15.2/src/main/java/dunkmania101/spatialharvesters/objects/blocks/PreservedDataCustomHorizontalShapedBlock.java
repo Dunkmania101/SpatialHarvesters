@@ -25,7 +25,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
         this(properties, shape, Direction.NORTH);
     }
 
-    private CompoundNBT thisTileNBT = null;
+    private CompoundNBT thisTileNBT = new CompoundNBT();
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
@@ -40,7 +40,9 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
         List<ItemStack> drops = super.getDrops(state, builder);
         if (this.thisTileNBT != null) {
-            return Tools.getPreservedDataBlockDrops(drops, state, this.thisTileNBT);
+            if (!this.thisTileNBT.isEmpty()) {
+                return Tools.getPreservedDataBlockDrops(drops, state, this.thisTileNBT);
+            }
         }
         return drops;
     }

@@ -16,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -28,7 +27,7 @@ import java.util.UUID;
 public class MobHarvesterTE extends SpatialHarvesterTE {
     private String entity = null;
     private PlayerEntity player = null;
-    private ItemStack weapon = ItemStack.EMPTY;
+    private CompoundNBT weapon = new CompoundNBT();
 
     public MobHarvesterTE() {
         super(TileEntityInit.MOB_HARVESTER.get(), new ArrayList<>());
@@ -81,6 +80,13 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         return fakeMobEntity;
     }
 
+    protected void updateWeapon() {
+        if (this.player != null && this.weapon != null) {
+            this.player.getHeldItemMainhand().deserializeNBT(this.weapon.copy());
+            this.player.getHeldItemOffhand().deserializeNBT(this.weapon.copy());
+        }
+    }
+
     protected void removeAll() {
         removeMobEntity();
         removePlayer();
@@ -100,20 +106,12 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     protected void removeWeapon() {
-        this.weapon = ItemStack.EMPTY;
-    }
-
-    protected void updateWeapon() {
-        if (this.player != null && this.weapon != null) {
-            if (this.player.getHeldItemMainhand() != this.weapon) {
-                this.player.setHeldItem(Hand.MAIN_HAND, this.weapon);
-            }
-        }
+        this.weapon = new CompoundNBT();
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
+    public CompoundNBT saveSerializedValues() {
+        CompoundNBT nbt = super.saveSerializedValues();
         if (this.entity != null) {
             nbt.putString(CustomValues.entityNBTKey, this.entity);
         }
@@ -122,15 +120,15 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         }
         if (this.weapon != null) {
             if (!this.weapon.isEmpty()) {
-                nbt.put(CustomValues.weaponNBTKey, this.weapon.serializeNBT());
+                nbt.put(CustomValues.weaponNBTKey, this.weapon);
             }
         }
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        super.deserializeNBT(nbt);
+    public void setDeserializedValues(CompoundNBT nbt) {
+        super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeEntityNBTKey)) {
             removeAll();
         }
@@ -154,9 +152,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         }
         if (nbt.contains(CustomValues.weaponNBTKey)) {
             removeWeapon();
-            this.weapon = ItemStack.read(nbt.getCompound(CustomValues.weaponNBTKey));
+            this.weapon = nbt.getCompound(CustomValues.weaponNBTKey);
         }
-        markDirty();
     }
 
     @Override

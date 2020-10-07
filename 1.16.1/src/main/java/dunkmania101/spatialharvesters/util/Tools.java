@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,15 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tools {
-    public static ArrayList<StringTextComponent> getSplitStringTextComponent(String textComponent, String splitOn) {
-        String[] splitText = textComponent.split(splitOn);
-        ArrayList<StringTextComponent> splitTextComponent = new ArrayList<>();
-        for (String text : splitText) {
-            splitTextComponent.add(new StringTextComponent(text));
-        }
-        return splitTextComponent;
-    }
-
     public static VoxelShape getRotatedVoxelShape(VoxelShape shape, Direction from, Direction to) {
         if (from == to) {
             return shape;
@@ -83,16 +73,20 @@ public class Tools {
     }
 
     public static CompoundNBT correctTileNBT(TileEntity tile, CompoundNBT nbt) {
-        nbt.remove("id");
+        CompoundNBT newNBT = nbt.copy();
+        newNBT.remove("id");
         ResourceLocation id = TileEntityType.getId(tile.getType());
         if (id != null) {
-            nbt.putString("id", id.toString());
+            newNBT.putString("id", id.toString());
         }
         BlockPos pos = tile.getPos();
-        nbt.putInt("x", pos.getX());
-        nbt.putInt("y", pos.getY());
-        nbt.putInt("z", pos.getZ());
-        return nbt;
+        newNBT.remove("x");
+        newNBT.remove("y");
+        newNBT.remove("z");
+        newNBT.putInt("x", pos.getX());
+        newNBT.putInt("y", pos.getY());
+        newNBT.putInt("z", pos.getZ());
+        return newNBT;
     }
 
     public static List<ItemStack> getPreservedDataBlockDrops(List<ItemStack> drops, BlockState state, CompoundNBT tileNBT) {

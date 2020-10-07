@@ -14,11 +14,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MobKeyItem extends Item {
@@ -93,8 +91,7 @@ public class MobKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        ArrayList<StringTextComponent> textComponents = Tools.getSplitStringTextComponent(new TranslationTextComponent("msg.spatialharvesters.mob_key_description").getString(), "splithere");
-        tooltip.addAll(textComponents);
+        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.effect_key_description"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

@@ -50,15 +50,14 @@ public class CustomValues {
             Block.makeCuboidShape(1, 13, 1, 15, 16, 15)
     ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
 
+    public static final String energyStorageKey = SpatialHarvesters.modid + "_energyStorage";
     public static final String stackTileNBTKey = SpatialHarvesters.modid + "_stackTileNBT";
     public static final String potionsNBTKey = SpatialHarvesters.modid + "potionsNBTKey";
-    public static final String playerNBTKey = SpatialHarvesters.modid + "_DimensionalApplicatorEntity";
-    public static final String removePlayerNBTKey = SpatialHarvesters.modid + "removePlayer";
+    public static final String playerNBTKey = SpatialHarvesters.modid + "_dimensionalApplicatorEntity";
+    public static final String removePlayerNBTKey = SpatialHarvesters.modid + "_removePlayer";
     public static final String removeEntityNBTKey = SpatialHarvesters.modid + "_removeEntityNBT";
     public static final String entityNBTKey = SpatialHarvesters.modid + "_entityNBT";
     public static final String playerNameNBTKey = SpatialHarvesters.modid + "_playerNameNBT";
     public static final String weaponNBTKey = SpatialHarvesters.modid + "_weaponNBT";
-    public static final String chunkLoaderDataKey = SpatialHarvesters.modid + "_ChunkLoaders";
-    public static final String tileEnergyKey = "tileEnergy";
-    public static final String energyStorageKey = "energyStorage";
+    public static final String chunkLoaderDataKey = SpatialHarvesters.modid + "_chunkLoaders";
 }
