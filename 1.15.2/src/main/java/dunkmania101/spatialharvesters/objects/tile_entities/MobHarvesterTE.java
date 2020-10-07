@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -82,8 +83,13 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     protected void updateWeapon() {
         if (this.player != null && this.weapon != null) {
-            this.player.getHeldItemMainhand().deserializeNBT(this.weapon.copy());
-            this.player.getHeldItemOffhand().deserializeNBT(this.weapon.copy());
+            ItemStack stack = ItemStack.read(this.weapon.copy());
+            if (!this.player.getHeldItemMainhand().isItemEqual(stack)) {
+                this.player.setHeldItem(Hand.MAIN_HAND, stack);
+            }
+            if (!this.player.getHeldItemMainhand().isItemEqual(stack)) {
+                this.player.setHeldItem(Hand.OFF_HAND, stack);
+            }
         }
     }
 

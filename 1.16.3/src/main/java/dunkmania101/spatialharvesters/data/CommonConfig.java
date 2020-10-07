@@ -578,7 +578,7 @@ public class CommonConfig {
         DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this + 1.)")
                 .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_DURATION = BUILDER.comment("Duration for the Dimensional Applicator (in ticks.)")
-                .defineInRange("dimensional_applicator_duration", 100, 0, Integer.MAX_VALUE);
+                .defineInRange("dimensional_applicator_duration", 220, 0, Integer.MAX_VALUE);
 
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
                 .defineInRange("speed_heat_generator", 3, 0, Integer.MAX_VALUE);

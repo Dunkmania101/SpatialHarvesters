@@ -71,7 +71,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         for (int i : NBTEffects) {
             Effect effect = Effect.get(i);
             if (effect != null) {
-                EffectInstance effectInstance = new EffectInstance(effect, this.duration, getAmplifier());
+                EffectInstance effectInstance = new EffectInstance(effect, this.duration, getAmplifier(), true, false);
                 EFFECTS.add(effectInstance);
             }
         }
@@ -98,7 +98,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                 effect = Effects.STRENGTH;
             }
             if (effect != null) {
-                EFFECTS.add(new EffectInstance(effect, this.duration, getAmplifier()));
+                EFFECTS.add(new EffectInstance(effect, this.duration, getAmplifier(), true, false));
             }
         }
         return EFFECTS;

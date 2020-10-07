@@ -41,8 +41,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                     }
                     TileEntity out = getWorld().getTileEntity(pos.offset(side));
                     if (out != null) {
-                        LazyOptional<IItemHandler> out_cap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                        out_cap.ifPresent(outInventories::add);
+                        LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                        outCap.ifPresent(outInventories::add);
                     }
                 }
                 setActive(false);
@@ -71,7 +71,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     public void setOutputs(ArrayList<Item> OUTPUTS) {
         this.OUTPUTS = new ArrayList<>();
         for (Item item : OUTPUTS) {
-            this.OUTPUTS.add(new ItemStack(item));
+            ItemStack stack = new ItemStack(item);
+            if (!stack.isEmpty()) {
+                this.OUTPUTS.add(stack);
+            }
         }
     }
 

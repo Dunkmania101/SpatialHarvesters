@@ -28,13 +28,12 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
         super.customTickActions();
         if (world != null && !world.isRemote) {
             ArrayList<IEnergyStorage> outBatteries = new ArrayList<>();
+            setActive(false);
             for (Direction side : Direction.values()) {
                 Block block = world.getBlockState(pos.offset(side)).getBlock();
                 if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
                     getEnergyStorage().addEnergy(getSpeed());
                     setActive(true);
-                } else {
-                    setActive(false);
                 }
                 TileEntity out = world.getTileEntity(pos.offset(side));
                 if (out != null) {

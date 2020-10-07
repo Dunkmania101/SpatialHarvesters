@@ -53,6 +53,9 @@ public class CustomEnergyMachineTE extends TileEntity {
     }
 
     protected LazyOptional<IEnergyStorage> createEnergy() {
+        if (this.energy != null) {
+            this.energy.invalidate();
+        }
         return LazyOptional.of(() -> this.energyStorage);
     }
 
