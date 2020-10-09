@@ -6,6 +6,7 @@ import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.entities.FakeMobEntity;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -68,11 +69,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                     if (mobRN != null) {
                         ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
                         ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
-                        ArrayList<String> modMob = new ArrayList<>();
-                        String modid = mobRN.getNamespace();
-                        modMob.add(modid);
-                        modMob.add(mobRN.getPath());
-                        if (!blacklist_mobs.contains(modMob) && !blacklist_mobs_mod.contains(modid)) {
+                        if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
                             Entity entity = entityType.create(serverWorld);
                             if (entity != null) {
                                 if (entity instanceof MobEntity) {
@@ -80,7 +77,6 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                                     EntityType<? extends MobEntity> mobEntityType = (EntityType<? extends MobEntity>)mobEntity.getType();
                                     fakeMobEntity = new FakeMobEntity(mobEntityType, serverWorld);
                                     fakeMobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(pos), SpawnReason.NATURAL, null, null);
-                                    fakeMobEntity.copyDataFromOld(mobEntity);
                                     mobEntity.remove();
                                 }
                                 entity.remove();

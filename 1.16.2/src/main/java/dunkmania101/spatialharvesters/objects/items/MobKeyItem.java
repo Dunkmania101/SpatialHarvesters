@@ -5,6 +5,7 @@ import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -16,11 +17,13 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MobKeyItem extends Item {
     public MobKeyItem(Properties properties) {
@@ -34,12 +37,8 @@ public class MobKeyItem extends Item {
             if (mobRN != null) {
                 ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
                 ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
-                ArrayList<String> modMob = new ArrayList<>();
-                String modid = mobRN.getNamespace();
-                modMob.add(modid);
-                modMob.add(mobRN.getPath());
                 boolean banned = false;
-                if (!blacklist_mobs.contains(modMob) && !blacklist_mobs_mod.contains(modid)) {
+                if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
                     stack.getOrCreateTag().putString(CustomValues.entityNBTKey, target.serializeNBT().getString("id"));
                 } else {
                     banned = true;
@@ -112,7 +111,32 @@ public class MobKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.effect_key_description"));
+        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_description"));
+        CompoundNBT nbt = stack.getTag();
+        if (nbt != null) {
+            if (nbt.contains(CustomValues.entityNBTKey)) {
+                String entity = nbt.getString(CustomValues.entityNBTKey);
+                Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
+                if (optionalEntityType.isPresent()) {
+                    EntityType<?> entityType = optionalEntityType.get();
+                    ResourceLocation mobRN = entityType.getRegistryName();
+                    if (mobRN != null) {
+                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));
+                        tooltip.add(new StringTextComponent(mobRN.toString()));
+                    }
+                }
+            }
+            if (nbt.contains(CustomValues.weaponNBTKey)) {
+                CompoundNBT weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
+                if (!weaponNBT.isEmpty()) {
+                    ItemStack weapon = ItemStack.read(weaponNBT);
+                    if (!weapon.isEmpty()) {
+                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"));
+                        tooltip.add(weapon.getDisplayName());
+                    }
+                }
+            }
+        }
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

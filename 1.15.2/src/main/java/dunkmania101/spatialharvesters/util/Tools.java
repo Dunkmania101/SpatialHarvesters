@@ -115,7 +115,7 @@ public class Tools {
                 String modid = itemRN.getNamespace();
                 modOre.add(modid);
                 modOre.add(itemRN.getPath());
-                if (!blacklist_ores.contains(modOre) && !blacklist_ores_mod.contains(modid)) {
+                if (!isResourceBanned(itemRN, blacklist_ores, blacklist_ores_mod)) {
                     if (checkItem.isIn(Tags.Items.ORES) || config_ores.contains(modOre)) {
                         ORES.add(checkItem);
                     }
@@ -137,7 +137,7 @@ public class Tools {
                 String modid = itemRN.getNamespace();
                 modBio.add(modid);
                 modBio.add(itemRN.getPath());
-                if (!blacklist_bios.contains(modBio) && !blacklist_bios_mod.contains(modid)) {
+                if (!isResourceBanned(itemRN, blacklist_bios, blacklist_bios_mod)) {
                     if (checkItem.isIn(Tags.Items.CROPS)
                                     || checkItem.isIn(Tags.Items.MUSHROOMS)
                                     || checkItem.isIn(Tags.Items.LEATHER)
@@ -172,7 +172,7 @@ public class Tools {
                 String modid = itemRN.getNamespace();
                 modStone.add(modid);
                 modStone.add(itemRN.getPath());
-                if (!blacklist_stones.contains(modStone) && !blacklist_stones_mod.contains(modid)) {
+                if (!isResourceBanned(itemRN, blacklist_stones, blacklist_stones_mod)) {
                     if ((
                             checkItem.isIn(Tags.Items.STONE)
                                     || checkItem.isIn(Tags.Items.COBBLESTONE)
@@ -202,7 +202,7 @@ public class Tools {
                 String modid = itemRN.getNamespace();
                 modSoil.add(modid);
                 modSoil.add(itemRN.getPath());
-                if (!blacklist_soils.contains(modSoil) && !blacklist_soils_mod.contains(modid)) {
+                if (!isResourceBanned(itemRN, blacklist_soils, blacklist_soils_mod)) {
                     if ((block.isIn(Tags.Blocks.DIRT)
                             || block.isIn(Tags.Blocks.SAND)
                             || block.isIn(Tags.Blocks.GRAVEL)
@@ -213,5 +213,16 @@ public class Tools {
             }
         }
         return SOILS;
+    }
+
+    public static boolean isResourceBanned(ResourceLocation rn, ArrayList<ArrayList<String>> blacklist, ArrayList<String> blacklist_mod) {
+        if (rn != null) {
+            ArrayList<String> modRN = new ArrayList<>();
+            String modid = rn.getNamespace();
+            modRN.add(modid);
+            modRN.add(rn.getPath());
+            return blacklist.contains(modRN) || blacklist_mod.contains(modid);
+        }
+        return false;
     }
 }
