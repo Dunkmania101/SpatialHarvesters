@@ -20,27 +20,31 @@ public class ChunkLoaderBlock extends Block {
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        if (!worldIn.isRemote) {
-            ServerWorld sworld = (ServerWorld) worldIn;
-            ChunkPos cpos = worldIn.getChunk(pos).getPos();
-            ChunkLoaderData data = ChunkLoaderData.get(sworld);
-            data.addChunk(cpos);
-            sworld.forceChunk(cpos.x, cpos.z, true);
-        }
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        if (!worldIn.isRemote) {
+            if (worldIn instanceof ServerWorld) {
+                ServerWorld serverWorld = (ServerWorld) worldIn;
+                ChunkPos cpos = serverWorld.getChunk(pos).getPos();
+                ChunkLoaderData data = ChunkLoaderData.get(serverWorld);
+                data.addChunk(cpos);
+                serverWorld.forceChunk(cpos.x, cpos.z, true);
+            }
+        }
     }
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.onBlockHarvested(worldIn, pos, state, player);
         if (!worldIn.isRemote) {
-            ChunkPos cpos = worldIn.getChunk(pos).getPos();
-            if (!(Tools.checkChunkBlocks(worldIn, cpos, BlockInit.CHUNK_LOADER.get().getBlock()) > 1)) {
-                ServerWorld sworld = (ServerWorld) worldIn;
-                ChunkLoaderData data = ChunkLoaderData.get(sworld);
-                data.removeChunk(cpos);
-                sworld.forceChunk(cpos.x, cpos.z, false);
+            if (worldIn instanceof ServerWorld) {
+                ServerWorld serverWorld = (ServerWorld) worldIn;
+                ChunkPos cpos = serverWorld.getChunk(pos).getPos();
+                if (Tools.getBlocksInChunk(serverWorld, cpos, BlockInit.CHUNK_LOADER.get().getBlock()) <= 0) {
+                    ChunkLoaderData data = ChunkLoaderData.get(serverWorld);
+                    data.removeChunk(cpos);
+                    serverWorld.forceChunk(cpos.x, cpos.z, false);
+                }
             }
         }
-        super.onBlockHarvested(worldIn, pos, state, player);
     }
 }

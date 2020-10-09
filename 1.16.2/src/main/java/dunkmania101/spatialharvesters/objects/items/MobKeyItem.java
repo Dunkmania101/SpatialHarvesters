@@ -1,5 +1,6 @@
 package dunkmania101.spatialharvesters.objects.items;
 
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
@@ -12,11 +13,13 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MobKeyItem extends Item {
@@ -27,10 +30,28 @@ public class MobKeyItem extends Item {
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.isCrouching()) {
-            stack.getOrCreateTag().putString(CustomValues.entityNBTKey, target.serializeNBT().getString("id"));
-            if (attacker instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) attacker;
-                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_entity"), true);
+            ResourceLocation mobRN = target.getType().getRegistryName();
+            if (mobRN != null) {
+                ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
+                ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
+                ArrayList<String> modMob = new ArrayList<>();
+                String modid = mobRN.getNamespace();
+                modMob.add(modid);
+                modMob.add(mobRN.getPath());
+                boolean banned = false;
+                if (!blacklist_mobs.contains(modMob) && !blacklist_mobs_mod.contains(modid)) {
+                    stack.getOrCreateTag().putString(CustomValues.entityNBTKey, target.serializeNBT().getString("id"));
+                } else {
+                    banned = true;
+                }
+                if (attacker instanceof PlayerEntity) {
+                    PlayerEntity player = (PlayerEntity) attacker;
+                    if (banned) {
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_entity_failed"), true);
+                    } else {
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_entity"), true);
+                    }
+                }
             }
         }
         return super.hitEntity(stack, target, attacker);

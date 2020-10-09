@@ -61,7 +61,7 @@ public class Tools {
         return buffer[0];
     }
 
-    public static int checkChunkBlocks(World worldIn, ChunkPos cpos, Block blockIn) {
+    public static int getBlocksInChunk(World worldIn, ChunkPos cpos, Block blockIn) {
         int count = 0;
         int height = worldIn.getChunk(cpos.asBlockPos()).getHeight();
         for (BlockPos checkPos : BlockPos.getAllInBoxMutable(cpos.getXStart(), 0, cpos.getZStart(), cpos.getXEnd(), height, cpos.getZEnd())) {

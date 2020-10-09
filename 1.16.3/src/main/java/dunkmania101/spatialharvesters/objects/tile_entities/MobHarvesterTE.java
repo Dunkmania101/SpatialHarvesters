@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -63,17 +64,28 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                 Optional<EntityType<?>> optionalEntityType = EntityType.byKey(this.entity);
                 if (optionalEntityType.isPresent()) {
                     EntityType<?> entityType = optionalEntityType.get();
-                    Entity entity = entityType.create(serverWorld);
-                    if (entity != null) {
-                        if (entity instanceof MobEntity) {
-                            MobEntity mobEntity = (MobEntity) entity;
-                            EntityType<? extends MobEntity> mobEntityType = (EntityType<? extends MobEntity>)mobEntity.getType();
-                            fakeMobEntity = new FakeMobEntity(mobEntityType, serverWorld);
-                            fakeMobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(pos), SpawnReason.NATURAL, null, null);
-                            fakeMobEntity.copyDataFromOld(mobEntity);
-                            mobEntity.remove();
+                    ResourceLocation mobRN = entityType.getRegistryName();
+                    if (mobRN != null) {
+                        ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
+                        ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
+                        ArrayList<String> modMob = new ArrayList<>();
+                        String modid = mobRN.getNamespace();
+                        modMob.add(modid);
+                        modMob.add(mobRN.getPath());
+                        if (!blacklist_mobs.contains(modMob) && !blacklist_mobs_mod.contains(modid)) {
+                            Entity entity = entityType.create(serverWorld);
+                            if (entity != null) {
+                                if (entity instanceof MobEntity) {
+                                    MobEntity mobEntity = (MobEntity) entity;
+                                    EntityType<? extends MobEntity> mobEntityType = (EntityType<? extends MobEntity>)mobEntity.getType();
+                                    fakeMobEntity = new FakeMobEntity(mobEntityType, serverWorld);
+                                    fakeMobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(pos), SpawnReason.NATURAL, null, null);
+                                    fakeMobEntity.copyDataFromOld(mobEntity);
+                                    mobEntity.remove();
+                                }
+                                entity.remove();
+                            }
                         }
-                        entity.remove();
                     }
                 }
             }
