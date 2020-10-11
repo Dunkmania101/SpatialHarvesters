@@ -30,6 +30,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         super.customTickActions();
         if (getWorld() != null && !getWorld().isRemote) {
             Block thisBlock = getBlockState().getBlock();
+            this.thisBlock = thisBlock;
+            updateEnergyStorage();
             if (getCountedTicks() >= getSpeed(thisBlock)) {
                 resetCountedTicks();
                 int price = getPrice(thisBlock);
@@ -89,16 +91,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     private Block thisBlock = null;
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        this.thisBlock = getBlockState().getBlock();
-        updateEnergyStorage();
-    }
-
-    @Override
     protected int getCapacity() {
-        if (thisBlock != null) {
-            return getPrice(thisBlock) * 10;
+        if (this.thisBlock != null) {
+            return getPrice(this.thisBlock) * 10;
         }
         return Integer.MAX_VALUE;
     }
