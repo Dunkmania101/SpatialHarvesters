@@ -419,7 +419,7 @@ public class CommonConfig {
         BLACKLIST_SOILS = BUILDER.comment("Blacklist for the Soil Harvesters")
                 .define("blacklist_soils", blacklist_soils);
         ArrayList<ArrayList<String>> blacklist_mobs = new ArrayList<>();
-        BLACKLIST_SOILS = BUILDER.comment("Blacklist for the Mob Harvesters")
+        BLACKLIST_MOBS = BUILDER.comment("Blacklist for the Mob Harvesters")
                 .define("blacklist_mobs", blacklist_mobs);
 
         ArrayList<String> blacklist_ores_mod = new ArrayList<>();

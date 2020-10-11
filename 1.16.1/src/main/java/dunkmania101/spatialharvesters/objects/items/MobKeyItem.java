@@ -15,9 +15,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -38,10 +38,17 @@ public class MobKeyItem extends Item {
                 ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
                 ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
                 boolean banned = false;
-                if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
-                    stack.getOrCreateTag().putString(CustomValues.entityNBTKey, target.serializeNBT().getString("id"));
-                } else {
+                if (Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
                     banned = true;
+                } else {
+                    String id = target.getEntityString();
+                    if (!StringUtils.isNullOrEmpty(id)) {
+                        stack.getOrCreateTag().putString(CustomValues.entityNBTKey, id);
+                    }
+                }
+                String id = target.getEntityString();
+                if (!StringUtils.isNullOrEmpty(id)) {
+                    stack.getOrCreateTag().putString(CustomValues.entityNBTKey, id);
                 }
                 if (attacker instanceof PlayerEntity) {
                     PlayerEntity player = (PlayerEntity) attacker;
@@ -119,11 +126,8 @@ public class MobKeyItem extends Item {
                 Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
                 if (optionalEntityType.isPresent()) {
                     EntityType<?> entityType = optionalEntityType.get();
-                    ResourceLocation mobRN = entityType.getRegistryName();
-                    if (mobRN != null) {
-                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));
-                        tooltip.add(new StringTextComponent(mobRN.toString()));
-                    }
+                    tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));
+                    tooltip.add(entityType.getName());
                 }
             }
             if (nbt.contains(CustomValues.weaponNBTKey)) {

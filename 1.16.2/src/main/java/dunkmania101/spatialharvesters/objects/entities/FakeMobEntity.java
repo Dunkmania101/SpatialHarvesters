@@ -43,7 +43,6 @@ public class FakeMobEntity extends MobEntity {
 
     protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
         super.dropSpecialItems(source, looting, recentlyHitIn);
-
         for (EquipmentSlotType equipmentslottype : EquipmentSlotType.values()) {
             ItemStack itemstack = this.getItemStackFromSlot(equipmentslottype);
             float f = this.getDropChance(equipmentslottype);
