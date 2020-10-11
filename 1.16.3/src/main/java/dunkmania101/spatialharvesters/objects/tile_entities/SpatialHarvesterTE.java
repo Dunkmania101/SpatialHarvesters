@@ -46,6 +46,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                     }
                 }
                 setActive(false);
+                lastMinuteActions();
                 if (spaceRippers.size() > 0 && outInventories.size() > 0 && this.OUTPUTS.size() > 0) {
                     for (Direction ignored : spaceRippers) {
                         if (getEnergyStorage().getEnergyStored() >= price) {
@@ -66,6 +67,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                 }
             }
         }
+    }
+
+    protected void lastMinuteActions() {
     }
 
     public void setOutputs(ArrayList<Item> OUTPUTS) {

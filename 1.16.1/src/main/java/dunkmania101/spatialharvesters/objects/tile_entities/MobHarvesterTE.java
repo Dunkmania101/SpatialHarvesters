@@ -37,9 +37,9 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public void customTickActions() {
+    protected void lastMinuteActions() {
+        super.lastMinuteActions();
         setEntityDrops();
-        super.customTickActions();
     }
 
     protected void setEntityDrops() {
@@ -92,11 +92,20 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     protected void updateWeapon() {
         if (this.player != null && this.weapon != null) {
             ItemStack stack = ItemStack.read(this.weapon.copy());
-            if (!this.player.getHeldItemMainhand().isItemEqual(stack)) {
+            CompoundNBT stackNBT = stack.getTag();
+            ItemStack mainHandStack = this.player.getHeldItemMainhand();
+            if (!ItemStack.areItemStacksEqual(mainHandStack, stack)) {
                 this.player.setHeldItem(Hand.MAIN_HAND, stack);
             }
-            if (!this.player.getHeldItemMainhand().isItemEqual(stack)) {
+            if (mainHandStack.getTag() != stackNBT) {
+                mainHandStack.deserializeNBT(stackNBT);
+            }
+            ItemStack offHandStack = this.player.getHeldItemOffhand();
+            if (!ItemStack.areItemStacksEqual(offHandStack, stack)) {
                 this.player.setHeldItem(Hand.OFF_HAND, stack);
+            }
+            if (offHandStack.getTag() != stackNBT) {
+                offHandStack.deserializeNBT(stackNBT);
             }
         }
     }
