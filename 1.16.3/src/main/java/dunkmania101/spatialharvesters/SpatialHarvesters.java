@@ -28,7 +28,7 @@ public class SpatialHarvesters {
 
         modBus.addListener(this::setup);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CommonConfig.CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.CONFIG);
         CommonConfig.init(FMLPaths.CONFIGDIR.get().resolve(SpatialHarvesters.modid + "-common.toml"));
 
         ItemInit.ITEMS.register(modBus);
