@@ -104,6 +104,8 @@ public class CommonConfig {
 
     public static ForgeConfigSpec.IntValue MOB_PRICE;
 
+    public static ForgeConfigSpec.BooleanValue MOB_DROP_DRAGON_EGG;
+
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
 
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
@@ -580,6 +582,9 @@ public class CommonConfig {
 
         MOB_PRICE = BUILDER.comment("Price for the Mob Harvester (in FE per operation)")
                 .defineInRange("price_mob", 8000, 0, Integer.MAX_VALUE);
+
+        MOB_DROP_DRAGON_EGG = BUILDER.comment("Should the Mob Harvester drop dragon eggs when set to that mob?")
+                .define("mob_drop_dragon_egg", true);
 
         DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
                 .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);

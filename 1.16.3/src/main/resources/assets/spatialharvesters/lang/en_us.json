@@ -73,6 +73,7 @@
 
   "itemGroup.spatial_harvesters": "Spatial Harvesters",
 
+  "msg.spatialharvesters.divider": "----------",
   "msg.spatialharvesters.player_key_description": "Right-Click a Dimensional Applicator to bind it to you; Sneak-Right-Click to unbind it.",
   "msg.spatialharvesters.set_dimensional_applicator": "Set Dimensional Applicator to you!",
   "msg.spatialharvesters.clear_dimensional_applicator": "Cleared Dimensional Applicator!",

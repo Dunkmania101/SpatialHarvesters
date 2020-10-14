@@ -12,6 +12,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -59,6 +60,12 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         if (this.player != null && this.entity != null) {
             MobEntity mobEntity = getMobEntity();
             if (mobEntity != null) {
+                if (mobEntity.getType() == EntityType.ENDER_DRAGON) {
+                    boolean dropEgg = CommonConfig.MOB_DROP_DRAGON_EGG.get();
+                    if (dropEgg) {
+                        newOutputs.add(new ItemStack(Items.DRAGON_EGG));
+                    }
+                }
                 updateWeapon();
                 DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
                 ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");

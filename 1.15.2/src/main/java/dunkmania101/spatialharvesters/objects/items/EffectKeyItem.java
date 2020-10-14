@@ -64,7 +64,8 @@ public class EffectKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.effect_key_description"));
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
     }
 }
