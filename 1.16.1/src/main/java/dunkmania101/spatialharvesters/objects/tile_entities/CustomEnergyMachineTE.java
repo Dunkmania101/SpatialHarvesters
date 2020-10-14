@@ -108,7 +108,8 @@ public class CustomEnergyMachineTE extends TileEntity {
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         CompoundNBT nbt = super.write(compound);
-        return nbt.merge(saveSerializedValues());
+        nbt.merge(saveSerializedValues());
+        return nbt;
     }
 
     @Override

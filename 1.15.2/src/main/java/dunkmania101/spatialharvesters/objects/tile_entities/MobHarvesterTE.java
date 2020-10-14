@@ -5,13 +5,10 @@ import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
-import dunkmania101.spatialharvesters.objects.entities.FakeMobEntity;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,9 +18,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,6 +39,15 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         super(TileEntityInit.MOB_HARVESTER.get(), new ArrayList<>());
     }
 
+    public static final Method dropLoot;
+    public static final Method dropSpecialItems;
+    static {
+        dropLoot = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213354_a",
+                DamageSource.class, boolean.class);
+        dropSpecialItems = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213333_a",
+                DamageSource.class, int.class, boolean.class);
+    }
+
     @Override
     protected void lastMinuteActions() {
         super.lastMinuteActions();
@@ -45,20 +57,34 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     protected void setEntityDrops() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
         if (this.player != null && this.entity != null) {
-            FakeMobEntity fakeMobEntity = getFakeMobEntity();
-            if (fakeMobEntity != null) {
+            MobEntity mobEntity = getMobEntity();
+            if (mobEntity != null) {
                 updateWeapon();
                 DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
-                fakeMobEntity.publicSpawnDrops(playerDamage);
-                newOutputs = fakeMobEntity.getDrops();
-                fakeMobEntity.remove();
+                ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
+                mobEntity.captureDrops(new ArrayList<>());
+                int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
+                try {
+                    dropLoot.invoke(mobEntity, playerDamage, true);
+                    dropSpecialItems.invoke(mobEntity, playerDamage, lootingLevel, true);
+                } catch (Exception error) {
+                    throw new RuntimeException(error);
+                }
+                Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
+                LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
+                if (!MinecraftForge.EVENT_BUS.post(event)) {
+                    event.getDrops().stream()
+                            .map(ItemEntity::getItem)
+                            .forEach(newOutputs::add);
+                }
+                mobEntity.remove();
             }
         }
         setOutputStacks(newOutputs);
     }
 
-    protected FakeMobEntity getFakeMobEntity() {
-        FakeMobEntity fakeMobEntity = null;
+    protected MobEntity getMobEntity() {
+        MobEntity mobEntity = null;
         if (world != null && this.entity != null) {
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) world;
@@ -73,11 +99,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                             Entity entity = entityType.create(serverWorld);
                             if (entity != null) {
                                 if (entity instanceof MobEntity) {
-                                    MobEntity mobEntity = (MobEntity) entity;
-                                    EntityType<? extends MobEntity> mobEntityType = (EntityType<? extends MobEntity>)mobEntity.getType();
-                                    fakeMobEntity = new FakeMobEntity(mobEntityType, serverWorld);
-                                    fakeMobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(pos), SpawnReason.NATURAL, null, null);
-                                    mobEntity.remove();
+                                    mobEntity = (MobEntity) entity;
+                                    mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(pos), SpawnReason.NATURAL, null, null);
                                 }
                                 entity.remove();
                             }
@@ -86,7 +109,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                 }
             }
         }
-        return fakeMobEntity;
+        return mobEntity;
     }
 
     protected void updateWeapon() {
