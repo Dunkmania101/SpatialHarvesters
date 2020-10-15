@@ -15,7 +15,6 @@
       "model": "spatialharvesters:block/stone_harvester_2",
       "y": 90
     },
-
     "facing=north,active=false": {
       "model": "spatialharvesters:block/stone_harvester_2"
     },

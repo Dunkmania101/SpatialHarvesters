@@ -15,7 +15,6 @@
       "model": "spatialharvesters:block/dimensional_applicator",
       "y": 90
     },
-
     "facing=north,active=false": {
       "model": "spatialharvesters:block/dimensional_applicator"
     },

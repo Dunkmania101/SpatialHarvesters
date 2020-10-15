@@ -22,7 +22,6 @@
   "item.spatialharvesters.crystal_5": "Crystal 5",
   "item.spatialharvesters.crystal_6": "Crystal 6",
   "item.spatialharvesters.crystal_7": "Crystal 7",
-
   "block.spatialharvesters.chunk_loader": "Chunk Loader",
   "block.spatialharvesters.casing": "casing",
   "block.spatialharvesters.space_ripper": "Space Ripper",
@@ -70,9 +69,7 @@
   "block.spatialharvesters.invisibility_activator": "Invisibility Activator",
   "block.spatialharvesters.night_vision_activator": "Night Vision Activator",
   "block.spatialharvesters.strength_activator": "Strength Activator",
-
   "itemGroup.spatial_harvesters": "Spatial Harvesters",
-
   "msg.spatialharvesters.divider": "----------",
   "msg.spatialharvesters.energy_message": "Stored Energy: ",
   "msg.spatialharvesters.counted_ticks_message": "Counted Ticks: ",
@@ -84,6 +81,7 @@
   "msg.spatialharvesters.remove_dimensional_applicator_nbt_effects_failed": "You don't have any active effects!",
   "msg.spatialharvesters.remove_dimensional_applicator_nbt_effects": "Removed saved effects from Dimensional Applicator!",
   "msg.spatialharvesters.mob_key_description": "Attack an entity with this to bind; Sneak-Left-Click a block with a weapon in your offhand to bind it; Right-Click a Mob Harvester to configure it; Sneak-Right-Click it to clear its configuration;",
+  "msg.spatialharvesters.bound_player_name": "Bound player name: ",
   "msg.spatialharvesters.mob_key_bound_mob": "Bound mob: ",
   "msg.spatialharvesters.mob_key_bound_weapon": "Bound weapon: ",
   "msg.spatialharvesters.set_mob_key_entity": "Set Mob Key to entity!",

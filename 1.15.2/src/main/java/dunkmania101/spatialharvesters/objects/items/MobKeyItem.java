@@ -126,12 +126,14 @@ public class MobKeyItem extends Item {
         if (nbt != null) {
             if (nbt.contains(CustomValues.entityNBTKey)) {
                 String entity = nbt.getString(CustomValues.entityNBTKey);
-                Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
-                if (optionalEntityType.isPresent()) {
-                    EntityType<?> entityType = optionalEntityType.get();
-                    tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-                    tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));
-                    tooltip.add(entityType.getName());
+                if (!StringUtils.isNullOrEmpty(entity)) {
+                    Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
+                    if (optionalEntityType.isPresent()) {
+                        EntityType<?> entityType = optionalEntityType.get();
+                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));
+                        tooltip.add(entityType.getName());
+                    }
                 }
             }
             if (nbt.contains(CustomValues.weaponNBTKey)) {

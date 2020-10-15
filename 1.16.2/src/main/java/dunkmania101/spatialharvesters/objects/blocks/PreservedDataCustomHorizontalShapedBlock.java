@@ -2,6 +2,7 @@ package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.CustomEnergyMachineTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.TickingRedstoneEnergyMachineTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
@@ -14,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -84,6 +86,27 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                     player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
                     player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                 }
+            }
+            if (tile instanceof MobHarvesterTE) {
+                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"), false);
+                String mob = data.getString(CustomValues.entityNBTKey);
+                if (!StringUtils.isNullOrEmpty(mob)) {
+                    player.sendStatusMessage(new StringTextComponent(mob), false);
+                }
+                String playerName = data.getString(CustomValues.playerNameNBTKey);
+                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.bound_player_name"), false);
+                if (!StringUtils.isNullOrEmpty(playerName)) {
+                    player.sendStatusMessage(new StringTextComponent(mob), false);
+                }
+                CompoundNBT weapon = data.getCompound(CustomValues.weaponNBTKey);
+                if (!weapon.isEmpty()) {
+                    ItemStack weaponStack = ItemStack.read(weapon);
+                    if (!weaponStack.isEmpty()) {
+                        player.sendStatusMessage(new TranslationTextComponent(weaponStack.getTranslationKey()), false);
+                    }
+                }
+                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
             }
         }
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
