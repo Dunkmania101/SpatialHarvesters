@@ -18,6 +18,7 @@ import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     protected ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
+    private Block thisBlock = null;
 
     public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn, ArrayList<Item> OUTPUTS) {
         super(tileEntityTypeIn, true, true, true);
@@ -29,40 +30,43 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     public void customTickActions() {
         super.customTickActions();
         if (getWorld() != null && !getWorld().isRemote) {
-            Block thisBlock = getBlockState().getBlock();
-            this.thisBlock = thisBlock;
+            this.thisBlock = getBlockState().getBlock();
             updateEnergyStorage();
-            if (getCountedTicks() >= getSpeed(thisBlock)) {
-                resetCountedTicks();
-                int price = getPrice(thisBlock);
-                ArrayList<Direction> spaceRippers = new ArrayList<>();
-                ArrayList<IItemHandler> outInventories = new ArrayList<>();
-                for (Direction side : Direction.values()) {
-                    if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
-                        spaceRippers.add(side);
-                    }
-                    TileEntity out = getWorld().getTileEntity(pos.offset(side));
-                    if (out != null) {
-                        LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                        outCap.ifPresent(outInventories::add);
-                    }
-                }
+            if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                 setActive(false);
-                lastMinuteActions();
-                if (spaceRippers.size() > 0 && outInventories.size() > 0 && this.OUTPUTS.size() > 0) {
-                    for (Direction ignored : spaceRippers) {
-                        if (getEnergyStorage().getEnergyStored() >= price) {
-                            Random rand = getWorld().rand;
-                            ItemStack chosenOutput = new ItemStack(getShard(thisBlock));
-                            if (rand.nextInt(75) != 1) {
-                                chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size()));
-                            }
-                            int originalCount = chosenOutput.getCount();
-                            IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
-                            ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
-                            if (resultStack.getCount() != originalCount) {
-                                getEnergyStorage().consumeEnergy(price);
-                                setActive(true);
+                resetCountedTicks();
+                int price = getPrice(this.thisBlock);
+                if (getEnergyStorage().getEnergyStored() >= price) {
+                    ArrayList<Direction> spaceRippers = new ArrayList<>();
+                    ArrayList<IItemHandler> outInventories = new ArrayList<>();
+                    for (Direction side : Direction.values()) {
+                        if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                            spaceRippers.add(side);
+                        }
+                        TileEntity out = getWorld().getTileEntity(pos.offset(side));
+                        if (out != null) {
+                            LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                            outCap.ifPresent(outInventories::add);
+                        }
+                    }
+                    lastMinuteActions();
+                    if (spaceRippers.size() > 0 && outInventories.size() > 0 && this.OUTPUTS.size() > 0) {
+                        for (Direction ignored : spaceRippers) {
+                            if (getEnergyStorage().getEnergyStored() >= price) {
+                                ItemStack chosenOutput;
+                                Random rand = getWorld().rand;
+                                if (rand.nextInt(75) != 1) {
+                                    chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size()));
+                                } else {
+                                    chosenOutput = new ItemStack(getShard(this.thisBlock));
+                                }
+                                int originalCount = chosenOutput.getCount();
+                                IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
+                                ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
+                                if (resultStack.getCount() != originalCount) {
+                                    getEnergyStorage().consumeEnergy(price);
+                                    setActive(true);
+                                }
                             }
                         }
                     }
@@ -87,8 +91,6 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     public void setOutputStacks(ArrayList<ItemStack> OUTPUTS) {
         this.OUTPUTS = OUTPUTS;
     }
-
-    private Block thisBlock = null;
 
     @Override
     protected int getCapacity() {

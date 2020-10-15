@@ -12,11 +12,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockInit {
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SpatialHarvesters.modid);
     private static final float block_hardness = CommonConfig.BLOCK_HARDNESS.get().floatValue();
     private static final float block_resistance = CommonConfig.BLOCK_RESISTANCE.get().floatValue();
-
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SpatialHarvesters.modid);
-
     public static final RegistryObject<ChunkLoaderBlock> CHUNK_LOADER = BLOCKS.register("chunk_loader",
             () -> new ChunkLoaderBlock(
                     Block.Properties

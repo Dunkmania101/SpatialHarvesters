@@ -13,7 +13,10 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
+import javax.annotation.Nonnull;
+
 public class CustomShapedBlock extends Block {
+    private static final DirectionProperty FACING = BlockStateProperties.FACING;
     private final VoxelShape NORTH_SHAPE;
     private final VoxelShape SOUTH_SHAPE;
     private final VoxelShape EAST_SHAPE;
@@ -39,10 +42,10 @@ public class CustomShapedBlock extends Block {
         this(properties, shape, Direction.DOWN);
     }
 
-    private static final DirectionProperty FACING = BlockStateProperties.FACING;
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch(state.get(FACING)) {
+    @Nonnull
+    public VoxelShape getShape(BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
+        switch (state.get(FACING)) {
             default:
                 return NORTH_SHAPE;
             case SOUTH:
@@ -64,7 +67,7 @@ public class CustomShapedBlock extends Block {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(FACING);
     }

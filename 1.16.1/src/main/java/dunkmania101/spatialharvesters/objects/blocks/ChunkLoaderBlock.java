@@ -13,13 +13,15 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nonnull;
+
 public class ChunkLoaderBlock extends Block {
     public ChunkLoaderBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    public void onBlockPlacedBy(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         if (!worldIn.isRemote) {
             if (worldIn instanceof ServerWorld) {
@@ -33,7 +35,7 @@ public class ChunkLoaderBlock extends Block {
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void onBlockHarvested(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull PlayerEntity player) {
         super.onBlockHarvested(worldIn, pos, state, player);
         if (!worldIn.isRemote) {
             if (worldIn instanceof ServerWorld) {

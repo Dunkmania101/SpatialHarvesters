@@ -15,7 +15,6 @@
       "model": "spatialharvesters:block/mob_harvester",
       "y": 90
     },
-
     "facing=north,active=false": {
       "model": "spatialharvesters:block/mob_harvester"
     },

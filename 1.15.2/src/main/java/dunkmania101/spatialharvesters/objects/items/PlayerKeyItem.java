@@ -15,6 +15,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class PlayerKeyItem extends Item {
@@ -23,7 +24,8 @@ public class PlayerKeyItem extends Item {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    public @Nonnull
+    ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(context.getPos());
@@ -48,7 +50,7 @@ public class PlayerKeyItem extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(@Nonnull ItemStack stack, World worldIn, List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.player_key_description"));
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));

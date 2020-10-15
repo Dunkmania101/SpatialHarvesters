@@ -42,6 +42,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     public static final Method dropLoot;
     public static final Method dropSpecialItems;
+
     static {
         dropLoot = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213354_a",
                 DamageSource.class, boolean.class);
@@ -57,7 +58,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     protected void setEntityDrops() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
-        if (this.player != null && this.entity != null) {
+        if (this.player != null && !StringUtils.isNullOrEmpty(this.entity)) {
             MobEntity mobEntity = getMobEntity();
             if (mobEntity != null) {
                 if (mobEntity.getType() == EntityType.ENDER_DRAGON) {
@@ -92,9 +93,9 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     protected MobEntity getMobEntity() {
         MobEntity mobEntity = null;
-        if (world != null && this.entity != null) {
-            if (world instanceof ServerWorld) {
-                ServerWorld serverWorld = (ServerWorld) world;
+        if (getWorld() != null && !StringUtils.isNullOrEmpty(this.entity)) {
+            if (getWorld() instanceof ServerWorld) {
+                ServerWorld serverWorld = (ServerWorld) getWorld();
                 Optional<EntityType<?>> optionalEntityType = EntityType.byKey(this.entity);
                 if (optionalEntityType.isPresent()) {
                     EntityType<?> entityType = optionalEntityType.get();
@@ -120,12 +121,18 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     protected void updateWeapon() {
-        if (this.player != null && this.weapon != null) {
-            ItemStack stack = ItemStack.read(this.weapon.copy());
+        if (this.player != null) {
+            ItemStack stack = ItemStack.EMPTY;
+            if (this.weapon != null) {
+                if (!this.weapon.isEmpty()) {
+                    stack = ItemStack.read(this.weapon);
+                }
+            }
             CompoundNBT stackNBT = stack.getTag();
             ItemStack mainHandStack = this.player.getHeldItemMainhand();
             if (!ItemStack.areItemStacksEqual(mainHandStack, stack)) {
                 this.player.setHeldItem(Hand.MAIN_HAND, stack);
+                this.player.getHeldItemMainhand();
             }
             if (mainHandStack.getTag() != stackNBT) {
                 mainHandStack.deserializeNBT(stackNBT);
@@ -133,6 +140,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
             ItemStack offHandStack = this.player.getHeldItemOffhand();
             if (!ItemStack.areItemStacksEqual(offHandStack, stack)) {
                 this.player.setHeldItem(Hand.OFF_HAND, stack);
+                offHandStack = this.player.getHeldItemOffhand();
             }
             if (offHandStack.getTag() != stackNBT) {
                 offHandStack.deserializeNBT(stackNBT);
@@ -165,7 +173,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     @Override
     public CompoundNBT saveSerializedValues() {
         CompoundNBT nbt = super.saveSerializedValues();
-        if (this.entity != null) {
+        if (!StringUtils.isNullOrEmpty(this.entity)) {
             nbt.putString(CustomValues.entityNBTKey, this.entity);
         }
         if (this.player != null) {
@@ -190,9 +198,9 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
             this.entity = nbt.getString(CustomValues.entityNBTKey);
         }
         if (nbt.contains(CustomValues.playerNameNBTKey)) {
-            if (world != null) {
-                if (world instanceof ServerWorld) {
-                    ServerWorld serverWorld = (ServerWorld) world;
+            if (getWorld() != null) {
+                if (getWorld() instanceof ServerWorld) {
+                    ServerWorld serverWorld = (ServerWorld) getWorld();
                     String name = nbt.getString(CustomValues.playerNameNBTKey);
                     if (!StringUtils.isNullOrEmpty(name)) {
                         removePlayer();

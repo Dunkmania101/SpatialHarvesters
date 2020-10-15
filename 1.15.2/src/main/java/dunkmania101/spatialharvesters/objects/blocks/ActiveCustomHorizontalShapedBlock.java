@@ -10,7 +10,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
+import javax.annotation.Nonnull;
+
 public class ActiveCustomHorizontalShapedBlock extends PreservedDataCustomHorizontalShapedBlock {
+    public static final BooleanProperty ACTIVE = CustomProperties.ACTIVE;
+
     public ActiveCustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction frontDirection) {
         super(properties, shape, frontDirection);
 
@@ -22,10 +26,8 @@ public class ActiveCustomHorizontalShapedBlock extends PreservedDataCustomHorizo
         this(properties, shape, Direction.NORTH);
     }
 
-    public static final BooleanProperty ACTIVE = CustomProperties.ACTIVE;
-
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(ACTIVE);
     }

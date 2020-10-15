@@ -10,24 +10,21 @@ import java.util.ArrayList;
 
 @Mod.EventBusSubscriber
 public class CommonConfig {
+    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOILS;
-
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_SOILS;
-
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_ORES_MOD;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_BIOS_MOD;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_STONES_MOD;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_SOILS_MOD;
-
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_MOBS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_MOBS_MOD;
-
     public static ForgeConfigSpec.IntValue ORE_1_SPEED;
     public static ForgeConfigSpec.IntValue ORE_2_SPEED;
     public static ForgeConfigSpec.IntValue ORE_3_SPEED;
@@ -36,7 +33,6 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue ORE_6_SPEED;
     public static ForgeConfigSpec.IntValue ORE_7_SPEED;
     public static ForgeConfigSpec.IntValue ORE_8_SPEED;
-
     public static ForgeConfigSpec.IntValue BIO_1_SPEED;
     public static ForgeConfigSpec.IntValue BIO_2_SPEED;
     public static ForgeConfigSpec.IntValue BIO_3_SPEED;
@@ -45,7 +41,6 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue BIO_6_SPEED;
     public static ForgeConfigSpec.IntValue BIO_7_SPEED;
     public static ForgeConfigSpec.IntValue BIO_8_SPEED;
-
     public static ForgeConfigSpec.IntValue STONE_1_SPEED;
     public static ForgeConfigSpec.IntValue STONE_2_SPEED;
     public static ForgeConfigSpec.IntValue STONE_3_SPEED;
@@ -54,9 +49,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue STONE_6_SPEED;
     public static ForgeConfigSpec.IntValue STONE_7_SPEED;
     public static ForgeConfigSpec.IntValue STONE_8_SPEED;
-
     public static ForgeConfigSpec.IntValue MOB_SPEED;
-
     public static ForgeConfigSpec.IntValue SOIL_1_SPEED;
     public static ForgeConfigSpec.IntValue SOIL_2_SPEED;
     public static ForgeConfigSpec.IntValue SOIL_3_SPEED;
@@ -65,7 +58,6 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue SOIL_6_SPEED;
     public static ForgeConfigSpec.IntValue SOIL_7_SPEED;
     public static ForgeConfigSpec.IntValue SOIL_8_SPEED;
-
     public static ForgeConfigSpec.IntValue ORE_1_PRICE;
     public static ForgeConfigSpec.IntValue ORE_2_PRICE;
     public static ForgeConfigSpec.IntValue ORE_3_PRICE;
@@ -74,7 +66,6 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue ORE_6_PRICE;
     public static ForgeConfigSpec.IntValue ORE_7_PRICE;
     public static ForgeConfigSpec.IntValue ORE_8_PRICE;
-
     public static ForgeConfigSpec.IntValue BIO_1_PRICE;
     public static ForgeConfigSpec.IntValue BIO_2_PRICE;
     public static ForgeConfigSpec.IntValue BIO_3_PRICE;
@@ -83,7 +74,6 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue BIO_6_PRICE;
     public static ForgeConfigSpec.IntValue BIO_7_PRICE;
     public static ForgeConfigSpec.IntValue BIO_8_PRICE;
-
     public static ForgeConfigSpec.IntValue STONE_1_PRICE;
     public static ForgeConfigSpec.IntValue STONE_2_PRICE;
     public static ForgeConfigSpec.IntValue STONE_3_PRICE;
@@ -92,7 +82,6 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue STONE_6_PRICE;
     public static ForgeConfigSpec.IntValue STONE_7_PRICE;
     public static ForgeConfigSpec.IntValue STONE_8_PRICE;
-
     public static ForgeConfigSpec.IntValue SOIL_1_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_2_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_3_PRICE;
@@ -101,21 +90,20 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue SOIL_6_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_7_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_8_PRICE;
-
     public static ForgeConfigSpec.IntValue MOB_PRICE;
-
     public static ForgeConfigSpec.BooleanValue MOB_DROP_DRAGON_EGG;
-
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
-
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_AMPLIFIER;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_DURATION;
-
     public static ForgeConfigSpec.DoubleValue BLOCK_HARDNESS;
     public static ForgeConfigSpec.DoubleValue BLOCK_RESISTANCE;
 
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    static {
+        BUILDER.push("Common Config:");
+        setup();
+        BUILDER.pop();
+    }
 
     public static void init(Path file) {
         final CommentedFileConfig data = CommentedFileConfig.builder(file)
@@ -125,12 +113,6 @@ public class CommonConfig {
                 .build();
         data.load();
         CONFIG.setConfig(data);
-    }
-
-    static {
-        BUILDER.push("Common Config:");
-        setup();
-        BUILDER.pop();
     }
 
     private static void setup() {
@@ -590,7 +572,7 @@ public class CommonConfig {
                 .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this + 1.)")
                 .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
-        DIMENSIONAL_APPLICATOR_DURATION = BUILDER.comment("Duration for the Dimensional Applicator (in ticks.)")
+        DIMENSIONAL_APPLICATOR_DURATION = BUILDER.comment("Duration for the Dimensional Applicator (in ticks, 20 = one second, 220 = 11 seconds (Night Vision flashes at 10 or less)).")
                 .defineInRange("dimensional_applicator_duration", 220, 0, Integer.MAX_VALUE);
 
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")

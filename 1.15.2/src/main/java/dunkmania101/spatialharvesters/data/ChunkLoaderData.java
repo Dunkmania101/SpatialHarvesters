@@ -6,10 +6,12 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class ChunkLoaderData extends WorldSavedData {
     private final ArrayList<Long> CHUNK_LOADERS;
+
     public ChunkLoaderData() {
         super(CustomValues.chunkLoaderDataKey);
         this.CHUNK_LOADERS = new ArrayList<>();
@@ -44,7 +46,8 @@ public class ChunkLoaderData extends WorldSavedData {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public @Nonnull
+    CompoundNBT write(CompoundNBT compound) {
         LongArrayNBT CHUNK_LOADERS_NBT = new LongArrayNBT(CHUNK_LOADERS);
         compound.put(CustomValues.chunkLoaderDataKey, CHUNK_LOADERS_NBT);
         return compound;

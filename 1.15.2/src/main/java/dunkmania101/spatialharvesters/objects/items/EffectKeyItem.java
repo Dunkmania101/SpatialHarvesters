@@ -17,6 +17,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class EffectKeyItem extends Item {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    public @Nonnull ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(context.getPos());
@@ -38,7 +39,7 @@ public class EffectKeyItem extends Item {
                         ArrayList<Integer> effects = new ArrayList<>();
                         boolean doContinue = true;
                         if (player.isCrouching()) {
-                            potionsNBT.putString(CustomValues.removePlayerNBTKey, "");
+                            potionsNBT.putString(CustomValues.removePotionsNBTKey, "");
                             player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.remove_dimensional_applicator_nbt_effects"), true);
                         } else {
                             for (EffectInstance effectInstance : player.getActivePotionEffects()) {
@@ -63,7 +64,7 @@ public class EffectKeyItem extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(@Nonnull ItemStack stack, World worldIn, List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.effect_key_description"));
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));

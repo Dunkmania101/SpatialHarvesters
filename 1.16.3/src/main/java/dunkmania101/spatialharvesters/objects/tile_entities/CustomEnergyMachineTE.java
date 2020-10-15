@@ -16,21 +16,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CustomEnergyMachineTE extends TileEntity {
+    private final LazyOptional<IEnergyStorage> energy = createEnergy();
+    private boolean setCanExtract = false;
+    private boolean setCanReceive = false;
+    private final CustomEnergyStorage energyStorage = createEnergyStorage(getCapacity(), getMaxInput(), getMaxExtract());
+
     public CustomEnergyMachineTE(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
     }
-
-    private boolean setCanExtract = false;
-    private boolean setCanReceive = false;
     public CustomEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
         this(tileEntityTypeIn);
 
         this.setCanExtract = canExtract;
         this.setCanReceive = canReceive;
     }
-
-    private final CustomEnergyStorage energyStorage = createEnergyStorage(getCapacity(), getMaxInput(), getMaxExtract());
-    private final LazyOptional<IEnergyStorage> energy = createEnergy();
 
     protected CustomEnergyStorage createEnergyStorage(int capacity, int maxInput, int maxExtract) {
         return new CustomEnergyStorage(capacity, maxInput, maxExtract, 0) {
@@ -105,15 +104,16 @@ public class CustomEnergyMachineTE extends TileEntity {
         }
     }
 
+    @Nonnull
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT write(@Nonnull CompoundNBT compound) {
         CompoundNBT nbt = super.write(compound);
         nbt.merge(saveSerializedValues());
         return nbt;
     }
 
     @Override
-    public void func_230337_a_(BlockState state, CompoundNBT nbt) {
+    public void func_230337_a_(@Nonnull BlockState state, @Nonnull CompoundNBT nbt) {
         super.func_230337_a_(state, nbt);
         setDeserializedValues(nbt);
         markDirty();

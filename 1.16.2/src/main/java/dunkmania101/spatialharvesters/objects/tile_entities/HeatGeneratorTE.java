@@ -27,13 +27,15 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     public void customTickActions() {
         super.customTickActions();
         if (world != null && !world.isRemote) {
-            ArrayList<IEnergyStorage> outBatteries = new ArrayList<>();
             setActive(false);
+            ArrayList<IEnergyStorage> outBatteries = new ArrayList<>();
             for (Direction side : Direction.values()) {
                 Block block = world.getBlockState(pos.offset(side)).getBlock();
                 if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
-                    getEnergyStorage().addEnergy(getSpeed());
-                    setActive(true);
+                    if (getEnergyStorage().getEnergyStored() < getEnergyStorage().getMaxEnergyStored()) {
+                        getEnergyStorage().addEnergy(getSpeed());
+                        setActive(true);
+                    }
                 }
                 TileEntity out = world.getTileEntity(pos.offset(side));
                 if (out != null) {
@@ -41,11 +43,14 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
                     outCap.ifPresent(outBatteries::add);
                 }
             }
-            for (IEnergyStorage outBattery : outBatteries) {
-                int energy = getEnergyStorage().getEnergyStored();
-                if (energy > 0) {
-                    int outReceived = outBattery.receiveEnergy(energy, false);
-                    getEnergyStorage().consumeEnergy(outReceived);
+            if (outBatteries.size() > 0) {
+                setActive(true);
+                for (IEnergyStorage outBattery : outBatteries) {
+                    int energy = getEnergyStorage().getEnergyStored();
+                    if (energy > 0) {
+                        int outReceived = outBattery.receiveEnergy(energy, false);
+                        getEnergyStorage().consumeEnergy(outReceived);
+                    }
                 }
             }
         }

@@ -2,7 +2,6 @@ package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.CustomEnergyMachineTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.HeatGeneratorTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.TickingRedstoneEnergyMachineTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
@@ -12,28 +11,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalShapedBlock {
+    private CompoundNBT thisTileNBT = new CompoundNBT();
+
     public PreservedDataCustomHorizontalShapedBlock(Properties properties, VoxelShape shape, Direction frontDirection) {
         super(properties, shape, frontDirection);
     }
 
-    public PreservedDataCustomHorizontalShapedBlock(Properties properties, VoxelShape shape) {
-        this(properties, shape, Direction.NORTH);
-    }
-
-    private CompoundNBT thisTileNBT = new CompoundNBT();
-
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void onBlockHarvested(World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull PlayerEntity player) {
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile != null) {
             this.thisTileNBT = tile.serializeNBT();
@@ -41,8 +40,9 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
+    @Nonnull
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    public List<ItemStack> getDrops(@Nonnull BlockState state, @Nonnull LootContext.Builder builder) {
         List<ItemStack> drops = super.getDrops(state, builder);
         if (this.thisTileNBT != null) {
             if (!this.thisTileNBT.isEmpty()) {
@@ -53,7 +53,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    public void onBlockPlacedBy(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         if (!worldIn.isRemote) {
             TileEntity tile = worldIn.getTileEntity(pos);
@@ -64,8 +64,9 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
         }
     }
 
+    @Nonnull
     @Override
-    public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+    public ActionResultType onBlockActivated(@Nonnull BlockState state, World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand handIn, @Nonnull BlockRayTraceResult hit) {
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile != null) {
             CompoundNBT data = tile.serializeNBT();
@@ -76,14 +77,15 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                 player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
             }
             if (tile instanceof TickingRedstoneEnergyMachineTE) {
-                if (!(tile instanceof HeatGeneratorTE)) {
+                int countedTicks = data.getInt(CustomValues.countedTicksKey);
+                if (countedTicks > 0) {
                     player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                     player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
-                    player.sendStatusMessage(new StringTextComponent(Integer.toString(data.getInt(CustomValues.countedTicksKey))), false);
+                    player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
                     player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                 }
             }
         }
-        super.onBlockClicked(state, worldIn, pos, player);
+        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
 }

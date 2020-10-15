@@ -1,32 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
+  "pattern": [
     "bdb",
     "cac",
     "bdb"
   ],
-  "key":
-  {
-    "a":
-    {
+  "key": {
+    "a": {
       "item": "spatialharvesters:casing"
     },
-    "b":
-    {
+    "b": {
       "tag": "forge:ingots/iron"
     },
-    "c":
-    {
+    "c": {
       "tag": "forge:crops/carrot"
     },
-    "d":
-    {
+    "d": {
       "tag": "forge:gems/diamond"
     }
   },
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:regeneration_activator"
   }
 }

@@ -10,18 +10,18 @@ import net.minecraft.tileentity.TileEntityType;
 
 public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implements ITickableTileEntity {
     private final boolean countTicks;
+    protected boolean active = false;
+    protected int ticks = 0;
+
     public TickingRedstoneEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive, boolean countTicks) {
         super(tileEntityTypeIn, canExtract, canReceive);
 
         this.countTicks = countTicks;
     }
-
     public TickingRedstoneEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
         this(tileEntityTypeIn, canExtract, canReceive, false);
     }
 
-    protected boolean active = false;
-    protected int ticks = 0;
     @Override
     public void tick() {
         if (getWorld() != null) {
@@ -54,12 +54,12 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
         return this.ticks;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public boolean getActive() {
         return this.active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
         if (countTicks) {
             nbt.putInt(CustomValues.countedTicksKey, getCountedTicks());
         }
-        return  nbt;
+        return nbt;
     }
 
     @Override

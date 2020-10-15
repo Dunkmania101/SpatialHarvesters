@@ -16,18 +16,13 @@ public class CustomEnergyStorage extends EnergyStorage {
         }
     }
 
-    public void setEnergyStored(int energy) {
-        this.energy = energy;
-        onEnergyChanged();
-    }
-
     @Override
     public int getEnergyStored() {
         return this.energy;
     }
 
-    public void setMaxEnergyStored(int energy) {
-        this.capacity = energy;
+    public void setEnergyStored(int energy) {
+        this.energy = energy;
         onEnergyChanged();
     }
 
@@ -36,8 +31,8 @@ public class CustomEnergyStorage extends EnergyStorage {
         return this.capacity;
     }
 
-    public void setMaxInput(int energy) {
-        this.maxReceive = energy;
+    public void setMaxEnergyStored(int energy) {
+        this.capacity = energy;
         onEnergyChanged();
     }
 
@@ -45,13 +40,18 @@ public class CustomEnergyStorage extends EnergyStorage {
         return this.maxReceive;
     }
 
-    public void setMaxExtract(int energy) {
-        this.maxExtract = energy;
+    public void setMaxInput(int energy) {
+        this.maxReceive = energy;
         onEnergyChanged();
     }
 
     public int getMaxExtract() {
         return this.maxExtract;
+    }
+
+    public void setMaxExtract(int energy) {
+        this.maxExtract = energy;
+        onEnergyChanged();
     }
 
     @Override

@@ -1,28 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
+  "pattern": [
     "cbc",
     "bab",
     "cbc"
   ],
-  "key":
-  {
-    "a":
-    {
+  "key": {
+    "a": {
       "tag": "forge:gems/diamond"
     },
-    "b":
-    {
+    "b": {
       "tag": "forge:crops"
     },
-    "c":
-    {
+    "c": {
       "item": "spatialharvesters:base_powder"
     }
   },
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:bio_core"
   }
 }

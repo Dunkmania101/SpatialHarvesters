@@ -44,7 +44,7 @@ public class Tools {
         }
 
         for (int i = 0; i < verticalTimes; i++) {
-            buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(minX, 1-maxZ, minY, maxX, 1-minZ, maxY)));
+            buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(minX, 1 - maxZ, minY, maxX, 1 - minZ, maxY)));
             if (from.getAxis() == Direction.Axis.Z || from.getAxis() == Direction.Axis.Y) {
                 from = Direction.byIndex(from.getIndex() + 2);
             }
@@ -54,7 +54,7 @@ public class Tools {
 
         int horizontalTimes = (to.getHorizontalIndex() - from.getHorizontalIndex() + 4) % 4;
         for (int i = 0; i < horizontalTimes; i++) {
-            buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(1-maxZ, minY, minX, 1-minZ, maxY, maxX)));
+            buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX)));
             buffer[0] = buffer[1];
             buffer[1] = VoxelShapes.empty();
         }
@@ -111,12 +111,8 @@ public class Tools {
         for (Item checkItem : ForgeRegistries.ITEMS.getValues()) {
             ResourceLocation itemRN = checkItem.getRegistryName();
             if (itemRN != null) {
-                ArrayList<String> modOre = new ArrayList<>();
-                String modid = itemRN.getNamespace();
-                modOre.add(modid);
-                modOre.add(itemRN.getPath());
                 if (!isResourceBanned(itemRN, blacklist_ores, blacklist_ores_mod)) {
-                    if (checkItem.isIn(Tags.Items.ORES) || config_ores.contains(modOre)) {
+                    if (checkItem.isIn(Tags.Items.ORES) || config_ores.contains(getModResourceArray(itemRN))) {
                         ORES.add(checkItem);
                     }
                 }
@@ -133,25 +129,21 @@ public class Tools {
         for (Item checkItem : ForgeRegistries.ITEMS.getValues()) {
             ResourceLocation itemRN = checkItem.getRegistryName();
             if (itemRN != null) {
-                ArrayList<String> modBio = new ArrayList<>();
-                String modid = itemRN.getNamespace();
-                modBio.add(modid);
-                modBio.add(itemRN.getPath());
                 if (!isResourceBanned(itemRN, blacklist_bios, blacklist_bios_mod)) {
                     if (checkItem.isIn(Tags.Items.CROPS)
-                                    || checkItem.isIn(Tags.Items.MUSHROOMS)
-                                    || checkItem.isIn(Tags.Items.LEATHER)
-                                    || checkItem.isIn(Tags.Items.FEATHERS)
-                                    || checkItem.isIn(Tags.Items.SEEDS)
-                                    || checkItem.isIn(Tags.Items.DYES)
-                                    || checkItem.isIn(Tags.Items.BONES)
-                                    || checkItem.isIn(ItemTags.SMALL_FLOWERS)
-                                    || checkItem.isIn(ItemTags.LOGS)
-                                    || checkItem.isIn(ItemTags.LEAVES)
-                                    || checkItem.isIn(ItemTags.SAPLINGS)
-                                    || checkItem.isIn(ItemTags.PLANKS)
-                                    || checkItem.isIn(Tags.Items.RODS_WOODEN)
-                     || config_bios.contains(modBio)) {
+                            || checkItem.isIn(Tags.Items.MUSHROOMS)
+                            || checkItem.isIn(Tags.Items.LEATHER)
+                            || checkItem.isIn(Tags.Items.FEATHERS)
+                            || checkItem.isIn(Tags.Items.SEEDS)
+                            || checkItem.isIn(Tags.Items.DYES)
+                            || checkItem.isIn(Tags.Items.BONES)
+                            || checkItem.isIn(ItemTags.SMALL_FLOWERS)
+                            || checkItem.isIn(ItemTags.LOGS)
+                            || checkItem.isIn(ItemTags.LEAVES)
+                            || checkItem.isIn(ItemTags.SAPLINGS)
+                            || checkItem.isIn(ItemTags.PLANKS)
+                            || checkItem.isIn(Tags.Items.RODS_WOODEN)
+                            || config_bios.contains(getModResourceArray(itemRN))) {
                         BIOS.add(checkItem);
                     }
                 }
@@ -168,10 +160,6 @@ public class Tools {
         for (Item checkItem : ForgeRegistries.ITEMS.getValues()) {
             ResourceLocation itemRN = checkItem.getRegistryName();
             if (itemRN != null) {
-                ArrayList<String> modStone = new ArrayList<>();
-                String modid = itemRN.getNamespace();
-                modStone.add(modid);
-                modStone.add(itemRN.getPath());
                 if (!isResourceBanned(itemRN, blacklist_stones, blacklist_stones_mod)) {
                     if ((
                             checkItem.isIn(Tags.Items.STONE)
@@ -179,7 +167,7 @@ public class Tools {
                                     || checkItem.isIn(Tags.Items.SANDSTONE)
                                     || checkItem.isIn(Tags.Items.END_STONES)
                                     || checkItem.isIn(Tags.Items.NETHERRACK)
-                    ) || config_stones.contains(modStone)) {
+                    ) || config_stones.contains(getModResourceArray(itemRN))) {
                         STONES.add(checkItem);
                     }
                 }
@@ -198,15 +186,11 @@ public class Tools {
             Item checkItem = block.asItem();
             ResourceLocation itemRN = checkItem.getRegistryName();
             if (itemRN != null) {
-                ArrayList<String> modSoil = new ArrayList<>();
-                String modid = itemRN.getNamespace();
-                modSoil.add(modid);
-                modSoil.add(itemRN.getPath());
                 if (!isResourceBanned(itemRN, blacklist_soils, blacklist_soils_mod)) {
                     if ((block.isIn(Tags.Blocks.DIRT)
                             || block.isIn(Tags.Blocks.SAND)
                             || block.isIn(Tags.Blocks.GRAVEL)
-                    ) || config_soils.contains(modSoil)) {
+                    ) || config_soils.contains(getModResourceArray(itemRN))) {
                         SOILS.add(checkItem);
                     }
                 }
@@ -215,13 +199,16 @@ public class Tools {
         return SOILS;
     }
 
+    public static ArrayList<String> getModResourceArray(ResourceLocation rn) {
+        ArrayList<String> modRN = new ArrayList<>();
+        modRN.add(rn.getNamespace());
+        modRN.add(rn.getPath());
+        return modRN;
+    }
+
     public static boolean isResourceBanned(ResourceLocation rn, ArrayList<ArrayList<String>> blacklist, ArrayList<String> blacklist_mod) {
         if (rn != null) {
-            ArrayList<String> modRN = new ArrayList<>();
-            String modid = rn.getNamespace();
-            modRN.add(modid);
-            modRN.add(rn.getPath());
-            return blacklist.contains(modRN) || blacklist_mod.contains(modid);
+            return blacklist.contains(getModResourceArray(rn)) || blacklist_mod.contains(rn.getNamespace());
         }
         return false;
     }

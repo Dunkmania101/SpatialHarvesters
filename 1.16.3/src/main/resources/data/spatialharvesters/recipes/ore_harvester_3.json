@@ -1,36 +1,28 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
+  "pattern": [
     "cec",
     "bab",
     "bdb"
   ],
-  "key":
-  {
-    "a":
-    {
+  "key": {
+    "a": {
       "item": "spatialharvesters:ore_harvester_2"
     },
-    "b":
-    {
+    "b": {
       "tag": "forge:ingots/iron"
     },
-    "c":
-    {
+    "c": {
       "item": "spatialharvesters:base_powder"
     },
-    "d":
-    {
+    "d": {
       "item": "spatialharvesters:crystal_2"
     },
-  "e":
-    {
+    "e": {
       "item": "spatialharvesters:ore_core"
     }
   },
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:ore_harvester_3"
   }
 }

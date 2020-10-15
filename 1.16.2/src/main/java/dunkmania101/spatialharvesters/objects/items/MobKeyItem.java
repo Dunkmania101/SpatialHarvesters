@@ -21,6 +21,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class MobKeyItem extends Item {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public boolean hitEntity(@Nonnull ItemStack stack, @Nonnull LivingEntity target, LivingEntity attacker) {
         if (attacker.isCrouching()) {
             ResourceLocation mobRN = target.getType().getRegistryName();
             if (mobRN != null) {
@@ -78,6 +79,7 @@ public class MobKeyItem extends Item {
         return true;
     }
 
+    @Nonnull
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
@@ -117,7 +119,7 @@ public class MobKeyItem extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_description"));
         CompoundNBT nbt = stack.getTag();
