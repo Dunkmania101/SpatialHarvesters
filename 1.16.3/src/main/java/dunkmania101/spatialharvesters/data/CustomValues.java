@@ -51,6 +51,7 @@ public class CustomValues {
     ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
 
     public static final String energyStorageKey = SpatialHarvesters.modid + "_energyStorage";
+    public static final String countedTicksKey = "countedTicks";
     public static final String stackTileNBTKey = SpatialHarvesters.modid + "_stackTileNBT";
     public static final String potionsNBTKey = SpatialHarvesters.modid + "potionsNBTKey";
     public static final String playerNBTKey = SpatialHarvesters.modid + "_dimensionalApplicatorEntity";

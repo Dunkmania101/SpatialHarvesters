@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CustomProperties;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.RedstoneParticleData;
@@ -8,7 +9,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
 public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implements ITickableTileEntity {
-    private static final String countedTicksKey = "countedTicks";
     private final boolean countTicks;
     public TickingRedstoneEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive, boolean countTicks) {
         super(tileEntityTypeIn, canExtract, canReceive);
@@ -66,7 +66,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     public CompoundNBT saveSerializedValues() {
         CompoundNBT nbt = super.saveSerializedValues();
         if (countTicks) {
-            nbt.putInt(countedTicksKey, getCountedTicks());
+            nbt.putInt(CustomValues.countedTicksKey, getCountedTicks());
         }
         return  nbt;
     }
@@ -74,8 +74,8 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     @Override
     public void setDeserializedValues(CompoundNBT nbt) {
         super.setDeserializedValues(nbt);
-        if (nbt.contains(countedTicksKey)) {
-            this.ticks = nbt.getInt(countedTicksKey);
+        if (nbt.contains(CustomValues.countedTicksKey)) {
+            this.ticks = nbt.getInt(CustomValues.countedTicksKey);
         }
     }
 }
