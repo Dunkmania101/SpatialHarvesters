@@ -100,7 +100,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.DoubleValue BLOCK_RESISTANCE;
 
     static {
-        BUILDER.push("Common Config:");
+        BUILDER.push("Spatial Harvesters - Common Config: ");
         setup();
         BUILDER.pop();
     }
@@ -378,6 +378,7 @@ public class CommonConfig {
         oreMod.add(ore);
         ores.add(oreMod);
 
+        BUILDER.push("Custom Outputs: ");
         CUSTOM_ORES = BUILDER.comment("Custom outputs for the Ore Harvester.")
                 .define("custom_ores", ores);
         ArrayList<ArrayList<String>> custom_plants = new ArrayList<>();
@@ -389,7 +390,9 @@ public class CommonConfig {
         ArrayList<ArrayList<String>> custom_soils = new ArrayList<>();
         CUSTOM_SOILS = BUILDER.comment("Custom outputs for the Soil Harvester.")
                 .define("custom_soils", custom_soils);
+        BUILDER.pop();
 
+        BUILDER.push("Harvester Blacklists: ");
         ArrayList<ArrayList<String>> blacklist_ores = new ArrayList<>();
         BLACKLIST_ORES = BUILDER.comment("Blacklist for the Ore Harvesters")
                 .define("blacklist_ores", blacklist_ores);
@@ -405,7 +408,9 @@ public class CommonConfig {
         ArrayList<ArrayList<String>> blacklist_mobs = new ArrayList<>();
         BLACKLIST_MOBS = BUILDER.comment("Blacklist for the Mob Harvesters")
                 .define("blacklist_mobs", blacklist_mobs);
+        BUILDER.pop();
 
+        BUILDER.push("Harvester Blacklists (by modid): ");
         ArrayList<String> blacklist_ores_mod = new ArrayList<>();
         BLACKLIST_ORES_MOD = BUILDER.comment("Blacklist for the Soil Harvesters (By mod)")
                 .define("blacklist_ores_mod", blacklist_ores_mod);
@@ -422,7 +427,11 @@ public class CommonConfig {
         ArrayList<String> blacklist_mobs_mod = new ArrayList<>();
         BLACKLIST_MOBS_MOD = BUILDER.comment("Blacklist for the Mob Harvesters (By mod)")
                 .define("blacklist_mobs_mod", blacklist_mobs_mod);
+        BUILDER.pop();
 
+        BUILDER.push("Harvester Speeds: ");
+
+        BUILDER.push("Ore Harvester Speeds: ");
         ORE_1_SPEED = BUILDER.comment("Speed for the tier 1 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_ore_1", 400, 0, Integer.MAX_VALUE);
         ORE_2_SPEED = BUILDER.comment("Speed for the tier 2 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -439,7 +448,9 @@ public class CommonConfig {
                 .defineInRange("speed_ore_7", 100, 0, Integer.MAX_VALUE);
         ORE_8_SPEED = BUILDER.comment("Speed for the tier 8 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_ore_8", 5, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
+        BUILDER.push("Bio Harvester Speeds: ");
         BIO_1_SPEED = BUILDER.comment("Speed for the tier 1 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_bio_1", 400, 0, Integer.MAX_VALUE);
         BIO_2_SPEED = BUILDER.comment("Speed for the tier 2 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -456,7 +467,9 @@ public class CommonConfig {
                 .defineInRange("speed_bio_7", 100, 0, Integer.MAX_VALUE);
         BIO_8_SPEED = BUILDER.comment("Speed for the tier 8 Bio Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_bio_8", 5, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
+        BUILDER.push("Stone Harvester Speeds: ");
         STONE_1_SPEED = BUILDER.comment("Speed for the tier 1 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_stone_1", 400, 0, Integer.MAX_VALUE);
         STONE_2_SPEED = BUILDER.comment("Speed for the tier 2 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -473,7 +486,9 @@ public class CommonConfig {
                 .defineInRange("speed_stone_7", 100, 0, Integer.MAX_VALUE);
         STONE_8_SPEED = BUILDER.comment("Speed for the tier 8 Stone Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_stone_8", 5, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
+        BUILDER.push("Soil Harvester Speeds: ");
         SOIL_1_SPEED = BUILDER.comment("Speed for the tier 1 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_soil_1", 400, 0, Integer.MAX_VALUE);
         SOIL_2_SPEED = BUILDER.comment("Speed for the tier 2 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -490,10 +505,15 @@ public class CommonConfig {
                 .defineInRange("speed_soil_7", 100, 0, Integer.MAX_VALUE);
         SOIL_8_SPEED = BUILDER.comment("Speed for the tier 8 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_soil_8", 5, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
         MOB_SPEED = BUILDER.comment("Speed for the Mob Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_mob", 50, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
+        BUILDER.push("Harvester Prices: ");
+
+        BUILDER.push("Ore Harvester Prices: ");
         ORE_1_PRICE = BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_1", 400, 0, Integer.MAX_VALUE);
         ORE_2_PRICE = BUILDER.comment("Price for the tier 2 Ore Harvester (in FE per operation)")
@@ -510,7 +530,9 @@ public class CommonConfig {
                 .defineInRange("price_ore_7", 7500, 0, Integer.MAX_VALUE);
         ORE_8_PRICE = BUILDER.comment("Price for the tier 8 Ore Harvester (in FE per operation)")
                 .defineInRange("price_ore_8", 8000, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
+        BUILDER.push("Bio Harvester Prices: ");
         BIO_1_PRICE = BUILDER.comment("Price for the tier 1 Bio Harvester (in FE per operation)")
                 .defineInRange("price_bio_1", 400, 0, Integer.MAX_VALUE);
         BIO_2_PRICE = BUILDER.comment("Price for the tier 2 Bio Harvester (in FE per operation)")
@@ -527,7 +549,9 @@ public class CommonConfig {
                 .defineInRange("price_bio_7", 7500, 0, Integer.MAX_VALUE);
         BIO_8_PRICE = BUILDER.comment("Price for the tier 8 Bio Harvester (in FE per operation)")
                 .defineInRange("price_bio_8", 8000, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
+        BUILDER.push("Stone Harvester Prices: ");
         STONE_1_PRICE = BUILDER.comment("Price for the tier 1 Stone Harvester (in FE per operation)")
                 .defineInRange("price_stone_1", 400, 0, Integer.MAX_VALUE);
         STONE_2_PRICE = BUILDER.comment("Price for the tier 2 Stone Harvester (in FE per operation)")
@@ -544,7 +568,9 @@ public class CommonConfig {
                 .defineInRange("price_stone_7", 7500, 0, Integer.MAX_VALUE);
         STONE_8_PRICE = BUILDER.comment("Price for the tier 8 Stone Harvester (in FE per operation)")
                 .defineInRange("price_stone_8", 8000, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
+        BUILDER.push("Soil Harvester Prices: ");
         SOIL_1_PRICE = BUILDER.comment("Price for the tier 1 Soil Harvester (in FE per operation)")
                 .defineInRange("price_soil_1", 400, 0, Integer.MAX_VALUE);
         SOIL_2_PRICE = BUILDER.comment("Price for the tier 2 Soil Harvester (in FE per operation)")
@@ -561,27 +587,31 @@ public class CommonConfig {
                 .defineInRange("price_soil_7", 7500, 0, Integer.MAX_VALUE);
         SOIL_8_PRICE = BUILDER.comment("Price for the tier 8 Soil Harvester (in FE per operation)")
                 .defineInRange("price_soil_8", 8000, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
         MOB_PRICE = BUILDER.comment("Price for the Mob Harvester (in FE per operation)")
                 .defineInRange("price_mob", 8000, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
-        MOB_DROP_DRAGON_EGG = BUILDER.comment("Should the Mob Harvester drop dragon eggs when set to that mob?")
-                .define("mob_drop_dragon_egg", true);
-
+        BUILDER.push("Dimensional Applicator Stats: ");
         DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
                 .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this + 1.)")
                 .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_DURATION = BUILDER.comment("Duration for the Dimensional Applicator (in ticks, 20 = one second, 220 = 11 seconds (Night Vision flashes at 10 or less)).")
                 .defineInRange("dimensional_applicator_duration", 220, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
+        BUILDER.push("Misc.: ");
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
                 .defineInRange("speed_heat_generator", 3, 0, Integer.MAX_VALUE);
-
         BLOCK_HARDNESS = BUILDER.comment("Hardness for the blocks (Iron Block is 5.)")
                 .defineInRange("block_hardness", 5.0f, 0, Float.MAX_VALUE);
         BLOCK_RESISTANCE = BUILDER.comment("Resistance for the blocks (Iron Block is 6.)")
                 .defineInRange("block_resistance", 6.0f, 0, Float.MAX_VALUE);
+        MOB_DROP_DRAGON_EGG = BUILDER.comment("Should the Mob Harvester drop dragon eggs when set to that mob?")
+                .define("mob_drop_dragon_egg", true);
+        BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();
 }
