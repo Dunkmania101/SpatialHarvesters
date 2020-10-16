@@ -13,6 +13,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -30,7 +31,8 @@ public class EffectKeyItem extends Item {
     public @Nonnull ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
         if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(context.getPos());
+            BlockPos pos = context.getPos();
+            TileEntity tile = world.getTileEntity(pos);
             if (tile != null) {
                 if (tile instanceof DimensionalApplicatorTE) {
                     PlayerEntity player = context.getPlayer();

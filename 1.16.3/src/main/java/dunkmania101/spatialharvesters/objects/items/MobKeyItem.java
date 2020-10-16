@@ -84,33 +84,36 @@ public class MobKeyItem extends Item {
     public ActionResultType onItemUse(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
         if (player != null) {
-            TileEntity tile = context.getWorld().getTileEntity(context.getPos());
-            if (tile != null) {
-                if (tile instanceof MobHarvesterTE) {
-                    CompoundNBT harvesterNBT = new CompoundNBT();
-                    if (player.isCrouching()) {
-                        harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
-                    } else {
-                        CompoundNBT itemNBT = context.getItem().getTag();
-                        if (itemNBT != null) {
-                            if (itemNBT.contains(CustomValues.entityNBTKey)) {
-                                harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
-                            }
-                            if (itemNBT.contains(CustomValues.weaponNBTKey)) {
-                                harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
-                            }
-                        }
-                    }
-                    if (harvesterNBT.isEmpty()) {
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
-                    } else {
-                        if (harvesterNBT.contains(CustomValues.removeEntityNBTKey)) {
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
+            World world = context.getWorld();
+            if (!world.isRemote) {
+                BlockPos pos = context.getPos();
+                TileEntity tile = world.getTileEntity(pos);
+                if (tile != null) {
+                    if (tile instanceof MobHarvesterTE) {
+                        CompoundNBT harvesterNBT = new CompoundNBT();
+                        if (player.isCrouching()) {
+                            harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
                         } else {
-                            harvesterNBT.putString(CustomValues.playerNameNBTKey, player.getName().getString());
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
+                            CompoundNBT itemNBT = context.getItem().getTag();
+                            if (itemNBT != null) {
+                                if (itemNBT.contains(CustomValues.entityNBTKey)) {
+                                    harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
+                                }
+                                if (itemNBT.contains(CustomValues.weaponNBTKey)) {
+                                    harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
+                                }
+                            }
                         }
-                        tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
+                        if (harvesterNBT.isEmpty()) {
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
+                        } else {
+                            if (harvesterNBT.contains(CustomValues.removeEntityNBTKey)) {
+                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
+                            } else {
+                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
+                            }
+                            tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
+                        }
                     }
                 }
             }

@@ -95,11 +95,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                     if (!StringUtils.isNullOrEmpty(mob)) {
                         player.sendStatusMessage(new StringTextComponent(mob), false);
                     }
-                    String playerName = data.getString(CustomValues.playerNameNBTKey);
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.bound_player_name"), false);
-                    if (!StringUtils.isNullOrEmpty(playerName)) {
-                        player.sendStatusMessage(new StringTextComponent(mob), false);
-                    }
+                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"), false);
                     CompoundNBT weapon = data.getCompound(CustomValues.weaponNBTKey);
                     if (!weapon.isEmpty()) {
                         ItemStack weaponStack = ItemStack.read(weapon);
