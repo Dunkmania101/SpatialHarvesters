@@ -36,7 +36,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     @Override
     public void customTickActions() {
         super.customTickActions();
-        if (getWorld() != null && !getWorld().isRemote) {
+        if (getWorld() != null && !getWorld().isRemote && this.thisBlock != null) {
             if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                 setActive(false);
                 resetCountedTicks();
@@ -62,7 +62,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                     ItemStack chosenOutput;
                                     Random rand = getWorld().rand;
                                     if (rand.nextInt(75) != 1) {
-                                        chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size()));
+                                        chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                     } else {
                                         chosenOutput = new ItemStack(getShard(this.thisBlock));
                                     }

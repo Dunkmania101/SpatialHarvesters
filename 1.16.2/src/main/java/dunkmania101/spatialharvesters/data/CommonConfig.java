@@ -515,82 +515,82 @@ public class CommonConfig {
 
         BUILDER.push("Ore Harvester Prices: ");
         ORE_1_PRICE = BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_1", 400, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_1", 400, 0, (Integer.MAX_VALUE / 10) - 1);
         ORE_2_PRICE = BUILDER.comment("Price for the tier 2 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_2", 600, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_2", 600, 0, (Integer.MAX_VALUE / 10) - 1);
         ORE_3_PRICE = BUILDER.comment("Price for the tier 3 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_3", 1000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_3", 1000, 0, (Integer.MAX_VALUE / 10) - 1);
         ORE_4_PRICE = BUILDER.comment("Price for the tier 4 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_4", 1500, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_4", 1500, 0, (Integer.MAX_VALUE / 10) - 1);
         ORE_5_PRICE = BUILDER.comment("Price for the tier 5 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_5", 4000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_5", 4000, 0, (Integer.MAX_VALUE / 10) - 1);
         ORE_6_PRICE = BUILDER.comment("Price for the tier 6 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_6", 7000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_6", 7000, 0, (Integer.MAX_VALUE / 10) - 1);
         ORE_7_PRICE = BUILDER.comment("Price for the tier 7 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_7", 7500, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_7", 7500, 0, (Integer.MAX_VALUE / 10) - 1);
         ORE_8_PRICE = BUILDER.comment("Price for the tier 8 Ore Harvester (in FE per operation)")
-                .defineInRange("price_ore_8", 8000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_ore_8", 8000, 0, (Integer.MAX_VALUE / 10) - 1);
         BUILDER.pop();
 
         BUILDER.push("Bio Harvester Prices: ");
         BIO_1_PRICE = BUILDER.comment("Price for the tier 1 Bio Harvester (in FE per operation)")
-                .defineInRange("price_bio_1", 400, 0, Integer.MAX_VALUE);
+                .defineInRange("price_bio_1", 400, 0, (Integer.MAX_VALUE / 10) - 1);
         BIO_2_PRICE = BUILDER.comment("Price for the tier 2 Bio Harvester (in FE per operation)")
-                .defineInRange("price_bio_2", 600, 0, Integer.MAX_VALUE);
+                .defineInRange("price_bio_2", 600, 0, (Integer.MAX_VALUE / 10) - 1);
         BIO_3_PRICE = BUILDER.comment("Price for the tier 3 Bio Harvester (in FE per operation)")
-                .defineInRange("price_bio_3", 1000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_bio_3", 1000, 0, (Integer.MAX_VALUE / 10) - 1);
         BIO_4_PRICE = BUILDER.comment("Price for the tier 4 Bio Harvester (in FE per operation)")
-                .defineInRange("price_bio_4", 1500, 0, Integer.MAX_VALUE);
+                .defineInRange("price_bio_4", 1500, 0, (Integer.MAX_VALUE / 10) - 1);
         BIO_5_PRICE = BUILDER.comment("Price for the tier 5 Bio Harvester (in FE per operation)")
-                .defineInRange("price_bio_5", 4000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_bio_5", 4000, 0, (Integer.MAX_VALUE / 10) - 1);
         BIO_6_PRICE = BUILDER.comment("Price for the tier 6 Bio Harvester (in FE per operation)")
-                .defineInRange("price_bio_6", 7000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_bio_6", 7000, 0, (Integer.MAX_VALUE / 10) - 1);
         BIO_7_PRICE = BUILDER.comment("Price for the tier 7 Bio Harvester (in FE per operation)")
-                .defineInRange("price_bio_7", 7500, 0, Integer.MAX_VALUE);
+                .defineInRange("price_bio_7", 7500, 0, (Integer.MAX_VALUE / 10) - 1);
         BIO_8_PRICE = BUILDER.comment("Price for the tier 8 Bio Harvester (in FE per operation)")
-                .defineInRange("price_bio_8", 8000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_bio_8", 8000, 0, (Integer.MAX_VALUE / 10) - 1);
         BUILDER.pop();
 
         BUILDER.push("Stone Harvester Prices: ");
         STONE_1_PRICE = BUILDER.comment("Price for the tier 1 Stone Harvester (in FE per operation)")
-                .defineInRange("price_stone_1", 400, 0, Integer.MAX_VALUE);
+                .defineInRange("price_stone_1", 400, 0, (Integer.MAX_VALUE / 10) - 1);
         STONE_2_PRICE = BUILDER.comment("Price for the tier 2 Stone Harvester (in FE per operation)")
-                .defineInRange("price_stone_2", 600, 0, Integer.MAX_VALUE);
+                .defineInRange("price_stone_2", 600, 0, (Integer.MAX_VALUE / 10) - 1);
         STONE_3_PRICE = BUILDER.comment("Price for the tier 3 Stone Harvester (in FE per operation)")
-                .defineInRange("price_stone_3", 1000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_stone_3", 1000, 0, (Integer.MAX_VALUE / 10) - 1);
         STONE_4_PRICE = BUILDER.comment("Price for the tier 4 Stone Harvester (in FE per operation)")
-                .defineInRange("price_stone_4", 1500, 0, Integer.MAX_VALUE);
+                .defineInRange("price_stone_4", 1500, 0, (Integer.MAX_VALUE / 10) - 1);
         STONE_5_PRICE = BUILDER.comment("Price for the tier 5 Stone Harvester (in FE per operation)")
-                .defineInRange("price_stone_5", 4000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_stone_5", 4000, 0, (Integer.MAX_VALUE / 10) - 1);
         STONE_6_PRICE = BUILDER.comment("Price for the tier 6 Stone Harvester (in FE per operation)")
-                .defineInRange("price_stone_6", 7000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_stone_6", 7000, 0, (Integer.MAX_VALUE / 10) - 1);
         STONE_7_PRICE = BUILDER.comment("Price for the tier 7 Stone Harvester (in FE per operation)")
-                .defineInRange("price_stone_7", 7500, 0, Integer.MAX_VALUE);
+                .defineInRange("price_stone_7", 7500, 0, (Integer.MAX_VALUE / 10) - 1);
         STONE_8_PRICE = BUILDER.comment("Price for the tier 8 Stone Harvester (in FE per operation)")
-                .defineInRange("price_stone_8", 8000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_stone_8", 8000, 0, (Integer.MAX_VALUE / 10) - 1);
         BUILDER.pop();
 
         BUILDER.push("Soil Harvester Prices: ");
         SOIL_1_PRICE = BUILDER.comment("Price for the tier 1 Soil Harvester (in FE per operation)")
-                .defineInRange("price_soil_1", 400, 0, Integer.MAX_VALUE);
+                .defineInRange("price_soil_1", 400, 0, (Integer.MAX_VALUE / 10) - 1);
         SOIL_2_PRICE = BUILDER.comment("Price for the tier 2 Soil Harvester (in FE per operation)")
-                .defineInRange("price_soil_2", 600, 0, Integer.MAX_VALUE);
+                .defineInRange("price_soil_2", 600, 0, (Integer.MAX_VALUE / 10) - 1);
         SOIL_3_PRICE = BUILDER.comment("Price for the tier 3 Soil Harvester (in FE per operation)")
-                .defineInRange("price_soil_3", 1000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_soil_3", 1000, 0, (Integer.MAX_VALUE / 10) - 1);
         SOIL_4_PRICE = BUILDER.comment("Price for the tier 4 Soil Harvester (in FE per operation)")
-                .defineInRange("price_soil_4", 1500, 0, Integer.MAX_VALUE);
+                .defineInRange("price_soil_4", 1500, 0, (Integer.MAX_VALUE / 10) - 1);
         SOIL_5_PRICE = BUILDER.comment("Price for the tier 5 Soil Harvester (in FE per operation)")
-                .defineInRange("price_soil_5", 4000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_soil_5", 4000, 0, (Integer.MAX_VALUE / 10) - 1);
         SOIL_6_PRICE = BUILDER.comment("Price for the tier 6 Soil Harvester (in FE per operation)")
-                .defineInRange("price_soil_6", 7000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_soil_6", 7000, 0, (Integer.MAX_VALUE / 10) - 1);
         SOIL_7_PRICE = BUILDER.comment("Price for the tier 7 Soil Harvester (in FE per operation)")
-                .defineInRange("price_soil_7", 7500, 0, Integer.MAX_VALUE);
+                .defineInRange("price_soil_7", 7500, 0, (Integer.MAX_VALUE / 10) - 1);
         SOIL_8_PRICE = BUILDER.comment("Price for the tier 8 Soil Harvester (in FE per operation)")
-                .defineInRange("price_soil_8", 8000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_soil_8", 8000, 0, (Integer.MAX_VALUE / 10) - 1);
         BUILDER.pop();
 
         MOB_PRICE = BUILDER.comment("Price for the Mob Harvester (in FE per operation)")
-                .defineInRange("price_mob", 8000, 0, Integer.MAX_VALUE);
+                .defineInRange("price_mob", 8000, 0, (Integer.MAX_VALUE / 10) - 1);
         BUILDER.pop();
 
         BUILDER.push("Dimensional Applicator Stats: ");
@@ -604,7 +604,7 @@ public class CommonConfig {
 
         BUILDER.push("Misc.: ");
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
-                .defineInRange("speed_heat_generator", 3, 0, Integer.MAX_VALUE);
+                .defineInRange("speed_heat_generator", 3, 0, (Integer.MAX_VALUE / 100) - 1);
         BLOCK_HARDNESS = BUILDER.comment("Hardness for the blocks (Iron Block is 5.)")
                 .defineInRange("block_hardness", 5.0f, 0, Float.MAX_VALUE);
         BLOCK_RESISTANCE = BUILDER.comment("Resistance for the blocks (Iron Block is 6.)")
