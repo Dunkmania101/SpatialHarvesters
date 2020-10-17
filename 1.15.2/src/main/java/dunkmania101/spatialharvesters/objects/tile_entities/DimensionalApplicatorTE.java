@@ -21,6 +21,7 @@ import java.util.UUID;
 public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private UUID playerId = null;
     private ArrayList<Integer> NBTEffects = new ArrayList<>();
+
     public DimensionalApplicatorTE() {
         super(TileEntityInit.DIMENSIONAL_APPLICATOR.get(), true, true, true);
     }
@@ -32,15 +33,15 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             if (getCountedTicks() >= getDuration() / 2 || (getDuration() >= 220 && getCountedTicks() < 200)) {
                 resetCountedTicks();
                 setActive(false);
-                boolean has_space_ripper = false;
-                for (Direction side : Direction.values()) {
-                    if (world.getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
-                        has_space_ripper = true;
-                        break;
+                if (getEnergyStorage().getEnergyStored() >= getPrice()) {
+                    boolean has_space_ripper = false;
+                    for (Direction side : Direction.values()) {
+                        if (world.getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                            has_space_ripper = true;
+                            break;
+                        }
                     }
-                }
-                if (has_space_ripper) {
-                    if (getEnergyStorage().getEnergyStored() >= getPrice()) {
+                    if (has_space_ripper) {
                         PlayerEntity player = null;
                         if (world.getServer() != null) {
                             for (World check_world : world.getServer().getWorlds()) {
@@ -50,12 +51,14 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                                 }
                             }
                             if (player != null) {
-                                if (getEnergyStorage().getEnergyStored() >= getPrice()) {
-                                    ArrayList<EffectInstance> effects = getEffects(world, pos);
-                                    for (EffectInstance effect : effects) {
-                                        setActive(true);
-                                        player.addPotionEffect(effect);
-                                        getEnergyStorage().consumeEnergy(getPrice());
+                                ArrayList<EffectInstance> effects = getEffects(world, pos);
+                                for (EffectInstance effect : effects) {
+                                    if (effect != null) {
+                                        if (getEnergyStorage().getEnergyStored() >= getPrice()) {
+                                            setActive(true);
+                                            player.addPotionEffect(effect);
+                                            getEnergyStorage().consumeEnergy(getPrice());
+                                        }
                                     }
                                 }
                             }
@@ -69,8 +72,8 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private ArrayList<EffectInstance> getEffects(World worldIn, BlockPos pos) {
         ArrayList<EffectInstance> effectInstances = new ArrayList<>();
         ArrayList<Effect> effects = new ArrayList<>();
-        for (int i : NBTEffects) {
-            Effect effect = Effect.get(i);
+        for (int id : NBTEffects) {
+            Effect effect = Effect.get(id);
             if (effect != null) {
                 effects.add(effect);
             }

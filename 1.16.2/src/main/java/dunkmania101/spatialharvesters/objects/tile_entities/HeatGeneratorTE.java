@@ -19,10 +19,6 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
         super(TileEntityInit.HEAT_GENERATOR.get(), true, true);
     }
 
-    public static int getSpeed() {
-        return CommonConfig.HEAT_GENERATOR_SPEED.get();
-    }
-
     @Override
     public void customTickActions() {
         super.customTickActions();
@@ -43,17 +39,23 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
                     outCap.ifPresent(outBatteries::add);
                 }
             }
-            if (outBatteries.size() > 0) {
-                setActive(true);
+            if (!outBatteries.isEmpty()) {
                 for (IEnergyStorage outBattery : outBatteries) {
                     int energy = getEnergyStorage().getEnergyStored();
                     if (energy > 0) {
                         int outReceived = outBattery.receiveEnergy(energy, false);
-                        getEnergyStorage().consumeEnergy(outReceived);
+                        if (outReceived > 0) {
+                            setActive(true);
+                            getEnergyStorage().consumeEnergy(outReceived);
+                        }
                     }
                 }
             }
         }
+    }
+
+    public static int getSpeed() {
+        return CommonConfig.HEAT_GENERATOR_SPEED.get();
     }
 
     @Override

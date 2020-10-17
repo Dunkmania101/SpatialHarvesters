@@ -27,11 +27,16 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
+    public void tick() {
+        this.thisBlock = getBlockState().getBlock();
+        updateEnergyStorage();
+        super.tick();
+    }
+
+    @Override
     public void customTickActions() {
         super.customTickActions();
         if (getWorld() != null && !getWorld().isRemote) {
-            this.thisBlock = getBlockState().getBlock();
-            updateEnergyStorage();
             if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                 setActive(false);
                 resetCountedTicks();
@@ -49,23 +54,25 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                             outCap.ifPresent(outInventories::add);
                         }
                     }
-                    lastMinuteActions();
-                    if (spaceRippers.size() > 0 && outInventories.size() > 0 && this.OUTPUTS.size() > 0) {
-                        for (Direction ignored : spaceRippers) {
-                            if (getEnergyStorage().getEnergyStored() >= price) {
-                                ItemStack chosenOutput;
-                                Random rand = getWorld().rand;
-                                if (rand.nextInt(75) != 1) {
-                                    chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size()));
-                                } else {
-                                    chosenOutput = new ItemStack(getShard(this.thisBlock));
-                                }
-                                int originalCount = chosenOutput.getCount();
-                                IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
-                                ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
-                                if (resultStack.getCount() != originalCount) {
-                                    getEnergyStorage().consumeEnergy(price);
-                                    setActive(true);
+                    if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
+                        lastMinuteActions();
+                        if (!this.OUTPUTS.isEmpty()) {
+                            for (Direction ignored : spaceRippers) {
+                                if (getEnergyStorage().getEnergyStored() >= price) {
+                                    ItemStack chosenOutput;
+                                    Random rand = getWorld().rand;
+                                    if (rand.nextInt(75) != 1) {
+                                        chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size()));
+                                    } else {
+                                        chosenOutput = new ItemStack(getShard(this.thisBlock));
+                                    }
+                                    int originalCount = chosenOutput.getCount();
+                                    IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
+                                    ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
+                                    if (resultStack.getCount() != originalCount) {
+                                        getEnergyStorage().consumeEnergy(price);
+                                        setActive(true);
+                                    }
                                 }
                             }
                         }

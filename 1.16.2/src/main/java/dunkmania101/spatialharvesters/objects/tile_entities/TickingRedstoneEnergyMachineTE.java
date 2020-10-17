@@ -54,12 +54,12 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
         return this.ticks;
     }
 
-    public boolean getActive() {
-        return this.active;
-    }
-
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean getActive() {
+        return this.active;
     }
 
     @Override
