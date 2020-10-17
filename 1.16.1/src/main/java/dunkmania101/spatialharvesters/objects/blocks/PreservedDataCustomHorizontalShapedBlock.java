@@ -12,12 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -66,47 +63,48 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
         }
     }
 
-    @Nonnull
     @Override
-    public ActionResultType onBlockActivated(@Nonnull BlockState state, World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand handIn, @Nonnull BlockRayTraceResult hit) {
+    public void onBlockClicked(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player) {
         if (!worldIn.isRemote) {
-            TileEntity tile = worldIn.getTileEntity(pos);
-            if (tile != null) {
-                CompoundNBT data = tile.serializeNBT();
-                if (tile instanceof CustomEnergyMachineTE) {
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.energy_message"), false);
-                    player.sendStatusMessage(new StringTextComponent(Integer.toString(data.getInt(CustomValues.energyStorageKey))), false);
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                }
-                if (tile instanceof TickingRedstoneEnergyMachineTE) {
-                    int countedTicks = data.getInt(CustomValues.countedTicksKey);
-                    if (countedTicks > 0) {
+            if (player.isCrouching()) {
+                TileEntity tile = worldIn.getTileEntity(pos);
+                if (tile != null) {
+                    CompoundNBT data = tile.serializeNBT();
+                    if (tile instanceof CustomEnergyMachineTE) {
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
-                        player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.energy_message"), false);
+                        player.sendStatusMessage(new StringTextComponent(Integer.toString(data.getInt(CustomValues.energyStorageKey))), false);
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                     }
-                }
-                if (tile instanceof MobHarvesterTE) {
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"), false);
-                    String mob = data.getString(CustomValues.entityNBTKey);
-                    if (!StringUtils.isNullOrEmpty(mob)) {
-                        player.sendStatusMessage(new StringTextComponent(mob), false);
-                    }
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"), false);
-                    CompoundNBT weapon = data.getCompound(CustomValues.weaponNBTKey);
-                    if (!weapon.isEmpty()) {
-                        ItemStack weaponStack = ItemStack.read(weapon);
-                        if (!weaponStack.isEmpty()) {
-                            player.sendStatusMessage(new TranslationTextComponent(weaponStack.getTranslationKey()), false);
+                    if (tile instanceof TickingRedstoneEnergyMachineTE) {
+                        int countedTicks = data.getInt(CustomValues.countedTicksKey);
+                        if (countedTicks > 0) {
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
+                            player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                         }
                     }
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                    if (tile instanceof MobHarvesterTE) {
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"), false);
+                        String mob = data.getString(CustomValues.entityNBTKey);
+                        if (!StringUtils.isNullOrEmpty(mob)) {
+                            player.sendStatusMessage(new StringTextComponent(mob), false);
+                        }
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"), false);
+                        CompoundNBT weapon = data.getCompound(CustomValues.weaponNBTKey);
+                        if (!weapon.isEmpty()) {
+                            ItemStack weaponStack = ItemStack.read(weapon);
+                            if (!weaponStack.isEmpty()) {
+                                player.sendStatusMessage(new TranslationTextComponent(weaponStack.getTranslationKey()), false);
+                            }
+                        }
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                    }
                 }
             }
         }
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        super.onBlockClicked(state, worldIn, pos, player);
     }
 }
