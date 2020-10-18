@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
+  "pattern": [
     "dad",
     "cbc",
     "dad"
@@ -20,8 +19,7 @@
       "tag": "forge:ingots/iron"
     }
   },
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:casing"
   }
 }

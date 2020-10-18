@@ -67,8 +67,12 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                 if (mobEntity != null) {
                     if (mobEntity.getType() == EntityType.ENDER_DRAGON) {
                         boolean dropEgg = CommonConfig.MOB_DROP_DRAGON_EGG.get();
+                        boolean dropWings = CommonConfig.MOB_DROP_WINGS.get();
                         if (dropEgg) {
                             newOutputs.add(new ItemStack(Items.DRAGON_EGG));
+                        }
+                        if (dropWings) {
+                            newOutputs.add(new ItemStack(Items.ELYTRA));
                         }
                     }
                     updateWeapon();

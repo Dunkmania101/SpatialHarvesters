@@ -1,28 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
+  "pattern": [
     "ccc",
     "bab",
     "bbb"
   ],
-  "key":
-  {
-    "a":
-    {
+  "key": {
+    "a": {
       "tag": "forge:storage_blocks/redstone"
     },
-    "b":
-    {
+    "b": {
       "tag": "forge:ingots/iron"
     },
-    "c":
-    {
+    "c": {
       "item": "spatialharvesters:base_powder"
     }
   },
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:chunk_loader"
   }
 }

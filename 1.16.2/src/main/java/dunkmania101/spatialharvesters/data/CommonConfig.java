@@ -92,6 +92,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue SOIL_8_PRICE;
     public static ForgeConfigSpec.IntValue MOB_PRICE;
     public static ForgeConfigSpec.BooleanValue MOB_DROP_DRAGON_EGG;
+    public static ForgeConfigSpec.BooleanValue MOB_DROP_WINGS;
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_AMPLIFIER;
@@ -611,6 +612,8 @@ public class CommonConfig {
                 .defineInRange("block_resistance", 6.0f, 0, Float.MAX_VALUE);
         MOB_DROP_DRAGON_EGG = BUILDER.comment("Should the Mob Harvester drop dragon eggs when set to that mob?")
                 .define("mob_drop_dragon_egg", true);
+        MOB_DROP_WINGS = BUILDER.comment("Should the Mob Harvester drop elytras when set to the ender dragon?")
+                .define("mob_drop_wings", true);
         BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();

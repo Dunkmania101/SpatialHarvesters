@@ -1,24 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
+  "pattern": [
     "  b",
     " b ",
     "a  "
   ],
-  "key":
-  {
-    "a":
-    {
+  "key": {
+    "a": {
       "item": "spatialharvesters:base_powder"
     },
-    "b":
-    {
+    "b": {
       "tag": "forge:ingots/gold"
     }
   },
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:player_key"
   }
 }

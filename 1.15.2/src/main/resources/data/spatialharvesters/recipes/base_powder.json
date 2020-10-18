@@ -14,8 +14,7 @@
       "item": "minecraft:clay"
     }
   ],
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:base_powder",
     "count": 4
   }

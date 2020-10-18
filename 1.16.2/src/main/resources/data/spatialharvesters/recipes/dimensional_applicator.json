@@ -1,32 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
+  "pattern": [
     "bdb",
     "cac",
     "bdb"
   ],
-  "key":
-  {
-    "a":
-    {
+  "key": {
+    "a": {
       "item": "spatialharvesters:casing"
     },
-    "b":
-    {
+    "b": {
       "tag": "forge:ingots/iron"
     },
-    "c":
-    {
+    "c": {
       "item": "minecraft:glass_bottle"
     },
-    "d":
-    {
+    "d": {
       "item": "spatialharvesters:crystal_7"
     }
   },
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:dimensional_applicator"
   }
 }

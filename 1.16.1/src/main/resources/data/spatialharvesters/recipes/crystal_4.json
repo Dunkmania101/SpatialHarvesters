@@ -1,7 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
+  "pattern": [
     "aaa",
     "aaa",
     "aaa"
@@ -11,8 +10,7 @@
       "item": "spatialharvesters:shard_4"
     }
   },
-  "result":
-  {
+  "result": {
     "item": "spatialharvesters:crystal_4"
   }
 }
