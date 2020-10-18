@@ -15,6 +15,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOILS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_DRAGON_DROPS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES;
@@ -91,8 +92,6 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue SOIL_7_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_8_PRICE;
     public static ForgeConfigSpec.IntValue MOB_PRICE;
-    public static ForgeConfigSpec.BooleanValue MOB_DROP_DRAGON_EGG;
-    public static ForgeConfigSpec.BooleanValue MOB_DROP_WINGS;
     public static ForgeConfigSpec.IntValue HARVESTER_SHARD_CHANCE;
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
@@ -122,265 +121,265 @@ public class CommonConfig {
 
         String mod = "appliedenergistics2";
         String ore = "quartz_ore";
-        ArrayList<String> oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        ArrayList<String> modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "appliedenergistics2";
         ore = "charged_quartz_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "rftoolsbase";
         ore = "dimensionalshard_overworld";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "rftoolsbase";
 
         ore = "dimensionalshard_nether";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "rftoolsbase";
         ore = "dimensionalshard_end";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "rhodonite";
         ore = "block_ore_fluorite";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "rhodonite";
         ore = "block_ore_rhodonite";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "exp_ore";
         ore = "block_exp_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "rockcandy";
         ore = "candy_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "lightestlamp";
         ore = "boron_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "zombie_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "blaze_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "ghast_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "magma_cube_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "wither_skeleton_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "zombie_pigman_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "salmon_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "squid_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "cod_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "sheep_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "rabbit_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "pig_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "cow_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "chicken_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "bat_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "witch_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "spider_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "slime_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "phantom_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "skeleton_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "enderman_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "guardian_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "pufferfish_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "funores";
         ore = "creeper_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore_nether";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore_end";
-        oreMod = new ArrayList<>();
-        oreMod.add(mod);
-        oreMod.add(ore);
-        ores.add(oreMod);
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        ores.add(modOre);
 
-        BUILDER.push("Custom Outputs: ");
+        BUILDER.push("Custom Harvester Outputs: ");
         CUSTOM_ORES = BUILDER.comment("Custom outputs for the Ore Harvester.")
                 .define("custom_ores", ores);
         ArrayList<ArrayList<String>> custom_plants = new ArrayList<>();
@@ -392,6 +391,39 @@ public class CommonConfig {
         ArrayList<ArrayList<String>> custom_soils = new ArrayList<>();
         CUSTOM_SOILS = BUILDER.comment("Custom outputs for the Soil Harvester.")
                 .define("custom_soils", custom_soils);
+
+        ArrayList<ArrayList<String>> custom_dragon_drops = new ArrayList<>();
+
+        mod = "minecraft";
+        String dragonDrop = "elytra";
+        ArrayList<String> modDragonDrop = new ArrayList<>();
+        modDragonDrop.add(mod);
+        modDragonDrop.add(dragonDrop);
+        custom_dragon_drops.add(modDragonDrop);
+
+        mod = "minecraft";
+        dragonDrop = "dragon_head";
+        modDragonDrop = new ArrayList<>();
+        modDragonDrop.add(mod);
+        modDragonDrop.add(dragonDrop);
+        custom_dragon_drops.add(modDragonDrop);
+
+        mod = "minecraft";
+        dragonDrop = "dragon_egg";
+        modDragonDrop = new ArrayList<>();
+        modDragonDrop.add(mod);
+        modDragonDrop.add(dragonDrop);
+        custom_dragon_drops.add(modDragonDrop);
+
+        mod = "minecraft";
+        dragonDrop = "dragon_breath";
+        modDragonDrop = new ArrayList<>();
+        modDragonDrop.add(mod);
+        modDragonDrop.add(dragonDrop);
+        custom_dragon_drops.add(modDragonDrop);
+
+        CUSTOM_DRAGON_DROPS = BUILDER.comment("Custom drops for the Mob Harvester when set to the Ender Dragon")
+                .define("custom_dragon_drops", custom_dragon_drops);
         BUILDER.pop();
 
         BUILDER.push("Harvester Blacklists: ");
@@ -615,10 +647,6 @@ public class CommonConfig {
                 .defineInRange("block_resistance", 6.0f, 0, Float.MAX_VALUE);
         HARVESTER_SHARD_CHANCE = BUILDER.comment("Chance for a harvester to output a shard (the higher the value, the less likely the shard, 0 means no shards.)")
                 .defineInRange("harvester_shard_chance", 75, 0, Integer.MAX_VALUE);
-        MOB_DROP_DRAGON_EGG = BUILDER.comment("Should the Mob Harvester drop dragon eggs when set to the ender dragon?")
-                .define("mob_drop_dragon_egg", true);
-        MOB_DROP_WINGS = BUILDER.comment("Should the Mob Harvester drop elytras when set to the ender dragon?")
-                .define("mob_drop_wings", true);
         BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();

@@ -12,7 +12,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -24,6 +23,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -66,13 +66,15 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                 MobEntity mobEntity = getMobEntity();
                 if (mobEntity != null) {
                     if (mobEntity.getType() == EntityType.ENDER_DRAGON) {
-                        boolean dropEgg = CommonConfig.MOB_DROP_DRAGON_EGG.get();
-                        boolean dropWings = CommonConfig.MOB_DROP_WINGS.get();
-                        if (dropEgg) {
-                            newOutputs.add(new ItemStack(Items.DRAGON_EGG));
-                        }
-                        if (dropWings) {
-                            newOutputs.add(new ItemStack(Items.ELYTRA));
+                        ArrayList<ArrayList<String>> custom_dragon_drops = CommonConfig.CUSTOM_DRAGON_DROPS.get();
+                        for (ArrayList<String> modDragonDrop : custom_dragon_drops) {
+                            if (modDragonDrop.size() >= 2) {
+                                ResourceLocation dragonDropRN = new ResourceLocation(modDragonDrop.get(0), modDragonDrop.get(1));
+                                Item drop = ForgeRegistries.ITEMS.getValue(dragonDropRN);
+                                if (drop != null) {
+                                    newOutputs.add(new ItemStack(drop));
+                                }
+                            }
                         }
                     }
                     updateWeapon();
