@@ -6,6 +6,7 @@ import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.TickingRedstoneEnergyMachineTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
 
 public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalShapedBlock {
     private CompoundNBT thisTileNBT = new CompoundNBT();
@@ -90,7 +92,11 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"), false);
                         String mob = data.getString(CustomValues.entityNBTKey);
                         if (!StringUtils.isNullOrEmpty(mob)) {
-                            player.sendStatusMessage(new StringTextComponent(mob), false);
+                            Optional<EntityType<?>> optionalEntityType = EntityType.byKey(mob);
+                            if (optionalEntityType.isPresent()) {
+                                EntityType<?> entityType = optionalEntityType.get();
+                                player.sendStatusMessage(entityType.getName(), false);
+                            }
                         }
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"), false);
                         CompoundNBT weapon = data.getCompound(CustomValues.weaponNBTKey);

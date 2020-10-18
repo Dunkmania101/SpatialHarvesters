@@ -123,35 +123,34 @@ public class MobKeyItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+        super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_description"));
         CompoundNBT nbt = stack.getTag();
         if (nbt != null) {
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));
             if (nbt.contains(CustomValues.entityNBTKey)) {
                 String entity = nbt.getString(CustomValues.entityNBTKey);
                 if (!StringUtils.isNullOrEmpty(entity)) {
                     Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
                     if (optionalEntityType.isPresent()) {
                         EntityType<?> entityType = optionalEntityType.get();
-                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));
                         tooltip.add(entityType.getName());
                     }
                 }
             }
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"));
             if (nbt.contains(CustomValues.weaponNBTKey)) {
                 CompoundNBT weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
                 if (!weaponNBT.isEmpty()) {
                     ItemStack weapon = ItemStack.read(weaponNBT);
                     if (!weapon.isEmpty()) {
-                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-                        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"));
                         tooltip.add(weapon.getDisplayName());
                     }
                 }
             }
         }
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-        super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

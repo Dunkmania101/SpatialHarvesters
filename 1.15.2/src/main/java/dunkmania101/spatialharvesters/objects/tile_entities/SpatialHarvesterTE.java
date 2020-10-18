@@ -1,5 +1,6 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import net.minecraft.block.Block;
@@ -47,11 +48,12 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                     for (Direction side : Direction.values()) {
                         if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
                             spaceRippers.add(side);
-                        }
-                        TileEntity out = getWorld().getTileEntity(pos.offset(side));
-                        if (out != null) {
-                            LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                            outCap.ifPresent(outInventories::add);
+                        } else {
+                            TileEntity out = getWorld().getTileEntity(pos.offset(side));
+                            if (out != null) {
+                                LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                                outCap.ifPresent(outInventories::add);
+                            }
                         }
                     }
                     if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
@@ -61,10 +63,11 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                 if (getEnergyStorage().getEnergyStored() >= price) {
                                     ItemStack chosenOutput;
                                     Random rand = getWorld().rand;
-                                    if (rand.nextInt(75) != 1) {
-                                        chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
-                                    } else {
+                                    int shardChance = CommonConfig.HARVESTER_SHARD_CHANCE.get();
+                                    if (rand.nextInt(shardChance) == 1) {
                                         chosenOutput = new ItemStack(getShard(this.thisBlock));
+                                    } else {
+                                        chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                     }
                                     int originalCount = chosenOutput.getCount();
                                     IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));

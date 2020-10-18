@@ -90,8 +90,8 @@ public class CustomEnergyMachineTE extends TileEntity {
 
     public CompoundNBT saveSerializedValues() {
         CompoundNBT nbt = new CompoundNBT();
-        int energyNBT = getEnergyStorage().getEnergyStored();
-        nbt.putInt(CustomValues.energyStorageKey, energyNBT);
+        int energy = getEnergyStorage().getEnergyStored();
+        nbt.putInt(CustomValues.energyStorageKey, energy);
         return nbt;
     }
 

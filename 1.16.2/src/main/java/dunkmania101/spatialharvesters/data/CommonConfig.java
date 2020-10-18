@@ -93,6 +93,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue MOB_PRICE;
     public static ForgeConfigSpec.BooleanValue MOB_DROP_DRAGON_EGG;
     public static ForgeConfigSpec.BooleanValue MOB_DROP_WINGS;
+    public static ForgeConfigSpec.IntValue HARVESTER_SHARD_CHANCE;
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_SPEED;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_AMPLIFIER;
@@ -430,7 +431,10 @@ public class CommonConfig {
                 .define("blacklist_mobs_mod", blacklist_mobs_mod);
         BUILDER.pop();
 
-        BUILDER.push("Harvester Speeds: ");
+        BUILDER.push("Machine Speeds: ");
+
+        HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
+                .defineInRange("speed_heat_generator", 3, 0, (Integer.MAX_VALUE / 100) - 1);
 
         BUILDER.push("Ore Harvester Speeds: ");
         ORE_1_SPEED = BUILDER.comment("Speed for the tier 1 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -512,7 +516,10 @@ public class CommonConfig {
                 .defineInRange("speed_mob", 50, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
-        BUILDER.push("Harvester Prices: ");
+        BUILDER.push("Machine Prices: ");
+
+        DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
+                .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
 
         BUILDER.push("Ore Harvester Prices: ");
         ORE_1_PRICE = BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
@@ -595,8 +602,6 @@ public class CommonConfig {
         BUILDER.pop();
 
         BUILDER.push("Dimensional Applicator Stats: ");
-        DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
-                .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this + 1.)")
                 .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_DURATION = BUILDER.comment("Duration for the Dimensional Applicator (in ticks, 20 = one second, 220 = 11 seconds (Night Vision flashes at 10 or less)).")
@@ -604,13 +609,13 @@ public class CommonConfig {
         BUILDER.pop();
 
         BUILDER.push("Misc.: ");
-        HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
-                .defineInRange("speed_heat_generator", 3, 0, (Integer.MAX_VALUE / 100) - 1);
         BLOCK_HARDNESS = BUILDER.comment("Hardness for the blocks (Iron Block is 5.)")
                 .defineInRange("block_hardness", 5.0f, 0, Float.MAX_VALUE);
         BLOCK_RESISTANCE = BUILDER.comment("Resistance for the blocks (Iron Block is 6.)")
                 .defineInRange("block_resistance", 6.0f, 0, Float.MAX_VALUE);
-        MOB_DROP_DRAGON_EGG = BUILDER.comment("Should the Mob Harvester drop dragon eggs when set to that mob?")
+        HARVESTER_SHARD_CHANCE = BUILDER.comment("Chance for a harvester to output a shard (the higher the value, the less likely the shard, 0 means no shards.)")
+                .defineInRange("harvester_shard_chance", 75, 0, Integer.MAX_VALUE);
+        MOB_DROP_DRAGON_EGG = BUILDER.comment("Should the Mob Harvester drop dragon eggs when set to the ender dragon?")
                 .define("mob_drop_dragon_egg", true);
         MOB_DROP_WINGS = BUILDER.comment("Should the Mob Harvester drop elytras when set to the ender dragon?")
                 .define("mob_drop_wings", true);

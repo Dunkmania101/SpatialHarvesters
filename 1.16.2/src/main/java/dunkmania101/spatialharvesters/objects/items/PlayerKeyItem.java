@@ -53,9 +53,8 @@ public class PlayerKeyItem extends Item {
 
     @Override
     public void addInformation(@Nonnull ItemStack stack, World worldIn, List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+        super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.player_key_description"));
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-        super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }
