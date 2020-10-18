@@ -2,6 +2,7 @@ package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.CustomEnergyMachineTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.TickingRedstoneEnergyMachineTE;
 import dunkmania101.spatialharvesters.util.Tools;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.StringUtils;
@@ -71,12 +73,11 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
             if (player.isCrouching()) {
                 TileEntity tile = worldIn.getTileEntity(pos);
                 if (tile != null) {
+                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                     CompoundNBT data = tile.serializeNBT();
                     if (tile instanceof CustomEnergyMachineTE) {
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.energy_message"), false);
                         player.sendStatusMessage(new StringTextComponent(Integer.toString(data.getInt(CustomValues.energyStorageKey))), false);
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                     }
                     if (tile instanceof TickingRedstoneEnergyMachineTE) {
                         int countedTicks = data.getInt(CustomValues.countedTicksKey);
@@ -84,7 +85,6 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                             player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
                             player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                         }
                     }
                     if (tile instanceof MobHarvesterTE) {
@@ -106,8 +106,19 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                                 player.sendStatusMessage(new TranslationTextComponent(weaponStack.getTranslationKey()), false);
                             }
                         }
+                    } else if (tile instanceof DimensionalApplicatorTE) {
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.dimensional_applicator_saved_effects"), false);
+                        if (data.contains(CustomValues.potionsNBTKey)) {
+                            for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
+                                Effect effect = Effect.get(id);
+                                if (effect != null) {
+                                    player.sendStatusMessage(effect.getDisplayName(), false);
+                                }
+                            }
+                        }
                     }
+                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
                 }
             }
         }
