@@ -59,12 +59,12 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     protected void setEntityDrops() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
         if (!StringUtils.isNullOrEmpty(this.entity)) {
-            if (this.player == null) {
-                setPlayer();
-            }
-            if (this.player != null) {
-                MobEntity mobEntity = getMobEntity();
-                if (mobEntity != null) {
+            MobEntity mobEntity = getMobEntity();
+            if (mobEntity != null) {
+                if (this.player == null) {
+                    setPlayer();
+                }
+                if (this.player != null) {
                     if (mobEntity.getType() == EntityType.ENDER_DRAGON) {
                         ArrayList<ArrayList<String>> custom_dragon_drops = CommonConfig.CUSTOM_DRAGON_DROPS.get();
                         for (ArrayList<String> modDragonDrop : custom_dragon_drops) {

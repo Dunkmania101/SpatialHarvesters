@@ -2,6 +2,7 @@ package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
+import dunkmania101.spatialharvesters.objects.blocks.block_items.MachineBlockItem;
 import dunkmania101.spatialharvesters.objects.items.MobKeyItem;
 import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
 import net.minecraft.item.BlockItem;
@@ -155,267 +156,246 @@ public class ItemInit {
             ));
 
     //BlockItems
-    public static final RegistryObject<BlockItem> CHUNK_LOADER = ITEMS.register("chunk_loader",
-            () -> new BlockItem(
-                    BlockInit.CHUNK_LOADER.get(),
-                    new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
-            ));
-
-    public static final RegistryObject<BlockItem> CASING = ITEMS.register("casing",
-            () -> new BlockItem(
-                    BlockInit.CASING.get(),
-                    new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
-            ));
-
-    public static final RegistryObject<BlockItem> SPACE_RIPPER = ITEMS.register("space_ripper",
-            () -> new BlockItem(
-                    BlockInit.SPACE_RIPPER.get(),
-                    new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
-            ));
-
-    public static final RegistryObject<BlockItem> ORE_HARVESTER_1 = ITEMS.register("ore_harvester_1",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> ORE_HARVESTER_1 = ITEMS.register("ore_harvester_1",
+            () -> new MachineBlockItem(
                     BlockInit.ORE_HARVESTER_1.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> ORE_HARVESTER_2 = ITEMS.register("ore_harvester_2",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> ORE_HARVESTER_2 = ITEMS.register("ore_harvester_2",
+            () -> new MachineBlockItem(
                     BlockInit.ORE_HARVESTER_2.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> ORE_HARVESTER_3 = ITEMS.register("ore_harvester_3",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> ORE_HARVESTER_3 = ITEMS.register("ore_harvester_3",
+            () -> new MachineBlockItem(
                     BlockInit.ORE_HARVESTER_3.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> ORE_HARVESTER_4 = ITEMS.register("ore_harvester_4",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> ORE_HARVESTER_4 = ITEMS.register("ore_harvester_4",
+            () -> new MachineBlockItem(
                     BlockInit.ORE_HARVESTER_4.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> ORE_HARVESTER_5 = ITEMS.register("ore_harvester_5",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> ORE_HARVESTER_5 = ITEMS.register("ore_harvester_5",
+            () -> new MachineBlockItem(
                     BlockInit.ORE_HARVESTER_5.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> ORE_HARVESTER_6 = ITEMS.register("ore_harvester_6",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> ORE_HARVESTER_6 = ITEMS.register("ore_harvester_6",
+            () -> new MachineBlockItem(
                     BlockInit.ORE_HARVESTER_6.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> ORE_HARVESTER_7 = ITEMS.register("ore_harvester_7",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> ORE_HARVESTER_7 = ITEMS.register("ore_harvester_7",
+            () -> new MachineBlockItem(
                     BlockInit.ORE_HARVESTER_7.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> ORE_HARVESTER_8 = ITEMS.register("ore_harvester_8",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> ORE_HARVESTER_8 = ITEMS.register("ore_harvester_8",
+            () -> new MachineBlockItem(
                     BlockInit.ORE_HARVESTER_8.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> BIO_HARVESTER_1 = ITEMS.register("bio_harvester_1",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> BIO_HARVESTER_1 = ITEMS.register("bio_harvester_1",
+            () -> new MachineBlockItem(
                     BlockInit.BIO_HARVESTER_1.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> BIO_HARVESTER_2 = ITEMS.register("bio_harvester_2",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> BIO_HARVESTER_2 = ITEMS.register("bio_harvester_2",
+            () -> new MachineBlockItem(
                     BlockInit.BIO_HARVESTER_2.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> BIO_HARVESTER_3 = ITEMS.register("bio_harvester_3",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> BIO_HARVESTER_3 = ITEMS.register("bio_harvester_3",
+            () -> new MachineBlockItem(
                     BlockInit.BIO_HARVESTER_3.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> BIO_HARVESTER_4 = ITEMS.register("bio_harvester_4",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> BIO_HARVESTER_4 = ITEMS.register("bio_harvester_4",
+            () -> new MachineBlockItem(
                     BlockInit.BIO_HARVESTER_4.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> BIO_HARVESTER_5 = ITEMS.register("bio_harvester_5",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> BIO_HARVESTER_5 = ITEMS.register("bio_harvester_5",
+            () -> new MachineBlockItem(
                     BlockInit.BIO_HARVESTER_5.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> BIO_HARVESTER_6 = ITEMS.register("bio_harvester_6",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> BIO_HARVESTER_6 = ITEMS.register("bio_harvester_6",
+            () -> new MachineBlockItem(
                     BlockInit.BIO_HARVESTER_6.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> BIO_HARVESTER_7 = ITEMS.register("bio_harvester_7",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> BIO_HARVESTER_7 = ITEMS.register("bio_harvester_7",
+            () -> new MachineBlockItem(
                     BlockInit.BIO_HARVESTER_7.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> BIO_HARVESTER_8 = ITEMS.register("bio_harvester_8",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> BIO_HARVESTER_8 = ITEMS.register("bio_harvester_8",
+            () -> new MachineBlockItem(
                     BlockInit.BIO_HARVESTER_8.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> STONE_HARVESTER_1 = ITEMS.register("stone_harvester_1",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> STONE_HARVESTER_1 = ITEMS.register("stone_harvester_1",
+            () -> new MachineBlockItem(
                     BlockInit.STONE_HARVESTER_1.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> STONE_HARVESTER_2 = ITEMS.register("stone_harvester_2",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> STONE_HARVESTER_2 = ITEMS.register("stone_harvester_2",
+            () -> new MachineBlockItem(
                     BlockInit.STONE_HARVESTER_2.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> STONE_HARVESTER_3 = ITEMS.register("stone_harvester_3",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> STONE_HARVESTER_3 = ITEMS.register("stone_harvester_3",
+            () -> new MachineBlockItem(
                     BlockInit.STONE_HARVESTER_3.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> STONE_HARVESTER_4 = ITEMS.register("stone_harvester_4",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> STONE_HARVESTER_4 = ITEMS.register("stone_harvester_4",
+            () -> new MachineBlockItem(
                     BlockInit.STONE_HARVESTER_4.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> STONE_HARVESTER_5 = ITEMS.register("stone_harvester_5",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> STONE_HARVESTER_5 = ITEMS.register("stone_harvester_5",
+            () -> new MachineBlockItem(
                     BlockInit.STONE_HARVESTER_5.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> STONE_HARVESTER_6 = ITEMS.register("stone_harvester_6",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> STONE_HARVESTER_6 = ITEMS.register("stone_harvester_6",
+            () -> new MachineBlockItem(
                     BlockInit.STONE_HARVESTER_6.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> STONE_HARVESTER_7 = ITEMS.register("stone_harvester_7",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> STONE_HARVESTER_7 = ITEMS.register("stone_harvester_7",
+            () -> new MachineBlockItem(
                     BlockInit.STONE_HARVESTER_7.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> STONE_HARVESTER_8 = ITEMS.register("stone_harvester_8",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> STONE_HARVESTER_8 = ITEMS.register("stone_harvester_8",
+            () -> new MachineBlockItem(
                     BlockInit.STONE_HARVESTER_8.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> SOIL_HARVESTER_1 = ITEMS.register("soil_harvester_1",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> SOIL_HARVESTER_1 = ITEMS.register("soil_harvester_1",
+            () -> new MachineBlockItem(
                     BlockInit.SOIL_HARVESTER_1.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> SOIL_HARVESTER_2 = ITEMS.register("soil_harvester_2",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> SOIL_HARVESTER_2 = ITEMS.register("soil_harvester_2",
+            () -> new MachineBlockItem(
                     BlockInit.SOIL_HARVESTER_2.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> SOIL_HARVESTER_3 = ITEMS.register("soil_harvester_3",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> SOIL_HARVESTER_3 = ITEMS.register("soil_harvester_3",
+            () -> new MachineBlockItem(
                     BlockInit.SOIL_HARVESTER_3.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> SOIL_HARVESTER_4 = ITEMS.register("soil_harvester_4",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> SOIL_HARVESTER_4 = ITEMS.register("soil_harvester_4",
+            () -> new MachineBlockItem(
                     BlockInit.SOIL_HARVESTER_4.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> SOIL_HARVESTER_5 = ITEMS.register("soil_harvester_5",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> SOIL_HARVESTER_5 = ITEMS.register("soil_harvester_5",
+            () -> new MachineBlockItem(
                     BlockInit.SOIL_HARVESTER_5.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> SOIL_HARVESTER_6 = ITEMS.register("soil_harvester_6",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> SOIL_HARVESTER_6 = ITEMS.register("soil_harvester_6",
+            () -> new MachineBlockItem(
                     BlockInit.SOIL_HARVESTER_6.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> SOIL_HARVESTER_7 = ITEMS.register("soil_harvester_7",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> SOIL_HARVESTER_7 = ITEMS.register("soil_harvester_7",
+            () -> new MachineBlockItem(
                     BlockInit.SOIL_HARVESTER_7.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> SOIL_HARVESTER_8 = ITEMS.register("soil_harvester_8",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> SOIL_HARVESTER_8 = ITEMS.register("soil_harvester_8",
+            () -> new MachineBlockItem(
                     BlockInit.SOIL_HARVESTER_8.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> MOB_HARVESTER = ITEMS.register("mob_harvester",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> MOB_HARVESTER = ITEMS.register("mob_harvester",
+            () -> new MachineBlockItem(
                     BlockInit.MOB_HARVESTER.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> HEAT_GENERATOR = ITEMS.register("heat_generator",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> HEAT_GENERATOR = ITEMS.register("heat_generator",
+            () -> new MachineBlockItem(
                     BlockInit.HEAT_GENERATOR.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<BlockItem> DIMENSIONAL_APPLICATOR = ITEMS.register("dimensional_applicator",
-            () -> new BlockItem(
+    public static final RegistryObject<MachineBlockItem> DIMENSIONAL_APPLICATOR = ITEMS.register("dimensional_applicator",
+            () -> new MachineBlockItem(
                     BlockInit.DIMENSIONAL_APPLICATOR.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
@@ -480,6 +460,27 @@ public class ItemInit {
     public static final RegistryObject<BlockItem> STRENGTH_ACTIVATOR = ITEMS.register("strength_activator",
             () -> new BlockItem(
                     BlockInit.STRENGTH_ACTIVATOR.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> CHUNK_LOADER = ITEMS.register("chunk_loader",
+            () -> new BlockItem(
+                    BlockInit.CHUNK_LOADER.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> CASING = ITEMS.register("casing",
+            () -> new BlockItem(
+                    BlockInit.CASING.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<BlockItem> SPACE_RIPPER = ITEMS.register("space_ripper",
+            () -> new BlockItem(
+                    BlockInit.SPACE_RIPPER.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
