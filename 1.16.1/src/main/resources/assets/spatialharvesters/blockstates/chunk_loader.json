@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "spatialharvesters:block/chunk_loader"
+    },
+    "facing=south": {
+      "model": "spatialharvesters:block/chunk_loader",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "spatialharvesters:block/chunk_loader",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "spatialharvesters:block/chunk_loader",
+      "y": 90
     }
   }
 }

@@ -36,45 +36,61 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public void customTickActions() {
-        super.customTickActions();
-        if (getWorld() != null && !getWorld().isRemote && this.thisBlock != null) {
-            if (getCountedTicks() >= getSpeed(this.thisBlock)) {
-                setActive(false);
-                resetCountedTicks();
-                int price = getPrice(this.thisBlock);
-                if (getEnergyStorage().getEnergyStored() >= price) {
-                    ArrayList<Direction> spaceRippers = new ArrayList<>();
-                    ArrayList<IItemHandler> outInventories = new ArrayList<>();
-                    for (Direction side : Direction.values()) {
-                        if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
-                            spaceRippers.add(side);
-                        } else {
-                            TileEntity out = getWorld().getTileEntity(pos.offset(side));
-                            if (out != null) {
-                                LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
-                                outCap.ifPresent(outInventories::add);
+        boolean enableOre = CommonConfig.ENABLE_ORE_HARVESTERS.get();
+        boolean enableBio = CommonConfig.ENABLE_ORE_HARVESTERS.get();
+        boolean enableStone = CommonConfig.ENABLE_ORE_HARVESTERS.get();
+        boolean enableSoil = CommonConfig.ENABLE_ORE_HARVESTERS.get();
+        if (this instanceof OreHarvesterTE && !enableOre) {
+            setActive(false);
+        } else if (this instanceof BioHarvesterTE && !enableBio) {
+            setActive(false);
+        } else if (this instanceof StoneHarvesterTE && !enableStone) {
+            setActive(false);
+        } else if (this instanceof SoilHarvesterTE && !enableSoil) {
+            setActive(false);
+        } else {
+            super.customTickActions();
+            if (getWorld() != null && !getWorld().isRemote && this.thisBlock != null) {
+                if (getCountedTicks() >= getSpeed(this.thisBlock)) {
+                    resetCountedTicks();
+                    setActive(false);
+                    int price = getPrice(this.thisBlock);
+                    if (getEnergyStorage().getEnergyStored() >= price) {
+                        ArrayList<Direction> spaceRippers = new ArrayList<>();
+                        ArrayList<IItemHandler> outInventories = new ArrayList<>();
+                        for (Direction side : Direction.values()) {
+                            if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                                spaceRippers.add(side);
+                            } else {
+                                TileEntity out = getWorld().getTileEntity(pos.offset(side));
+                                if (out != null) {
+                                    LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                                    outCap.ifPresent(outInventories::add);
+                                }
                             }
                         }
-                    }
-                    if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
-                        lastMinuteActions();
-                        if (!this.OUTPUTS.isEmpty()) {
-                            for (Direction ignored : spaceRippers) {
-                                if (getEnergyStorage().getEnergyStored() >= price) {
-                                    ItemStack chosenOutput;
-                                    Random rand = getWorld().rand;
-                                    int shardChance = CommonConfig.HARVESTER_SHARD_CHANCE.get();
-                                    if (rand.nextInt(shardChance) == 1) {
-                                        chosenOutput = new ItemStack(getShard(this.thisBlock));
-                                    } else {
-                                        chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
-                                    }
-                                    int originalCount = chosenOutput.getCount();
-                                    IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
-                                    ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
-                                    if (resultStack.getCount() != originalCount) {
-                                        getEnergyStorage().consumeEnergy(price);
-                                        setActive(true);
+                        if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
+                            lastMinuteActions();
+                            if (!this.OUTPUTS.isEmpty()) {
+                                for (Direction ignored : spaceRippers) {
+                                    if (getEnergyStorage().getEnergyStored() >= price) {
+                                        ItemStack chosenOutput;
+                                        Random rand = getWorld().getRandom();
+                                        int shardChance = CommonConfig.HARVESTER_SHARD_CHANCE.get();
+                                        if (rand.nextInt(shardChance) == 1) {
+                                            chosenOutput = new ItemStack(getShard(this.thisBlock));
+                                        } else {
+                                            chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
+                                        }
+                                        if (!chosenOutput.isEmpty()) {
+                                            int originalCount = chosenOutput.getCount();
+                                            IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
+                                            ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
+                                            if (resultStack.getCount() != originalCount) {
+                                                getEnergyStorage().consumeEnergy(price);
+                                                setActive(true);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -105,7 +121,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     @Override
     protected int getCapacity() {
         if (this.thisBlock != null) {
-            return getPrice(this.thisBlock) * 10;
+            int multiplier = CommonConfig.HARVESTER_CAPACITY_MULTIPLIER.get();
+            return getPrice(this.thisBlock) * multiplier;
         }
         return Integer.MAX_VALUE;
     }

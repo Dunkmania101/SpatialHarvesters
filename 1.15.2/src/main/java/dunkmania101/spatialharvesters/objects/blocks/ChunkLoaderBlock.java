@@ -1,13 +1,14 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.ChunkLoaderData;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.util.Tools;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -15,9 +16,9 @@ import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 
-public class ChunkLoaderBlock extends Block {
+public class ChunkLoaderBlock extends CustomHorizontalShapedBlock {
     public ChunkLoaderBlock(Properties properties) {
-        super(properties);
+        super(properties, CustomValues.machineShape, Direction.NORTH);
     }
 
     @Override
@@ -29,7 +30,6 @@ public class ChunkLoaderBlock extends Block {
                 ChunkPos cpos = serverWorld.getChunk(pos).getPos();
                 ChunkLoaderData data = ChunkLoaderData.get(serverWorld);
                 data.addChunk(cpos);
-                serverWorld.forceChunk(cpos.x, cpos.z, true);
             }
         }
     }

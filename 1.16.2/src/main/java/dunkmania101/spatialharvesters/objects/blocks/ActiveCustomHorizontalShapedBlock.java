@@ -1,5 +1,6 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -35,7 +36,7 @@ public class ActiveCustomHorizontalShapedBlock extends PreservedDataCustomHorizo
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
         if (state.get(ACTIVE)) {
-            return 15;
+            return CommonConfig.MACHINE_LIGHT_LEVEL.get();
         }
         return 0;
     }

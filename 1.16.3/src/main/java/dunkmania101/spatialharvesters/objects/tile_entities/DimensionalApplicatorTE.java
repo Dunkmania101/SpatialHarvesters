@@ -28,36 +28,39 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public void customTickActions() {
-        super.customTickActions();
-        if (this.playerId != null && world != null && !world.isRemote) {
-            if (getCountedTicks() >= getDuration() / 2 || (getDuration() >= 220 && getCountedTicks() < 200)) {
-                resetCountedTicks();
-                setActive(false);
-                if (getEnergyStorage().getEnergyStored() >= getPrice()) {
-                    boolean has_space_ripper = false;
-                    for (Direction side : Direction.values()) {
-                        if (world.getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
-                            has_space_ripper = true;
-                            break;
-                        }
-                    }
-                    if (has_space_ripper) {
-                        PlayerEntity player = null;
-                        if (world.getServer() != null) {
-                            for (World check_world : world.getServer().getWorlds()) {
-                                player = check_world.getPlayerByUuid(this.playerId);
-                                if (player != null) {
-                                    break;
-                                }
+        boolean enabled = CommonConfig.ENABLE_DIMENSIONAL_APPLICATOR.get();
+        if (enabled) {
+            super.customTickActions();
+            if (this.playerId != null && world != null && !world.isRemote) {
+                if (getCountedTicks() >= getDuration() / 2 || (getDuration() >= 220 && getCountedTicks() < 200)) {
+                    resetCountedTicks();
+                    setActive(false);
+                    if (getEnergyStorage().getEnergyStored() >= getPrice()) {
+                        boolean hasSpaceRipper = false;
+                        for (Direction side : Direction.values()) {
+                            if (world.getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                                hasSpaceRipper = true;
+                                break;
                             }
-                            if (player != null) {
-                                ArrayList<EffectInstance> effects = getEffects(world, pos);
-                                for (EffectInstance effect : effects) {
-                                    if (effect != null) {
-                                        if (getEnergyStorage().getEnergyStored() >= getPrice()) {
-                                            setActive(true);
-                                            player.addPotionEffect(effect);
-                                            getEnergyStorage().consumeEnergy(getPrice());
+                        }
+                        if (hasSpaceRipper) {
+                            PlayerEntity player = null;
+                            if (world.getServer() != null) {
+                                for (World check_world : world.getServer().getWorlds()) {
+                                    player = check_world.getPlayerByUuid(this.playerId);
+                                    if (player != null) {
+                                        break;
+                                    }
+                                }
+                                if (player != null) {
+                                    ArrayList<EffectInstance> effects = getEffects(world, pos);
+                                    for (EffectInstance effect : effects) {
+                                        if (effect != null) {
+                                            if (getEnergyStorage().getEnergyStored() >= getPrice()) {
+                                                setActive(true);
+                                                player.addPotionEffect(effect);
+                                                getEnergyStorage().consumeEnergy(getPrice());
+                                            }
                                         }
                                     }
                                 }
@@ -66,6 +69,8 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                     }
                 }
             }
+        } else {
+            setActive(false);
         }
     }
 
@@ -126,7 +131,8 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     protected int getCapacity() {
-        return getPrice() * 10;
+        int multiplier = CommonConfig.DIMENSIONAL_APPLICATOR_CAPACITY_MULTIPLIER.get();
+        return getPrice() * multiplier;
     }
 
     @Override

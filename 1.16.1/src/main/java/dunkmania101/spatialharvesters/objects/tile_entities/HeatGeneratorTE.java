@@ -21,36 +21,41 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public void customTickActions() {
-        super.customTickActions();
-        if (world != null && !world.isRemote) {
-            setActive(false);
-            ArrayList<IEnergyStorage> outBatteries = new ArrayList<>();
-            for (Direction side : Direction.values()) {
-                Block block = world.getBlockState(pos.offset(side)).getBlock();
-                if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
-                    if (getEnergyStorage().getEnergyStored() < getEnergyStorage().getMaxEnergyStored()) {
-                        getEnergyStorage().addEnergy(getSpeed());
-                        setActive(true);
+        boolean enabled = CommonConfig.ENABLE_HEAT_GENERATOR.get();
+        if (enabled) {
+            super.customTickActions();
+            if (world != null && !world.isRemote) {
+                setActive(false);
+                ArrayList<IEnergyStorage> outBatteries = new ArrayList<>();
+                for (Direction side : Direction.values()) {
+                    Block block = world.getBlockState(pos.offset(side)).getBlock();
+                    if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
+                        if (getEnergyStorage().getEnergyStored() < getEnergyStorage().getMaxEnergyStored()) {
+                            getEnergyStorage().addEnergy(getSpeed());
+                            setActive(true);
+                        }
+                    }
+                    TileEntity out = world.getTileEntity(pos.offset(side));
+                    if (out != null) {
+                        LazyOptional<IEnergyStorage> outCap = out.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
+                        outCap.ifPresent(outBatteries::add);
                     }
                 }
-                TileEntity out = world.getTileEntity(pos.offset(side));
-                if (out != null) {
-                    LazyOptional<IEnergyStorage> outCap = out.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
-                    outCap.ifPresent(outBatteries::add);
-                }
-            }
-            if (!outBatteries.isEmpty()) {
-                for (IEnergyStorage outBattery : outBatteries) {
-                    int energy = getEnergyStorage().getEnergyStored();
-                    if (energy > 0) {
-                        int outReceived = outBattery.receiveEnergy(energy, false);
-                        if (outReceived > 0) {
-                            setActive(true);
-                            getEnergyStorage().consumeEnergy(outReceived);
+                if (!outBatteries.isEmpty()) {
+                    for (IEnergyStorage outBattery : outBatteries) {
+                        int energy = getEnergyStorage().getEnergyStored();
+                        if (energy > 0) {
+                            int outReceived = outBattery.receiveEnergy(energy, false);
+                            if (outReceived > 0) {
+                                setActive(true);
+                                getEnergyStorage().consumeEnergy(outReceived);
+                            }
                         }
                     }
                 }
             }
+        } else {
+            setActive(false);
         }
     }
 

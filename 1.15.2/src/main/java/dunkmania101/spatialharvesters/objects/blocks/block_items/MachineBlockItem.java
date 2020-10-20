@@ -30,10 +30,12 @@ public class MachineBlockItem extends BlockItem {
         tooltip.add(new TranslationTextComponent("msg.spatialharvesters.energy_message"));
         int energy = data.getInt(CustomValues.energyStorageKey);
         tooltip.add(new StringTextComponent(Integer.toString(energy)));
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"));
-        int ticks = data.getInt(CustomValues.countedTicksKey);
-        tooltip.add(new StringTextComponent(Integer.toString(ticks)));
+        if (data.contains(CustomValues.countedTicksKey)) {
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"));
+            int ticks = data.getInt(CustomValues.countedTicksKey);
+            tooltip.add(new StringTextComponent(Integer.toString(ticks)));
+        }
         if (data.contains(CustomValues.entityNBTKey)) {
             tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
             tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));

@@ -62,7 +62,9 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
             TileEntity tile = worldIn.getTileEntity(pos);
             CompoundNBT stackTileNBT = stack.getChildTag(CustomValues.stackTileNBTKey);
             if (tile != null && stackTileNBT != null) {
-                tile.deserializeNBT(Tools.correctTileNBT(tile, stackTileNBT));
+                if (!stackTileNBT.isEmpty()) {
+                    tile.deserializeNBT(Tools.correctTileNBT(tile, stackTileNBT));
+                }
             }
         }
     }
@@ -81,11 +83,9 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                     }
                     if (tile instanceof TickingRedstoneEnergyMachineTE) {
                         int countedTicks = data.getInt(CustomValues.countedTicksKey);
-                        if (countedTicks > 0) {
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
-                            player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
-                        }
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
+                        player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
                     }
                     if (tile instanceof MobHarvesterTE) {
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);

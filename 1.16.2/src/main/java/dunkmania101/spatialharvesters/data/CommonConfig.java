@@ -15,7 +15,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOILS;
-    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_DRAGON_DROPS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<ArrayList<String>>>> CUSTOM_MOB_DROPS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES;
@@ -99,6 +99,17 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_DURATION;
     public static ForgeConfigSpec.DoubleValue BLOCK_HARDNESS;
     public static ForgeConfigSpec.DoubleValue BLOCK_RESISTANCE;
+    public static ForgeConfigSpec.IntValue MACHINE_LIGHT_LEVEL;
+    public static ForgeConfigSpec.IntValue HARVESTER_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.IntValue HEAT_GENERATOR_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.BooleanValue ENABLE_CHUNK_LOADER;
+    public static ForgeConfigSpec.BooleanValue ENABLE_DIMENSIONAL_APPLICATOR;
+    public static ForgeConfigSpec.BooleanValue ENABLE_HEAT_GENERATOR;
+    public static ForgeConfigSpec.BooleanValue ENABLE_ORE_HARVESTERS;
+    public static ForgeConfigSpec.BooleanValue ENABLE_BIO_HARVESTERS;
+    public static ForgeConfigSpec.BooleanValue ENABLE_STONE_HARVESTERS;
+    public static ForgeConfigSpec.BooleanValue ENABLE_SOIL_HARVESTERS;
 
     static {
         BUILDER.push("Spatial Harvesters - Common Config: ");
@@ -392,38 +403,70 @@ public class CommonConfig {
         CUSTOM_SOILS = BUILDER.comment("Custom outputs for the Soil Harvester.")
                 .define("custom_soils", custom_soils);
 
-        ArrayList<ArrayList<String>> custom_dragon_drops = new ArrayList<>();
+        ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = new ArrayList<>();
 
+        ArrayList<ArrayList<String>> modMobDrop = new ArrayList<>();
         mod = "minecraft";
-        String dragonDrop = "elytra";
-        ArrayList<String> modDragonDrop = new ArrayList<>();
-        modDragonDrop.add(mod);
-        modDragonDrop.add(dragonDrop);
-        custom_dragon_drops.add(modDragonDrop);
-
+        String mob = "ender_dragon";
+        ArrayList<String> modMob = new ArrayList<>();
+        modMob.add(mod);
+        modMob.add(mob);
+        modMobDrop.add(modMob);
         mod = "minecraft";
-        dragonDrop = "dragon_head";
-        modDragonDrop = new ArrayList<>();
-        modDragonDrop.add(mod);
-        modDragonDrop.add(dragonDrop);
-        custom_dragon_drops.add(modDragonDrop);
+        String mobDrop = "elytra";
+        ArrayList<String> modDrop = new ArrayList<>();
+        modDrop.add(mod);
+        modDrop.add(mobDrop);
+        modMobDrop.add(modDrop);
+        custom_mob_drops.add(modMobDrop);
 
+        modMobDrop = new ArrayList<>();
         mod = "minecraft";
-        dragonDrop = "dragon_egg";
-        modDragonDrop = new ArrayList<>();
-        modDragonDrop.add(mod);
-        modDragonDrop.add(dragonDrop);
-        custom_dragon_drops.add(modDragonDrop);
-
+        mob = "ender_dragon";
+        modMob = new ArrayList<>();
+        modMob.add(mod);
+        modMob.add(mob);
+        modMobDrop.add(modMob);
         mod = "minecraft";
-        dragonDrop = "dragon_breath";
-        modDragonDrop = new ArrayList<>();
-        modDragonDrop.add(mod);
-        modDragonDrop.add(dragonDrop);
-        custom_dragon_drops.add(modDragonDrop);
+        mobDrop = "dragon_head";
+        modDrop = new ArrayList<>();
+        modDrop.add(mod);
+        modDrop.add(mobDrop);
+        modMobDrop.add(modDrop);
+        custom_mob_drops.add(modMobDrop);
 
-        CUSTOM_DRAGON_DROPS = BUILDER.comment("Custom drops for the Mob Harvester when set to the Ender Dragon")
-                .define("custom_dragon_drops", custom_dragon_drops);
+        modMobDrop = new ArrayList<>();
+        mod = "minecraft";
+        mob = "ender_dragon";
+        modMob = new ArrayList<>();
+        modMob.add(mod);
+        modMob.add(mob);
+        modMobDrop.add(modMob);
+        mod = "minecraft";
+        mobDrop = "dragon_egg";
+        modDrop = new ArrayList<>();
+        modDrop.add(mod);
+        modDrop.add(mobDrop);
+        modMobDrop.add(modDrop);
+        custom_mob_drops.add(modMobDrop);
+
+        modMobDrop = new ArrayList<>();
+        mod = "minecraft";
+        mob = "ender_dragon";
+        modMob = new ArrayList<>();
+        modMob.add(mod);
+        modMob.add(mob);
+        modMobDrop.add(modMob);
+        mod = "minecraft";
+        mobDrop = "dragon_breath";
+        modDrop = new ArrayList<>();
+        modDrop.add(mod);
+        modDrop.add(mobDrop);
+        modMobDrop.add(modDrop);
+        custom_mob_drops.add(modMobDrop);
+
+        CUSTOM_MOB_DROPS = BUILDER.comment("Custom drops for the Mob Harvester when set to the Ender Dragon")
+                .define("custom_mob_drops", custom_mob_drops);
         BUILDER.pop();
 
         BUILDER.push("Harvester Blacklists: ");
@@ -550,8 +593,12 @@ public class CommonConfig {
 
         BUILDER.push("Machine Prices: ");
 
-        DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
-                .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
+        HARVESTER_CAPACITY_MULTIPLIER = BUILDER.comment("Amount to multiply the price of the harvesters by to set their energy capacity.")
+                .defineInRange("harvester_capacity_multiplier", 10, 0, Integer.MAX_VALUE);
+        DIMENSIONAL_APPLICATOR_CAPACITY_MULTIPLIER = BUILDER.comment("Amount to multiply the price of the Dimensional Applicator by to set its energy capacity.")
+                .defineInRange("dimensional_applicator_capacity_multiplier", 100, 0, Integer.MAX_VALUE);
+        HEAT_GENERATOR_CAPACITY_MULTIPLIER = BUILDER.comment("Amount to multiply the price of the Heat Generator by to set its energy capacity.")
+                .defineInRange("heat_generator_capacity_multiplier", 100, 0, Integer.MAX_VALUE);
 
         BUILDER.push("Ore Harvester Prices: ");
         ORE_1_PRICE = BUILDER.comment("Price for the tier 1 Ore Harvester (in FE per operation)")
@@ -629,6 +676,9 @@ public class CommonConfig {
                 .defineInRange("price_soil_8", 8000, 0, (Integer.MAX_VALUE / 10) - 1);
         BUILDER.pop();
 
+        DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
+                .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
+
         MOB_PRICE = BUILDER.comment("Price for the Mob Harvester (in FE per operation)")
                 .defineInRange("price_mob", 8000, 0, (Integer.MAX_VALUE / 10) - 1);
         BUILDER.pop();
@@ -640,6 +690,23 @@ public class CommonConfig {
                 .defineInRange("dimensional_applicator_duration", 220, 0, Integer.MAX_VALUE);
         BUILDER.pop();
 
+        BUILDER.push("Enable / Disable: ");
+        ENABLE_CHUNK_LOADER = BUILDER.comment("Should the Chunk Loader have functionality?")
+                .define("enable_ore_harvesters", true);
+        ENABLE_DIMENSIONAL_APPLICATOR = BUILDER.comment("Should the Dimensional Applicator have functionality?")
+                .define("enable_dimensional_applicator", true);
+        ENABLE_HEAT_GENERATOR = BUILDER.comment("Should the Heat Generator have functionality?")
+                .define("enable_heat_generator", true);
+        ENABLE_ORE_HARVESTERS = BUILDER.comment("Should the Ore Harvesters have functionality?")
+                .define("enable_ore_harvesters", true);
+        ENABLE_BIO_HARVESTERS = BUILDER.comment("Should the Bio Harvesters have functionality?")
+                .define("enable_bio_harvesters", true);
+        ENABLE_STONE_HARVESTERS = BUILDER.comment("Should the Stone Harvesters have functionality?")
+                .define("enable_stone_harvesters", true);
+        ENABLE_SOIL_HARVESTERS = BUILDER.comment("Should the Soil Harvesters have functionality?")
+                .define("enable_soil_harvesters", true);
+        BUILDER.pop();
+
         BUILDER.push("Misc.: ");
         BLOCK_HARDNESS = BUILDER.comment("Hardness for the blocks (Iron Block is 5.)")
                 .defineInRange("block_hardness", 5.0f, 0, Float.MAX_VALUE);
@@ -647,6 +714,8 @@ public class CommonConfig {
                 .defineInRange("block_resistance", 6.0f, 0, Float.MAX_VALUE);
         HARVESTER_SHARD_CHANCE = BUILDER.comment("Chance for a harvester to output a shard (the higher the value, the less likely the shard, 0 means no shards.)")
                 .defineInRange("harvester_shard_chance", 75, 0, Integer.MAX_VALUE);
+        MACHINE_LIGHT_LEVEL = BUILDER.comment("Light level for the machines to emit when active (a regular torch is 14, 0 to disable).")
+                .defineInRange("machine_light_level", 7, 0, Integer.MAX_VALUE);
         BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();

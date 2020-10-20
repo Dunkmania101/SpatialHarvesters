@@ -10,11 +10,11 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class ChunkLoaderData extends WorldSavedData {
-    private final ArrayList<Long> CHUNK_LOADERS;
+    private final ArrayList<Long> chunkLoaders;
 
     public ChunkLoaderData() {
         super(CustomValues.chunkLoaderDataKey);
-        this.CHUNK_LOADERS = new ArrayList<>();
+        this.chunkLoaders = new ArrayList<>();
     }
 
     public static ChunkLoaderData get(ServerWorld worldIn) {
@@ -22,34 +22,35 @@ public class ChunkLoaderData extends WorldSavedData {
     }
 
     public ArrayList<Long> getChunkLoaders() {
-        return this.CHUNK_LOADERS;
+        return this.chunkLoaders;
     }
 
     public void addChunk(ChunkPos cpos) {
-        if (!this.CHUNK_LOADERS.contains(cpos.asLong())) {
-            this.CHUNK_LOADERS.add(cpos.asLong());
+        long posLong = cpos.asLong();
+        if (!this.chunkLoaders.contains(posLong)) {
+            this.chunkLoaders.add(posLong);
             this.markDirty();
         }
     }
 
     public void removeChunk(ChunkPos cpos) {
-        this.CHUNK_LOADERS.remove(cpos.asLong());
+        this.chunkLoaders.remove(cpos.asLong());
         this.markDirty();
     }
 
     @Override
     public void read(CompoundNBT nbt) {
-        long[] CHUNK_LOADERS_NBT = nbt.getLongArray(CustomValues.chunkLoaderDataKey);
-        for (long check_pos : CHUNK_LOADERS_NBT) {
-            this.CHUNK_LOADERS.add(check_pos);
+        long[] chunkLoadersNBT = nbt.getLongArray(CustomValues.chunkLoaderDataKey);
+        for (long check_pos : chunkLoadersNBT) {
+            this.chunkLoaders.add(check_pos);
         }
     }
 
+    @Nonnull
     @Override
-    public @Nonnull
-    CompoundNBT write(CompoundNBT compound) {
-        LongArrayNBT CHUNK_LOADERS_NBT = new LongArrayNBT(CHUNK_LOADERS);
-        compound.put(CustomValues.chunkLoaderDataKey, CHUNK_LOADERS_NBT);
+    public CompoundNBT write(CompoundNBT compound) {
+        LongArrayNBT chunkLoadersNBT = new LongArrayNBT(chunkLoaders);
+        compound.put(CustomValues.chunkLoaderDataKey, chunkLoadersNBT);
         return compound;
     }
 }

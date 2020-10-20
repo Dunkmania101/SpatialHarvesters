@@ -65,12 +65,20 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                     setPlayer();
                 }
                 if (this.player != null) {
-                    if (mobEntity.getType() == EntityType.ENDER_DRAGON) {
-                        ArrayList<ArrayList<String>> custom_dragon_drops = CommonConfig.CUSTOM_DRAGON_DROPS.get();
-                        for (ArrayList<String> modDragonDrop : custom_dragon_drops) {
-                            if (modDragonDrop.size() >= 2) {
-                                ResourceLocation dragonDropRN = new ResourceLocation(modDragonDrop.get(0), modDragonDrop.get(1));
-                                Item drop = ForgeRegistries.ITEMS.getValue(dragonDropRN);
+                    ResourceLocation entityRN = mobEntity.getType().getRegistryName();
+                    if (entityRN != null) {
+                        ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
+                        String mod = entityRN.getNamespace();
+                        String path = entityRN.getPath();
+                        ArrayList<String> modMob = new ArrayList<>();
+                        modMob.add(mod);
+                        modMob.add(path);
+                        for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
+                            ArrayList<String> customModMob = modMobDrop.get(0);
+                            if (customModMob.containsAll(modMob)) {
+                                ArrayList<String> customMobDrop = modMobDrop.get(1);
+                                ResourceLocation mobDropRN = new ResourceLocation(customMobDrop.get(0), customMobDrop.get(1));
+                                Item drop = ForgeRegistries.ITEMS.getValue(mobDropRN);
                                 if (drop != null) {
                                     newOutputs.add(new ItemStack(drop));
                                 }

@@ -29,7 +29,6 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
                 setActive(false);
                 getWorld().addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX(), pos.getY(), pos.getZ(), 5, 5, 5);
             } else {
-                setActive(true);
                 customTickActions();
                 if (this.countTicks) {
                     this.ticks++;

@@ -13,8 +13,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockInit {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SpatialHarvesters.modid);
+
     private static final float block_hardness = CommonConfig.BLOCK_HARDNESS.get().floatValue();
     private static final float block_resistance = CommonConfig.BLOCK_RESISTANCE.get().floatValue();
+
     public static final RegistryObject<ChunkLoaderBlock> CHUNK_LOADER = BLOCKS.register("chunk_loader",
             () -> new ChunkLoaderBlock(
                     Block.Properties
@@ -24,8 +26,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> CASING = BLOCKS.register("casing",
-            () -> new Block(
+    public static final RegistryObject<CasingBlock> CASING = BLOCKS.register("casing",
+            () -> new CasingBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -357,8 +359,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> REGENERATION_ACTIVATOR = BLOCKS.register("regeneration_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> REGENERATION_ACTIVATOR = BLOCKS.register("regeneration_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -366,8 +368,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> RESISTANCE_ACTIVATOR = BLOCKS.register("resistance_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> RESISTANCE_ACTIVATOR = BLOCKS.register("resistance_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -375,8 +377,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> ABSORPTION_ACTIVATOR = BLOCKS.register("absorption_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> ABSORPTION_ACTIVATOR = BLOCKS.register("absorption_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -384,8 +386,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> HASTE_ACTIVATOR = BLOCKS.register("haste_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> HASTE_ACTIVATOR = BLOCKS.register("haste_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -393,8 +395,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> SPEED_ACTIVATOR = BLOCKS.register("speed_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> SPEED_ACTIVATOR = BLOCKS.register("speed_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -402,8 +404,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> JUMP_BOOST_ACTIVATOR = BLOCKS.register("jump_boost_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> JUMP_BOOST_ACTIVATOR = BLOCKS.register("jump_boost_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -411,8 +413,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> INVISIBILITY_ACTIVATOR = BLOCKS.register("invisibility_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> INVISIBILITY_ACTIVATOR = BLOCKS.register("invisibility_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -420,8 +422,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> NIGHT_VISION_ACTIVATOR = BLOCKS.register("night_vision_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> NIGHT_VISION_ACTIVATOR = BLOCKS.register("night_vision_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -429,8 +431,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<Block> STRENGTH_ACTIVATOR = BLOCKS.register("strength_activator",
-            () -> new Block(
+    public static final RegistryObject<ActivatorBlock> STRENGTH_ACTIVATOR = BLOCKS.register("strength_activator",
+            () -> new ActivatorBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
