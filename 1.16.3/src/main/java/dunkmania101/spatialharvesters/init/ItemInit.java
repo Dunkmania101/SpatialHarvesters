@@ -2,10 +2,7 @@ package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.objects.blocks.block_items.MachineBlockItem;
-import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
-import dunkmania101.spatialharvesters.objects.items.MobKeyItem;
-import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
-import dunkmania101.spatialharvesters.objects.items.ResourceDisablerKeyItem;
+import dunkmania101.spatialharvesters.objects.items.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -42,6 +39,13 @@ public class ItemInit {
                             .maxStackSize(1)
             ));
 
+    public static final RegistryObject<WeaponKeyItem> WEAPON_KEY = ITEMS.register("weapon_key",
+            () -> new WeaponKeyItem(
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .maxStackSize(1)
+            ));
+
     public static final RegistryObject<ResourceDisablerKeyItem> RESOURCE_DISABLER_KEY = ITEMS.register("resource_disabler_key",
             () -> new ResourceDisablerKeyItem(
                     new Item.Properties()
@@ -73,7 +77,25 @@ public class ItemInit {
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
+    public static final RegistryObject<Item> DARK_MOB_CORE = ITEMS.register("dark_mob_core",
+            () -> new Item(
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
     public static final RegistryObject<Item> MOB_CORE = ITEMS.register("mob_core",
+            () -> new Item(
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<Item> MOB_SHARD = ITEMS.register("mob_shard",
+            () -> new Item(
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<Item> MOB_CRYSTAL = ITEMS.register("mob_crystal",
             () -> new Item(
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
@@ -388,9 +410,16 @@ public class ItemInit {
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<MachineBlockItem> MOB_HARVESTER = ITEMS.register("mob_harvester",
+    public static final RegistryObject<MachineBlockItem> DARK_MOB_HARVESTER = ITEMS.register("dark_mob_harvester",
             () -> new MachineBlockItem(
-                    BlockInit.MOB_HARVESTER.get(),
+                    BlockInit.DARK_MOB_HARVESTER.get(),
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+            ));
+
+    public static final RegistryObject<MachineBlockItem> SPECIFIC_MOB_HARVESTER = ITEMS.register("specific_mob_harvester",
+            () -> new MachineBlockItem(
+                    BlockInit.SPECIFIC_MOB_HARVESTER.get(),
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));

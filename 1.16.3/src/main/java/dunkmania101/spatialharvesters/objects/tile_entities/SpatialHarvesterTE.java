@@ -46,6 +46,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         boolean enableBio = CommonConfig.ENABLE_ORE_HARVESTERS.get();
         boolean enableStone = CommonConfig.ENABLE_ORE_HARVESTERS.get();
         boolean enableSoil = CommonConfig.ENABLE_ORE_HARVESTERS.get();
+        boolean enableDarkMob = CommonConfig.ENABLE_DARK_MOB_HARVESTER.get();
+        boolean enableSpecificMob = CommonConfig.ENABLE_SPECIFIC_MOB_HARVESTER.get();
         if (this instanceof OreHarvesterTE && !enableOre) {
             setActive(false);
         } else if (this instanceof BioHarvesterTE && !enableBio) {
@@ -53,6 +55,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         } else if (this instanceof StoneHarvesterTE && !enableStone) {
             setActive(false);
         } else if (this instanceof SoilHarvesterTE && !enableSoil) {
+            setActive(false);
+        } else if (this instanceof DarkMobHarvesterTE && !enableDarkMob) {
+            setActive(false);
+        } else if (this instanceof SpecificMobHarvesterTE && !enableSpecificMob) {
             setActive(false);
         } else {
             super.customTickActions();
@@ -162,7 +168,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public CompoundNBT saveSerializedValues() {
-        CompoundNBT nbt =  super.saveSerializedValues();
+        CompoundNBT nbt = super.saveSerializedValues();
         CompoundNBT disabledResources = new CompoundNBT();
         int i = 0;
         for (Item item : this.BLACKLIST) {

@@ -114,7 +114,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                                 player.sendStatusMessage(entityType.getName(), false);
                             }
                         }
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"), false);
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.weapon_key_bound_weapon"), false);
                         CompoundNBT weapon = data.getCompound(CustomValues.weaponNBTKey);
                         if (!weapon.isEmpty()) {
                             ItemStack weaponStack = ItemStack.read(weapon);

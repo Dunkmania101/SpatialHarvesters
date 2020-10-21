@@ -4,7 +4,6 @@ import com.mojang.authlib.GameProfile;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
@@ -14,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -27,18 +27,15 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class MobHarvesterTE extends SpatialHarvesterTE {
-    private String entity = null;
-    private PlayerEntity player = null;
-    private CompoundNBT weapon = new CompoundNBT();
+    protected String entity = null;
+    protected PlayerEntity player = null;
+    protected CompoundNBT weapon = new CompoundNBT();
 
-    public MobHarvesterTE() {
-        super(TileEntityInit.MOB_HARVESTER.get(), new ArrayList<>());
+    public MobHarvesterTE(TileEntityType<?> tileEntityTypeIn) {
+        super(tileEntityTypeIn, new ArrayList<>());
     }
 
     public static final Method dropLoot;
@@ -61,51 +58,49 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
         if (!StringUtils.isNullOrEmpty(this.entity)) {
             MobEntity mobEntity = getMobEntity();
-            if (mobEntity != null) {
-                if (this.player == null) {
-                    setPlayer();
-                }
-                if (this.player != null) {
-                    ResourceLocation entityRN = mobEntity.getType().getRegistryName();
-                    if (entityRN != null) {
-                        ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
-                        String mod = entityRN.getNamespace();
-                        String path = entityRN.getPath();
-                        ArrayList<String> modMob = new ArrayList<>();
-                        modMob.add(mod);
-                        modMob.add(path);
-                        for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
-                            ArrayList<String> customModMob = modMobDrop.get(0);
-                            if (customModMob.containsAll(modMob)) {
-                                ArrayList<String> customMobDrop = modMobDrop.get(1);
-                                ResourceLocation mobDropRN = new ResourceLocation(customMobDrop.get(0), customMobDrop.get(1));
-                                Item drop = ForgeRegistries.ITEMS.getValue(mobDropRN);
-                                if (drop != null && drop != Items.AIR) {
-                                    newOutputs.add(new ItemStack(drop));
-                                }
+            if (this.player == null) {
+                setPlayer();
+            }
+            if (this.player != null) {
+                ResourceLocation entityRN = mobEntity.getType().getRegistryName();
+                if (entityRN != null) {
+                    ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
+                    String mod = entityRN.getNamespace();
+                    String path = entityRN.getPath();
+                    ArrayList<String> modMob = new ArrayList<>();
+                    modMob.add(mod);
+                    modMob.add(path);
+                    for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
+                        ArrayList<String> customModMob = modMobDrop.get(0);
+                        if (customModMob.containsAll(modMob)) {
+                            ArrayList<String> customMobDrop = modMobDrop.get(1);
+                            ResourceLocation mobDropRN = new ResourceLocation(customMobDrop.get(0), customMobDrop.get(1));
+                            Item drop = ForgeRegistries.ITEMS.getValue(mobDropRN);
+                            if (drop != null && drop != Items.AIR) {
+                                newOutputs.add(new ItemStack(drop));
                             }
                         }
                     }
-                    updateWeapon();
-                    DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
-                    ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
-                    mobEntity.captureDrops(new ArrayList<>());
-                    int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
-                    try {
-                        dropLoot.invoke(mobEntity, playerDamage, true);
-                        dropSpecialItems.invoke(mobEntity, playerDamage, lootingLevel, true);
-                    } catch (Exception error) {
-                        throw new RuntimeException(error);
-                    }
-                    Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
-                    LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
-                    if (!MinecraftForge.EVENT_BUS.post(event)) {
-                        event.getDrops().stream()
-                                .map(ItemEntity::getItem)
-                                .forEach(newOutputs::add);
-                    }
-                    mobEntity.remove();
                 }
+                updateWeapon();
+                DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
+                ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
+                mobEntity.captureDrops(new ArrayList<>());
+                int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
+                try {
+                    dropLoot.invoke(mobEntity, playerDamage, true);
+                    dropSpecialItems.invoke(mobEntity, playerDamage, lootingLevel, true);
+                } catch (Exception error) {
+                    throw new RuntimeException(error);
+                }
+                Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
+                LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
+                if (!MinecraftForge.EVENT_BUS.post(event)) {
+                    event.getDrops().stream()
+                            .map(ItemEntity::getItem)
+                            .forEach(newOutputs::add);
+                }
+                mobEntity.remove();
             }
         }
         setOutputStacks(newOutputs);
@@ -221,7 +216,11 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     public void setDeserializedValues(CompoundNBT nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeEntityNBTKey)) {
-            removeAll();
+            removePlayer();
+            removeMobEntity();
+        }
+        if (nbt.contains(CustomValues.removeWeaponNBTKey)) {
+            removeWeapon();
         }
         if (nbt.contains(CustomValues.entityNBTKey)) {
             removeMobEntity();
@@ -240,17 +239,14 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public int getPrice(Block block) {
-        return CommonConfig.MOB_PRICE.get();
-    }
-
-    @Override
-    public int getSpeed(Block block) {
-        return CommonConfig.MOB_SPEED.get();
-    }
-
-    @Override
     public Item getShard(Block block) {
+        if (getWorld() != null && !getWorld().isRemote) {
+            Random rand = getWorld().getRandom();
+            int shardChance = CommonConfig.MOB_HARVESTER_MOB_SHARD_CHANCE.get();
+            if (rand.nextInt(shardChance) == 1) {
+                return ItemInit.MOB_SHARD.get();
+            }
+        }
         return ItemInit.SHARD_7.get();
     }
 }

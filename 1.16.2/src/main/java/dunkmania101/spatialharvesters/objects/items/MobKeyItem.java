@@ -2,11 +2,10 @@ package dunkmania101.spatialharvesters.objects.items;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.blocks.MobHarvesterBlock;
-import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
+import dunkmania101.spatialharvesters.objects.blocks.SpecificMobHarvesterBlock;
+import dunkmania101.spatialharvesters.objects.tile_entities.SpecificMobHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -67,27 +66,6 @@ public class MobKeyItem extends Item {
         return super.hitEntity(stack, target, attacker);
     }
 
-    @Override
-    public float getDestroySpeed(@Nonnull ItemStack stack, @Nonnull BlockState state) {
-        int multiplier = CommonConfig.KEY_BREAK_SPEED_MULTIPLIER.get();
-        return super.getDestroySpeed(stack, state) * multiplier;
-    }
-
-    @Override
-    public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
-        if (player.isCrouching()) {
-            ItemStack otherStack = player.getHeldItemOffhand();
-            if (otherStack.isEmpty()) {
-                itemstack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
-                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_key_weapon"), true);
-            } else {
-                itemstack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.serializeNBT());
-                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_weapon"), true);
-            }
-        }
-        return true;
-    }
-
     @Nonnull
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
@@ -97,10 +75,10 @@ public class MobKeyItem extends Item {
             if (!world.isRemote) {
                 BlockPos pos = context.getPos();
                 Block block = world.getBlockState(pos).getBlock();
-                if (block instanceof MobHarvesterBlock) {
+                if (block instanceof SpecificMobHarvesterBlock) {
                     TileEntity tile = world.getTileEntity(pos);
                     if (tile != null) {
-                        if (tile instanceof MobHarvesterTE) {
+                        if (tile instanceof SpecificMobHarvesterTE) {
                             CompoundNBT harvesterNBT = new CompoundNBT();
                             if (player.isCrouching()) {
                                 harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
@@ -109,9 +87,6 @@ public class MobKeyItem extends Item {
                                 if (itemNBT != null) {
                                     if (itemNBT.contains(CustomValues.entityNBTKey)) {
                                         harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
-                                    }
-                                    if (itemNBT.contains(CustomValues.weaponNBTKey)) {
-                                        harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
                                     }
                                 }
                             }
@@ -148,17 +123,6 @@ public class MobKeyItem extends Item {
                     if (optionalEntityType.isPresent()) {
                         EntityType<?> entityType = optionalEntityType.get();
                         tooltip.add(entityType.getName());
-                    }
-                }
-            }
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"));
-            if (nbt.contains(CustomValues.weaponNBTKey)) {
-                CompoundNBT weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
-                if (!weaponNBT.isEmpty()) {
-                    ItemStack weapon = ItemStack.read(weaponNBT);
-                    if (!weapon.isEmpty()) {
-                        tooltip.add(weapon.getDisplayName());
                     }
                 }
             }

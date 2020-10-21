@@ -60,6 +60,7 @@ public class CustomValues {
     public static final String removePlayerNBTKey = SpatialHarvesters.modid + "_removePlayer";
     public static final String removePotionsNBTKey = SpatialHarvesters.modid + "_removePotions";
     public static final String removeEntityNBTKey = SpatialHarvesters.modid + "_removeEntityNBT";
+    public static final String removeWeaponNBTKey = SpatialHarvesters.modid + "_removeWeaponNBT";
     public static final String removeDisabledNBTKey = SpatialHarvesters.modid + "_removeDisabledNBT";
     public static final String entityNBTKey = SpatialHarvesters.modid + "_entityNBT";
     public static final String weaponNBTKey = SpatialHarvesters.modid + "_weaponNBT";

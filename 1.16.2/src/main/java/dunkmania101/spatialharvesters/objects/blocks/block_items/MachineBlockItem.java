@@ -67,7 +67,7 @@ public class MachineBlockItem extends BlockItem {
         }
         if (data.contains(CustomValues.weaponNBTKey)) {
             tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_weapon"));
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.weapon_key_bound_weapon"));
             CompoundNBT weaponNBT = data.getCompound(CustomValues.weaponNBTKey);
             if (!weaponNBT.isEmpty()) {
                 ItemStack weapon = ItemStack.read(weaponNBT);

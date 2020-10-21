@@ -332,8 +332,17 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<MobHarvesterBlock> MOB_HARVESTER = BLOCKS.register("mob_harvester",
-            () -> new MobHarvesterBlock(
+    public static final RegistryObject<DarkMobHarvesterBlock> DARK_MOB_HARVESTER = BLOCKS.register("dark_mob_harvester",
+            () -> new DarkMobHarvesterBlock(
+                    Block.Properties
+                            .create(Material.IRON)
+                            .sound(SoundType.METAL)
+                            .hardnessAndResistance(block_hardness, block_resistance)
+                            .harvestTool(ToolType.PICKAXE)
+            ));
+
+    public static final RegistryObject<SpecificMobHarvesterBlock> SPECIFIC_MOB_HARVESTER = BLOCKS.register("specific_mob_harvester",
+            () -> new SpecificMobHarvesterBlock(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
