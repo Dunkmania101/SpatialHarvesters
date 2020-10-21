@@ -1,20 +1,20 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.tile_entities.CustomEnergyMachineTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.TickingRedstoneEnergyMachineTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.*;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -22,6 +22,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -82,10 +83,25 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                         player.sendStatusMessage(new StringTextComponent(Integer.toString(data.getInt(CustomValues.energyStorageKey))), false);
                     }
                     if (tile instanceof TickingRedstoneEnergyMachineTE) {
-                        int countedTicks = data.getInt(CustomValues.countedTicksKey);
+                        if (data.contains(CustomValues.countedTicksKey)) {
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
+                            int countedTicks = data.getInt(CustomValues.countedTicksKey);
+                            player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
+                        }
+                    }
+                    if (tile instanceof SpatialHarvesterTE) {
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
-                        player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
+                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.disabled_resources"), false);
+                        if (data.contains(CustomValues.disabledResourcesKey)) {
+                            CompoundNBT disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
+                            for (String key : disabledResources.keySet()) {
+                                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
+                                if (item != null && item != Items.AIR) {
+                                    player.sendStatusMessage(item.getName(), false);
+                                }
+                            }
+                        }
                     }
                     if (tile instanceof MobHarvesterTE) {
                         player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);

@@ -12,6 +12,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -79,7 +80,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                                 ArrayList<String> customMobDrop = modMobDrop.get(1);
                                 ResourceLocation mobDropRN = new ResourceLocation(customMobDrop.get(0), customMobDrop.get(1));
                                 Item drop = ForgeRegistries.ITEMS.getValue(mobDropRN);
-                                if (drop != null) {
+                                if (drop != null && drop != Items.AIR) {
                                     newOutputs.add(new ItemStack(drop));
                                 }
                             }
@@ -127,7 +128,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                             if (entity != null) {
                                 if (entity instanceof MobEntity) {
                                     mobEntity = (MobEntity) entity;
-                                    mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(pos), SpawnReason.NATURAL, null, null);
+                                    mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(getPos()), SpawnReason.NATURAL, null, null);
                                 }
                                 entity.remove();
                             }

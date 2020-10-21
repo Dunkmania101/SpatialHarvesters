@@ -5,14 +5,18 @@ import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -35,6 +39,19 @@ public class MachineBlockItem extends BlockItem {
             tooltip.add(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"));
             int ticks = data.getInt(CustomValues.countedTicksKey);
             tooltip.add(new StringTextComponent(Integer.toString(ticks)));
+        }
+        if (data.contains(CustomValues.disabledResourcesKey)) {
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.disabled_resources"));
+            if (data.contains(CustomValues.disabledResourcesKey)) {
+                CompoundNBT disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
+                for (String key : disabledResources.keySet()) {
+                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
+                    if (item != null && item != Items.AIR) {
+                        tooltip.add(item.getName());
+                    }
+                }
+            }
         }
         if (data.contains(CustomValues.entityNBTKey)) {
             tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));

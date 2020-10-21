@@ -59,7 +59,7 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
         }
     }
 
-    public static int getSpeed() {
+    public int getSpeed() {
         return CommonConfig.HEAT_GENERATOR_SPEED.get();
     }
 

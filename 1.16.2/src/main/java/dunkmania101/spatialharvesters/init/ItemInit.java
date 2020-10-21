@@ -1,10 +1,11 @@
 package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
-import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
 import dunkmania101.spatialharvesters.objects.blocks.block_items.MachineBlockItem;
+import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
 import dunkmania101.spatialharvesters.objects.items.MobKeyItem;
 import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
+import dunkmania101.spatialharvesters.objects.items.ResourceDisablerKeyItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -36,6 +37,13 @@ public class ItemInit {
 
     public static final RegistryObject<MobKeyItem> MOB_KEY = ITEMS.register("mob_key",
             () -> new MobKeyItem(
+                    new Item.Properties()
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .maxStackSize(1)
+            ));
+
+    public static final RegistryObject<ResourceDisablerKeyItem> RESOURCE_DISABLER_KEY = ITEMS.register("resource_disabler_key",
+            () -> new ResourceDisablerKeyItem(
                     new Item.Properties()
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
                             .maxStackSize(1)

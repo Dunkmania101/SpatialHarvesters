@@ -1,24 +1,30 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
+import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     protected ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
+    protected ArrayList<Item> BLACKLIST = new ArrayList<>();
     private Block thisBlock = null;
 
     public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn, ArrayList<Item> OUTPUTS) {
@@ -59,10 +65,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                         ArrayList<Direction> spaceRippers = new ArrayList<>();
                         ArrayList<IItemHandler> outInventories = new ArrayList<>();
                         for (Direction side : Direction.values()) {
-                            if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                            if (getWorld().getBlockState(getPos().offset(side)).getBlock() instanceof SpaceRipperBlock) {
                                 spaceRippers.add(side);
                             } else {
-                                TileEntity out = getWorld().getTileEntity(pos.offset(side));
+                                TileEntity out = getWorld().getTileEntity(getPos().offset(side));
                                 if (out != null) {
                                     LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                                     outCap.ifPresent(outInventories::add);
@@ -83,12 +89,17 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                             chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                         }
                                         if (!chosenOutput.isEmpty()) {
-                                            int originalCount = chosenOutput.getCount();
-                                            IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
-                                            ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
-                                            if (resultStack.getCount() != originalCount) {
+                                            if (this.BLACKLIST.contains(chosenOutput.getItem())) {
                                                 getEnergyStorage().consumeEnergy(price);
                                                 setActive(true);
+                                            } else {
+                                                int originalCount = chosenOutput.getCount();
+                                                IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
+                                                ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
+                                                if (resultStack.getCount() != originalCount) {
+                                                    getEnergyStorage().consumeEnergy(price);
+                                                    setActive(true);
+                                                }
                                             }
                                         }
                                     }
@@ -147,5 +158,47 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
 
     public Item getShard(Block block) {
         return ItemInit.SHARD_1.get();
+    }
+
+    @Override
+    public CompoundNBT saveSerializedValues() {
+        CompoundNBT nbt =  super.saveSerializedValues();
+        CompoundNBT disabledResources = new CompoundNBT();
+        int i = 0;
+        for (Item item : this.BLACKLIST) {
+            ResourceLocation rn = item.getRegistryName();
+            if (rn != null) {
+                disabledResources.putString(Integer.toString(i), rn.toString());
+                i++;
+            }
+        }
+        if (!disabledResources.isEmpty()) {
+            nbt.put(CustomValues.disabledResourcesKey, disabledResources);
+        }
+        return nbt;
+    }
+
+    @Override
+    public void setDeserializedValues(CompoundNBT nbt) {
+        super.setDeserializedValues(nbt);
+        if (nbt.contains(CustomValues.removeDisabledNBTKey)) {
+            this.BLACKLIST = new ArrayList<>();
+        }
+        if (nbt.contains(CustomValues.disabledResourcesKey)) {
+            this.BLACKLIST = new ArrayList<>();
+            CompoundNBT disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
+            for (String key : disabledResources.keySet()) {
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
+                if (item != null && item != Items.AIR) {
+                    this.BLACKLIST.add(item);
+                }
+            }
+        }
+        if (nbt.contains(CustomValues.disabledResourceKey)) {
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(nbt.getString(CustomValues.disabledResourceKey)));
+            if (item != null && item != Items.AIR) {
+                this.BLACKLIST.add(item);
+            }
+        }
     }
 }

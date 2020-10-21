@@ -97,9 +97,14 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_PRICE;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_AMPLIFIER;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_DURATION;
+    public static ForgeConfigSpec.DoubleValue DIMENSIONAL_APPLICATOR_DIVISOR;
+    public static ForgeConfigSpec.BooleanValue DIMENSIONAL_APPLICATOR_IS_BEACON_EFFECT;
+    public static ForgeConfigSpec.BooleanValue DIMENSIONAL_APPLICATOR_SHOW_PARTICLES;
+    public static ForgeConfigSpec.BooleanValue DIMENSIONAL_APPLICATOR_SHOW_ICON;
     public static ForgeConfigSpec.DoubleValue BLOCK_HARDNESS;
     public static ForgeConfigSpec.DoubleValue BLOCK_RESISTANCE;
     public static ForgeConfigSpec.IntValue MACHINE_LIGHT_LEVEL;
+    public static ForgeConfigSpec.IntValue KEY_BREAK_SPEED_MULTIPLIER;
     public static ForgeConfigSpec.IntValue HARVESTER_CAPACITY_MULTIPLIER;
     public static ForgeConfigSpec.IntValue DIMENSIONAL_APPLICATOR_CAPACITY_MULTIPLIER;
     public static ForgeConfigSpec.IntValue HEAT_GENERATOR_CAPACITY_MULTIPLIER;
@@ -465,7 +470,7 @@ public class CommonConfig {
         modMobDrop.add(modDrop);
         custom_mob_drops.add(modMobDrop);
 
-        CUSTOM_MOB_DROPS = BUILDER.comment("Custom drops for the Mob Harvester when set to the Ender Dragon")
+        CUSTOM_MOB_DROPS = BUILDER.comment("Custom drops for the Mob Harvester.")
                 .define("custom_mob_drops", custom_mob_drops);
         BUILDER.pop();
 
@@ -487,7 +492,7 @@ public class CommonConfig {
                 .define("blacklist_mobs", blacklist_mobs);
         BUILDER.pop();
 
-        BUILDER.push("Harvester Blacklists (by modid): ");
+        BUILDER.push("Harvester Blacklists (by mod): ");
         ArrayList<String> blacklist_ores_mod = new ArrayList<>();
         BLACKLIST_ORES_MOD = BUILDER.comment("Blacklist for the Soil Harvesters (By mod)")
                 .define("blacklist_ores_mod", blacklist_ores_mod);
@@ -688,6 +693,15 @@ public class CommonConfig {
                 .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_DURATION = BUILDER.comment("Duration for the Dimensional Applicator (in ticks, 20 = one second, 220 = 11 seconds (Night Vision flashes at 10 or less)).")
                 .defineInRange("dimensional_applicator_duration", 220, 0, Integer.MAX_VALUE);
+        DIMENSIONAL_APPLICATOR_DIVISOR = BUILDER.comment("How much to divide the Dimensional Applicator's duration by to get it's reapplication frequency (10 makes it every second if the duration is 220).")
+                .comment("This can be less than one to make it take longer than the effect lasts (not recommended, though).")
+                .defineInRange("dimensional_applicator_divisor", 10, 0, Double.MAX_VALUE);
+        DIMENSIONAL_APPLICATOR_IS_BEACON_EFFECT = BUILDER.comment("Whether the game should think the effects came from a beacon.")
+                .define("dimensional_applicator_is_beacon_effect", true);
+        DIMENSIONAL_APPLICATOR_SHOW_PARTICLES = BUILDER.comment("Whether to show the particles of the effects.")
+                .define("dimensional_applicator_show_particles", false);
+        DIMENSIONAL_APPLICATOR_SHOW_ICON = BUILDER.comment("Whether to show the icons of the effects.")
+                .define("dimensional_applicator_show_icon", false);
         BUILDER.pop();
 
         BUILDER.push("Enable / Disable: ");
@@ -716,6 +730,8 @@ public class CommonConfig {
                 .defineInRange("harvester_shard_chance", 75, 0, Integer.MAX_VALUE);
         MACHINE_LIGHT_LEVEL = BUILDER.comment("Light level for the machines to emit when active (a regular torch is 14, 0 to disable).")
                 .defineInRange("machine_light_level", 7, 0, Integer.MAX_VALUE);
+        KEY_BREAK_SPEED_MULTIPLIER = BUILDER.comment("Multiplier for the break speed of the keys when configuring in that way (they won't actually break blocks).")
+                .defineInRange("key_break_speed_multiplier", 10, 0, Integer.MAX_VALUE);
         BUILDER.pop();
     }
     public static final ForgeConfigSpec CONFIG = BUILDER.build();

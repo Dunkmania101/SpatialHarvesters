@@ -2,8 +2,11 @@ package dunkmania101.spatialharvesters.objects.items;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.objects.blocks.MobHarvesterBlock;
 import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -65,15 +68,21 @@ public class MobKeyItem extends Item {
     }
 
     @Override
+    public float getDestroySpeed(@Nonnull ItemStack stack, @Nonnull BlockState state) {
+        int multiplier = CommonConfig.KEY_BREAK_SPEED_MULTIPLIER.get();
+        return super.getDestroySpeed(stack, state) * multiplier;
+    }
+
+    @Override
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
         if (player.isCrouching()) {
-            ItemStack other_stack = player.getHeldItemOffhand();
-            if (other_stack.isEmpty()) {
-                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_key_weapon"), true);
+            ItemStack otherStack = player.getHeldItemOffhand();
+            if (otherStack.isEmpty()) {
                 itemstack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
+                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_key_weapon"), true);
             } else {
+                itemstack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.serializeNBT());
                 player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_weapon"), true);
-                itemstack.getOrCreateTag().put(CustomValues.weaponNBTKey, other_stack.serializeNBT());
             }
         }
         return true;
@@ -87,32 +96,35 @@ public class MobKeyItem extends Item {
             World world = context.getWorld();
             if (!world.isRemote) {
                 BlockPos pos = context.getPos();
-                TileEntity tile = world.getTileEntity(pos);
-                if (tile != null) {
-                    if (tile instanceof MobHarvesterTE) {
-                        CompoundNBT harvesterNBT = new CompoundNBT();
-                        if (player.isCrouching()) {
-                            harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
-                        } else {
-                            CompoundNBT itemNBT = context.getItem().getTag();
-                            if (itemNBT != null) {
-                                if (itemNBT.contains(CustomValues.entityNBTKey)) {
-                                    harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
-                                }
-                                if (itemNBT.contains(CustomValues.weaponNBTKey)) {
-                                    harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
-                                }
-                            }
-                        }
-                        if (harvesterNBT.isEmpty()) {
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
-                        } else {
-                            if (harvesterNBT.contains(CustomValues.removeEntityNBTKey)) {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
+                Block block = world.getBlockState(pos).getBlock();
+                if (block instanceof MobHarvesterBlock) {
+                    TileEntity tile = world.getTileEntity(pos);
+                    if (tile != null) {
+                        if (tile instanceof MobHarvesterTE) {
+                            CompoundNBT harvesterNBT = new CompoundNBT();
+                            if (player.isCrouching()) {
+                                harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
+                                CompoundNBT itemNBT = context.getItem().getTag();
+                                if (itemNBT != null) {
+                                    if (itemNBT.contains(CustomValues.entityNBTKey)) {
+                                        harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
+                                    }
+                                    if (itemNBT.contains(CustomValues.weaponNBTKey)) {
+                                        harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
+                                    }
+                                }
                             }
-                            tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
+                            if (harvesterNBT.isEmpty()) {
+                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
+                            } else {
+                                if (harvesterNBT.contains(CustomValues.removeEntityNBTKey)) {
+                                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
+                                } else {
+                                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
+                                }
+                                tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
+                            }
                         }
                     }
                 }

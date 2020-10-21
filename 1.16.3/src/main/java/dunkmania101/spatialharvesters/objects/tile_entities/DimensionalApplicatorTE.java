@@ -31,29 +31,30 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         boolean enabled = CommonConfig.ENABLE_DIMENSIONAL_APPLICATOR.get();
         if (enabled) {
             super.customTickActions();
-            if (this.playerId != null && world != null && !world.isRemote) {
-                if (getCountedTicks() >= getDuration() / 2 || (getDuration() >= 220 && getCountedTicks() < 200)) {
+            if (this.playerId != null && getWorld() != null && !getWorld().isRemote) {
+                double divisor = CommonConfig.DIMENSIONAL_APPLICATOR_DIVISOR.get();
+                if (getCountedTicks() >= (getDuration() / divisor)) {
                     resetCountedTicks();
                     setActive(false);
                     if (getEnergyStorage().getEnergyStored() >= getPrice()) {
                         boolean hasSpaceRipper = false;
                         for (Direction side : Direction.values()) {
-                            if (world.getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                            if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
                                 hasSpaceRipper = true;
                                 break;
                             }
                         }
                         if (hasSpaceRipper) {
-                            PlayerEntity player = null;
-                            if (world.getServer() != null) {
-                                for (World check_world : world.getServer().getWorlds()) {
-                                    player = check_world.getPlayerByUuid(this.playerId);
+                            if (getWorld().getServer() != null) {
+                                PlayerEntity player = null;
+                                for (World checkWorld : getWorld().getServer().getWorlds()) {
+                                    player = checkWorld.getPlayerByUuid(this.playerId);
                                     if (player != null) {
                                         break;
                                     }
                                 }
                                 if (player != null) {
-                                    ArrayList<EffectInstance> effects = getEffects(world, pos);
+                                    ArrayList<EffectInstance> effects = getEffects(getWorld(), getPos());
                                     for (EffectInstance effect : effects) {
                                         if (effect != null) {
                                             if (getEnergyStorage().getEnergyStored() >= getPrice()) {
@@ -77,10 +78,12 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private ArrayList<EffectInstance> getEffects(World worldIn, BlockPos pos) {
         ArrayList<EffectInstance> effectInstances = new ArrayList<>();
         ArrayList<Effect> effects = new ArrayList<>();
-        for (int id : NBTEffects) {
+        for (int id : this.NBTEffects) {
             Effect effect = Effect.get(id);
             if (effect != null) {
-                effects.add(effect);
+                if (!effects.contains(effect)) {
+                    effects.add(effect);
+                }
             }
         }
         for (Direction check_direction : Direction.values()) {
@@ -106,12 +109,22 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                 effect = Effects.STRENGTH;
             }
             if (effect != null) {
-                effects.add(effect);
+                if (!effects.contains(effect)) {
+                    effects.add(effect);
+                }
             }
         }
-        for (Effect effect : effects) {
-            if (effect != null) {
-                effectInstances.add(new EffectInstance(effect, getDuration(), getAmplifier(), true, false));
+        if (!effects.isEmpty()) {
+            boolean isBeacon = CommonConfig.DIMENSIONAL_APPLICATOR_IS_BEACON_EFFECT.get();
+            boolean showParticles = CommonConfig.DIMENSIONAL_APPLICATOR_SHOW_PARTICLES.get();
+            boolean showIcon = CommonConfig.DIMENSIONAL_APPLICATOR_SHOW_ICON.get();
+            for (Effect effect : effects) {
+                if (effect != null) {
+                    EffectInstance effectInstance = new EffectInstance(effect, getDuration(), getAmplifier(), isBeacon, showParticles, showIcon);
+                    if (!effectInstances.contains(effectInstance)) {
+                        effectInstances.add(effectInstance);
+                    }
+                }
             }
         }
         return effectInstances;

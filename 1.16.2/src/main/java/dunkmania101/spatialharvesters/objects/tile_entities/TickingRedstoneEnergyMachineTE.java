@@ -18,6 +18,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
 
         this.countTicks = countTicks;
     }
+
     public TickingRedstoneEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
         this(tileEntityTypeIn, canExtract, canReceive, false);
     }
@@ -27,7 +28,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
         if (getWorld() != null) {
             if (getWorld().isBlockPowered(pos)) {
                 setActive(false);
-                getWorld().addParticle(RedstoneParticleData.REDSTONE_DUST, pos.getX(), pos.getY(), pos.getZ(), 5, 5, 5);
+                getWorld().addParticle(RedstoneParticleData.REDSTONE_DUST, getPos().getX(), getPos().getY(), getPos().getZ(), 5, 5, 5);
             } else {
                 customTickActions();
                 if (this.countTicks) {
@@ -36,7 +37,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
             }
             if (getBlockState().getBlock() instanceof ActiveCustomHorizontalShapedBlock) {
                 if (getBlockState().get(CustomProperties.ACTIVE) != getActive()) {
-                    getWorld().setBlockState(pos, getBlockState().with(CustomProperties.ACTIVE, getActive()));
+                    getWorld().setBlockState(getPos(), getBlockState().with(CustomProperties.ACTIVE, getActive()));
                 }
             }
         }
