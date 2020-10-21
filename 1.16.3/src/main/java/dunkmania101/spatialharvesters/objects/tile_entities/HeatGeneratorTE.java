@@ -24,18 +24,18 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
         boolean enabled = CommonConfig.ENABLE_HEAT_GENERATOR.get();
         if (enabled) {
             super.customTickActions();
-            if (world != null && !world.isRemote) {
+            if (getWorld() != null && !getWorld().isRemote) {
                 setActive(false);
                 ArrayList<IEnergyStorage> outBatteries = new ArrayList<>();
                 for (Direction side : Direction.values()) {
-                    Block block = world.getBlockState(pos.offset(side)).getBlock();
+                    Block block = getWorld().getBlockState(pos.offset(side)).getBlock();
                     if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
                         if (getEnergyStorage().getEnergyStored() < getEnergyStorage().getMaxEnergyStored()) {
                             getEnergyStorage().addEnergy(getSpeed());
                             setActive(true);
                         }
                     }
-                    TileEntity out = world.getTileEntity(pos.offset(side));
+                    TileEntity out = getWorld().getTileEntity(pos.offset(side));
                     if (out != null) {
                         LazyOptional<IEnergyStorage> outCap = out.getCapability(CapabilityEnergy.ENERGY, side.getOpposite());
                         outCap.ifPresent(outBatteries::add);
