@@ -44,8 +44,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_1 = BLOCKS.register("ore_harvester_1",
-            () -> new OreHarvesterBlock(
+    public static final RegistryObject<OreHarvesterBlockPreservedData> ORE_HARVESTER_1 = BLOCKS.register("ore_harvester_1",
+            () -> new OreHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -53,8 +53,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_2 = BLOCKS.register("ore_harvester_2",
-            () -> new OreHarvesterBlock(
+    public static final RegistryObject<OreHarvesterBlockPreservedData> ORE_HARVESTER_2 = BLOCKS.register("ore_harvester_2",
+            () -> new OreHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -62,8 +62,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_3 = BLOCKS.register("ore_harvester_3",
-            () -> new OreHarvesterBlock(
+    public static final RegistryObject<OreHarvesterBlockPreservedData> ORE_HARVESTER_3 = BLOCKS.register("ore_harvester_3",
+            () -> new OreHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -71,8 +71,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_4 = BLOCKS.register("ore_harvester_4",
-            () -> new OreHarvesterBlock(
+    public static final RegistryObject<OreHarvesterBlockPreservedData> ORE_HARVESTER_4 = BLOCKS.register("ore_harvester_4",
+            () -> new OreHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -80,8 +80,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_5 = BLOCKS.register("ore_harvester_5",
-            () -> new OreHarvesterBlock(
+    public static final RegistryObject<OreHarvesterBlockPreservedData> ORE_HARVESTER_5 = BLOCKS.register("ore_harvester_5",
+            () -> new OreHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -89,8 +89,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_6 = BLOCKS.register("ore_harvester_6",
-            () -> new OreHarvesterBlock(
+    public static final RegistryObject<OreHarvesterBlockPreservedData> ORE_HARVESTER_6 = BLOCKS.register("ore_harvester_6",
+            () -> new OreHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -98,8 +98,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_7 = BLOCKS.register("ore_harvester_7",
-            () -> new OreHarvesterBlock(
+    public static final RegistryObject<OreHarvesterBlockPreservedData> ORE_HARVESTER_7 = BLOCKS.register("ore_harvester_7",
+            () -> new OreHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -107,8 +107,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<OreHarvesterBlock> ORE_HARVESTER_8 = BLOCKS.register("ore_harvester_8",
-            () -> new OreHarvesterBlock(
+    public static final RegistryObject<OreHarvesterBlockPreservedData> ORE_HARVESTER_8 = BLOCKS.register("ore_harvester_8",
+            () -> new OreHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -116,8 +116,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_1 = BLOCKS.register("bio_harvester_1",
-            () -> new BioHarvesterBlock(
+    public static final RegistryObject<BioHarvesterBlockPreservedData> BIO_HARVESTER_1 = BLOCKS.register("bio_harvester_1",
+            () -> new BioHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -125,8 +125,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_2 = BLOCKS.register("bio_harvester_2",
-            () -> new BioHarvesterBlock(
+    public static final RegistryObject<BioHarvesterBlockPreservedData> BIO_HARVESTER_2 = BLOCKS.register("bio_harvester_2",
+            () -> new BioHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -134,8 +134,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_3 = BLOCKS.register("bio_harvester_3",
-            () -> new BioHarvesterBlock(
+    public static final RegistryObject<BioHarvesterBlockPreservedData> BIO_HARVESTER_3 = BLOCKS.register("bio_harvester_3",
+            () -> new BioHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -143,8 +143,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_4 = BLOCKS.register("bio_harvester_4",
-            () -> new BioHarvesterBlock(
+    public static final RegistryObject<BioHarvesterBlockPreservedData> BIO_HARVESTER_4 = BLOCKS.register("bio_harvester_4",
+            () -> new BioHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -152,8 +152,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_5 = BLOCKS.register("bio_harvester_5",
-            () -> new BioHarvesterBlock(
+    public static final RegistryObject<BioHarvesterBlockPreservedData> BIO_HARVESTER_5 = BLOCKS.register("bio_harvester_5",
+            () -> new BioHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -161,8 +161,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_6 = BLOCKS.register("bio_harvester_6",
-            () -> new BioHarvesterBlock(
+    public static final RegistryObject<BioHarvesterBlockPreservedData> BIO_HARVESTER_6 = BLOCKS.register("bio_harvester_6",
+            () -> new BioHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -170,8 +170,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_7 = BLOCKS.register("bio_harvester_7",
-            () -> new BioHarvesterBlock(
+    public static final RegistryObject<BioHarvesterBlockPreservedData> BIO_HARVESTER_7 = BLOCKS.register("bio_harvester_7",
+            () -> new BioHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -179,8 +179,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<BioHarvesterBlock> BIO_HARVESTER_8 = BLOCKS.register("bio_harvester_8",
-            () -> new BioHarvesterBlock(
+    public static final RegistryObject<BioHarvesterBlockPreservedData> BIO_HARVESTER_8 = BLOCKS.register("bio_harvester_8",
+            () -> new BioHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -188,8 +188,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_1 = BLOCKS.register("stone_harvester_1",
-            () -> new StoneHarvesterBlock(
+    public static final RegistryObject<StoneHarvesterBlockPreservedData> STONE_HARVESTER_1 = BLOCKS.register("stone_harvester_1",
+            () -> new StoneHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -197,8 +197,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_2 = BLOCKS.register("stone_harvester_2",
-            () -> new StoneHarvesterBlock(
+    public static final RegistryObject<StoneHarvesterBlockPreservedData> STONE_HARVESTER_2 = BLOCKS.register("stone_harvester_2",
+            () -> new StoneHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -206,8 +206,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_3 = BLOCKS.register("stone_harvester_3",
-            () -> new StoneHarvesterBlock(
+    public static final RegistryObject<StoneHarvesterBlockPreservedData> STONE_HARVESTER_3 = BLOCKS.register("stone_harvester_3",
+            () -> new StoneHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -215,8 +215,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_4 = BLOCKS.register("stone_harvester_4",
-            () -> new StoneHarvesterBlock(
+    public static final RegistryObject<StoneHarvesterBlockPreservedData> STONE_HARVESTER_4 = BLOCKS.register("stone_harvester_4",
+            () -> new StoneHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -224,8 +224,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_5 = BLOCKS.register("stone_harvester_5",
-            () -> new StoneHarvesterBlock(
+    public static final RegistryObject<StoneHarvesterBlockPreservedData> STONE_HARVESTER_5 = BLOCKS.register("stone_harvester_5",
+            () -> new StoneHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -233,8 +233,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_6 = BLOCKS.register("stone_harvester_6",
-            () -> new StoneHarvesterBlock(
+    public static final RegistryObject<StoneHarvesterBlockPreservedData> STONE_HARVESTER_6 = BLOCKS.register("stone_harvester_6",
+            () -> new StoneHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -242,8 +242,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_7 = BLOCKS.register("stone_harvester_7",
-            () -> new StoneHarvesterBlock(
+    public static final RegistryObject<StoneHarvesterBlockPreservedData> STONE_HARVESTER_7 = BLOCKS.register("stone_harvester_7",
+            () -> new StoneHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -251,8 +251,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<StoneHarvesterBlock> STONE_HARVESTER_8 = BLOCKS.register("stone_harvester_8",
-            () -> new StoneHarvesterBlock(
+    public static final RegistryObject<StoneHarvesterBlockPreservedData> STONE_HARVESTER_8 = BLOCKS.register("stone_harvester_8",
+            () -> new StoneHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -260,8 +260,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_1 = BLOCKS.register("soil_harvester_1",
-            () -> new SoilHarvesterBlock(
+    public static final RegistryObject<SoilHarvesterBlockPreservedData> SOIL_HARVESTER_1 = BLOCKS.register("soil_harvester_1",
+            () -> new SoilHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -269,8 +269,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_2 = BLOCKS.register("soil_harvester_2",
-            () -> new SoilHarvesterBlock(
+    public static final RegistryObject<SoilHarvesterBlockPreservedData> SOIL_HARVESTER_2 = BLOCKS.register("soil_harvester_2",
+            () -> new SoilHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -278,8 +278,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_3 = BLOCKS.register("soil_harvester_3",
-            () -> new SoilHarvesterBlock(
+    public static final RegistryObject<SoilHarvesterBlockPreservedData> SOIL_HARVESTER_3 = BLOCKS.register("soil_harvester_3",
+            () -> new SoilHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -287,8 +287,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_4 = BLOCKS.register("soil_harvester_4",
-            () -> new SoilHarvesterBlock(
+    public static final RegistryObject<SoilHarvesterBlockPreservedData> SOIL_HARVESTER_4 = BLOCKS.register("soil_harvester_4",
+            () -> new SoilHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -296,8 +296,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_5 = BLOCKS.register("soil_harvester_5",
-            () -> new SoilHarvesterBlock(
+    public static final RegistryObject<SoilHarvesterBlockPreservedData> SOIL_HARVESTER_5 = BLOCKS.register("soil_harvester_5",
+            () -> new SoilHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -305,8 +305,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_6 = BLOCKS.register("soil_harvester_6",
-            () -> new SoilHarvesterBlock(
+    public static final RegistryObject<SoilHarvesterBlockPreservedData> SOIL_HARVESTER_6 = BLOCKS.register("soil_harvester_6",
+            () -> new SoilHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -314,8 +314,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_7 = BLOCKS.register("soil_harvester_7",
-            () -> new SoilHarvesterBlock(
+    public static final RegistryObject<SoilHarvesterBlockPreservedData> SOIL_HARVESTER_7 = BLOCKS.register("soil_harvester_7",
+            () -> new SoilHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -323,8 +323,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SoilHarvesterBlock> SOIL_HARVESTER_8 = BLOCKS.register("soil_harvester_8",
-            () -> new SoilHarvesterBlock(
+    public static final RegistryObject<SoilHarvesterBlockPreservedData> SOIL_HARVESTER_8 = BLOCKS.register("soil_harvester_8",
+            () -> new SoilHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -332,8 +332,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<DarkMobHarvesterBlock> DARK_MOB_HARVESTER = BLOCKS.register("dark_mob_harvester",
-            () -> new DarkMobHarvesterBlock(
+    public static final RegistryObject<DarkMobHarvesterBlockPreservedData> DARK_MOB_HARVESTER = BLOCKS.register("dark_mob_harvester",
+            () -> new DarkMobHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -341,8 +341,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<SpecificMobHarvesterBlock> SPECIFIC_MOB_HARVESTER = BLOCKS.register("specific_mob_harvester",
-            () -> new SpecificMobHarvesterBlock(
+    public static final RegistryObject<SpecificMobHarvesterBlockPreservedData> SPECIFIC_MOB_HARVESTER = BLOCKS.register("specific_mob_harvester",
+            () -> new SpecificMobHarvesterBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -350,8 +350,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<HeatGeneratorBlock> HEAT_GENERATOR = BLOCKS.register("heat_generator",
-            () -> new HeatGeneratorBlock(
+    public static final RegistryObject<HeatGeneratorBlockPreservedData> HEAT_GENERATOR = BLOCKS.register("heat_generator",
+            () -> new HeatGeneratorBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)
@@ -359,8 +359,8 @@ public class BlockInit {
                             .harvestTool(ToolType.PICKAXE)
             ));
 
-    public static final RegistryObject<DimensionalApplicatorBlock> DIMENSIONAL_APPLICATOR = BLOCKS.register("dimensional_applicator",
-            () -> new DimensionalApplicatorBlock(
+    public static final RegistryObject<DimensionalApplicatorBlockPreservedData> DIMENSIONAL_APPLICATOR = BLOCKS.register("dimensional_applicator",
+            () -> new DimensionalApplicatorBlockPreservedData(
                     Block.Properties
                             .create(Material.IRON)
                             .sound(SoundType.METAL)

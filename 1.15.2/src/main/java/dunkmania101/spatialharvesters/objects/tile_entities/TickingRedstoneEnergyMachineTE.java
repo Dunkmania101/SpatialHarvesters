@@ -2,7 +2,7 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.blocks.ActiveCustomHorizontalShapedBlock;
+import dunkmania101.spatialharvesters.objects.blocks.ActivePreservedDataCustomHorizontalShapedBlock;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -35,7 +35,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
                     this.ticks++;
                 }
             }
-            if (getBlockState().getBlock() instanceof ActiveCustomHorizontalShapedBlock) {
+            if (getBlockState().getBlock() instanceof ActivePreservedDataCustomHorizontalShapedBlock) {
                 if (getBlockState().get(CustomProperties.ACTIVE) != getActive()) {
                     getWorld().setBlockState(getPos(), getBlockState().with(CustomProperties.ACTIVE, getActive()));
                 }

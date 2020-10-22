@@ -11,6 +11,10 @@ import java.util.ArrayList;
 @Mod.EventBusSubscriber
 public class CommonConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_ORE_TAGS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_BIO_TAGS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONE_TAGS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOIL_TAGS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONES;
@@ -138,28 +142,29 @@ public class CommonConfig {
     }
 
     private static void setup() {
-        ArrayList<ArrayList<String>> ores = new ArrayList<>();
+        BUILDER.push("Custom Harvester Outputs: ");
+        ArrayList<ArrayList<String>> custom_ores = new ArrayList<>();
 
         String mod = "appliedenergistics2";
         String ore = "quartz_ore";
         ArrayList<String> modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "appliedenergistics2";
         ore = "charged_quartz_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "rftoolsbase";
         ore = "dimensionalshard_overworld";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "rftoolsbase";
 
@@ -167,249 +172,257 @@ public class CommonConfig {
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "rftoolsbase";
         ore = "dimensionalshard_end";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "rhodonite";
         ore = "block_ore_fluorite";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "rhodonite";
         ore = "block_ore_rhodonite";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "exp_ore";
         ore = "block_exp_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "rockcandy";
         ore = "candy_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "lightestlamp";
         ore = "boron_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "zombie_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "blaze_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "ghast_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "magma_cube_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "wither_skeleton_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "zombie_pigman_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "salmon_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "squid_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "cod_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "sheep_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "rabbit_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "pig_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "cow_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "chicken_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "bat_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "witch_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "spider_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "slime_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "phantom_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "skeleton_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "enderman_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "guardian_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "pufferfish_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "funores";
         ore = "creeper_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore_nether";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore_end";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
-        ores.add(modOre);
+        custom_ores.add(modOre);
 
-        BUILDER.push("Custom Harvester Outputs: ");
         CUSTOM_ORES = BUILDER.comment("Custom outputs for the Ore Harvester.")
-                .define("custom_ores", ores);
+                .define("custom_ores", custom_ores);
         ArrayList<ArrayList<String>> custom_plants = new ArrayList<>();
         CUSTOM_BIOS = BUILDER.comment("Custom outputs for the Bio Harvester.")
                 .define("custom_plants", custom_plants);
         ArrayList<ArrayList<String>> custom_stones = new ArrayList<>();
         CUSTOM_STONES = BUILDER.comment("Custom outputs for the Stone Harvester.")
                 .define("custom_stones", custom_stones);
+
         ArrayList<ArrayList<String>> custom_soils = new ArrayList<>();
+
+        mod = "minecraft";
+        String soil = "clay";
+        ArrayList<String> modSoil = new ArrayList<>();
+        modSoil.add(mod);
+        modSoil.add(soil);
+        custom_soils.add(modSoil);
+
         CUSTOM_SOILS = BUILDER.comment("Custom outputs for the Soil Harvester.")
                 .define("custom_soils", custom_soils);
 
@@ -477,6 +490,169 @@ public class CommonConfig {
 
         CUSTOM_MOB_DROPS = BUILDER.comment("Custom drops for the Mob Harvester.")
                 .define("custom_mob_drops", custom_mob_drops);
+        BUILDER.pop();
+
+        BUILDER.push("Custom Harvester Tags: ");
+        ArrayList<ArrayList<String>> custom_ore_tags = new ArrayList<>();
+
+        mod = "forge";
+        String tag = "ores";
+        ArrayList<String> modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        CUSTOM_ORE_TAGS = BUILDER.comment("Custom tags for the Ore Harvester.")
+                .define("custom_ore_tags", custom_ore_tags);
+
+        ArrayList<ArrayList<String>> custom_bio_tags = new ArrayList<>();
+
+        mod = "forge";
+        tag = "crops";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "forge";
+        tag = "leather";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "forge";
+        tag = "feathers";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "forge";
+        tag = "seeds";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "forge";
+        tag = "dyes";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "forge";
+        tag = "bones";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "forge";
+        tag = "rods_wooden";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "minecraft";
+        tag = "small_flowers";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "minecraft";
+        tag = "logs";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "minecraft";
+        tag = "planks";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "minecraft";
+        tag = "saplings";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "minecraft";
+        tag = "leaves";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        CUSTOM_BIO_TAGS = BUILDER.comment("Custom tags for the Bio Harvester.")
+                .define("custom_bio_tags", custom_bio_tags);
+
+        ArrayList<ArrayList<String>> custom_stone_tags = new ArrayList<>();
+
+        mod = "forge";
+        tag = "cobblestone";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_stone_tags.add(modTag);
+
+        mod = "forge";
+        tag = "sandstone";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_stone_tags.add(modTag);
+
+        mod = "forge";
+        tag = "end_stones";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_stone_tags.add(modTag);
+
+        mod = "forge";
+        tag = "netherrack";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_stone_tags.add(modTag);
+
+        CUSTOM_STONE_TAGS = BUILDER.comment("Custom tags for the Stone Harvester.")
+                .define("custom_stone_tags", custom_stone_tags);
+
+        ArrayList<ArrayList<String>> custom_soil_tags = new ArrayList<>();
+
+        mod = "forge";
+        tag = "dirt";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_soil_tags.add(modTag);
+
+        mod = "forge";
+        tag = "sand";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_soil_tags.add(modTag);
+
+        mod = "forge";
+        tag = "gravel";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_soil_tags.add(modTag);
+
+        CUSTOM_SOIL_TAGS = BUILDER.comment("Custom tags for the Soil Harvester.")
+                .comment("Note that this one uses block tags, rather than item tags, because most soil-like thinks are only tagged in their blocks.")
+                .define("custom_soil_tags", custom_soil_tags);
         BUILDER.pop();
 
         BUILDER.push("Harvester Blacklists: ");

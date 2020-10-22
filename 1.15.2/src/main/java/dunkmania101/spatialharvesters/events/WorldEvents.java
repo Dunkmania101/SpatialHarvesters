@@ -29,7 +29,9 @@ public class WorldEvents {
                         serverWorld.forceChunk(cpos.x, cpos.z, true);
                         serverWorld.tickEnvironment(serverWorld.getChunk(cpos.x, cpos.z), serverWorld.getWorldInfo().getGameRulesInstance().getInt(GameRules.RANDOM_TICK_SPEED));
                     } else {
-                        serverWorld.forceChunk(cpos.x, cpos.z, false);
+                        if (serverWorld.isAreaLoaded(cpos.asBlockPos(), 0)) {
+                            serverWorld.forceChunk(cpos.x, cpos.z, false);
+                        }
                     }
                 }
             }

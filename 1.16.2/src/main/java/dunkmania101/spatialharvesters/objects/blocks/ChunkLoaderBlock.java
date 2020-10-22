@@ -8,7 +8,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -18,7 +17,7 @@ import javax.annotation.Nonnull;
 
 public class ChunkLoaderBlock extends CustomHorizontalShapedBlock {
     public ChunkLoaderBlock(Properties properties) {
-        super(properties, CustomValues.machineShape, Direction.NORTH);
+        super(properties, CustomValues.machineShape);
     }
 
     @Override

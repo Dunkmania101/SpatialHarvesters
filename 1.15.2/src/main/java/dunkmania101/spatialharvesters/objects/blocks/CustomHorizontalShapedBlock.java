@@ -34,6 +34,10 @@ public class CustomHorizontalShapedBlock extends Block {
         this.WEST_SHAPE = Tools.getRotatedVoxelShape(shape, frontDirection, Direction.WEST);
     }
 
+    public CustomHorizontalShapedBlock(Properties properties, VoxelShape shape) {
+        this(properties, shape, Direction.NORTH);
+    }
+
     @Override
     @Nonnull
     public VoxelShape getShape(BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
