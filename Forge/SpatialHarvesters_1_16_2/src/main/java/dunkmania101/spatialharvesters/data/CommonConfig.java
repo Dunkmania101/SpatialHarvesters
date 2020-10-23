@@ -407,9 +407,9 @@ public class CommonConfig {
 
         CUSTOM_ORES = BUILDER.comment("Custom outputs for the Ore Harvester.")
                 .define("custom_ores", custom_ores);
-        ArrayList<ArrayList<String>> custom_plants = new ArrayList<>();
+        ArrayList<ArrayList<String>> custom_bios = new ArrayList<>();
         CUSTOM_BIOS = BUILDER.comment("Custom outputs for the Bio Harvester.")
-                .define("custom_plants", custom_plants);
+                .define("custom_bios", custom_bios);
         ArrayList<ArrayList<String>> custom_stones = new ArrayList<>();
         CUSTOM_STONES = BUILDER.comment("Custom outputs for the Stone Harvester.")
                 .define("custom_stones", custom_stones);

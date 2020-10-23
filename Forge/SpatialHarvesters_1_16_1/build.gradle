@@ -12,7 +12,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 
 group = 'dunkmania101'
-version = '0.9.2'
+version = '0.9.3'
 archivesBaseName = 'spatialharvesters_1.16.1'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
