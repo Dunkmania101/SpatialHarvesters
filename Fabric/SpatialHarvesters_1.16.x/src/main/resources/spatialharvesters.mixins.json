@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dunkmania101.spatialharvesters.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "MobEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

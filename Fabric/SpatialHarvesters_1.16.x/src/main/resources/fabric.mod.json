@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "spatialharvesters",
+  "version": "0.9.4",
+
+  "name": "Spatial Harvesters",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Dunkmania101"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "MIT",
+  "icon": "spatialharvesters-logo.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dunkmania101.spatialharvesters.SpatialHarvesters"
+    ]
+  },
+  "mixins": [
+    "spatialharvesters.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

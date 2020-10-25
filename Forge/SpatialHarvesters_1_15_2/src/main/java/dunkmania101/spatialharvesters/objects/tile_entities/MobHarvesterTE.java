@@ -61,49 +61,51 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
         if (!StringUtils.isNullOrEmpty(this.entity)) {
             MobEntity mobEntity = getMobEntity();
-            if (this.player == null) {
-                setPlayer();
-            }
-            if (this.player != null) {
-                ResourceLocation entityRN = mobEntity.getType().getRegistryName();
-                if (entityRN != null) {
-                    ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
-                    String mod = entityRN.getNamespace();
-                    String path = entityRN.getPath();
-                    ArrayList<String> modMob = new ArrayList<>();
-                    modMob.add(mod);
-                    modMob.add(path);
-                    for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
-                        ArrayList<String> customModMob = modMobDrop.get(0);
-                        if (customModMob.containsAll(modMob)) {
-                            ArrayList<String> customMobDrop = modMobDrop.get(1);
-                            ResourceLocation mobDropRN = new ResourceLocation(customMobDrop.get(0), customMobDrop.get(1));
-                            Item drop = ForgeRegistries.ITEMS.getValue(mobDropRN);
-                            if (drop != null && drop != Items.AIR) {
-                                newOutputs.add(new ItemStack(drop));
+            if (mobEntity != null) {
+                if (this.player == null) {
+                    setPlayer();
+                }
+                if (this.player != null) {
+                    ResourceLocation entityRN = mobEntity.getType().getRegistryName();
+                    if (entityRN != null) {
+                        ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
+                        String mod = entityRN.getNamespace();
+                        String path = entityRN.getPath();
+                        ArrayList<String> modMob = new ArrayList<>();
+                        modMob.add(mod);
+                        modMob.add(path);
+                        for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
+                            ArrayList<String> customModMob = modMobDrop.get(0);
+                            if (customModMob.containsAll(modMob)) {
+                                ArrayList<String> customMobDrop = modMobDrop.get(1);
+                                ResourceLocation mobDropRN = new ResourceLocation(customMobDrop.get(0), customMobDrop.get(1));
+                                Item drop = ForgeRegistries.ITEMS.getValue(mobDropRN);
+                                if (drop != null && drop != Items.AIR) {
+                                    newOutputs.add(new ItemStack(drop));
+                                }
                             }
                         }
                     }
+                    updateWeapon();
+                    DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
+                    ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
+                    mobEntity.captureDrops(new ArrayList<>());
+                    int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
+                    try {
+                        dropLoot.invoke(mobEntity, playerDamage, true);
+                        dropSpecialItems.invoke(mobEntity, playerDamage, lootingLevel, true);
+                    } catch (Exception error) {
+                        throw new RuntimeException(error);
+                    }
+                    Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
+                    LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
+                    if (!MinecraftForge.EVENT_BUS.post(event)) {
+                        event.getDrops().stream()
+                                .map(ItemEntity::getItem)
+                                .forEach(newOutputs::add);
+                    }
+                    mobEntity.remove();
                 }
-                updateWeapon();
-                DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
-                ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
-                mobEntity.captureDrops(new ArrayList<>());
-                int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
-                try {
-                    dropLoot.invoke(mobEntity, playerDamage, true);
-                    dropSpecialItems.invoke(mobEntity, playerDamage, lootingLevel, true);
-                } catch (Exception error) {
-                    throw new RuntimeException(error);
-                }
-                Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
-                LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
-                if (!MinecraftForge.EVENT_BUS.post(event)) {
-                    event.getDrops().stream()
-                            .map(ItemEntity::getItem)
-                            .forEach(newOutputs::add);
-                }
-                mobEntity.remove();
             }
         }
         setOutputStacks(newOutputs);

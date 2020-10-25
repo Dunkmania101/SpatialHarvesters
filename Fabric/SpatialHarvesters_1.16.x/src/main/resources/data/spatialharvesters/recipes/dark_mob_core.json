@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cbc",
+    "bab",
+    "cbc"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:gems/diamond"
+    },
+    "b": {
+      "tag": "forge:bones"
+    },
+    "c": {
+      "item": "spatialharvesters:base_powder"
+    }
+  },
+  "result": {
+    "item": "spatialharvesters:dark_mob_core"
+  }
+}

@@ -1,3 +1,5 @@
+#----------
+#Forge
 # eclipse
 bin
 *.launch
@@ -24,3 +26,40 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+#----------
+#----------
+#Fabric
+# gradle
+
+.gradle/
+build/
+out/
+classes/
+
+# eclipse
+
+*.launch
+
+# idea
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+
+# macos
+
+*.DS_Store
+
+# fabric
+
+run/
+#----------
