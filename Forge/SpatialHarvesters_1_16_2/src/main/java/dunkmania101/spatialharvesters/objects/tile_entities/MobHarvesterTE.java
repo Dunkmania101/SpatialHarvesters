@@ -27,7 +27,10 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.UUID;
 
 public class MobHarvesterTE extends SpatialHarvesterTE {
     protected String entity = null;
@@ -240,13 +243,6 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     @Override
     public Item getShard(Block block) {
-        if (getWorld() != null && !getWorld().isRemote) {
-            Random rand = getWorld().getRandom();
-            int shardChance = CommonConfig.MOB_HARVESTER_MOB_SHARD_CHANCE.get();
-            if (rand.nextInt(shardChance) == 1) {
-                return ItemInit.MOB_SHARD.get();
-            }
-        }
-        return ItemInit.SHARD_7.get();
+        return ItemInit.MOB_SHARD.get();
     }
 }

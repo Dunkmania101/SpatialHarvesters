@@ -13,9 +13,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.9.3'
+version = '0.9.4'
 group = 'dunkmania101' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'spatialharvesters_1.16.2'
+archivesBaseName = 'spatialharvesters_forge_1.16.2'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
