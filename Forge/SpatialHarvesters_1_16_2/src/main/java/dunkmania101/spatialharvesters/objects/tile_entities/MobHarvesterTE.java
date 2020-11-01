@@ -62,7 +62,6 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         if (!StringUtils.isNullOrEmpty(this.entity)) {
             MobEntity mobEntity = getMobEntity();
             if (mobEntity != null) {
-
                 if (this.player == null) {
                     setPlayer();
                 }
@@ -129,7 +128,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                             if (entity != null) {
                                 if (entity instanceof MobEntity) {
                                     mobEntity = (MobEntity) entity;
-                                    mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(getPos()), SpawnReason.NATURAL, null, null);
+                                    mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(getPos()), SpawnReason.NATURAL, new ILivingEntityData() {}, mobEntity.getPersistentData());
                                 }
                                 entity.remove();
                             }

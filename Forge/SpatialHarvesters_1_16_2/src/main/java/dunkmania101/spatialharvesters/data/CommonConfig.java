@@ -785,7 +785,7 @@ public class CommonConfig {
         BUILDER.push("Machine Prices: ");
 
         HARVESTER_CAPACITY_MULTIPLIER = BUILDER.comment("Amount to multiply the price of the harvesters by to set their energy capacity.")
-                .defineInRange("harvester_capacity_multiplier", 10, 0, Integer.MAX_VALUE);
+                .defineInRange("harvester_capacity_multiplier", 100, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_CAPACITY_MULTIPLIER = BUILDER.comment("Amount to multiply the price of the Dimensional Applicator by to set its energy capacity.")
                 .defineInRange("dimensional_applicator_capacity_multiplier", 100, 0, Integer.MAX_VALUE);
         HEAT_GENERATOR_CAPACITY_MULTIPLIER = BUILDER.comment("Amount to multiply the price of the Heat Generator by to set its energy capacity.")
