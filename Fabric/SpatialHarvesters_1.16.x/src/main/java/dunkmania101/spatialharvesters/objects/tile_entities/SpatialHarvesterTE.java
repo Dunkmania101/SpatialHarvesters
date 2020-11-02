@@ -3,6 +3,7 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -11,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
 import java.util.ArrayList;
@@ -98,9 +100,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                                 int originalCount = chosenOutput.getCount();
                                                 Inventory inventory = outInventories.get(rand.nextInt(outInventories.size()));
 
-                                                ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
+                                                ItemStack resultStack = Tools.insertItemStacked(inventory, chosenOutput);
                                                 if (resultStack.getCount() != originalCount) {
-                                                    getEnergyStorage().consumeEnergy(price);
+                                                    getEnergyStorage().extract(price);
                                                     setActive(true);
                                                 }
                                             }
@@ -165,13 +167,13 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public CompoundTag saveSerializedValues() {
-        CompoundNBT nbt = super.saveSerializedValues();
-        CompoundNBT disabledResources = new CompoundNBT();
+        CompoundTag nbt = super.saveSerializedValues();
+        CompoundTag disabledResources = new CompoundTag();
         int i = 0;
         for (Item item : this.BLACKLIST) {
-            ResourceLocation rn = item.getRegistryName();
+            String rn = item.getTranslationKey();
             if (rn != null) {
-                disabledResources.putString(Integer.toString(i), rn.toString());
+                disabledResources.putString(Integer.toString(i), rn);
                 i++;
             }
         }
