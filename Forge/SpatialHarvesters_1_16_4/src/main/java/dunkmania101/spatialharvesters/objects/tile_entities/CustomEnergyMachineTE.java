@@ -113,8 +113,8 @@ public class CustomEnergyMachineTE extends TileEntity {
     }
 
     @Override
-    public void func_230337_a_(@Nonnull BlockState state, @Nonnull CompoundNBT nbt) {
-        super.func_230337_a_(state, nbt);
+    public void read(@Nonnull BlockState state, @Nonnull CompoundNBT nbt) {
+        super.read(state, nbt);
         setDeserializedValues(nbt);
         markDirty();
     }
