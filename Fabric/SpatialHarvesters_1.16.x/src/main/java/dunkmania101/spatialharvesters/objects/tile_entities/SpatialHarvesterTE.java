@@ -14,6 +14,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -184,24 +185,24 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public void setDeserializedValues(CompoundNBT nbt) {
+    public void setDeserializedValues(CompoundTag nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeDisabledNBTKey)) {
             this.BLACKLIST = new ArrayList<>();
         }
         if (nbt.contains(CustomValues.disabledResourcesKey)) {
             this.BLACKLIST = new ArrayList<>();
-            CompoundNBT disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
-            for (String key : disabledResources.keySet()) {
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
-                if (item != null && item != Items.AIR) {
+            CompoundTag disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
+            for (String key : disabledResources.getKeys()) {
+                Item item = Registry.ITEM.get(new Identifier(disabledResources.getString(key)));
+                if (item != Items.AIR) {
                     this.BLACKLIST.add(item);
                 }
             }
         }
         if (nbt.contains(CustomValues.disabledResourceKey)) {
-            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(nbt.getString(CustomValues.disabledResourceKey)));
-            if (item != null && item != Items.AIR) {
+            Item item = Registry.ITEM.get(new Identifier(nbt.getString(CustomValues.disabledResourceKey)));
+            if (item != Items.AIR) {
                 this.BLACKLIST.add(item);
             }
         }

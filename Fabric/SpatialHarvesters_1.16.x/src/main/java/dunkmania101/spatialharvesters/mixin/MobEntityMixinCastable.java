@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(MobEntity.class)
-public interface MobEntityMixin {
+public interface MobEntityMixinCastable {
 	@Invoker("dropLoot")
 	void invokeDropLoot(DamageSource source, boolean causedByPlayer);
 

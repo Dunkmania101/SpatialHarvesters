@@ -4,7 +4,9 @@
   "package": "dunkmania101.spatialharvesters.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MobEntityMixin"
+    "EntityMixin",
+    "MobEntityMixinCastable",
+    "WorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1

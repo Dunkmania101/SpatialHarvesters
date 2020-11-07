@@ -1,14 +1,13 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,20 +21,20 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
 
     @Override
     protected void lastMinuteActions() {
-        if (getWorld() != null && !getWorld().isRemote) {
+        if (getWorld() != null && !getWorld().isClient) {
             if (this.MOBS.isEmpty()) {
-                if (getWorld() != null && !getWorld().isRemote) {
-                    for (EntityType<?> entityType : ForgeRegistries.ENTITIES.getValues()) {
+                if (getWorld() != null && !getWorld().isClient) {
+                    for (EntityType<?> entityType : Registry.ENTITY_TYPE) {
                         if (entityType != null) {
                             ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
                             ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
-                            ResourceLocation rn = entityType.getRegistryName();
+                            Identifier rn = Identifier.tryParse(entityType.getTranslationKey());
                             if (rn != null) {
                                 if (!Tools.isResourceBanned(rn, blacklist_mobs, blacklist_mobs_mod)) {
                                     Entity entity = entityType.create(getWorld());
                                     if (entity != null) {
                                         if (entity instanceof MobEntity) {
-                                            if (entity.isNonBoss()) {
+                                            if (((MobEntity) entity).isMobOrPlayer()) {
                                                 this.MOBS.add(rn.toString());
                                             }
                                         }
@@ -52,7 +51,7 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
                 this.entity = this.MOBS.get(rand.nextInt(this.MOBS.size()));
             }
         }
-        if (getWorld() != null && !getWorld().isRemote) {
+        if (getWorld() != null && !getWorld().isClient) {
             if (!this.MOBS.isEmpty()) {
                 Random rand = getWorld().getRandom();
                 this.entity = this.MOBS.get(rand.nextInt(this.MOBS.size()));

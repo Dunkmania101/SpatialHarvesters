@@ -49,10 +49,6 @@ public class MobKeyItem extends Item {
                         stack.getOrCreateTag().putString(CustomValues.entityNBTKey, id);
                     }
                 }
-                String id = target.getEntityString();
-                if (!StringUtils.isNullOrEmpty(id)) {
-                    stack.getOrCreateTag().putString(CustomValues.entityNBTKey, id);
-                }
                 if (attacker instanceof PlayerEntity) {
                     PlayerEntity player = (PlayerEntity) attacker;
                     if (banned) {

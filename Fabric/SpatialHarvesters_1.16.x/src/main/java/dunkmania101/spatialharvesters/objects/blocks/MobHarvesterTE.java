@@ -3,7 +3,7 @@ package dunkmania101.spatialharvesters.objects.blocks;
 import com.mojang.authlib.GameProfile;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.mixin.MobEntityMixin;
+import dunkmania101.spatialharvesters.mixin.MobEntityMixinCastable;
 import dunkmania101.spatialharvesters.objects.tile_entities.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
@@ -41,7 +41,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     protected void setEntityDrops() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
         if (this.entity != null && !this.entity.isEmpty()) {
-            MobEntityMixin mobEntity = (MobEntityMixin)getMobEntity();
+            MobEntityMixinCastable mobEntity = (MobEntityMixinCastable)getMobEntity();
             if (mobEntity != null) {
                 if (this.player == null) {
                     setPlayer();
@@ -79,12 +79,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                         throw new RuntimeException(error);
                     }
                     Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
-                    LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
-                    if (!MinecraftForge.EVENT_BUS.post(event)) {
-                        event.getDrops().stream()
-                                .map(ItemEntity::getItem)
-                                .forEach(newOutputs::add);
-                    }
+
                     mobEntity.();
                 }
             }

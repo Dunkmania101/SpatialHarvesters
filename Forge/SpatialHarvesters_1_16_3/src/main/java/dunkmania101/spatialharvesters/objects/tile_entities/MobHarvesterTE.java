@@ -165,7 +165,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
             ItemStack mainHandStack = this.player.getHeldItemMainhand();
             if (!ItemStack.areItemStacksEqual(mainHandStack, stack)) {
                 this.player.setHeldItem(Hand.MAIN_HAND, stack);
-                this.player.getHeldItemMainhand();
+                mainHandStack = this.player.getHeldItemMainhand();
             }
             if (mainHandStack.getTag() != stackNBT) {
                 mainHandStack.deserializeNBT(stackNBT);

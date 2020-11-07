@@ -81,15 +81,6 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
         return 0;
     }
 
-    protected void onEnergyChanged() {
-        if (this.energyStored > getMaxStoredPower()) {
-            this.energyStored = getMaxStoredPower();
-        } else if (this.energyStored < 0) {
-            this.energyStored = 0;
-        }
-        markDirty();
-    }
-
     @Override
     public double getMaxInput(EnergySide side) {
         if (this.setCanReceive) {
@@ -115,6 +106,16 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
     public void setStored(double energy) {
         this.energyStored = energy;
         onEnergyChanged();
+    }
+
+    protected void onEnergyChanged() {
+        double energy = getStored(EnergySide.UNKNOWN);
+        if (energy > getMaxStoredPower()) {
+            setStored(getMaxStoredPower());
+        } else if (energy < 0) {
+            setStored(0);
+        }
+        markDirty();
     }
 
     @Override

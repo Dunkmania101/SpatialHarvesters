@@ -13,8 +13,7 @@ public class ChunkLoaderData {
     public ChunkLoaderData(ServerWorld serverWorld) {
         thisServerWorld = serverWorld;
         this.chunkLoaders = new ArrayList<>();
-        CompoundTag data = serverWorld.getPersistentStateManager().getOrCreate(null, CustomValues.chunkLoaderDataKey).toTag(new CompoundTag());
-        for (long chunkLong : data.getLongArray(CustomValues.chunkLoaderDataKey)) {
+        for (long chunkLong : getWorldTag().getLongArray(CustomValues.chunkLoaderDataKey)) {
             chunkLoaders.add(chunkLong);
         }
     }
@@ -27,20 +26,20 @@ public class ChunkLoaderData {
         long posLong = chunkPos.toLong();
         if (!this.chunkLoaders.contains(posLong)) {
             this.chunkLoaders.add(posLong);
-            save(this.thisServerWorld);
+            save();
         }
     }
 
     public void removeChunk(ChunkPos chunkPos) {
         this.chunkLoaders.remove(chunkPos.toLong());
-        save(this.thisServerWorld);
+        save();
     }
 
-    public void save(ServerWorld serverWorld) {
-        getWorldTag(serverWorld).putLongArray(CustomValues.chunkLoaderDataKey, this.chunkLoaders);
+    public void save() {
+        getWorldTag().putLongArray(CustomValues.chunkLoaderDataKey, this.chunkLoaders);
     }
 
-    public CompoundTag getWorldTag(ServerWorld serverWorld) {
-        return serverWorld.getPersistentStateManager().getOrCreate(null, CustomValues.chunkLoaderDataKey).toTag(new CompoundTag());
+    public CompoundTag getWorldTag() {
+        return this.thisServerWorld.getPersistentStateManager().getOrCreate(null, CustomValues.chunkLoaderDataKey).toTag(new CompoundTag());
     }
 }
