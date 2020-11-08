@@ -6,12 +6,11 @@ import net.minecraft.util.math.ChunkPos;
 
 import java.util.ArrayList;
 
-public class ChunkLoaderData {
+public class ChunkLoaderData extends WorldSaveData {
     private final ArrayList<Long> chunkLoaders;
-    private final ServerWorld thisServerWorld;
 
     public ChunkLoaderData(ServerWorld serverWorld) {
-        thisServerWorld = serverWorld;
+        super(serverWorld, CustomValues.chunkLoaderDataKey);
         this.chunkLoaders = new ArrayList<>();
         for (long chunkLong : getWorldTag().getLongArray(CustomValues.chunkLoaderDataKey)) {
             chunkLoaders.add(chunkLong);
@@ -35,11 +34,9 @@ public class ChunkLoaderData {
         save();
     }
 
-    public void save() {
-        getWorldTag().putLongArray(CustomValues.chunkLoaderDataKey, this.chunkLoaders);
-    }
-
-    public CompoundTag getWorldTag() {
-        return this.thisServerWorld.getPersistentStateManager().getOrCreate(null, CustomValues.chunkLoaderDataKey).toTag(new CompoundTag());
+    @Override
+    public void customSaveActions(CompoundTag data) {
+        super.customSaveActions(data);
+        data.putLongArray(CustomValues.chunkLoaderDataKey, this.chunkLoaders);
     }
 }

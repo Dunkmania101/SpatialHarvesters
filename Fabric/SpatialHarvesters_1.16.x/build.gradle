@@ -11,7 +11,9 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	jcenter()
+	maven {
+		url 'https://jitpack.io'
+	}
 }
 
 dependencies {
@@ -23,15 +25,23 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	//This adds CompleteConfig and includes it in your mod's jar, so users don't have to install it
+	//Replace Tag with the current version you can find above
+	modApi "com.gitlab.Lortseam:completeconfig:${project.complete_config_version}"
+	include "com.gitlab.Lortseam:completeconfig:${project.complete_config_version}"
+
+	//This bundles Cloth Config in your mod's jar which is required for CompleteConfig
+	//Replace Version with current version
+	include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
+
+	//Recommended: Adds Mod Menu to your game, so you can easily open and check your config GUI (see the Mod Menu documentation for more information)
+	//Replace Version with current version
+	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
+
+
 	// TeamReborn Energy
 	modApi "teamreborn:energy:${project.reborn_energy_version}"
 	include "teamreborn:energy:${project.reborn_energy_version}"
-
-	// Cloth Auto Config
-	modApi("me.sargunvohra.mcmods:autoconfig1u:${project.cloth_auto_config_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
-	}
-	include "me.sargunvohra.mcmods:autoconfig1u:${project.cloth_auto_config_version}"
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
