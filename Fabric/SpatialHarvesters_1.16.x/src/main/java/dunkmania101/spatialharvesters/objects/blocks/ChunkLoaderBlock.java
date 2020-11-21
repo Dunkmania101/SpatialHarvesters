@@ -2,6 +2,7 @@ package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.ChunkLoaderData;
 import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -38,7 +39,7 @@ public class ChunkLoaderBlock extends CustomHorizontalShapedBlock {
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) world;
                 ChunkPos chunkPos = serverWorld.getChunk(pos).getPos();
-                if (Tools.getBlocksInChunk(serverWorld, chunkPos, BlockInit.CHUNK_LOADER.get().getBlock()) <= 0) {
+                if (Tools.getBlocksInChunk(serverWorld, chunkPos, BlockInit.CHUNK_LOADER) <= 0) {
                     ChunkLoaderData data = new ChunkLoaderData(serverWorld);
                     data.removeChunk(chunkPos);
                     serverWorld.setChunkForced(chunkPos.x, chunkPos.z, false);

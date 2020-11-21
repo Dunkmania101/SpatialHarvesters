@@ -2,6 +2,7 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.StatusEffect;
@@ -21,7 +22,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private ArrayList<Integer> NBTEffects = new ArrayList<>();
 
     public DimensionalApplicatorTE() {
-        super(TileEntityInit.DIMENSIONAL_APPLICATOR.get(), true, true, true);
+        super(TileEntityInit.DIMENSIONAL_APPLICATOR, true, true, true);
     }
 
     @Override

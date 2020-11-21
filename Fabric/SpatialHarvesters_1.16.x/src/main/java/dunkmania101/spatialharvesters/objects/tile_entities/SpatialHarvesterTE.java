@@ -195,14 +195,14 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             CompoundTag disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
             for (String key : disabledResources.getKeys()) {
                 Item item = Registry.ITEM.get(new Identifier(disabledResources.getString(key)));
-                if (item != Items.AIR) {
+                if (item != Items.AIR && !this.BLACKLIST.contains(item)) {
                     this.BLACKLIST.add(item);
                 }
             }
         }
         if (nbt.contains(CustomValues.disabledResourceKey)) {
             Item item = Registry.ITEM.get(new Identifier(nbt.getString(CustomValues.disabledResourceKey)));
-            if (item != Items.AIR) {
+            if (item != Items.AIR && !this.BLACKLIST.contains(item)) {
                 this.BLACKLIST.add(item);
             }
         }

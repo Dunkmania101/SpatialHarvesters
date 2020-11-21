@@ -3,11 +3,15 @@ package dunkmania101.spatialharvesters.objects.blocks;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 
 public class CustomShapedBlock extends Block {
     private static final DirectionProperty FACING = Properties.FACING;
@@ -32,13 +36,12 @@ public class CustomShapedBlock extends Block {
         this.DOWN_SHAPE = Tools.getRotatedVoxelShape(shape, baseDirection, Direction.DOWN);
     }
 
-    public CustomShapedBlock(Properties properties, VoxelShape shape) {
-        this(properties, shape, Direction.DOWN);
+    public CustomShapedBlock(Settings settings, VoxelShape shape) {
+        this(settings, shape, Direction.DOWN);
     }
 
     @Override
-    @Nonnull
-    public VoxelShape getShape(BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
         switch (state.get(FACING)) {
             default:
                 return NORTH_SHAPE;
@@ -56,13 +59,13 @@ public class CustomShapedBlock extends Block {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getFace().getOpposite());
+    public BlockState getPlacementState(ItemPlacementContext context) {
+        return this.getDefaultState().with(FACING, context.getSide().getOpposite());
     }
 
     @Override
-    protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder) {
-        super.fillStateContainer(builder);
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
         builder.add(FACING);
     }
 }

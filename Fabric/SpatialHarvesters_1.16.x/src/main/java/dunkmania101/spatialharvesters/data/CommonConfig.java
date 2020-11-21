@@ -1,5 +1,7 @@
 package dunkmania101.spatialharvesters.data;
 
+import java.util.ArrayList;
+
 @Mod.EventBusSubscriber
 public class CommonConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();

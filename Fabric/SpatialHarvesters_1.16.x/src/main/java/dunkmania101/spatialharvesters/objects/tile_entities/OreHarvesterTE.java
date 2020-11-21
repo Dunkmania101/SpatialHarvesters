@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 
 public class OreHarvesterTE extends SpatialHarvesterTE {
     public OreHarvesterTE() {
-        super(TileEntityInit.ORE_HARVESTER.get(), Tools.getLoadedOres());
+        super(TileEntityInit.ORE_HARVESTER, Tools.getLoadedOres());
     }
 
     @Override

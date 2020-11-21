@@ -2,7 +2,7 @@ package dunkmania101.spatialharvesters.objects.items;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.blocks.SpecificMobHarvesterBlockPreservedData;
+import dunkmania101.spatialharvesters.objects.blocks.SpecificMobHarvesterBlock;
 import dunkmania101.spatialharvesters.objects.tile_entities.SpecificMobHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
@@ -68,7 +68,7 @@ public class MobKeyItem extends Item {
             if (!world.isClient) {
                 BlockPos pos = context.getBlockPos();
                 Block block = world.getBlockState(pos).getBlock();
-                if (block instanceof SpecificMobHarvesterBlockPreservedData) {
+                if (block instanceof SpecificMobHarvesterBlock) {
                     BlockEntity tile = world.getBlockEntity(pos);
                     if (tile != null) {
                         if (tile instanceof SpecificMobHarvesterTE) {

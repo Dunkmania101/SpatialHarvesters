@@ -38,7 +38,6 @@ dependencies {
 	//Replace Version with current version
 	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
 
-
 	// TeamReborn Energy
 	modApi "teamreborn:energy:${project.reborn_energy_version}"
 	include "teamreborn:energy:${project.reborn_energy_version}"

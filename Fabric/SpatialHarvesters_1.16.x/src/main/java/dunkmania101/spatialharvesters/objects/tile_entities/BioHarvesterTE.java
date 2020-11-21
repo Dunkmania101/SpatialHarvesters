@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 
 public class BioHarvesterTE extends SpatialHarvesterTE {
     public BioHarvesterTE() {
-        super(TileEntityInit.BIO_HARVESTER.get(), Tools.getLoadedBios());
+        super(TileEntityInit.BIO_HARVESTER, Tools.getLoadedBios());
     }
 
     @Override

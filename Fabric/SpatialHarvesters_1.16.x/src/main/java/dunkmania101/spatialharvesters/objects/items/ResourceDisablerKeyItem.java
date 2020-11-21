@@ -5,70 +5,71 @@ import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import javax.annotation.Nonnull;
-import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class ResourceDisablerKeyItem extends Item {
-    public ResourceDisablerKeyItem(Properties properties) {
-        super(properties);
+    public ResourceDisablerKeyItem(Settings settings) {
+        super(settings);
     }
 
     @Override
-    public float getDestroySpeed(@Nonnull ItemStack stack, @Nonnull BlockState state) {
+    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
         int multiplier = CommonConfig.KEY_BREAK_SPEED_MULTIPLIER.get();
-        return super.getDestroySpeed(stack, state) * multiplier;
+        return super.getMiningSpeedMultiplier(stack, state) * multiplier;
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
-        if (player.isCrouching()) {
-            ItemStack otherStack = player.getHeldItemOffhand();
-            if (otherStack.isEmpty()) {
-                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_disabled_resource"), true);
-                itemstack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
-            } else {
-                ResourceLocation rn = otherStack.getItem().getRegistryName();
-                if (rn != null) {
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_disabled_resource"), true);
-                    itemstack.getOrCreateTag().putString(CustomValues.disabledResourceKey, rn.toString());
+    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+        if (miner instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) miner;
+            if (player.isSneaking()) {
+                ItemStack otherStack = player.getOffHandStack();
+                if (otherStack.isEmpty()) {
+                    player.sendMessage(new TranslatableText("msg.spatialharvesters.clear_disabled_resource"), true);
+                    stack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
+                } else {
+                    Identifier rn = Identifier.tryParse(otherStack.getItem().getTranslationKey());
+                    if (rn != null) {
+                        player.sendMessage(new TranslatableText("msg.spatialharvesters.set_disabled_resource"), true);
+                        stack.getOrCreateTag().putString(CustomValues.disabledResourceKey, rn.toString());
+                    }
                 }
             }
         }
         return true;
     }
 
-    @Nonnull
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    public ActionResult useOnBlock(ItemUsageContext context) {
         PlayerEntity player = context.getPlayer();
         if (player != null) {
             World world = context.getWorld();
-            if (!world.isRemote) {
-                BlockPos pos = context.getPos();
-                TileEntity tile = world.getTileEntity(pos);
+            if (!world.isClient) {
+                BlockPos pos = context.getBlockPos();
+                BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
                     if (tile instanceof SpatialHarvesterTE) {
-                        CompoundNBT disabledNBT = new CompoundNBT();
-                        if (player.isCrouching()) {
+                        CompoundTag disabledNBT = new CompoundTag();
+                        if (player.isSneaking()) {
                             disabledNBT.putString(CustomValues.removeDisabledNBTKey, "");
                         } else {
-                            CompoundNBT itemNBT = context.getItem().getTag();
+                            CompoundTag itemNBT = context.getStack().getTag();
                             if (itemNBT != null) {
                                 if (itemNBT.contains(CustomValues.disabledResourceKey)) {
                                     disabledNBT.putString(CustomValues.disabledResourceKey, itemNBT.getString(CustomValues.disabledResourceKey));
@@ -76,40 +77,40 @@ public class ResourceDisablerKeyItem extends Item {
                             }
                         }
                         if (disabledNBT.isEmpty()) {
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_disabled_resource_failed"), true);
+                            player.sendMessage(new TranslatableText("msg.spatialharvesters.set_disabled_resource_failed"), true);
                         } else {
                             if (disabledNBT.contains(CustomValues.removeDisabledNBTKey)) {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_disabled_resources"), true);
+                                player.sendMessage(new TranslatableText("msg.spatialharvesters.clear_disabled_resources"), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.add_disabled_resource"), true);
+                                player.sendMessage(new TranslatableText("msg.spatialharvesters.add_disabled_resource"), true);
                             }
-                            tile.deserializeNBT(Tools.correctTileNBT(tile, disabledNBT));
+                            tile.fromTag(world.getBlockState(pos) ,Tools.correctTileNBT(tile, disabledNBT));
                         }
                     }
                 }
             }
         }
-        return super.onItemUse(context);
+        return super.useOnBlock(context);
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, World worldIn, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.resource_disabler_key_description"));
-        CompoundNBT nbt = stack.getTag();
+    public void appendTooltip(ItemStack stack, @Nullable World world, java.util.List<Text> tooltip, TooltipContext context) {
+        super.appendTooltip(stack, world, tooltip, context);
+        tooltip.add(new TranslatableText("msg.spatialharvesters.resource_disabler_key_description"));
+        CompoundTag nbt = stack.getTag();
         if (nbt != null) {
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.disabled_resource"));
+            tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
+            tooltip.add(new TranslatableText("msg.spatialharvesters.disabled_resource"));
             if (nbt.contains(CustomValues.disabledResourceKey)) {
                 String resource = nbt.getString(CustomValues.disabledResourceKey);
-                if (!StringUtils.isNullOrEmpty(resource)) {
-                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(resource));
-                    if (item != null) {
+                if (resource != null && !resource.isEmpty()) {
+                    Item item = Registry.ITEM.get(new Identifier(resource));
+                    if (item != Items.AIR) {
                         tooltip.add(item.getName());
                     }
                 }
             }
         }
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+        tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
     }
 }
