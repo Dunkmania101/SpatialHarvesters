@@ -252,7 +252,7 @@ public class Tools {
                         if (configItems.contains(getModResourceArray(itemRN))) {
                             ITEMS.add(checkItem);
                         } else {
-                            for (ResourceLocation tagRN : checkItem.getTags()) {
+                            for (ResourceLocation tagRN : checkBlock.getTags()) {
                                 if (customTags.contains(getModResourceArray(tagRN)) && !ITEMS.contains(checkItem)) {
                                     ITEMS.add(checkItem);
                                     break;

@@ -120,7 +120,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             boolean showIcon = CommonConfig.DIMENSIONAL_APPLICATOR_SHOW_ICON.get();
             for (Effect effect : effects) {
                 if (effect != null) {
-                    EffectInstance effectInstance = new EffectInstance(effect, getDuration(), getAmplifier(), isBeacon, showParticles, showIcon);
+                    EffectInstance effectInstance = new EffectInstance(effect, getDuration(), getAmplifier() * getSpaceRippers(world, pos), isBeacon, showParticles, showIcon);
                     if (!effectInstances.contains(effectInstance)) {
                         effectInstances.add(effectInstance);
                     }
@@ -128,6 +128,17 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             }
         }
         return effectInstances;
+    }
+
+    protected int getSpaceRippers(World world, BlockPos pos) {
+        int count = 0;
+        for (Direction side : Direction.values()) {
+            Block block = world.getBlockState(pos.offset(side)).getBlock();
+            if (block instanceof SpaceRipperBlock) {
+                count++;
+            }
+        }
+        return count;
     }
 
     protected int getDuration() {

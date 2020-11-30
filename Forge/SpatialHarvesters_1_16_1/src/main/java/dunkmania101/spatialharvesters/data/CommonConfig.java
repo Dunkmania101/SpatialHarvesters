@@ -651,7 +651,7 @@ public class CommonConfig {
         custom_soil_tags.add(modTag);
 
         CUSTOM_SOIL_TAGS = BUILDER.comment("Custom tags for the Soil Harvester.")
-                .comment("Note that this one uses block tags, rather than item tags, because most soil-like thinks are only tagged in their blocks.")
+                .comment("Note that this one uses block tags, rather than item tags, because most soil-like things are only tagged in their blocks.")
                 .define("custom_soil_tags", custom_soil_tags);
         BUILDER.pop();
 
@@ -880,7 +880,7 @@ public class CommonConfig {
         BUILDER.pop();
 
         BUILDER.push("Dimensional Applicator Stats: ");
-        DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this + 1.)")
+        DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this * the number of Space Rippers.)")
                 .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_DURATION = BUILDER.comment("Duration for the Dimensional Applicator (in ticks, 20 = one second, 220 = 11 seconds (Night Vision flashes at 10 or less)).")
                 .defineInRange("dimensional_applicator_duration", 220, 0, Integer.MAX_VALUE);
