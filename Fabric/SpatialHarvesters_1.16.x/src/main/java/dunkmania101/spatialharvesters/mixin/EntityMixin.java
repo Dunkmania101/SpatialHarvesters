@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    @Shadow public abstract CompoundTag toTag(CompoundTag tag);
+    @Shadow
+    public abstract CompoundTag toTag(CompoundTag tag);
 
     @Inject(at = @At("TAIL"), method = "dropStack(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/entity/ItemEntity;")
     public void injectDropStack(ItemStack stack, CallbackInfoReturnable<ItemEntity> cir) {

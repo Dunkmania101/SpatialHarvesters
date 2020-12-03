@@ -84,7 +84,7 @@ public class ResourceDisablerKeyItem extends Item {
                             } else {
                                 player.sendMessage(new TranslatableText("msg.spatialharvesters.add_disabled_resource"), true);
                             }
-                            tile.fromTag(world.getBlockState(pos) ,Tools.correctTileNBT(tile, disabledNBT));
+                            tile.fromTag(world.getBlockState(pos), Tools.correctTileNBT(tile, disabledNBT));
                         }
                     }
                 }

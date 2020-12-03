@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 
 public class SpecificMobHarvesterTE extends MobHarvesterTE {
     public SpecificMobHarvesterTE() {
-        super(TileEntityInit.SPECIFIC_MOB_HARVESTER.get());
+        super(TileEntityInit.SPECIFIC_MOB_HARVESTER);
     }
 
     @Override

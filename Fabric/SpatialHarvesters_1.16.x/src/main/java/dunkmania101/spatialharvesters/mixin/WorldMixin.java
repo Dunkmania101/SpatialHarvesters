@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.mixin;
 
 import dunkmania101.spatialharvesters.data.ChunkLoaderData;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -16,12 +17,13 @@ import java.util.function.BooleanSupplier;
 
 @Mixin(ServerWorld.class)
 public interface WorldMixin {
-    @Shadow ServerWorld toServerWorld();
+    @Shadow
+    ServerWorld toServerWorld();
 
     @Inject(at = @At("TAIL"), method = "tick")
     default void tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         if (toServerWorld() != null) {
-            boolean chunkLoaderEnabled = true;
+            boolean chunkLoaderEnabled = CommonConfig.ENABLE_CHUNK_LOADER;
             ChunkLoaderData data = new ChunkLoaderData(toServerWorld());
             ArrayList<Long> CHUNK_LOADERS = data.getChunkLoaders();
             for (long long_pos : CHUNK_LOADERS) {

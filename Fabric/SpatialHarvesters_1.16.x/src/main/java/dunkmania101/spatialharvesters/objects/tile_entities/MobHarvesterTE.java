@@ -50,8 +50,11 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                 if (this.player == null) {
                     setPlayer();
                 }
+                if (this.player != null && this.player.isDead()) {
+                    setPlayer();
+                }
                 if (this.player != null) {
-                    Identifier entityRN = Identifier.tryParse(mobEntity.toString());
+                    Identifier entityRN = Identifier.tryParse(mobEntity.getType().getTranslationKey());
                     if (entityRN != null) {
                         ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
                         String mod = entityRN.getNamespace();

@@ -1,15 +1,14 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.shape.VoxelShapes;
 
 import java.util.stream.Stream;
 
 public class ActivatorBlock extends CustomShapedBlock {
-    public ActivatorBlock(Properties properties) {
-        super(properties, Stream.of(
+    public ActivatorBlock(Settings settings) {
+        super(settings, Stream.of(
                 Block.createCuboidShape(5, 1, 5, 11, 2, 11),
                 Block.createCuboidShape(5, 15, 5, 11, 16, 11),
                 Block.createCuboidShape(7, 2, 7, 9, 15, 9),

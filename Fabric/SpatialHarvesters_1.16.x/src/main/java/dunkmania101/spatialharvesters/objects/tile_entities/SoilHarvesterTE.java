@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 
 public class SoilHarvesterTE extends SpatialHarvesterTE {
     public SoilHarvesterTE() {
-        super(TileEntityInit.SOIL_HARVESTER.get(), Tools.getLoadedSoils());
+        super(TileEntityInit.SOIL_HARVESTER, Tools.getLoadedSoils());
     }
 
     @Override

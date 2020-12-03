@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 
 public class StoneHarvesterTE extends SpatialHarvesterTE {
     public StoneHarvesterTE() {
-        super(TileEntityInit.STONE_HARVESTER.get(), Tools.getLoadedStones());
+        super(TileEntityInit.STONE_HARVESTER, Tools.getLoadedStones());
     }
 
     @Override

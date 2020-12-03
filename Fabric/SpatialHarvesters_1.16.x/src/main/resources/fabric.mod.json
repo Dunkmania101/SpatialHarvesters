@@ -23,6 +23,9 @@
       "dunkmania101.spatialharvesters.init.ItemInit",
       "dunkmania101.spatialharvesters.init.BlockInit",
       "dunkmania101.spatialharvesters.init.TileEntityInit"
+    ],
+    "completeconfig": [
+      "dunkmania101.spatialharvesters.data.CustomConfigOwner"
     ]
   },
   "mixins": [

@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(MobEntity.class)
 public interface MobEntityMixinCastable {
-	@Invoker("dropLoot")
-	void invokeDropLoot(DamageSource source, boolean causedByPlayer);
+    @Invoker("dropLoot")
+    void invokeDropLoot(DamageSource source, boolean causedByPlayer);
 
-	@Invoker("dropEquipment")
-	void invokeDropEquipment(DamageSource source, int lootingMultiplier, boolean allowDrops);
+    @Invoker("dropEquipment")
+    void invokeDropEquipment(DamageSource source, int lootingMultiplier, boolean allowDrops);
 }

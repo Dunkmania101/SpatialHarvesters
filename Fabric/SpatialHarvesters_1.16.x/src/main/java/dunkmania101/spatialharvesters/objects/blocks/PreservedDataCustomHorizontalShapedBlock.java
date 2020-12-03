@@ -1,10 +1,7 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.tile_entities.CustomEnergyMachineTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.SpatialHarvesterTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.TickingRedstoneEnergyMachineTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.*;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

@@ -12,8 +12,8 @@ import net.minecraft.world.BlockView;
 import java.util.stream.Stream;
 
 public class CasingBlock extends Block {
-    public CasingBlock(Settings properties) {
-        super(properties);
+    public CasingBlock(Settings settings) {
+        super(settings);
     }
 
     private static final VoxelShape SHAPE = Stream.of(

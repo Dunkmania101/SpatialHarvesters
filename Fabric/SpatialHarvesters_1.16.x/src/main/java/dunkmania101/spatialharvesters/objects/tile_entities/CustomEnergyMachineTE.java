@@ -18,6 +18,7 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
     public CustomEnergyMachineTE(BlockEntityType<?> blockEntityTypeIn) {
         super(blockEntityTypeIn);
     }
+
     public CustomEnergyMachineTE(BlockEntityType<?> blockEntityTypeIn, boolean canExtract, boolean canReceive) {
         this(blockEntityTypeIn);
 
