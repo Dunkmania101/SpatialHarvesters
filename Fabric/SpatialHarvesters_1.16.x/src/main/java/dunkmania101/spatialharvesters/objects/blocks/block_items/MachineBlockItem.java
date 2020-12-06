@@ -45,7 +45,7 @@ public class MachineBlockItem extends BlockItem {
                 CompoundTag disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                 for (String key : disabledResources.getKeys()) {
                     Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
-                    if (item != null && item != Items.AIR) {
+                    if (item != Items.AIR) {
                         tooltip.add(item.getName());
                     }
                 }

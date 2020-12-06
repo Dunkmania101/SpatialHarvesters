@@ -2,6 +2,7 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import net.minecraft.block.Block;
@@ -27,11 +28,11 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public void customTickActions() {
-        boolean enabled = CommonConfig.ENABLE_DIMENSIONAL_APPLICATOR.get();
+        boolean enabled = CommonConfig.enable_dimensional_applicator;
         if (enabled) {
             super.customTickActions();
             if (this.playerId != null && getWorld() != null && !getWorld().isClient) {
-                double divisor = CommonConfig.DIMENSIONAL_APPLICATOR_DIVISOR.get();
+                double divisor = CommonConfig.dimensional_applicator_divisor;
                 if (getCountedTicks() >= (getDuration() / divisor)) {
                     resetCountedTicks();
                     setActive(false);
@@ -114,9 +115,9 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             }
         }
         if (!effects.isEmpty()) {
-            boolean isBeacon = CommonConfig.DIMENSIONAL_APPLICATOR_IS_BEACON_EFFECT.get();
-            boolean showParticles = CommonConfig.DIMENSIONAL_APPLICATOR_SHOW_PARTICLES.get();
-            boolean showIcon = CommonConfig.DIMENSIONAL_APPLICATOR_SHOW_ICON.get();
+            boolean isBeacon = CommonConfig.dimensional_applicator_is_beacon_effect;
+            boolean showParticles = CommonConfig.dimensional_applicator_show_particles;
+            boolean showIcon = CommonConfig.dimensional_applicator_show_icon;
             for (StatusEffect effect : effects) {
                 if (effect != null) {
                     StatusEffectInstance effectInstance = new StatusEffectInstance(effect, getDuration(), getAmplifier() * getSpaceRippers(world, pos), isBeacon, showParticles, showIcon);
@@ -141,31 +142,31 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     protected int getDuration() {
-        return CommonConfig.DIMENSIONAL_APPLICATOR_DURATION.get();
+        return CommonConfig.dimensional_applicator_duration;
     }
 
     protected int getAmplifier() {
-        return CommonConfig.DIMENSIONAL_APPLICATOR_AMPLIFIER.get();
+        return CommonConfig.dimensional_applicator_amplifier;
     }
 
-    protected int getPrice() {
-        return CommonConfig.DIMENSIONAL_APPLICATOR_PRICE.get();
+    protected double getPrice() {
+        return CommonConfig.dimensional_applicator_price;
     }
 
     @Override
-    protected int getCapacity() {
-        int multiplier = CommonConfig.DIMENSIONAL_APPLICATOR_CAPACITY_MULTIPLIER.get();
+    public double getMaxStoredPower() {
+        int multiplier = CommonConfig.dimensional_applicator_capacity_multiplier;
         return getPrice() * multiplier;
     }
 
     @Override
-    protected int getMaxInput() {
-        return getCapacity();
+    public double getCustomMaxInput() {
+        return getMaxStoredPower();
     }
 
     @Override
-    protected int getMaxExtract() {
-        return getCapacity();
+    public double getCustomMaxOutput() {
+        return getMaxStoredPower();
     }
 
     @Override

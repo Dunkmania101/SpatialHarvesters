@@ -38,8 +38,8 @@ public class MobKeyItem extends Item {
             if (entityKey != null && !entityKey.isEmpty()) {
                 Identifier mobRN = Identifier.tryParse(entityKey);
                 if (mobRN != null) {
-                    ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
-                    ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
+                    ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.blacklist_mobs;
+                    ArrayList<String> blacklist_mobs_mod = CommonConfig.blacklist_mobs_mod;
                     boolean banned = false;
                     if (Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
                         banned = true;

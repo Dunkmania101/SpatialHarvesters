@@ -14,70 +14,64 @@ public class StoneHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public int getPrice(Block block) {
-        int price = CommonConfig.STONE_1_PRICE.get();
-        if (block == BlockInit.STONE_HARVESTER_1.get()) {
-            price = CommonConfig.STONE_1_PRICE.get();
-        } else if (block == BlockInit.STONE_HARVESTER_2.get()) {
-            price = CommonConfig.STONE_2_PRICE.get();
-        } else if (block == BlockInit.STONE_HARVESTER_3.get()) {
-            price = CommonConfig.STONE_3_PRICE.get();
-        } else if (block == BlockInit.STONE_HARVESTER_4.get()) {
-            price = CommonConfig.STONE_4_PRICE.get();
-        } else if (block == BlockInit.STONE_HARVESTER_5.get()) {
-            price = CommonConfig.STONE_5_PRICE.get();
-        } else if (block == BlockInit.STONE_HARVESTER_6.get()) {
-            price = CommonConfig.STONE_6_PRICE.get();
-        } else if (block == BlockInit.STONE_HARVESTER_7.get()) {
-            price = CommonConfig.STONE_7_PRICE.get();
-        } else if (block == BlockInit.STONE_HARVESTER_8.get()) {
-            price = CommonConfig.STONE_8_PRICE.get();
+    public double getPrice(Block block) {
+        double price = CommonConfig.price_stone_1;
+        if (block == BlockInit.STONE_HARVESTER_2) {
+            price = CommonConfig.price_stone_2;
+        } else if (block == BlockInit.STONE_HARVESTER_3) {
+            price = CommonConfig.price_stone_3;
+        } else if (block == BlockInit.STONE_HARVESTER_4) {
+            price = CommonConfig.price_stone_4;
+        } else if (block == BlockInit.STONE_HARVESTER_5) {
+            price = CommonConfig.price_stone_5;
+        } else if (block == BlockInit.STONE_HARVESTER_6) {
+            price = CommonConfig.price_stone_6;
+        } else if (block == BlockInit.STONE_HARVESTER_7) {
+            price = CommonConfig.price_stone_7;
+        } else if (block == BlockInit.STONE_HARVESTER_8) {
+            price = CommonConfig.price_stone_8;
         }
         return price;
     }
 
     @Override
-    public int getSpeed(Block block) {
-        int speed = CommonConfig.STONE_1_SPEED.get();
-        if (block == BlockInit.STONE_HARVESTER_1.get()) {
-            speed = CommonConfig.STONE_1_SPEED.get();
-        } else if (block == BlockInit.STONE_HARVESTER_2.get()) {
-            speed = CommonConfig.STONE_2_SPEED.get();
-        } else if (block == BlockInit.STONE_HARVESTER_3.get()) {
-            speed = CommonConfig.STONE_3_SPEED.get();
-        } else if (block == BlockInit.STONE_HARVESTER_4.get()) {
-            speed = CommonConfig.STONE_4_SPEED.get();
-        } else if (block == BlockInit.STONE_HARVESTER_5.get()) {
-            speed = CommonConfig.STONE_5_SPEED.get();
-        } else if (block == BlockInit.STONE_HARVESTER_6.get()) {
-            speed = CommonConfig.STONE_6_SPEED.get();
-        } else if (block == BlockInit.STONE_HARVESTER_7.get()) {
-            speed = CommonConfig.STONE_7_SPEED.get();
-        } else if (block == BlockInit.STONE_HARVESTER_8.get()) {
-            speed = CommonConfig.STONE_8_SPEED.get();
+    public double getSpeed(Block block) {
+        double speed = CommonConfig.speed_stone_1;
+        if (block == BlockInit.STONE_HARVESTER_2) {
+            speed = CommonConfig.speed_stone_2;
+        } else if (block == BlockInit.STONE_HARVESTER_3) {
+            speed = CommonConfig.speed_stone_3;
+        } else if (block == BlockInit.STONE_HARVESTER_4) {
+            speed = CommonConfig.speed_stone_4;
+        } else if (block == BlockInit.STONE_HARVESTER_5) {
+            speed = CommonConfig.speed_stone_5;
+        } else if (block == BlockInit.STONE_HARVESTER_6) {
+            speed = CommonConfig.speed_stone_6;
+        } else if (block == BlockInit.STONE_HARVESTER_7) {
+            speed = CommonConfig.speed_stone_7;
+        } else if (block == BlockInit.STONE_HARVESTER_8) {
+            speed = CommonConfig.speed_stone_8;
         }
         return speed;
     }
 
     @Override
     public Item getShard(Block block) {
-        Item CHOSEN_SHARD = ItemInit.SHARD_1.get();
-        if (block == BlockInit.STONE_HARVESTER_1.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_1.get();
-        } else if (block == BlockInit.STONE_HARVESTER_2.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_2.get();
-        } else if (block == BlockInit.STONE_HARVESTER_3.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_3.get();
-        } else if (block == BlockInit.STONE_HARVESTER_4.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_4.get();
-        } else if (block == BlockInit.STONE_HARVESTER_5.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_5.get();
-        } else if (block == BlockInit.STONE_HARVESTER_6.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_6.get();
-        } else if (block == BlockInit.STONE_HARVESTER_7.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_7.get();
-        } else if (block == BlockInit.STONE_HARVESTER_8.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_7.get();
+        Item CHOSEN_SHARD = ItemInit.SHARD_1;
+        if (block == BlockInit.STONE_HARVESTER_2) {
+            CHOSEN_SHARD = ItemInit.SHARD_2;
+        } else if (block == BlockInit.STONE_HARVESTER_3) {
+            CHOSEN_SHARD = ItemInit.SHARD_3;
+        } else if (block == BlockInit.STONE_HARVESTER_4) {
+            CHOSEN_SHARD = ItemInit.SHARD_4;
+        } else if (block == BlockInit.STONE_HARVESTER_5) {
+            CHOSEN_SHARD = ItemInit.SHARD_5;
+        } else if (block == BlockInit.STONE_HARVESTER_6) {
+            CHOSEN_SHARD = ItemInit.SHARD_6;
+        } else if (block == BlockInit.STONE_HARVESTER_7) {
+            CHOSEN_SHARD = ItemInit.SHARD_7;
+        } else if (block == BlockInit.STONE_HARVESTER_8) {
+            CHOSEN_SHARD = ItemInit.SHARD_7;
         }
         return CHOSEN_SHARD;
     }

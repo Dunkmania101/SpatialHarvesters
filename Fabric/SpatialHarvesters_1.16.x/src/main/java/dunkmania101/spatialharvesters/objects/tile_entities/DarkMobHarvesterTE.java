@@ -27,8 +27,8 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
                 if (getWorld() != null && !getWorld().isClient) {
                     for (EntityType<?> entityType : Registry.ENTITY_TYPE) {
                         if (entityType != null) {
-                            ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
-                            ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
+                            ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.blacklist_mobs;
+                            ArrayList<String> blacklist_mobs_mod = CommonConfig.blacklist_mobs_mod;
                             Identifier rn = Identifier.tryParse(entityType.getTranslationKey());
                             if (rn != null) {
                                 if (!Tools.isResourceBanned(rn, blacklist_mobs, blacklist_mobs_mod)) {
@@ -62,12 +62,12 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
     }
 
     @Override
-    public int getPrice(Block block) {
-        return CommonConfig.DARK_MOB_PRICE.get();
+    public double getPrice(Block block) {
+        return CommonConfig.price_dark_mob;
     }
 
     @Override
-    public int getSpeed(Block block) {
-        return CommonConfig.DARK_MOB_SPEED.get();
+    public double getSpeed(Block block) {
+        return CommonConfig.speed_dark_mob;
     }
 }

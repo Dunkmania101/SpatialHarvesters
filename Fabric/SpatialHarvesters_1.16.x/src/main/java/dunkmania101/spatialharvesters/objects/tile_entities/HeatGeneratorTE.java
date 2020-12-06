@@ -15,12 +15,12 @@ import java.util.ArrayList;
 
 public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     public HeatGeneratorTE() {
-        super(TileEntityInit.HEAT_GENERATOR.get(), true, true);
+        super(TileEntityInit.HEAT_GENERATOR, true, true);
     }
 
     @Override
     public void customTickActions() {
-        boolean enabled = CommonConfig.ENABLE_HEAT_GENERATOR.get();
+        boolean enabled = CommonConfig.enable_heat_generator;
         if (enabled) {
             super.customTickActions();
             if (getWorld() != null && !getWorld().isClient) {
@@ -60,21 +60,22 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public int getSpeed() {
-        return CommonConfig.HEAT_GENERATOR_SPEED.get();
+        return CommonConfig.speed_heat_generator;
     }
 
     @Override
-    protected int getCapacity() {
-        return getSpeed() * 100;
+    public double getMaxStoredPower() {
+        int multiplier = CommonConfig.heat_generator_capacity_multiplier;
+        return getSpeed() * multiplier;
     }
 
     @Override
-    protected int getMaxInput() {
-        return getCapacity();
+    public double getCustomMaxInput() {
+        return getMaxStoredPower();
     }
 
     @Override
-    protected int getMaxExtract() {
-        return getCapacity();
+    public double getCustomMaxOutput() {
+        return getMaxStoredPower();
     }
 }

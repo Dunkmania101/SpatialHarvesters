@@ -554,8 +554,10 @@ public class CommonConfig implements ConfigCategory {
     public static int speed_soil_7 = 100;
     public static int speed_soil_8 = 5;
 
-    public static int dark_mob_speed = 50;
-    public static int specific_mob_speed = 50;
+    public static int speed_dark_mob = 50;
+    public static int speed_specific_mob = 50;
+
+    public static int speed_heat_generator = 3;
 
     public static int harvester_capacity_multiplier = 100;
     public static int dimensional_applicator_capacity_multiplier = 100;
@@ -599,8 +601,8 @@ public class CommonConfig implements ConfigCategory {
 
     public static double dimensional_applicator_price = 1000;
 
-    public static double dark_mob_price = 8000;
-    public static double specific_mob_price = 8000;
+    public static double price_dark_mob = 8000;
+    public static double price_specific_mob = 8000;
 
     public static int dimensional_applicator_amplifier = 1;
     public static int dimensional_applicator_duration = 220;
@@ -621,7 +623,7 @@ public class CommonConfig implements ConfigCategory {
     public static boolean enable_specific_mob_harvester = true;
 
     public static float block_hardness = 5;
-    public static float block_resistance = 5;
+    public static float block_resistance = 6;
     public static int harvester_shard_chance = 75;
     public static int mob_harvester_mob_shard_chance = 25;
     public static int machine_light_level = 7;

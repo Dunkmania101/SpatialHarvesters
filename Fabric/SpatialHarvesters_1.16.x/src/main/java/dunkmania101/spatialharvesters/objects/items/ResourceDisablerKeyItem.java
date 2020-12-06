@@ -30,7 +30,7 @@ public class ResourceDisablerKeyItem extends Item {
 
     @Override
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
-        int multiplier = CommonConfig.KEY_BREAK_SPEED_MULTIPLIER.get();
+        int multiplier = CommonConfig.key_break_speed_multiplier;
         return super.getMiningSpeedMultiplier(stack, state) * multiplier;
     }
 

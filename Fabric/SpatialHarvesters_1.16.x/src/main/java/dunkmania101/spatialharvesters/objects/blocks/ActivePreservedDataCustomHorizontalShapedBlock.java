@@ -34,7 +34,7 @@ public class ActivePreservedDataCustomHorizontalShapedBlock extends PreservedDat
     @Override
     public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
         if (state.get(ACTIVE)) {
-            return CommonConfig.MACHINE_LIGHT_LEVEL.get();
+            return CommonConfig.machine_light_level;
         }
         return 0;
     }

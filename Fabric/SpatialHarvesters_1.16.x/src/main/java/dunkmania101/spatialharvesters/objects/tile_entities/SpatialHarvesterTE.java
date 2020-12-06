@@ -32,20 +32,13 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public void tick() {
-        this.thisBlock = getCachedState().getBlock();
-        updateEnergyStorage();
-        super.tick();
-    }
-
-    @Override
     public void customTickActions() {
-        boolean enableOre = CommonConfig.ENABLE_ORE_HARVESTERS.get();
-        boolean enableBio = CommonConfig.ENABLE_ORE_HARVESTERS.get();
-        boolean enableStone = CommonConfig.ENABLE_ORE_HARVESTERS.get();
-        boolean enableSoil = CommonConfig.ENABLE_ORE_HARVESTERS.get();
-        boolean enableDarkMob = CommonConfig.ENABLE_DARK_MOB_HARVESTER.get();
-        boolean enableSpecificMob = CommonConfig.ENABLE_SPECIFIC_MOB_HARVESTER.get();
+        boolean enableOre = CommonConfig.enable_ore_harvesters;
+        boolean enableBio = CommonConfig.enable_ore_harvesters;
+        boolean enableStone = CommonConfig.enable_ore_harvesters;
+        boolean enableSoil = CommonConfig.enable_ore_harvesters;
+        boolean enableDarkMob = CommonConfig.enable_dark_mob_harvester;
+        boolean enableSpecificMob = CommonConfig.enable_specific_mob_harvester;
         if (this instanceof OreHarvesterTE && !enableOre) {
             setActive(false);
         } else if (this instanceof BioHarvesterTE && !enableBio) {
@@ -64,7 +57,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                 if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                     resetCountedTicks();
                     setActive(false);
-                    int price = getPrice(this.thisBlock);
+                    double price = getPrice(this.thisBlock);
                     if (getEnergyStorage().getEnergy() >= price) {
                         ArrayList<Direction> spaceRippers = new ArrayList<>();
                         ArrayList<Inventory> outInventories = new ArrayList<>();
@@ -88,7 +81,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                     if (getEnergyStorage().getEnergy() >= price) {
                                         ItemStack chosenOutput;
                                         Random rand = getWorld().getRandom();
-                                        int shardChance = CommonConfig.HARVESTER_SHARD_CHANCE.get();
+                                        int shardChance = CommonConfig.harvester_shard_chance;
                                         if (rand.nextInt(shardChance) == 1) {
                                             chosenOutput = new ItemStack(getShard(this.thisBlock));
                                         } else {
@@ -137,34 +130,34 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    protected int getCapacity() {
+    public double getMaxStoredPower() {
         if (this.thisBlock != null) {
-            int multiplier = CommonConfig.HARVESTER_CAPACITY_MULTIPLIER.get();
+            int multiplier = CommonConfig.harvester_capacity_multiplier;
             return getPrice(this.thisBlock) * multiplier;
         }
-        return Integer.MAX_VALUE;
+        return Double.MAX_VALUE;
     }
 
     @Override
-    protected int getMaxInput() {
-        return getCapacity();
+    public double getCustomMaxInput() {
+        return getMaxStoredPower();
     }
 
     @Override
-    protected int getMaxExtract() {
-        return getCapacity();
+    public double getCustomMaxOutput() {
+        return getMaxStoredPower();
     }
 
-    public int getPrice(Block block) {
-        return Integer.MAX_VALUE;
+    public double getPrice(Block block) {
+        return Double.MAX_VALUE;
     }
 
-    public int getSpeed(Block block) {
-        return Integer.MAX_VALUE;
+    public double getSpeed(Block block) {
+        return Double.MAX_VALUE;
     }
 
     public Item getShard(Block block) {
-        return ItemInit.SHARD_1.get();
+        return ItemInit.SHARD_1;
     }
 
     @Override

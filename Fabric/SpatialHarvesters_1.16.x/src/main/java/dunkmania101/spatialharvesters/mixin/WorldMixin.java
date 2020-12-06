@@ -23,7 +23,7 @@ public interface WorldMixin {
     @Inject(at = @At("TAIL"), method = "tick")
     default void tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         if (toServerWorld() != null) {
-            boolean chunkLoaderEnabled = CommonConfig.ENABLE_CHUNK_LOADER;
+            boolean chunkLoaderEnabled = CommonConfig.enable_chunk_loader;
             ChunkLoaderData data = new ChunkLoaderData(toServerWorld());
             ArrayList<Long> CHUNK_LOADERS = data.getChunkLoaders();
             for (long long_pos : CHUNK_LOADERS) {

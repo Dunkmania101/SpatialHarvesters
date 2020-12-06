@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.objects.blocks.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -12,8 +13,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class BlockInit implements ModInitializer {
-    private static final float blockHardness = 5f;
-    private static final float blockResistance = 6f;
+    private static final float blockHardness = CommonConfig.block_hardness;
+    private static final float blockResistance = CommonConfig.block_resistance;
 
     // Misc Machines
     public static final ChunkLoaderBlock CHUNK_LOADER = registerBlock(

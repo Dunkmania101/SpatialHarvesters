@@ -10,12 +10,12 @@ public class SpecificMobHarvesterTE extends MobHarvesterTE {
     }
 
     @Override
-    public int getPrice(Block block) {
-        return CommonConfig.SPECIFIC_MOB_PRICE.get();
+    public double getPrice(Block block) {
+        return CommonConfig.price_specific_mob;
     }
 
     @Override
-    public int getSpeed(Block block) {
-        return CommonConfig.SPECIFIC_MOB_SPEED.get();
+    public double getSpeed(Block block) {
+        return CommonConfig.speed_specific_mob;
     }
 }

@@ -56,7 +56,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                 if (this.player != null) {
                     Identifier entityRN = Identifier.tryParse(mobEntity.getType().getTranslationKey());
                     if (entityRN != null) {
-                        ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
+                        ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.custom_mob_drops;
                         String mod = entityRN.getNamespace();
                         String path = entityRN.getPath();
                         ArrayList<String> modMob = new ArrayList<>();
@@ -107,8 +107,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                     EntityType<?> entityType = optionalEntityType.get();
                     Identifier mobRN = Identifier.tryParse(entityType.getTranslationKey());
                     if (mobRN != null) {
-                        ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
-                        ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
+                        ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.blacklist_mobs;
+                        ArrayList<String> blacklist_mobs_mod = CommonConfig.blacklist_mobs_mod;
                         if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
                             Entity entity = entityType.create(serverWorld);
                             if (entity != null) {
@@ -229,6 +229,6 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     @Override
     public Item getShard(Block block) {
-        return ItemInit.MOB_SHARD.get();
+        return ItemInit.MOB_SHARD;
     }
 }

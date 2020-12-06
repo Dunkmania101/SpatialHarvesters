@@ -158,10 +158,10 @@ public class Tools {
 
     public static ArrayList<Item> getLoadedOres() {
         ArrayList<Item> ITEMS = new ArrayList<>();
-        ArrayList<ArrayList<String>> customTags = CommonConfig.CUSTOM_ORE_TAGS.get();
-        ArrayList<ArrayList<String>> configItems = CommonConfig.CUSTOM_ORES.get();
-        ArrayList<ArrayList<String>> blacklistItems = CommonConfig.BLACKLIST_ORES.get();
-        ArrayList<String> blacklistItemsMod = CommonConfig.BLACKLIST_ORES_MOD.get();
+        ArrayList<ArrayList<String>> customTags = CommonConfig.custom_ore_tags;
+        ArrayList<ArrayList<String>> configItems = CommonConfig.custom_ores;
+        ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_ores;
+        ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_ores_mod;
         for (Identifier itemRN : Registry.ITEM.getIds()) {
             if (itemRN != null) {
                 if (!isResourceBanned(itemRN, blacklistItems, blacklistItemsMod)) {
@@ -188,10 +188,10 @@ public class Tools {
 
     public static ArrayList<Item> getLoadedBios() {
         ArrayList<Item> ITEMS = new ArrayList<>();
-        ArrayList<ArrayList<String>> customTags = CommonConfig.CUSTOM_BIO_TAGS.get();
-        ArrayList<ArrayList<String>> configItems = CommonConfig.CUSTOM_BIOS.get();
-        ArrayList<ArrayList<String>> blacklistItems = CommonConfig.BLACKLIST_BIOS.get();
-        ArrayList<String> blacklistItemsMod = CommonConfig.BLACKLIST_BIOS_MOD.get();
+        ArrayList<ArrayList<String>> customTags = CommonConfig.custom_bio_tags;
+        ArrayList<ArrayList<String>> configItems = CommonConfig.custom_bios;
+        ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_bios;
+        ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_bios_mod;
         for (Identifier itemRN : Registry.ITEM.getIds()) {
             if (itemRN != null) {
                 if (!isResourceBanned(itemRN, blacklistItems, blacklistItemsMod)) {
@@ -218,10 +218,10 @@ public class Tools {
 
     public static ArrayList<Item> getLoadedStones() {
         ArrayList<Item> ITEMS = new ArrayList<>();
-        ArrayList<ArrayList<String>> customTags = CommonConfig.CUSTOM_STONE_TAGS.get();
-        ArrayList<ArrayList<String>> configItems = CommonConfig.CUSTOM_STONES.get();
-        ArrayList<ArrayList<String>> blacklistItems = CommonConfig.BLACKLIST_STONES.get();
-        ArrayList<String> blacklistItemsMod = CommonConfig.BLACKLIST_STONES_MOD.get();
+        ArrayList<ArrayList<String>> customTags = CommonConfig.custom_stone_tags;
+        ArrayList<ArrayList<String>> configItems = CommonConfig.custom_stones;
+        ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_stones;
+        ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_stones_mod;
         for (Identifier itemRN : Registry.ITEM.getIds()) {
             if (itemRN != null) {
                 if (!isResourceBanned(itemRN, blacklistItems, blacklistItemsMod)) {
@@ -248,16 +248,16 @@ public class Tools {
 
     public static ArrayList<Item> getLoadedSoils() {
         ArrayList<Item> ITEMS = new ArrayList<>();
-        ArrayList<ArrayList<String>> configItems = CommonConfig.CUSTOM_SOILS.get();
-        ArrayList<ArrayList<String>> blacklistItems = CommonConfig.BLACKLIST_SOILS.get();
-        ArrayList<String> blacklistItemsMod = CommonConfig.BLACKLIST_SOILS_MOD.get();
+        ArrayList<ArrayList<String>> configItems = CommonConfig.custom_soils;
+        ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_soils;
+        ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_soils_mod;
         for (Block checkBlock : Registry.BLOCK) {
             Item checkItem = checkBlock.asItem();
             if (checkItem != Items.AIR) {
                 Identifier itemRN = Identifier.tryParse(checkItem.getTranslationKey());
                 if (itemRN != null) {
                     if (!isResourceBanned(itemRN, blacklistItems, blacklistItemsMod)) {
-                        ArrayList<ArrayList<String>> customTags = CommonConfig.CUSTOM_SOIL_TAGS.get();
+                        ArrayList<ArrayList<String>> customTags = CommonConfig.custom_soil_tags;
                         if (configItems.contains(getModResourceArray(itemRN))) {
                             ITEMS.add(checkItem);
                         } else {
