@@ -11,7 +11,7 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 
-group = 'dunkmania101'
+group = 'dunkmania10.spatialharvesters1'
 version = '0.9.10'
 archivesBaseName = 'spatialharvesters_forge_1.15.2'
 

@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '0.9.10'
-group = 'dunkmania101' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'dunkmania101.spatialharvesters' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'spatialharvesters_forge_1.16.3'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
