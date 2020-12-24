@@ -17,14 +17,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
-    protected ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
-    protected ArrayList<Item> BLACKLIST = new ArrayList<>();
+    protected final ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
+    protected final ArrayList<String> BLACKLIST = new ArrayList<>();
     private Block thisBlock = null;
 
     public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn, ArrayList<Item> OUTPUTS) {
@@ -84,6 +83,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                         if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
                             lastMinuteActions();
                             if (!this.OUTPUTS.isEmpty()) {
+                                filterOutputsMinTier(thisBlock);
                                 for (Direction ignored : spaceRippers) {
                                     if (getEnergyStorage().getEnergyStored() >= price) {
                                         ItemStack chosenOutput;
@@ -95,16 +95,19 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                             chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                         }
                                         if (!chosenOutput.isEmpty()) {
-                                            if (this.BLACKLIST.contains(chosenOutput.getItem())) {
-                                                getEnergyStorage().consumeEnergy(price);
-                                                setActive(true);
-                                            } else {
-                                                int originalCount = chosenOutput.getCount();
-                                                IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
-                                                ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
-                                                if (resultStack.getCount() != originalCount) {
+                                            ResourceLocation itemRN = chosenOutput.getItem().getRegistryName();
+                                            if (itemRN != null) {
+                                                if (this.BLACKLIST.contains(itemRN.toString())) {
                                                     getEnergyStorage().consumeEnergy(price);
                                                     setActive(true);
+                                                } else {
+                                                    int originalCount = chosenOutput.getCount();
+                                                    IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
+                                                    ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
+                                                    if (resultStack.getCount() != originalCount) {
+                                                        getEnergyStorage().consumeEnergy(price);
+                                                        setActive(true);
+                                                    }
                                                 }
                                             }
                                         }
@@ -122,7 +125,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public void setOutputs(ArrayList<Item> OUTPUTS) {
-        this.OUTPUTS = new ArrayList<>();
+        this.OUTPUTS.clear();
         for (Item item : OUTPUTS) {
             ItemStack stack = new ItemStack(item);
             if (!stack.isEmpty()) {
@@ -132,7 +135,33 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public void setOutputStacks(ArrayList<ItemStack> OUTPUTS) {
-        this.OUTPUTS = OUTPUTS;
+        this.OUTPUTS.clear();
+        this.OUTPUTS.addAll(OUTPUTS);
+    }
+
+    public void filterOutputsMinTier(Block block) {
+        ArrayList<ArrayList<String>> minTierItems = getMinTierItems();
+        for (ArrayList<String> itemTier : minTierItems) {
+            if (itemTier.size() >= 3) {
+                int tier = 0;
+                try {
+                    tier = Integer.parseInt(itemTier.get(2));
+                } catch (NumberFormatException | NullPointerException ignored) {
+                }
+                if (getTier(block) < tier) {
+                    ResourceLocation itemRN = new ResourceLocation(itemTier.get(0), itemTier.get(1));
+                    this.OUTPUTS.removeIf(stack -> stack.getItem().getRegistryName() != null && stack.getItem().getRegistryName().toString().equals(itemRN.toString()));
+                }
+            }
+        }
+    }
+
+    public ArrayList<ArrayList<String>> getMinTierItems() {
+        return new ArrayList<>();
+    }
+
+    public int getTier(Block block) {
+        return 1;
     }
 
     @Override
@@ -171,10 +200,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         CompoundNBT nbt = super.saveSerializedValues();
         CompoundNBT disabledResources = new CompoundNBT();
         int i = 0;
-        for (Item item : this.BLACKLIST) {
-            ResourceLocation rn = item.getRegistryName();
-            if (rn != null) {
-                disabledResources.putString(Integer.toString(i), rn.toString());
+        for (String itemRN : this.BLACKLIST) {
+            if (itemRN != null) {
+                disabledResources.putString(Integer.toString(i), itemRN);
                 i++;
             }
         }
@@ -188,22 +216,24 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     public void setDeserializedValues(CompoundNBT nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeDisabledNBTKey)) {
-            this.BLACKLIST = new ArrayList<>();
+            this.BLACKLIST.clear();
         }
         if (nbt.contains(CustomValues.disabledResourcesKey)) {
-            this.BLACKLIST = new ArrayList<>();
+            this.BLACKLIST.clear();
             CompoundNBT disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
             for (String key : disabledResources.keySet()) {
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
-                if (item != null && item != Items.AIR && !this.BLACKLIST.contains(item)) {
-                    this.BLACKLIST.add(item);
+                String itemRN = disabledResources.getString(key);
+                ResourceLocation airRN = Items.AIR.getRegistryName();
+                if (airRN != null && !itemRN.equals(airRN.toString()) && !this.BLACKLIST.contains(itemRN)) {
+                    this.BLACKLIST.add(itemRN);
                 }
             }
         }
         if (nbt.contains(CustomValues.disabledResourceKey)) {
-            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(nbt.getString(CustomValues.disabledResourceKey)));
-            if (item != null && item != Items.AIR && !this.BLACKLIST.contains(item)) {
-                this.BLACKLIST.add(item);
+            String itemRN = nbt.getString(CustomValues.disabledResourceKey);
+            ResourceLocation airRN = Items.AIR.getRegistryName();
+            if (airRN != null && !itemRN.equals(airRN.toString()) && !this.BLACKLIST.contains(itemRN)) {
+                this.BLACKLIST.add(itemRN);
             }
         }
     }

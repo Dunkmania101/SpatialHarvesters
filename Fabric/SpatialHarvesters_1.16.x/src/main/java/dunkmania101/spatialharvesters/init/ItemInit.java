@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class ItemInit implements ModInitializer {
-
     // BlockItems
     public static final MachineBlockItem ORE_HARVESTER_1 = registerItem(
             new MachineBlockItem(

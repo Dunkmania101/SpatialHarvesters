@@ -114,7 +114,10 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                             if (entity != null) {
                                 if (entity instanceof MobEntity) {
                                     mobEntity = (MobEntity) entity;
-                                    mobEntity.initialize(serverWorld, serverWorld.getLocalDifficulty(getPos()), SpawnReason.NATURAL, null, null);
+                                    try {
+                                        mobEntity.initialize(serverWorld, serverWorld.getLocalDifficulty(getPos()), SpawnReason.NATURAL, null, null);
+                                    } catch (Exception ignored) {
+                                    }
                                 }
                                 entity.remove();
                             }

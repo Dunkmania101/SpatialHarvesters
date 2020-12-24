@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private UUID playerId = null;
-    private ArrayList<Integer> NBTEffects = new ArrayList<>();
+    private final ArrayList<Integer> NBTEffects = new ArrayList<>();
 
     public DimensionalApplicatorTE() {
         super(TileEntityInit.DIMENSIONAL_APPLICATOR.get(), true, true, true);
@@ -175,8 +175,8 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         if (playerId != null) {
             nbt.putUniqueId(CustomValues.playerNBTKey, playerId);
         }
-        if (NBTEffects.size() > 0) {
-            nbt.putIntArray(CustomValues.potionsNBTKey, NBTEffects);
+        if (this.NBTEffects.size() > 0) {
+            nbt.putIntArray(CustomValues.potionsNBTKey, this.NBTEffects);
         }
         return nbt;
     }
@@ -188,13 +188,13 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             this.playerId = null;
         }
         if (nbt.contains(CustomValues.removePotionsNBTKey)) {
-            this.NBTEffects = new ArrayList<>();
+            this.NBTEffects.clear();
         }
         if (nbt.contains(CustomValues.playerNBTKey)) {
             this.playerId = nbt.getUniqueId(CustomValues.playerNBTKey);
         }
         if (nbt.contains(CustomValues.potionsNBTKey)) {
-            NBTEffects = new ArrayList<>();
+            this.NBTEffects.clear();
             for (int potion : nbt.getIntArray(CustomValues.potionsNBTKey)) {
                 if (!NBTEffects.contains(potion)) {
                     NBTEffects.add(potion);

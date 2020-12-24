@@ -367,6 +367,26 @@ public class BlockInit implements ModInitializer {
             "dark_mob_harvester"
     );
 
+    public static final HeatGeneratorBlock HEAT_GENERATOR = registerBlock(
+            new HeatGeneratorBlock(FabricBlockSettings.of(Material.METAL)
+                    .sounds(BlockSoundGroup.METAL)
+                    .hardness(blockHardness)
+                    .resistance(blockResistance)
+                    .breakByTool(FabricToolTags.PICKAXES)
+            ),
+            "heat_generator"
+    );
+
+    public static final DimensionalApplicatorBlock DIMENSIONAL_APPLICATOR = registerBlock(
+            new DimensionalApplicatorBlock(FabricBlockSettings.of(Material.METAL)
+                    .sounds(BlockSoundGroup.METAL)
+                    .hardness(blockHardness)
+                    .resistance(blockResistance)
+                    .breakByTool(FabricToolTags.PICKAXES)
+            ),
+            "dimensional_applicator"
+    );
+
     public static <B extends Block> B registerBlock(B block, String name) {
         Registry.register(Registry.BLOCK, new Identifier(SpatialHarvesters.modid, name), block);
         return block;

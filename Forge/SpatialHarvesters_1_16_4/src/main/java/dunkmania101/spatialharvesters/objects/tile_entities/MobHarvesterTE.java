@@ -53,11 +53,6 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     @Override
     protected void lastMinuteActions() {
-        super.lastMinuteActions();
-        setEntityDrops();
-    }
-
-    protected void setEntityDrops() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
         if (!StringUtils.isNullOrEmpty(this.entity)) {
             MobEntity mobEntity = getMobEntity();
@@ -128,7 +123,10 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                             if (entity != null) {
                                 if (entity instanceof MobEntity) {
                                     mobEntity = (MobEntity) entity;
-                                    mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(getPos()), SpawnReason.NATURAL, null, null);
+                                    try {
+                                        mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(getPos()), SpawnReason.NATURAL, null, null);
+                                    } catch (Exception ignored) {
+                                    }
                                 }
                                 entity.remove();
                             }

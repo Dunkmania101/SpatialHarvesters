@@ -8,6 +8,8 @@ import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
+import java.util.ArrayList;
+
 public class OreHarvesterTE extends SpatialHarvesterTE {
     public OreHarvesterTE() {
         super(TileEntityInit.ORE_HARVESTER.get(), Tools.getLoadedOres());
@@ -16,9 +18,7 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
     @Override
     public int getPrice(Block block) {
         int price = CommonConfig.ORE_1_PRICE.get();
-        if (block == BlockInit.ORE_HARVESTER_1.get()) {
-            price = CommonConfig.ORE_1_PRICE.get();
-        } else if (block == BlockInit.ORE_HARVESTER_2.get()) {
+        if (block == BlockInit.ORE_HARVESTER_2.get()) {
             price = CommonConfig.ORE_2_PRICE.get();
         } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
             price = CommonConfig.ORE_3_PRICE.get();
@@ -39,9 +39,7 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
     @Override
     public int getSpeed(Block block) {
         int speed = CommonConfig.ORE_1_SPEED.get();
-        if (block == BlockInit.ORE_HARVESTER_1.get()) {
-            speed = CommonConfig.ORE_1_SPEED.get();
-        } else if (block == BlockInit.ORE_HARVESTER_2.get()) {
+        if (block == BlockInit.ORE_HARVESTER_2.get()) {
             speed = CommonConfig.ORE_2_SPEED.get();
         } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
             speed = CommonConfig.ORE_3_SPEED.get();
@@ -62,9 +60,7 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
     @Override
     public Item getShard(Block block) {
         Item CHOSEN_SHARD = ItemInit.SHARD_1.get();
-        if (block == BlockInit.ORE_HARVESTER_1.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_1.get();
-        } else if (block == BlockInit.ORE_HARVESTER_2.get()) {
+       if (block == BlockInit.ORE_HARVESTER_2.get()) {
             CHOSEN_SHARD = ItemInit.SHARD_2.get();
         } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
             CHOSEN_SHARD = ItemInit.SHARD_3.get();
@@ -80,5 +76,31 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
             CHOSEN_SHARD = ItemInit.SHARD_7.get();
         }
         return CHOSEN_SHARD;
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> getMinTierItems() {
+        return CommonConfig.MIN_TIER_ORES.get();
+    }
+
+    @Override
+    public int getTier(Block block) {
+        int tier = super.getTier(block);
+        if (block == BlockInit.ORE_HARVESTER_2.get()) {
+            tier = 2;
+        } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
+            tier = 3;
+        } else if (block == BlockInit.ORE_HARVESTER_4.get()) {
+            tier = 4;
+        } else if (block == BlockInit.ORE_HARVESTER_5.get()) {
+            tier = 5;
+        } else if (block == BlockInit.ORE_HARVESTER_6.get()) {
+            tier = 6;
+        } else if (block == BlockInit.ORE_HARVESTER_7.get()) {
+            tier = 7;
+        } else if (block == BlockInit.ORE_HARVESTER_8.get()) {
+            tier = 8;
+        }
+        return tier;
     }
 }

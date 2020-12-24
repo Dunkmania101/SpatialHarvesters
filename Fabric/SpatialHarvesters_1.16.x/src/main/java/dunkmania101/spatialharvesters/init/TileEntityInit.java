@@ -78,6 +78,20 @@ public class TileEntityInit implements ModInitializer {
             "dark_mob_harvester"
     );
 
+    public static final BlockEntityType<DarkMobHarvesterTE> HEAT_GENERATOR = registerBlockEntityType(
+            BlockEntityType.Builder.create(DarkMobHarvesterTE::new,
+                    BlockInit.HEAT_GENERATOR
+            ).build(null),
+            "heat_generator"
+    );
+
+    public static final BlockEntityType<DarkMobHarvesterTE> DIMENSIONAL_APPLICATOR = registerBlockEntityType(
+            BlockEntityType.Builder.create(DarkMobHarvesterTE::new,
+                    BlockInit.DIMENSIONAL_APPLICATOR
+            ).build(null),
+            "dimensional_applicator"
+    );
+
     public static <E extends BlockEntityType<?>> E registerBlockEntityType(E blockEntityType, String name) {
         Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(SpatialHarvesters.modid, name), blockEntityType);
         return blockEntityType;

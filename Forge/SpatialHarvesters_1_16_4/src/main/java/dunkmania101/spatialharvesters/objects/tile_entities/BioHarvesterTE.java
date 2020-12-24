@@ -8,6 +8,8 @@ import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
+import java.util.ArrayList;
+
 public class BioHarvesterTE extends SpatialHarvesterTE {
     public BioHarvesterTE() {
         super(TileEntityInit.BIO_HARVESTER.get(), Tools.getLoadedBios());
@@ -80,5 +82,31 @@ public class BioHarvesterTE extends SpatialHarvesterTE {
             CHOSEN_SHARD = ItemInit.SHARD_7.get();
         }
         return CHOSEN_SHARD;
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> getMinTierItems() {
+        return CommonConfig.MIN_TIER_BIOS.get();
+    }
+
+    @Override
+    public int getTier(Block block) {
+        int tier = super.getTier(block);
+        if (block == BlockInit.BIO_HARVESTER_2.get()) {
+            tier = 2;
+        } else if (block == BlockInit.BIO_HARVESTER_3.get()) {
+            tier = 3;
+        } else if (block == BlockInit.BIO_HARVESTER_4.get()) {
+            tier = 4;
+        } else if (block == BlockInit.BIO_HARVESTER_5.get()) {
+            tier = 5;
+        } else if (block == BlockInit.BIO_HARVESTER_6.get()) {
+            tier = 6;
+        } else if (block == BlockInit.BIO_HARVESTER_7.get()) {
+            tier = 7;
+        } else if (block == BlockInit.BIO_HARVESTER_8.get()) {
+            tier = 8;
+        }
+        return tier;
     }
 }

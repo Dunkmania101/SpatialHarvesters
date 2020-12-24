@@ -21,6 +21,10 @@ public class CommonConfig {
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOILS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<ArrayList<String>>>> CUSTOM_MOB_DROPS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> MIN_TIER_ORES;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> MIN_TIER_BIOS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> MIN_TIER_STONES;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> MIN_TIER_SOILS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_SOILS;
@@ -653,6 +657,17 @@ public class CommonConfig {
         CUSTOM_SOIL_TAGS = BUILDER.comment("Custom tags for the Soil Harvester.")
                 .comment("Note that this one uses block tags, rather than item tags, because most soil-like things are only tagged in their blocks.")
                 .define("custom_soil_tags", custom_soil_tags);
+        BUILDER.pop();
+
+        BUILDER.push("Minimum Harvester Tier Items - Format: [[modid, name, tier (1-8, must be string)], [modid, name, tier (1-8, must be string)]]: ");
+        MIN_TIER_ORES = BUILDER.comment("Minimum Tier Ore Harvesters for given Ores.")
+                .define("min_tier_ores", new ArrayList<>());
+        MIN_TIER_BIOS = BUILDER.comment("Minimum Tier Bio Harvesters for given Bios.")
+                .define("min_tier_bios", new ArrayList<>());
+        MIN_TIER_STONES = BUILDER.comment("Minimum Tier Stone Harvesters for given Stones.")
+                .define("min_tier_stones", new ArrayList<>());
+        MIN_TIER_SOILS = BUILDER.comment("Minimum Tier Soil Harvesters for given Soils.")
+                .define("min_tier_soils", new ArrayList<>());
         BUILDER.pop();
 
         BUILDER.push("Harvester Blacklists: ");
