@@ -12,7 +12,12 @@ import java.util.ArrayList;
 
 public class StoneHarvesterTE extends SpatialHarvesterTE {
     public StoneHarvesterTE() {
-        super(TileEntityInit.STONE_HARVESTER.get(), Tools.getLoadedStones());
+        super(TileEntityInit.STONE_HARVESTER.get());
+    }
+
+    @Override
+    public ArrayList<Item> getOutputs() {
+        return Tools.getLoadedStones();
     }
 
     @Override

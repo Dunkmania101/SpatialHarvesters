@@ -12,7 +12,12 @@ import java.util.ArrayList;
 
 public class OreHarvesterTE extends SpatialHarvesterTE {
     public OreHarvesterTE() {
-        super(TileEntityInit.ORE_HARVESTER.get(), Tools.getLoadedOres());
+        super(TileEntityInit.ORE_HARVESTER.get());
+    }
+
+    @Override
+    public ArrayList<Item> getOutputs() {
+        return Tools.getLoadedOres();
     }
 
     @Override

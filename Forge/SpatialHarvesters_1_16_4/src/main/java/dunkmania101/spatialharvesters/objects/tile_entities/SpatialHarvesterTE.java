@@ -26,10 +26,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     protected final ArrayList<String> BLACKLIST = new ArrayList<>();
     private Block thisBlock = null;
 
-    public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn, ArrayList<Item> OUTPUTS) {
+    public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn, true, true, true);
-
-        setOutputs(OUTPUTS);
     }
 
     @Override
@@ -61,6 +59,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             setActive(false);
         } else {
             super.customTickActions();
+            if (this.OUTPUTS.isEmpty()) {
+                setOutputs(getOutputs());
+            }
             if (getWorld() != null && !getWorld().isRemote && this.thisBlock != null) {
                 if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                     resetCountedTicks();
@@ -137,6 +138,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     public void setOutputStacks(ArrayList<ItemStack> OUTPUTS) {
         this.OUTPUTS.clear();
         this.OUTPUTS.addAll(OUTPUTS);
+    }
+
+    public ArrayList<Item> getOutputs() {
+        return new ArrayList<>();
     }
 
     public void filterOutputsMinTier(Block block) {

@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import com.mojang.authlib.GameProfile;
+import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
@@ -38,7 +39,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     protected CompoundNBT weapon = new CompoundNBT();
 
     public MobHarvesterTE(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn, new ArrayList<>());
+        super(tileEntityTypeIn);
     }
 
     public static final Method dropLoot;
@@ -54,86 +55,95 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     @Override
     protected void lastMinuteActions() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
-        if (!StringUtils.isNullOrEmpty(this.entity)) {
-            MobEntity mobEntity = getMobEntity();
-            if (mobEntity != null) {
-                if (this.player == null) {
-                    setPlayer();
-                }
-                if (this.player != null) {
-                    ResourceLocation entityRN = mobEntity.getType().getRegistryName();
-                    if (entityRN != null) {
-                        ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
-                        String mod = entityRN.getNamespace();
-                        String path = entityRN.getPath();
-                        ArrayList<String> modMob = new ArrayList<>();
-                        modMob.add(mod);
-                        modMob.add(path);
-                        for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
-                            ArrayList<String> customModMob = modMobDrop.get(0);
-                            if (customModMob.containsAll(modMob)) {
-                                ArrayList<String> customMobDrop = modMobDrop.get(1);
-                                ResourceLocation mobDropRN = new ResourceLocation(customMobDrop.get(0), customMobDrop.get(1));
-                                Item drop = ForgeRegistries.ITEMS.getValue(mobDropRN);
-                                if (drop != null && drop != Items.AIR) {
-                                    newOutputs.add(new ItemStack(drop));
+        try {
+            if (!StringUtils.isNullOrEmpty(this.entity)) {
+                MobEntity mobEntity = getMobEntity();
+                if (mobEntity != null) {
+                    if (this.player == null) {
+                        setPlayer();
+                    }
+                    if (this.player != null) {
+                        ResourceLocation entityRN = mobEntity.getType().getRegistryName();
+                        if (entityRN != null) {
+                            ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
+                            String mod = entityRN.getNamespace();
+                            String path = entityRN.getPath();
+                            ArrayList<String> modMob = new ArrayList<>();
+                            modMob.add(mod);
+                            modMob.add(path);
+                            for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
+                                ArrayList<String> customModMob = modMobDrop.get(0);
+                                if (customModMob.containsAll(modMob)) {
+                                    ArrayList<String> customMobDrop = modMobDrop.get(1);
+                                    ResourceLocation mobDropRN = new ResourceLocation(customMobDrop.get(0), customMobDrop.get(1));
+                                    Item drop = ForgeRegistries.ITEMS.getValue(mobDropRN);
+                                    if (drop != null && drop != Items.AIR) {
+                                        newOutputs.add(new ItemStack(drop));
+                                    }
                                 }
                             }
                         }
+                        updateWeapon();
+                        DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
+                        ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
+                        mobEntity.captureDrops(new ArrayList<>());
+                        int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
+                        try {
+                            dropLoot.invoke(mobEntity, playerDamage, true);
+                            dropSpecialItems.invoke(mobEntity, playerDamage, lootingLevel, true);
+                        } catch (Exception error) {
+                            SpatialHarvesters.LOGGER.catching(error);
+                        }
+                        Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
+                        LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
+                        if (!MinecraftForge.EVENT_BUS.post(event)) {
+                            event.getDrops().stream()
+                                    .map(ItemEntity::getItem)
+                                    .forEach(newOutputs::add);
+                        }
+                        mobEntity.remove();
                     }
-                    updateWeapon();
-                    DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
-                    ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
-                    mobEntity.captureDrops(new ArrayList<>());
-                    int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
-                    try {
-                        dropLoot.invoke(mobEntity, playerDamage, true);
-                        dropSpecialItems.invoke(mobEntity, playerDamage, lootingLevel, true);
-                    } catch (Exception error) {
-                        throw new RuntimeException(error);
-                    }
-                    Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
-                    LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
-                    if (!MinecraftForge.EVENT_BUS.post(event)) {
-                        event.getDrops().stream()
-                                .map(ItemEntity::getItem)
-                                .forEach(newOutputs::add);
-                    }
-                    mobEntity.remove();
                 }
             }
+        } catch (Exception error) {
+            SpatialHarvesters.LOGGER.catching(error);
         }
         setOutputStacks(newOutputs);
     }
 
     protected MobEntity getMobEntity() {
         MobEntity mobEntity = null;
-        if (getWorld() != null && !StringUtils.isNullOrEmpty(this.entity)) {
-            if (getWorld() instanceof ServerWorld) {
-                ServerWorld serverWorld = (ServerWorld) getWorld();
-                Optional<EntityType<?>> optionalEntityType = EntityType.byKey(this.entity);
-                if (optionalEntityType.isPresent()) {
-                    EntityType<?> entityType = optionalEntityType.get();
-                    ResourceLocation mobRN = entityType.getRegistryName();
-                    if (mobRN != null) {
-                        ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
-                        ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
-                        if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
-                            Entity entity = entityType.create(serverWorld);
-                            if (entity != null) {
-                                if (entity instanceof MobEntity) {
-                                    mobEntity = (MobEntity) entity;
-                                    try {
-                                        mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(getPos()), SpawnReason.NATURAL, null, null);
-                                    } catch (Exception ignored) {
+        try {
+            if (getWorld() != null && !StringUtils.isNullOrEmpty(this.entity)) {
+                if (getWorld() instanceof ServerWorld) {
+                    ServerWorld serverWorld = (ServerWorld) getWorld();
+                    Optional<EntityType<?>> optionalEntityType = EntityType.byKey(this.entity);
+                    if (optionalEntityType.isPresent()) {
+                        EntityType<?> entityType = optionalEntityType.get();
+                        ResourceLocation mobRN = entityType.getRegistryName();
+                        if (mobRN != null) {
+                            ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
+                            ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
+                            if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
+                                Entity entity = entityType.create(serverWorld);
+                                if (entity != null) {
+                                    if (entity instanceof MobEntity) {
+                                        mobEntity = (MobEntity) entity;
+                                        try {
+                                            mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(getPos()), SpawnReason.NATURAL, null, null);
+                                        } catch (Exception error) {
+                                            SpatialHarvesters.LOGGER.catching(error);
+                                        }
                                     }
+                                    entity.remove();
                                 }
-                                entity.remove();
                             }
                         }
                     }
                 }
             }
+        } catch (Exception error) {
+            SpatialHarvesters.LOGGER.catching(error);
         }
         return mobEntity;
     }

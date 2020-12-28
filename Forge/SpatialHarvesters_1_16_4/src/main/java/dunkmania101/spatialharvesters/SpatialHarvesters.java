@@ -14,12 +14,15 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 
 @Mod(SpatialHarvesters.modid)
 public class SpatialHarvesters {
     public static final String modid = "spatialharvesters";
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public SpatialHarvesters() {
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();

@@ -12,7 +12,12 @@ import java.util.ArrayList;
 
 public class BioHarvesterTE extends SpatialHarvesterTE {
     public BioHarvesterTE() {
-        super(TileEntityInit.BIO_HARVESTER.get(), Tools.getLoadedBios());
+        super(TileEntityInit.BIO_HARVESTER.get());
+    }
+
+    @Override
+    public ArrayList<Item> getOutputs() {
+        return Tools.getLoadedBios();
     }
 
     @Override
