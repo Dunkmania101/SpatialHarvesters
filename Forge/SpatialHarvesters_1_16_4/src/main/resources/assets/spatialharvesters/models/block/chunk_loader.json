@@ -1,7 +1,7 @@
 {
   "credit": "Made by Dunkmania101 with Blockbench",
   "textures": {
-    "0": "spatialharvesters:block/tier_1_block",
+    "0": "spatialharvesters:block/no_tier_block",
     "1": "spatialharvesters:block/chunk_loader_block",
     "2": "spatialharvesters:dark_machine",
     "3": "spatialharvesters:dark_rough_color",

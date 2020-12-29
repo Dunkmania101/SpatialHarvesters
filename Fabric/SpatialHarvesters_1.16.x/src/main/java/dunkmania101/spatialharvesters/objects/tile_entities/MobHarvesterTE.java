@@ -1,5 +1,6 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
@@ -38,93 +39,97 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     @Override
     protected void lastMinuteActions() {
-        super.lastMinuteActions();
-        setEntityDrops();
-    }
-
-    protected void setEntityDrops() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
-        if (this.entity != null && !this.entity.isEmpty()) {
-            MobEntity mobEntity = getMobEntity();
-            if (mobEntity != null) {
-                if (this.player == null) {
-                    setPlayer();
-                }
-                if (this.player != null && this.player.isDead()) {
-                    setPlayer();
-                }
-                if (this.player != null) {
-                    Identifier entityRN = Identifier.tryParse(mobEntity.getType().getTranslationKey());
-                    if (entityRN != null) {
-                        ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.custom_mob_drops;
-                        String mod = entityRN.getNamespace();
-                        String path = entityRN.getPath();
-                        ArrayList<String> modMob = new ArrayList<>();
-                        modMob.add(mod);
-                        modMob.add(path);
-                        for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
-                            ArrayList<String> customModMob = modMobDrop.get(0);
-                            if (customModMob.containsAll(modMob)) {
-                                ArrayList<String> customMobDrop = modMobDrop.get(1);
-                                Identifier mobDropRN = new Identifier(customMobDrop.get(0), customMobDrop.get(1));
-                                Item drop = Registry.ITEM.get(mobDropRN);
-                                if (drop != Items.AIR) {
-                                    newOutputs.add(new ItemStack(drop));
+        try {
+            if (this.entity != null && !this.entity.isEmpty()) {
+                MobEntity mobEntity = getMobEntity();
+                if (mobEntity != null) {
+                    if (this.player == null) {
+                        setPlayer();
+                    }
+                    if (this.player != null && this.player.isDead()) {
+                        setPlayer();
+                    }
+                    if (this.player != null) {
+                        Identifier entityRN = Identifier.tryParse(mobEntity.getType().getTranslationKey());
+                        if (entityRN != null) {
+                            ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.custom_mob_drops;
+                            String mod = entityRN.getNamespace();
+                            String path = entityRN.getPath();
+                            ArrayList<String> modMob = new ArrayList<>();
+                            modMob.add(mod);
+                            modMob.add(path);
+                            for (ArrayList<ArrayList<String>> modMobDrop : custom_mob_drops) {
+                                ArrayList<String> customModMob = modMobDrop.get(0);
+                                if (customModMob.containsAll(modMob)) {
+                                    ArrayList<String> customMobDrop = modMobDrop.get(1);
+                                    Identifier mobDropRN = new Identifier(customMobDrop.get(0), customMobDrop.get(1));
+                                    Item drop = Registry.ITEM.get(mobDropRN);
+                                    if (drop != Items.AIR) {
+                                        newOutputs.add(new ItemStack(drop));
+                                    }
                                 }
                             }
                         }
-                    }
-                    updateWeapon();
-                    DamageSource playerDamage = DamageSource.player(this.player);
-                    getMobEntity().setAttacking(this.player);
-                    int lootingLevel = EnchantmentHelper.getLooting(this.player);
-                    ((MobEntityMixinCastable) mobEntity).invokeDropLoot(playerDamage, true);
-                    ((MobEntityMixinCastable) mobEntity).invokeDropEquipment(playerDamage, lootingLevel, true);
-                    CompoundTag savedDropsData = mobEntity.toTag(new CompoundTag()).getCompound(CustomValues.savedDropsKey);
-                    for (String key : savedDropsData.getKeys()) {
-                        CompoundTag stackNBT = savedDropsData.getCompound(key);
-                        if (!stackNBT.isEmpty()) {
-                            ItemStack stack = ItemStack.fromTag(stackNBT);
-                            if (!stack.isEmpty()) {
-                                newOutputs.add(stack);
+                        updateWeapon();
+                        DamageSource playerDamage = DamageSource.player(this.player);
+                        getMobEntity().setAttacking(this.player);
+                        int lootingLevel = EnchantmentHelper.getLooting(this.player);
+                        ((MobEntityMixinCastable) mobEntity).invokeDropLoot(playerDamage, true);
+                        ((MobEntityMixinCastable) mobEntity).invokeDropEquipment(playerDamage, lootingLevel, true);
+                        CompoundTag savedDropsData = mobEntity.toTag(new CompoundTag()).getCompound(CustomValues.savedDropsKey);
+                        for (String key : savedDropsData.getKeys()) {
+                            CompoundTag stackNBT = savedDropsData.getCompound(key);
+                            if (!stackNBT.isEmpty()) {
+                                ItemStack stack = ItemStack.fromTag(stackNBT);
+                                if (!stack.isEmpty()) {
+                                    newOutputs.add(stack);
+                                }
                             }
                         }
+                        mobEntity.remove();
                     }
-                    mobEntity.remove();
                 }
             }
+        } catch (Exception error) {
+            SpatialHarvesters.LOGGER.catching(error);
         }
         setOutputStacks(newOutputs);
     }
 
     protected MobEntity getMobEntity() {
         MobEntity mobEntity = null;
-        if (getWorld() != null && this.entity != null && !this.entity.isEmpty()) {
-            if (getWorld() instanceof ServerWorld) {
-                ServerWorld serverWorld = (ServerWorld) getWorld();
-                Optional<EntityType<?>> optionalEntityType = EntityType.get(this.entity);
-                if (optionalEntityType.isPresent()) {
-                    EntityType<?> entityType = optionalEntityType.get();
-                    Identifier mobRN = Identifier.tryParse(entityType.getTranslationKey());
-                    if (mobRN != null) {
-                        ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.blacklist_mobs;
-                        ArrayList<String> blacklist_mobs_mod = CommonConfig.blacklist_mobs_mod;
-                        if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
-                            Entity entity = entityType.create(serverWorld);
-                            if (entity != null) {
-                                if (entity instanceof MobEntity) {
-                                    mobEntity = (MobEntity) entity;
-                                    try {
-                                        mobEntity.initialize(serverWorld, serverWorld.getLocalDifficulty(getPos()), SpawnReason.NATURAL, null, null);
-                                    } catch (Exception ignored) {
+        try {
+            if (getWorld() != null && this.entity != null && !this.entity.isEmpty()) {
+                if (getWorld() instanceof ServerWorld) {
+                    ServerWorld serverWorld = (ServerWorld) getWorld();
+                    Optional<EntityType<?>> optionalEntityType = EntityType.get(this.entity);
+                    if (optionalEntityType.isPresent()) {
+                        EntityType<?> entityType = optionalEntityType.get();
+                        Identifier mobRN = Identifier.tryParse(entityType.getTranslationKey());
+                        if (mobRN != null) {
+                            ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.blacklist_mobs;
+                            ArrayList<String> blacklist_mobs_mod = CommonConfig.blacklist_mobs_mod;
+                            if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
+                                Entity entity = entityType.create(serverWorld);
+                                if (entity != null) {
+                                    if (entity instanceof MobEntity) {
+                                        mobEntity = (MobEntity) entity;
+                                        try {
+                                            mobEntity.initialize(serverWorld, serverWorld.getLocalDifficulty(getPos()), SpawnReason.NATURAL, null, null);
+                                        } catch (Exception error) {
+                                            SpatialHarvesters.LOGGER.catching(error);
+                                        }
                                     }
+                                    entity.remove();
                                 }
-                                entity.remove();
                             }
                         }
                     }
                 }
             }
+        } catch (Exception error) {
+            SpatialHarvesters.LOGGER.catching(error);
         }
         return mobEntity;
     }

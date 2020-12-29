@@ -15,20 +15,23 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
-    protected ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
-    protected ArrayList<Item> BLACKLIST = new ArrayList<>();
+    protected final ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
+    protected ArrayList<String> BLACKLIST = new ArrayList<>();
     private Block thisBlock = null;
 
-    public SpatialHarvesterTE(BlockEntityType<?> blockEntityType, ArrayList<Item> OUTPUTS) {
+    public SpatialHarvesterTE(BlockEntityType<?> blockEntityType) {
         super(blockEntityType, true, true, true);
+    }
 
-        setOutputs(OUTPUTS);
+    @Override
+    public void tick() {
+        this.thisBlock = getCachedState().getBlock();
+        super.tick();
     }
 
     @Override
@@ -52,7 +55,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         } else if (this instanceof SpecificMobHarvesterTE && !enableSpecificMob) {
             setActive(false);
         } else {
-            super.customTickActions();
+            if (this.OUTPUTS.isEmpty()) {
+                setOutputs(getOutputs());
+            }
             if (getWorld() != null && !getWorld().isClient && this.thisBlock != null) {
                 if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                     resetCountedTicks();
@@ -77,6 +82,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                         if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
                             lastMinuteActions();
                             if (!this.OUTPUTS.isEmpty()) {
+                                filterOutputsMinTier(thisBlock);
                                 for (Direction ignored : spaceRippers) {
                                     if (getEnergyStorage().getEnergy() >= price) {
                                         ItemStack chosenOutput;
@@ -116,7 +122,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public void setOutputs(ArrayList<Item> OUTPUTS) {
-        this.OUTPUTS = new ArrayList<>();
+        this.OUTPUTS.clear();
         for (Item item : OUTPUTS) {
             ItemStack stack = new ItemStack(item);
             if (!stack.isEmpty()) {
@@ -126,8 +132,39 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public void setOutputStacks(ArrayList<ItemStack> OUTPUTS) {
-        this.OUTPUTS = OUTPUTS;
+        this.OUTPUTS.clear();
+        this.OUTPUTS.addAll(OUTPUTS);
     }
+
+    public ArrayList<Item> getOutputs() {
+        return new ArrayList<>();
+    }
+
+    public void filterOutputsMinTier(Block block) {
+        ArrayList<ArrayList<String>> minTierItems = getMinTierItems();
+        for (ArrayList<String> itemTier : minTierItems) {
+            if (itemTier.size() >= 3) {
+                int tier = 0;
+                try {
+                    tier = Integer.parseInt(itemTier.get(2));
+                } catch (NumberFormatException | NullPointerException ignored) {
+                }
+                if (getTier(block) < tier) {
+                    Identifier itemRN = new Identifier(itemTier.get(0), itemTier.get(1));
+                    this.OUTPUTS.removeIf(stack -> stack.getItem().getTranslationKey() != null && stack.getItem().getTranslationKey().equals(itemRN.toString()));
+                }
+            }
+        }
+    }
+
+    public ArrayList<ArrayList<String>> getMinTierItems() {
+        return new ArrayList<>();
+    }
+
+    public int getTier(Block block) {
+        return 1;
+    }
+
 
     @Override
     public double getMaxStoredPower() {
@@ -165,12 +202,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         CompoundTag nbt = super.saveSerializedValues();
         CompoundTag disabledResources = new CompoundTag();
         int i = 0;
-        for (Item item : this.BLACKLIST) {
-            String rn = item.getTranslationKey();
-            if (rn != null) {
-                disabledResources.putString(Integer.toString(i), rn);
-                i++;
-            }
+        for (String rn : this.BLACKLIST) {
+            disabledResources.putString(Integer.toString(i), rn);
+            i++;
         }
         if (!disabledResources.isEmpty()) {
             nbt.put(CustomValues.disabledResourcesKey, disabledResources);
@@ -182,22 +216,23 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     public void setDeserializedValues(CompoundTag nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeDisabledNBTKey)) {
-            this.BLACKLIST = new ArrayList<>();
+            this.BLACKLIST.clear();
         }
         if (nbt.contains(CustomValues.disabledResourcesKey)) {
-            this.BLACKLIST = new ArrayList<>();
+            this.BLACKLIST.clear();
             CompoundTag disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
             for (String key : disabledResources.getKeys()) {
-                Item item = Registry.ITEM.get(new Identifier(disabledResources.getString(key)));
-                if (item != Items.AIR && !this.BLACKLIST.contains(item)) {
-                    this.BLACKLIST.add(item);
+                String airRN = Items.AIR.getTranslationKey();
+                if (!key.equals(airRN) && !this.BLACKLIST.contains(key)) {
+                    this.BLACKLIST.add(key);
                 }
             }
         }
         if (nbt.contains(CustomValues.disabledResourceKey)) {
-            Item item = Registry.ITEM.get(new Identifier(nbt.getString(CustomValues.disabledResourceKey)));
-            if (item != Items.AIR && !this.BLACKLIST.contains(item)) {
-                this.BLACKLIST.add(item);
+            String airRN = Items.AIR.getTranslationKey();
+            String key = nbt.getString(CustomValues.disabledResourceKey);
+            if (!key.equals(airRN) && !this.BLACKLIST.contains(key)) {
+                this.BLACKLIST.add(key);
             }
         }
     }

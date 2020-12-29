@@ -898,8 +898,8 @@ public class CommonConfig {
         DIMENSIONAL_APPLICATOR_AMPLIFIER = BUILDER.comment("Amplifier for the Dimensional Applicator (The final value will be this * the number of Space Rippers.)")
                 .defineInRange("amplifier_dimensional_applicator", 1, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_DURATION = BUILDER.comment("Duration for the Dimensional Applicator (in ticks, 20 = one second, 220 = 11 seconds (Night Vision flashes at 10 or less)).")
-                .defineInRange("dimensional_applicator_duration", 220, 0, Integer.MAX_VALUE);
-        DIMENSIONAL_APPLICATOR_DIVISOR = BUILDER.comment("How much to divide the Dimensional Applicator's duration by to get it's reapplication frequency (10 makes it every second if the duration is 220).")
+                .defineInRange("dimensional_applicator_duration", 240, 0, Integer.MAX_VALUE);
+        DIMENSIONAL_APPLICATOR_DIVISOR = BUILDER.comment("How much to divide the Dimensional Applicator's duration by to get it's reapplication frequency (10 makes it every second if the duration is 220, just over if 240).")
                 .comment("This can be less than one to make it take longer than the effect lasts (not recommended, though).")
                 .defineInRange("dimensional_applicator_divisor", 10, 0, Double.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_IS_BEACON_EFFECT = BUILDER.comment("Whether the game should think the effects came from a beacon.")

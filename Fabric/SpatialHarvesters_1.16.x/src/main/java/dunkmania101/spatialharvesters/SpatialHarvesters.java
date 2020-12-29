@@ -6,9 +6,12 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SpatialHarvesters implements ModInitializer {
     public static final String modid = "spatialharvesters";
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public static final ItemGroup SPATIAL_HARVESTERS_GROUP = FabricItemGroupBuilder.build(
             new Identifier(modid, "items"),
