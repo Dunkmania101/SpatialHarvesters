@@ -89,10 +89,11 @@ public class ItemInit {
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<Item> MOB_SHARD = ITEMS.register("mob_shard",
-            () -> new Item(
+    public static final RegistryObject<ShardItem> MOB_SHARD = ITEMS.register("mob_shard",
+            () -> new ShardItem(
                     new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance),
+                            0
             ));
 
     public static final RegistryObject<Item> MOB_CRYSTAL = ITEMS.register("mob_crystal",
@@ -101,46 +102,53 @@ public class ItemInit {
                             .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
             ));
 
-    public static final RegistryObject<Item> SHARD_1 = ITEMS.register("shard_1",
-            () -> new Item(
+    public static final RegistryObject<ShardItem> SHARD_1 = ITEMS.register("shard_1",
+            () -> new ShardItem(
                     new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance),
+                            1
             ));
 
-    public static final RegistryObject<Item> SHARD_2 = ITEMS.register("shard_2",
-            () -> new Item(
+    public static final RegistryObject<ShardItem> SHARD_2 = ITEMS.register("shard_2",
+            () -> new ShardItem(
                     new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance),
+                            2
             ));
 
-    public static final RegistryObject<Item> SHARD_3 = ITEMS.register("shard_3",
-            () -> new Item(
+    public static final RegistryObject<ShardItem> SHARD_3 = ITEMS.register("shard_3",
+            () -> new ShardItem(
                     new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance),
+                            3
             ));
 
-    public static final RegistryObject<Item> SHARD_4 = ITEMS.register("shard_4",
-            () -> new Item(
+    public static final RegistryObject<ShardItem> SHARD_4 = ITEMS.register("shard_4",
+            () -> new ShardItem(
                     new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance),
+                            4
             ));
 
-    public static final RegistryObject<Item> SHARD_5 = ITEMS.register("shard_5",
-            () -> new Item(
+    public static final RegistryObject<ShardItem> SHARD_5 = ITEMS.register("shard_5",
+            () -> new ShardItem(
                     new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance),
+                            5
             ));
 
-    public static final RegistryObject<Item> SHARD_6 = ITEMS.register("shard_6",
-            () -> new Item(
+    public static final RegistryObject<ShardItem> SHARD_6 = ITEMS.register("shard_6",
+            () -> new ShardItem(
                     new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance),
+                            6
             ));
 
-    public static final RegistryObject<Item> SHARD_7 = ITEMS.register("shard_7",
-            () -> new Item(
+    public static final RegistryObject<ShardItem> SHARD_7 = ITEMS.register("shard_7",
+            () -> new ShardItem(
                     new Item.Properties()
-                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance)
+                            .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance),
+                            7
             ));
 
     public static final RegistryObject<Item> CRYSTAL_1 = ITEMS.register("crystal_1",

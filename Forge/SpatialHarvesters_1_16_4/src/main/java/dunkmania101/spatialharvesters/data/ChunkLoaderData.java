@@ -11,10 +11,12 @@ import java.util.ArrayList;
 
 public class ChunkLoaderData extends WorldSavedData {
     private final ArrayList<Long> chunkLoaders;
+    private final ArrayList<Long> disabledChunks;
 
     public ChunkLoaderData() {
         super(CustomValues.chunkLoaderDataKey);
         this.chunkLoaders = new ArrayList<>();
+        this.disabledChunks = new ArrayList<>();
     }
 
     public static ChunkLoaderData get(ServerWorld worldIn) {
@@ -38,11 +40,34 @@ public class ChunkLoaderData extends WorldSavedData {
         this.markDirty();
     }
 
+    public ArrayList<Long> getDisabledChunks() {
+        return this.disabledChunks;
+    }
+
+    public void addDisabledChunk(ChunkPos cpos) {
+        long posLong = cpos.asLong();
+        if (!this.disabledChunks.contains(posLong)) {
+            this.disabledChunks.add(posLong);
+            this.markDirty();
+        }
+    }
+
     @Override
     public void read(CompoundNBT nbt) {
         long[] chunkLoadersNBT = nbt.getLongArray(CustomValues.chunkLoaderDataKey);
         for (long check_pos : chunkLoadersNBT) {
-            this.chunkLoaders.add(check_pos);
+            if (!this.chunkLoaders.contains(check_pos)) {
+                this.chunkLoaders.add(check_pos);
+            }
+        }
+        boolean enableChunkLoader = CommonConfig.ENABLE_CHUNK_LOADER.get();
+        if (!enableChunkLoader) {
+            long[] disabledChunksNBT = nbt.getLongArray(CustomValues.chunkLoaderDataKey);
+            for (long check_pos : disabledChunksNBT) {
+                if (!this.disabledChunks.contains(check_pos)) {
+                    this.disabledChunks.add(check_pos);
+                }
+            }
         }
     }
 
@@ -51,6 +76,8 @@ public class ChunkLoaderData extends WorldSavedData {
     public CompoundNBT write(CompoundNBT compound) {
         LongArrayNBT chunkLoadersNBT = new LongArrayNBT(chunkLoaders);
         compound.put(CustomValues.chunkLoaderDataKey, chunkLoadersNBT);
+        LongArrayNBT disabledChunksNBT = new LongArrayNBT(disabledChunks);
+        compound.put(CustomValues.disabledChunksKey, disabledChunksNBT);
         return compound;
     }
 }
