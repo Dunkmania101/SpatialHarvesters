@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cec",
+    "bab",
+    "bdb"
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:stone_harvester_5"
+    },
+    "b": {
+      "tag": "forge:ingots/iron"
+    },
+    "c": {
+      "item": "spatialharvesters:base_powder"
+    },
+    "d": {
+      "item": "spatialharvesters:crystal_5"
+    },
+    "e": {
+      "item": "spatialharvesters:stone_core"
+    }
+  },
+  "result": {
+    "item": "spatialharvesters:stone_harvester_6"
+  }
+}
