@@ -352,7 +352,7 @@ public class CommonConfig implements ConfigGroup {
     public static ArrayList<ArrayList<String>> custom_ore_tags = new ArrayList<>();
     static {
         ArrayList<String> modTag = new ArrayList<>();
-        String mod = "forge";
+        String mod = "c";
         String tag = "ores";
         modTag.add(mod);
         modTag.add(tag);
@@ -362,48 +362,48 @@ public class CommonConfig implements ConfigGroup {
     public static ArrayList<ArrayList<String>> custom_bio_tags = new ArrayList<>();
     static {
         ArrayList<String> modTag = new ArrayList<>();
-        String mod = "forge";
+        String mod = "c";
         String tag = "crops";
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "leather";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "feathers";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "seeds";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "dyes";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "bones";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "rods_wooden";
         modTag = new ArrayList<>();
         modTag.add(mod);
@@ -449,27 +449,27 @@ public class CommonConfig implements ConfigGroup {
     public static ArrayList<ArrayList<String>> custom_stone_tags = new ArrayList<>();
     static {
         ArrayList<String> modTag = new ArrayList<>();
-        String mod = "forge";
+        String mod = "c";
         String tag = "cobblestone";
         modTag.add(mod);
         modTag.add(tag);
         custom_stone_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "sandstone";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_stone_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "end_stones";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_stone_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "netherrack";
         modTag = new ArrayList<>();
         modTag.add(mod);
@@ -480,20 +480,20 @@ public class CommonConfig implements ConfigGroup {
     public static ArrayList<ArrayList<String>> custom_soil_tags = new ArrayList<>();
     static {
         ArrayList<String> modTag = new ArrayList<>();
-        String mod = "forge";
+        String mod = "c";
         String tag = "dirt";
         modTag.add(mod);
         modTag.add(tag);
         custom_soil_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "sand";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_soil_tags.add(modTag);
 
-        mod = "forge";
+        mod = "c";
         tag = "gravel";
         modTag = new ArrayList<>();
         modTag.add(mod);
