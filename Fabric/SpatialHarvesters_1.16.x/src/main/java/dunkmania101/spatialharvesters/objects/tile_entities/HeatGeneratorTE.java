@@ -1,7 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     public HeatGeneratorTE() {
-        super(TileEntityInit.HEAT_GENERATOR, true, true);
+        super(BlockEntityInit.HEAT_GENERATOR, true, true);
     }
 
     @Override

@@ -2,7 +2,7 @@
   "credit": "Made by Dunkmania101 with Blockbench",
   "textures": {
     "0": "spatialharvesters:block/tier_3_block",
-    "1": "spatialharvesters:block/ore_harvester_block",
+    "1": "spatialharvesters:block/ore_harvester_3_block",
     "2": "spatialharvesters:dark_machine",
     "3": "spatialharvesters:dark_rough_color",
     "particle": "spatialharvesters:dark_rough_color"

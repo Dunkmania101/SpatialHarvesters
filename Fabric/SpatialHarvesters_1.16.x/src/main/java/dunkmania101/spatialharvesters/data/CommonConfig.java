@@ -1,10 +1,10 @@
 package dunkmania101.spatialharvesters.data;
 
-import me.lortseam.completeconfig.api.ConfigCategory;
-
 import java.util.ArrayList;
 
-public class CommonConfig implements ConfigCategory {
+import me.lortseam.completeconfig.api.ConfigGroup;
+
+public class CommonConfig implements ConfigGroup {
     @Override
     public boolean isConfigPOJO() {
         return true;

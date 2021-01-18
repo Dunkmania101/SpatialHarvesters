@@ -34,7 +34,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     protected CompoundTag weapon = new CompoundTag();
 
     public MobHarvesterTE(BlockEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn, new ArrayList<>());
+        super(tileEntityTypeIn);
     }
 
     @Override

@@ -65,6 +65,7 @@ public class CustomValues {
     public static final String entityNBTKey = SpatialHarvesters.modid + "_entityNBT";
     public static final String weaponNBTKey = SpatialHarvesters.modid + "_weaponNBT";
     public static final String chunkLoaderDataKey = SpatialHarvesters.modid + "_chunkLoaders";
+    public static final String disabledChunksKey = SpatialHarvesters.modid + "_disabledChunks";
     public static final String shouldSaveDropsKey = SpatialHarvesters.modid + "_shouldSaveDrops";
     public static final String savedDropsKey = SpatialHarvesters.modid + "_savedDrops";
 }

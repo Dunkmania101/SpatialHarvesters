@@ -3,7 +3,7 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.BlockInit;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.StatusEffect;
@@ -23,7 +23,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private ArrayList<Integer> NBTEffects = new ArrayList<>();
 
     public DimensionalApplicatorTE() {
-        super(TileEntityInit.DIMENSIONAL_APPLICATOR, true, true, true);
+        super(BlockEntityInit.DIMENSIONAL_APPLICATOR, true, true, true);
     }
 
     @Override
@@ -89,23 +89,23 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         for (Direction check_direction : Direction.values()) {
             Block block = worldIn.getBlockState(pos.offset(check_direction)).getBlock();
             StatusEffect effect = null;
-            if (block == BlockInit.REGENERATION_ACTIVATOR.get()) {
+            if (block == BlockInit.REGENERATION_ACTIVATOR) {
                 effect = StatusEffects.REGENERATION;
-            } else if (block == BlockInit.RESISTANCE_ACTIVATOR.get()) {
+            } else if (block == BlockInit.RESISTANCE_ACTIVATOR) {
                 effect = StatusEffects.RESISTANCE;
-            } else if (block == BlockInit.ABSORPTION_ACTIVATOR.get()) {
+            } else if (block == BlockInit.ABSORPTION_ACTIVATOR) {
                 effect = StatusEffects.ABSORPTION;
-            } else if (block == BlockInit.HASTE_ACTIVATOR.get()) {
+            } else if (block == BlockInit.HASTE_ACTIVATOR) {
                 effect = StatusEffects.HASTE;
-            } else if (block == BlockInit.SPEED_ACTIVATOR.get()) {
+            } else if (block == BlockInit.SPEED_ACTIVATOR) {
                 effect = StatusEffects.SPEED;
-            } else if (block == BlockInit.JUMP_BOOST_ACTIVATOR.get()) {
+            } else if (block == BlockInit.JUMP_BOOST_ACTIVATOR) {
                 effect = StatusEffects.JUMP_BOOST;
-            } else if (block == BlockInit.INVISIBILITY_ACTIVATOR.get()) {
+            } else if (block == BlockInit.INVISIBILITY_ACTIVATOR) {
                 effect = StatusEffects.INVISIBILITY;
-            } else if (block == BlockInit.NIGHT_VISION_ACTIVATOR.get()) {
+            } else if (block == BlockInit.NIGHT_VISION_ACTIVATOR) {
                 effect = StatusEffects.NIGHT_VISION;
-            } else if (block == BlockInit.STRENGTH_ACTIVATOR.get()) {
+            } else if (block == BlockInit.STRENGTH_ACTIVATOR) {
                 effect = StatusEffects.STRENGTH;
             }
             if (effect != null) {

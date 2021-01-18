@@ -1,12 +1,12 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import net.minecraft.block.Block;
 
 public class SpecificMobHarvesterTE extends MobHarvesterTE {
     public SpecificMobHarvesterTE() {
-        super(TileEntityInit.SPECIFIC_MOB_HARVESTER);
+        super(BlockEntityInit.SPECIFIC_MOB_HARVESTER);
     }
 
     @Override

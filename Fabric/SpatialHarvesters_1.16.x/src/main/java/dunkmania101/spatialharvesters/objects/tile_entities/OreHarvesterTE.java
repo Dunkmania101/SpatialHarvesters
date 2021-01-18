@@ -1,16 +1,23 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import java.util.ArrayList;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
 public class OreHarvesterTE extends SpatialHarvesterTE {
     public OreHarvesterTE() {
-        super(TileEntityInit.ORE_HARVESTER, Tools.getLoadedOres());
+        super(BlockEntityInit.ORE_HARVESTER);
+    }
+
+    @Override
+    public ArrayList<Item> getOutputs() {
+        return Tools.getLoadedOres();
     }
 
     @Override

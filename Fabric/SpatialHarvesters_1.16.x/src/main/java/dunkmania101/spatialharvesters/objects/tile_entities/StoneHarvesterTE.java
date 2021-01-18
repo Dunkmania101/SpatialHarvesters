@@ -1,16 +1,23 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import java.util.ArrayList;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
 public class StoneHarvesterTE extends SpatialHarvesterTE {
     public StoneHarvesterTE() {
-        super(TileEntityInit.STONE_HARVESTER, Tools.getLoadedStones());
+        super(BlockEntityInit.STONE_HARVESTER);
+    }
+
+    @Override
+    public ArrayList<Item> getOutputs() {
+        return Tools.getLoadedStones();
     }
 
     @Override

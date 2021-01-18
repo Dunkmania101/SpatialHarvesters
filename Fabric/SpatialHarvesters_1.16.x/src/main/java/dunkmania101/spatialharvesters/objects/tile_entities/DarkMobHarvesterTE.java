@@ -2,7 +2,7 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -18,7 +18,7 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
     private final ArrayList<String> MOBS = new ArrayList<>();
 
     public DarkMobHarvesterTE() {
-        super(TileEntityInit.DARK_MOB_HARVESTER);
+        super(BlockEntityInit.DARK_MOB_HARVESTER);
     }
 
     @Override

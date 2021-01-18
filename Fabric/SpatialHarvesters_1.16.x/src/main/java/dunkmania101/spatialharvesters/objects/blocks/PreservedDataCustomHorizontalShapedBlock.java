@@ -1,7 +1,14 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
+import java.util.List;
+import java.util.Optional;
+
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.tile_entities.*;
+import dunkmania101.spatialharvesters.objects.tile_entities.CustomEnergyMachineTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.SpatialHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.TickingRedstoneEnergyMachineTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,18 +23,12 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
-
-import java.util.List;
-import java.util.Optional;
 
 public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalShapedBlock {
     private CompoundTag thisTileNBT = new CompoundTag();
@@ -71,12 +72,12 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
         if (!world.isClient) {
             if (player.isSneaking()) {
                 BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
-                    player.sendMessage(new LiteralText("msg.spatialharvesters.divider"), false);
+                    player.sendMessage(new TranslatableText("msg.spatialharvesters.divider"), false);
                     CompoundTag data = tile.toTag(new CompoundTag());
                     if (tile instanceof CustomEnergyMachineTE) {
                         player.sendMessage(new TranslatableText("msg.spatialharvesters.energy_message"), false);
@@ -139,6 +140,6 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                 }
             }
         }
-        return super.onUse(state, world, pos, player, hand, hit);
+        super.onBlockBreakStart(state, world, pos, player);
     }
 }
