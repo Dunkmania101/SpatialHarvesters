@@ -10,13 +10,13 @@
       "item": "spatialharvesters:casing"
     },
     "b": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:iron_ingots"
     },
     "c": {
-      "tag": "forge:crops/carrot"
+      "tag": "c:crops/carrot"
     },
     "d": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:diamonds"
     }
   },
   "result": {

@@ -10,7 +10,7 @@
       "item": "spatialharvesters:bio_harvester_7"
     },
     "b": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:iron_ingots"
     },
     "c": {
       "item": "spatialharvesters:base_powder"

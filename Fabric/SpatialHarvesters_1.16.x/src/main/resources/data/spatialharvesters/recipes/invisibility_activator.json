@@ -10,13 +10,13 @@
       "item": "spatialharvesters:casing"
     },
     "b": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:iron_ingots"
     },
     "c": {
-      "tag": "forge:glass_panes"
+      "tag": "c:glass_panes"
     },
     "d": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:diamonds"
     }
   },
   "result": {

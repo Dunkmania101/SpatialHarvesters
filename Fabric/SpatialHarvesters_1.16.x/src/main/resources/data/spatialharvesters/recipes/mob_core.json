@@ -7,10 +7,10 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:diamonds"
     },
     "b": {
-      "tag": "forge:eggs"
+      "tag": "c:eggs"
     },
     "c": {
       "item": "spatialharvesters:base_powder"

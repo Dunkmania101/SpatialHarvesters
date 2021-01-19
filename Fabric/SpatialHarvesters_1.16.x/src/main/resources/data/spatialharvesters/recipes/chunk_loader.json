@@ -7,10 +7,10 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/redstone"
+      "tag": "c:redstone_blocks"
     },
     "b": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:iron_ingots"
     },
     "c": {
       "item": "spatialharvesters:base_powder"
