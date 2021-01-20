@@ -17,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -40,12 +40,12 @@ public class ResourceDisablerKeyItem extends Item {
         if (player.isCrouching()) {
             ItemStack otherStack = player.getHeldItemOffhand();
             if (otherStack.isEmpty()) {
-                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_disabled_resource"), true);
+                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resource", TextFormatting.RED), true);
                 itemstack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
             } else {
                 ResourceLocation rn = otherStack.getItem().getRegistryName();
                 if (rn != null) {
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_disabled_resource"), true);
+                    player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", TextFormatting.BLUE), true);
                     itemstack.getOrCreateTag().putString(CustomValues.disabledResourceKey, rn.toString());
                 }
             }
@@ -76,12 +76,12 @@ public class ResourceDisablerKeyItem extends Item {
                             }
                         }
                         if (disabledNBT.isEmpty()) {
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_disabled_resource_failed"), true);
+                            player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource_failed", TextFormatting.DARK_RED), true);
                         } else {
                             if (disabledNBT.contains(CustomValues.removeDisabledNBTKey)) {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_disabled_resources"), true);
+                                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resources", TextFormatting.RED), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.add_disabled_resource"), true);
+                                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.add_disabled_resource", TextFormatting.BLUE), true);
                             }
                             tile.deserializeNBT(Tools.correctTileNBT(tile, disabledNBT));
                         }
@@ -95,21 +95,21 @@ public class ResourceDisablerKeyItem extends Item {
     @Override
     public void addInformation(@Nonnull ItemStack stack, World worldIn, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.resource_disabler_key_description"));
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.resource_disabler_key_description", TextFormatting.GOLD));
         CompoundNBT nbt = stack.getTag();
         if (nbt != null) {
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.disabled_resource"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resource", TextFormatting.RED));
             if (nbt.contains(CustomValues.disabledResourceKey)) {
                 String resource = nbt.getString(CustomValues.disabledResourceKey);
                 if (!StringUtils.isNullOrEmpty(resource)) {
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(resource));
                     if (item != null) {
-                        tooltip.add(item.getName());
+                        tooltip.add(item.getName().copyRaw().mergeStyle(TextFormatting.DARK_PURPLE));
                     }
                 }
             }
         }
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+        tooltip.add(Tools.getDividerText());
     }
 }

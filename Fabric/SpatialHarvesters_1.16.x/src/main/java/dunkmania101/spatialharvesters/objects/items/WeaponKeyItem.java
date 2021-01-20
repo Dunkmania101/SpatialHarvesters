@@ -14,8 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -41,10 +41,10 @@ public class WeaponKeyItem extends Item {
                 ItemStack otherStack = player.getOffHandStack();
                 if (otherStack.isEmpty()) {
                     stack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
-                    player.sendMessage(new TranslatableText("msg.spatialharvesters.clear_weapon_key_weapon"), true);
+                    player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_weapon_key_weapon", Formatting.RED), true);
                 } else {
                     stack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.toTag(new CompoundTag()));
-                    player.sendMessage(new TranslatableText("msg.spatialharvesters.set_weapon_key_weapon"), true);
+                    player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_weapon_key_weapon", Formatting.BLUE), true);
                 }
             }
         }
@@ -73,12 +73,12 @@ public class WeaponKeyItem extends Item {
                             }
                         }
                         if (harvesterNBT.isEmpty()) {
-                            player.sendMessage(new TranslatableText("msg.spatialharvesters.set_mob_harvester_failed"), true);
+                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester_failed", Formatting.DARK_RED), true);
                         } else {
                             if (harvesterNBT.contains(CustomValues.removeWeaponNBTKey)) {
-                                player.sendMessage(new TranslatableText("msg.spatialharvesters.clear_mob_harvester"), true);
+                                player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_mob_harvester", Formatting.RED), true);
                             } else {
-                                player.sendMessage(new TranslatableText("msg.spatialharvesters.set_mob_harvester"), true);
+                                player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", Formatting.BLUE), true);
                             }
                             tile.fromTag(world.getBlockState(pos), Tools.correctTileNBT(tile, harvesterNBT));
                         }
@@ -92,21 +92,21 @@ public class WeaponKeyItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(new TranslatableText("msg.spatialharvesters.weapon_key_description"));
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.weapon_key_description", Formatting.GOLD));
         CompoundTag nbt = stack.getTag();
         if (nbt != null) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslatableText("msg.spatialharvesters.weapon_key_bound_weapon"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY));
             if (nbt.contains(CustomValues.weaponNBTKey)) {
                 CompoundTag weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
                 if (!weaponNBT.isEmpty()) {
                     ItemStack weapon = ItemStack.fromTag(weaponNBT);
                     if (!weapon.isEmpty()) {
-                        tooltip.add(weapon.getName());
+                        tooltip.add(weapon.getName().copy().formatted(Formatting.GRAY, Formatting.BOLD));
                     }
                 }
             }
         }
-        tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
+        tooltip.add(Tools.getDividerText());
     }
 }

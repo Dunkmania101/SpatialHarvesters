@@ -1,5 +1,8 @@
 package dunkmania101.spatialharvesters.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import net.minecraft.block.Block;
@@ -13,6 +16,9 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -21,9 +27,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Tools {
     public static ItemStack insertItemStacked(Inventory inventory, ItemStack stack) {
@@ -287,5 +290,30 @@ public class Tools {
             return blacklist.contains(getModResourceArray(rn)) || blacklistMod.contains(rn.getNamespace());
         }
         return true;
+    }
+
+    public static Text getTranslatedFormattedText(String key, Formatting format) {
+        TranslatableText text = new TranslatableText(key);
+        if (format != null) {
+            return text.formatted(format);
+        }
+        return text;
+    }
+
+    public static Text getDividerText() {
+        return new TranslatableText("msg.spatialharvesters.divider").formatted(Formatting.GRAY);
+    }
+
+    public static ArrayList<Text> getMultiLineText(String key, Formatting format) {
+        ArrayList<Text> texts = new ArrayList<>();
+        for (String txt : new TranslatableText(key).getString().split("\n")) {
+            Text text = Text.of(txt);
+            if (format != null) {
+                texts.add(text.copy().formatted(format));
+            } else {
+                texts.add(text);
+            }
+        }
+        return texts;
     }
 }

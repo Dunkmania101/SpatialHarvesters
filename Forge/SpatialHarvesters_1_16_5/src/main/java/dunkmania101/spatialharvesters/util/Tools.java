@@ -16,6 +16,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -220,5 +224,31 @@ public class Tools {
             return blacklist.contains(getModResourceArray(rn)) || blacklist_mod.contains(rn.getNamespace());
         }
         return true;
+    }
+
+    public static TextComponent getTranslatedFormattedText(String key, TextFormatting format) {
+        TranslationTextComponent text = new TranslationTextComponent(key);
+        if (format != null) {
+            return (TextComponent) text.mergeStyle(format);
+        }
+        return text;
+    }
+
+    public static TextComponent getDividerText() {
+        return (TextComponent) new TranslationTextComponent("msg.spatialharvesters.divider")
+                .mergeStyle(TextFormatting.GRAY);
+    }
+
+    public static ArrayList<TextComponent> getMultiLineText(String key, TextFormatting format) {
+        ArrayList<TextComponent> texts = new ArrayList<>();
+        for (String txt : new TranslationTextComponent(key).getString().split("\n")) {
+            TextComponent text = new StringTextComponent(txt);
+            if (format != null) {
+                texts.add((TextComponent) text.mergeStyle(format));
+            } else {
+                texts.add(text);
+            }
+        }
+        return texts;
     }
 }

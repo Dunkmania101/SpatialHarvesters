@@ -94,13 +94,12 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                             chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                         }
                                         if (!chosenOutput.isEmpty()) {
-                                            if (this.BLACKLIST.contains(chosenOutput.getItem())) {
+                                            if (this.BLACKLIST.contains(chosenOutput.getItem().getTranslationKey())) {
                                                 getEnergyStorage().extract(price);
                                                 setActive(true);
                                             } else {
                                                 int originalCount = chosenOutput.getCount();
                                                 Inventory inventory = outInventories.get(rand.nextInt(outInventories.size()));
-
                                                 ItemStack resultStack = Tools.insertItemStacked(inventory, chosenOutput);
                                                 if (resultStack.getCount() != originalCount) {
                                                     getEnergyStorage().extract(price);
@@ -164,7 +163,6 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     public int getTier(Block block) {
         return 1;
     }
-
 
     @Override
     public double getMaxStoredPower() {

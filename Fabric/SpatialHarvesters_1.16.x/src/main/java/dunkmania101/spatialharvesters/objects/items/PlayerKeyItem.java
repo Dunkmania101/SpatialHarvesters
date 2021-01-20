@@ -11,8 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -37,10 +37,10 @@ public class PlayerKeyItem extends Item {
                         CompoundTag nbt = new CompoundTag();
                         if (player.isSneaking()) {
                             nbt.putString(CustomValues.removePlayerNBTKey, "");
-                            player.sendMessage(new TranslatableText("msg.spatialharvesters.clear_dimensional_applicator"), true);
+                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_dimensional_applicator", Formatting.RED), true);
                         } else {
                             nbt.putUuid(CustomValues.playerNBTKey, player.getUuid());
-                            player.sendMessage(new TranslatableText("msg.spatialharvesters.set_dimensional_applicator"), true);
+                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_dimensional_applicator", Formatting.BLUE), true);
                         }
                         tile.fromTag(context.getWorld().getBlockState(pos), Tools.correctTileNBT(tile, nbt));
                     }
@@ -53,7 +53,7 @@ public class PlayerKeyItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(new TranslatableText("msg.spatialharvesters.player_key_description"));
-        tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.player_key_description", Formatting.GOLD));
+        tooltip.add(Tools.getDividerText());
     }
 }

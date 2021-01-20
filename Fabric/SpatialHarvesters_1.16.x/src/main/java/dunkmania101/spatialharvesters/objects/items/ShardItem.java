@@ -3,11 +3,12 @@ package dunkmania101.spatialharvesters.objects.items;
 import java.util.List;
 
 import dunkmania101.spatialharvesters.init.ItemInit;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 public class ShardItem extends Item {
@@ -21,9 +22,10 @@ public class ShardItem extends Item {
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         if (this.tier > 0) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.shard_description").append(Integer.toString(this.tier)));
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.shard_description", Formatting.GOLD));
+            tooltip.add(Text.of(Integer.toString(this.tier)).copy().formatted(Formatting.BLUE, Formatting.BOLD));
         } else if (this == ItemInit.MOB_SHARD) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.mob_shard_description"));
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_shard_description", Formatting.RED));
         }
     }
 }

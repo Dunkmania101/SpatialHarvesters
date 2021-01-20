@@ -15,7 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -33,15 +33,15 @@ public class WeaponKeyItem extends Item {
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
         if (player.isCrouching()) {
             ItemStack otherStack = player.getHeldItemOffhand();
             if (otherStack.isEmpty()) {
-                itemstack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
-                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_weapon_key_weapon"), true);
+                stack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
+                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_weapon_key_weapon", TextFormatting.RED), true);
             } else {
-                itemstack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.serializeNBT());
-                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_weapon_key_weapon"), true);
+                stack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.serializeNBT());
+                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_weapon_key_weapon", TextFormatting.BLUE), true);
             }
         }
         return true;
@@ -70,12 +70,12 @@ public class WeaponKeyItem extends Item {
                             }
                         }
                         if (harvesterNBT.isEmpty()) {
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
+                            player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester_failed", TextFormatting.DARK_RED), true);
                         } else {
                             if (harvesterNBT.contains(CustomValues.removeWeaponNBTKey)) {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
+                                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_mob_harvester", TextFormatting.RED), true);
                             } else {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
+                                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", TextFormatting.BLUE), true);
                             }
                             tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
                         }
@@ -89,21 +89,21 @@ public class WeaponKeyItem extends Item {
     @Override
     public void addInformation(@Nonnull ItemStack stack, World worldIn, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.weapon_key_description"));
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.weapon_key_description", TextFormatting.GOLD));
         CompoundNBT nbt = stack.getTag();
         if (nbt != null) {
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.weapon_key_bound_weapon"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", TextFormatting.DARK_GRAY));
             if (nbt.contains(CustomValues.weaponNBTKey)) {
                 CompoundNBT weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
                 if (!weaponNBT.isEmpty()) {
                     ItemStack weapon = ItemStack.read(weaponNBT);
                     if (!weapon.isEmpty()) {
-                        tooltip.add(weapon.getDisplayName());
+                        tooltip.add(weapon.getDisplayName().copyRaw().mergeStyle(TextFormatting.GRAY));
                     }
                 }
             }
         }
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+        tooltip.add(Tools.getDividerText());
     }
 }

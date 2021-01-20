@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -52,9 +52,9 @@ public class MobKeyItem extends Item {
                 if (attacker instanceof PlayerEntity) {
                     PlayerEntity player = (PlayerEntity) attacker;
                     if (banned) {
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_entity_failed"), true);
+                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity_failed", TextFormatting.DARK_RED), true);
                     } else {
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_key_entity"), true);
+                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity", TextFormatting.BLUE), true);
                     }
                 }
             }
@@ -76,7 +76,7 @@ public class MobKeyItem extends Item {
                     if (tile != null) {
                         if (tile instanceof SpecificMobHarvesterTE) {
                             CompoundNBT harvesterNBT = new CompoundNBT();
-                            if (player.isCrouching()) {
+                            if (player.isSneaking()) {
                                 harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
                             } else {
                                 CompoundNBT itemNBT = context.getItem().getTag();
@@ -87,14 +87,14 @@ public class MobKeyItem extends Item {
                                 }
                             }
                             if (harvesterNBT.isEmpty()) {
-                                player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester_failed"), true);
+                                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester_failed", TextFormatting.DARK_RED), true);
                             } else {
                                 if (harvesterNBT.contains(CustomValues.removeEntityNBTKey)) {
-                                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.clear_mob_harvester"), true);
+                                    player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_mob_harvester", TextFormatting.RED), true);
                                 } else {
-                                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.set_mob_harvester"), true);
+                                    player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", TextFormatting.BLUE), true);
                                 }
-                                tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
+                                tile.read(context.getWorld().getBlockState(pos), Tools.correctTileNBT(tile, harvesterNBT));
                             }
                         }
                     }
@@ -107,22 +107,22 @@ public class MobKeyItem extends Item {
     @Override
     public void addInformation(@Nonnull ItemStack stack, World worldIn, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_description"));
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.mob_key_description", TextFormatting.GOLD));
         CompoundNBT nbt = stack.getTag();
         if (nbt != null) {
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", TextFormatting.DARK_RED));
             if (nbt.contains(CustomValues.entityNBTKey)) {
                 String entity = nbt.getString(CustomValues.entityNBTKey);
-                if (!StringUtils.isNullOrEmpty(entity)) {
+                if (entity != null && !entity.isEmpty()) {
                     Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
                     if (optionalEntityType.isPresent()) {
                         EntityType<?> entityType = optionalEntityType.get();
-                        tooltip.add(entityType.getName());
+                        tooltip.add(entityType.getName().copyRaw().mergeStyle(TextFormatting.RED));
                     }
                 }
             }
         }
-        tooltip.add(new TranslationTextComponent("msg.spatialharvesters.divider"));
+        tooltip.add(Tools.getDividerText());
     }
 }

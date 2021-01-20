@@ -13,8 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -42,16 +42,16 @@ public class EffectKeyItem extends Item {
                         boolean doContinue = true;
                         if (player.isSneaking()) {
                             potionsNBT.putString(CustomValues.removePotionsNBTKey, "");
-                            player.sendMessage(new TranslatableText("msg.spatialharvesters.remove_dimensional_applicator_nbt_effects"), true);
+                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.remove_dimensional_applicator_nbt_effects", Formatting.RED), true);
                         } else {
                             for (StatusEffectInstance effectInstance : player.getActiveStatusEffects().values()) {
                                 effects.add(StatusEffect.getRawId(effectInstance.getEffectType()));
                             }
                             if (effects.size() > 0) {
-                                player.sendMessage(new TranslatableText("msg.spatialharvesters.set_dimensional_applicator_nbt_effects"), true);
+                                player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_dimensional_applicator_nbt_effects", Formatting.BLUE), true);
                             } else {
                                 doContinue = false;
-                                player.sendMessage(new TranslatableText("msg.spatialharvesters.remove_dimensional_applicator_nbt_effects_failed"), true);
+                                player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.remove_dimensional_applicator_nbt_effects_failed", Formatting.DARK_RED), true);
                             }
                         }
                         if (doContinue) {
@@ -68,7 +68,7 @@ public class EffectKeyItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(new TranslatableText("msg.spatialharvesters.effect_key_description"));
-        tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.effect_key_description", Formatting.GOLD));
+        tooltip.add(Tools.getDividerText());
     }
 }

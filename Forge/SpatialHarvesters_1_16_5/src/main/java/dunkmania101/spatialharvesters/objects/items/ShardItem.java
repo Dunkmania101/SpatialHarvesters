@@ -3,11 +3,13 @@ package dunkmania101.spatialharvesters.objects.items;
 import java.util.List;
 
 import dunkmania101.spatialharvesters.init.ItemInit;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 public class ShardItem extends Item {
@@ -21,9 +23,11 @@ public class ShardItem extends Item {
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         if (this.tier > 0) {
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.shard_description").appendString(Integer.toString(this.tier)));
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.shard_description", TextFormatting.GOLD));
+            tooltip.add(new StringTextComponent((Integer.toString(this.tier))).copyRaw().mergeStyle(TextFormatting.BLUE,
+                    TextFormatting.BOLD));
         } else if (this == ItemInit.MOB_SHARD.get()) {
-            tooltip.add(new TranslationTextComponent("msg.spatialharvesters.mob_shard_description"));
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_shard_description", TextFormatting.GOLD));
         }
     }
 }

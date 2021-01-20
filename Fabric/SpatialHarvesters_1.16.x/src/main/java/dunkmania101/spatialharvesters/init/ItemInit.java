@@ -200,6 +200,9 @@ public class ItemInit implements ModInitializer {
                         new BlockItem(BlockInit.STRENGTH_ACTIVATOR, getBaseItemSettings()), "strength_activator");
 
         // Misc
+        public static final BlockItem CASING = registerItem(
+                new BlockItem(BlockInit.CASING, getBaseItemSettings()), "casing");
+
         public static final BlockItem CHUNK_LOADER = registerItem(
                 new BlockItem(BlockInit.CHUNK_LOADER, getBaseItemSettings()), "chunk_loader");
 

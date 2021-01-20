@@ -15,8 +15,8 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -41,12 +41,12 @@ public class ResourceDisablerKeyItem extends Item {
             if (player.isSneaking()) {
                 ItemStack otherStack = player.getOffHandStack();
                 if (otherStack.isEmpty()) {
-                    player.sendMessage(new TranslatableText("msg.spatialharvesters.clear_disabled_resource"), true);
+                    player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resource", Formatting.RED), true);
                     stack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
                 } else {
                     Identifier rn = Identifier.tryParse(otherStack.getItem().getTranslationKey());
                     if (rn != null) {
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.set_disabled_resource"), true);
+                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", Formatting.BLUE), true);
                         stack.getOrCreateTag().putString(CustomValues.disabledResourceKey, rn.toString());
                     }
                 }
@@ -77,12 +77,12 @@ public class ResourceDisablerKeyItem extends Item {
                             }
                         }
                         if (disabledNBT.isEmpty()) {
-                            player.sendMessage(new TranslatableText("msg.spatialharvesters.set_disabled_resource_failed"), true);
+                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource_failed", Formatting.DARK_RED), true);
                         } else {
                             if (disabledNBT.contains(CustomValues.removeDisabledNBTKey)) {
-                                player.sendMessage(new TranslatableText("msg.spatialharvesters.clear_disabled_resources"), true);
+                                player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resources", Formatting.RED), true);
                             } else {
-                                player.sendMessage(new TranslatableText("msg.spatialharvesters.add_disabled_resource"), true);
+                                player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.add_disabled_resource", Formatting.BLUE), true);
                             }
                             tile.fromTag(world.getBlockState(pos), Tools.correctTileNBT(tile, disabledNBT));
                         }
@@ -96,21 +96,21 @@ public class ResourceDisablerKeyItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, java.util.List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(new TranslatableText("msg.spatialharvesters.resource_disabler_key_description"));
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.resource_disabler_key_description", Formatting.GOLD));
         CompoundTag nbt = stack.getTag();
         if (nbt != null) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslatableText("msg.spatialharvesters.disabled_resource"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resource", Formatting.RED));
             if (nbt.contains(CustomValues.disabledResourceKey)) {
                 String resource = nbt.getString(CustomValues.disabledResourceKey);
                 if (resource != null && !resource.isEmpty()) {
                     Item item = Registry.ITEM.get(new Identifier(resource));
                     if (item != Items.AIR) {
-                        tooltip.add(item.getName());
+                        tooltip.add(item.getName().copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD));
                     }
                 }
             }
         }
-        tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
+        tooltip.add(Tools.getDividerText());
     }
 }

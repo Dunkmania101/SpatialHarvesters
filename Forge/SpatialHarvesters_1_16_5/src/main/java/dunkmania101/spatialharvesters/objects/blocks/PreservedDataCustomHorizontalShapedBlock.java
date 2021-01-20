@@ -20,7 +20,7 @@ import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -76,65 +76,65 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
             if (player.isCrouching()) {
                 TileEntity tile = worldIn.getTileEntity(pos);
                 if (tile != null) {
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                    player.sendStatusMessage(Tools.getDividerText(), false);
                     CompoundNBT data = tile.serializeNBT();
                     if (tile instanceof CustomEnergyMachineTE) {
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.energy_message"), false);
-                        player.sendStatusMessage(new StringTextComponent(Integer.toString(data.getInt(CustomValues.energyStorageKey))), false);
+                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", TextFormatting.DARK_GREEN), false);
+                        player.sendStatusMessage(new StringTextComponent(Integer.toString(data.getInt(CustomValues.energyStorageKey))).mergeStyle(TextFormatting.GREEN, TextFormatting.BOLD), false);
                     }
                     if (tile instanceof TickingRedstoneEnergyMachineTE) {
                         if (data.contains(CustomValues.countedTicksKey)) {
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                            player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.counted_ticks_message"), false);
+                            player.sendStatusMessage(Tools.getDividerText(), false);
+                            player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.counted_ticks_message", TextFormatting.YELLOW), false);
                             int countedTicks = data.getInt(CustomValues.countedTicksKey);
-                            player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)), false);
+                            player.sendStatusMessage(new StringTextComponent(Integer.toString(countedTicks)).mergeStyle(TextFormatting.YELLOW, TextFormatting.BOLD), false);
                         }
                     }
                     if (tile instanceof SpatialHarvesterTE) {
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.disabled_resources"), false);
+                        player.sendStatusMessage(Tools.getDividerText(), false);
+                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resources", TextFormatting.RED), false);
                         if (data.contains(CustomValues.disabledResourcesKey)) {
                             CompoundNBT disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                             for (String key : disabledResources.keySet()) {
                                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
                                 if (item != null && item != Items.AIR) {
-                                    player.sendStatusMessage(item.getName(), false);
+                                    player.sendStatusMessage(item.getName().copyRaw().mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.BOLD), false);
                                 }
                             }
                         }
                     }
                     if (tile instanceof MobHarvesterTE) {
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.mob_key_bound_mob"), false);
+                        player.sendStatusMessage(Tools.getDividerText(), false);
+                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", TextFormatting.DARK_RED), false);
                         String mob = data.getString(CustomValues.entityNBTKey);
                         if (!StringUtils.isNullOrEmpty(mob)) {
                             Optional<EntityType<?>> optionalEntityType = EntityType.byKey(mob);
                             if (optionalEntityType.isPresent()) {
                                 EntityType<?> entityType = optionalEntityType.get();
-                                player.sendStatusMessage(entityType.getName(), false);
+                                player.sendStatusMessage(entityType.getName().copyRaw().mergeStyle(TextFormatting.RED, TextFormatting.BOLD), false);
                             }
                         }
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.weapon_key_bound_weapon"), false);
+                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", TextFormatting.DARK_GRAY), false);
                         CompoundNBT weapon = data.getCompound(CustomValues.weaponNBTKey);
                         if (!weapon.isEmpty()) {
                             ItemStack weaponStack = ItemStack.read(weapon);
                             if (!weaponStack.isEmpty()) {
-                                player.sendStatusMessage(new TranslationTextComponent(weaponStack.getTranslationKey()), false);
+                                player.sendStatusMessage(weaponStack.getDisplayName().copyRaw().mergeStyle(TextFormatting.GRAY, TextFormatting.BOLD), false);
                             }
                         }
                     } else if (tile instanceof DimensionalApplicatorTE) {
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
-                        player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.dimensional_applicator_saved_effects"), false);
+                        player.sendStatusMessage(Tools.getDividerText(), false);
+                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.dimensional_applicator_saved_effects", TextFormatting.BLUE), false);
                         if (data.contains(CustomValues.potionsNBTKey)) {
                             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                                 Effect effect = Effect.get(id);
                                 if (effect != null) {
-                                    player.sendStatusMessage(effect.getDisplayName(), false);
+                                    player.sendStatusMessage(effect.getDisplayName().copyRaw().mergeStyle(TextFormatting.BLUE, TextFormatting.BOLD), false);
                                 }
                             }
                         }
                     }
-                    player.sendStatusMessage(new TranslationTextComponent("msg.spatialharvesters.divider"), false);
+                    player.sendStatusMessage(Tools.getDividerText(), false);
                 }
             }
         }

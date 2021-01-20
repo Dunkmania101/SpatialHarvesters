@@ -1,14 +1,7 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
-import java.util.List;
-import java.util.Optional;
-
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.tile_entities.CustomEnergyMachineTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.DimensionalApplicatorTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.SpatialHarvesterTE;
-import dunkmania101.spatialharvesters.objects.tile_entities.TickingRedstoneEnergyMachineTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.*;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,14 +14,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Optional;
 
 public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalShapedBlock {
     private CompoundTag thisTileNBT = new CompoundTag();
@@ -77,66 +73,65 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
             if (player.isSneaking()) {
                 BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
-                    player.sendMessage(new TranslatableText("msg.spatialharvesters.divider"), false);
+                    player.sendMessage(Tools.getDividerText(), false);
                     CompoundTag data = tile.toTag(new CompoundTag());
                     if (tile instanceof CustomEnergyMachineTE) {
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.energy_message"), false);
-                        player.sendMessage(new LiteralText(Integer.toString(data.getInt(CustomValues.energyStorageKey))) {
-                        }, false);
+                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN), false);
+                        player.sendMessage(Text.of(Integer.toString(data.getInt(CustomValues.energyStorageKey))).copy().formatted(Formatting.GREEN, Formatting.BOLD), false);
                     }
                     if (tile instanceof TickingRedstoneEnergyMachineTE) {
                         if (data.contains(CustomValues.countedTicksKey)) {
-                            player.sendMessage(new TranslatableText("msg.spatialharvesters.divider"), false);
-                            player.sendMessage(new TranslatableText("msg.spatialharvesters.counted_ticks_message"), false);
+                            player.sendMessage(Tools.getDividerText(), false);
+                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.counted_ticks_message", Formatting.YELLOW), false);
                             int countedTicks = data.getInt(CustomValues.countedTicksKey);
-                            player.sendMessage(new LiteralText(Integer.toString(countedTicks)), false);
+                            player.sendMessage(Text.of(Integer.toString(countedTicks)).copy().formatted(Formatting.YELLOW, Formatting.BOLD), false);
                         }
                     }
                     if (tile instanceof SpatialHarvesterTE) {
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.divider"), false);
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.disabled_resources"), false);
+                        player.sendMessage(Tools.getDividerText(), false);
+                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resources", Formatting.RED), false);
                         if (data.contains(CustomValues.disabledResourcesKey)) {
                             CompoundTag disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                             for (String key : disabledResources.getKeys()) {
-                                Item item = Registry.ITEM.get(new Identifier(disabledResources.getString(key)));
-                                if (item != null && item != Items.AIR) {
-                                    player.sendMessage(item.getName(), false);
+                                Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
+                                if (item != Items.AIR) {
+                                    player.sendMessage(item.getName().copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD), false);
                                 }
                             }
                         }
                     }
                     if (tile instanceof MobHarvesterTE) {
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.divider"), false);
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.mob_key_bound_mob"), false);
+                        player.sendMessage(Tools.getDividerText(), false);
+                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", Formatting.DARK_RED), false);
                         String mob = data.getString(CustomValues.entityNBTKey);
                         if (mob != null && !mob.isEmpty()) {
                             Optional<EntityType<?>> optionalEntityType = EntityType.get(mob);
                             if (optionalEntityType.isPresent()) {
                                 EntityType<?> entityType = optionalEntityType.get();
-                                player.sendMessage(entityType.getName(), false);
+                                player.sendMessage(entityType.getName().copy().formatted(Formatting.RED, Formatting.BOLD), false);
                             }
                         }
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.weapon_key_bound_weapon"), false);
+                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY), false);
                         CompoundTag weapon = data.getCompound(CustomValues.weaponNBTKey);
                         if (!weapon.isEmpty()) {
                             ItemStack weaponStack = ItemStack.fromTag(weapon);
                             if (!weaponStack.isEmpty()) {
-                                player.sendMessage(new TranslatableText(weaponStack.getTranslationKey()), false);
+                                player.sendMessage(weaponStack.getName().copy().formatted(Formatting.GRAY, Formatting.BOLD), false);
                             }
                         }
                     } else if (tile instanceof DimensionalApplicatorTE) {
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.divider"), false);
-                        player.sendMessage(new TranslatableText("msg.spatialharvesters.dimensional_applicator_saved_effects"), false);
+                        player.sendMessage(Tools.getDividerText(), false);
+                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.dimensional_applicator_saved_effects", Formatting.BLUE), false);
                         if (data.contains(CustomValues.potionsNBTKey)) {
                             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                                 StatusEffect effect = StatusEffect.byRawId(id);
                                 if (effect != null) {
-                                    player.sendMessage(effect.getName(), false);
+                                    player.sendMessage(effect.getName().copy().formatted(Formatting.BLUE, Formatting.BOLD), false);
                                 }
                             }
                         }
                     }
-                    player.sendMessage(new TranslatableText("msg.spatialharvesters.divider"), false);
+                    player.sendMessage(Tools.getDividerText(), false);
                 }
             }
         }

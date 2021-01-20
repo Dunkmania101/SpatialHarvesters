@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.objects.blocks.block_items;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EntityType;
@@ -11,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -29,61 +30,61 @@ public class MachineBlockItem extends BlockItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         CompoundTag data = stack.getOrCreateTag().getCompound(CustomValues.stackTileNBTKey);
-        tooltip.add(new TranslatableText("msg.spatialharvesters.energy_message"));
+        tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN));
         int energy = data.getInt(CustomValues.energyStorageKey);
-        tooltip.add(Text.of(Integer.toString(energy)));
+        tooltip.add(Text.of(Integer.toString(energy)).copy().formatted(Formatting.GREEN, Formatting.BOLD));
         if (data.contains(CustomValues.countedTicksKey)) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslatableText("msg.spatialharvesters.counted_ticks_message"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.counted_ticks_message", Formatting.YELLOW));
             int ticks = data.getInt(CustomValues.countedTicksKey);
-            tooltip.add(Text.of(Integer.toString(ticks)));
+            tooltip.add(Text.of(Integer.toString(ticks)).copy().formatted(Formatting.YELLOW, Formatting.BOLD));
         }
         if (data.contains(CustomValues.disabledResourcesKey)) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslatableText("msg.spatialharvesters.disabled_resources"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resources", Formatting.RED));
             if (data.contains(CustomValues.disabledResourcesKey)) {
                 CompoundTag disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                 for (String key : disabledResources.getKeys()) {
                     Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                     if (item != Items.AIR) {
-                        tooltip.add(item.getName());
+                        tooltip.add(item.getName().copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD));
                     }
                 }
             }
         }
         if (data.contains(CustomValues.entityNBTKey)) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslatableText("msg.spatialharvesters.mob_key_bound_mob"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", Formatting.DARK_RED));
             String entity = data.getString(CustomValues.entityNBTKey);
             if (entity != null && !entity.isEmpty()) {
                 Optional<EntityType<?>> optionalEntityType = EntityType.get(entity);
                 if (optionalEntityType.isPresent()) {
                     EntityType<?> entityType = optionalEntityType.get();
-                    tooltip.add(entityType.getName());
+                    tooltip.add(entityType.getName().copy().formatted(Formatting.RED, Formatting.BOLD));
                 }
             }
         }
         if (data.contains(CustomValues.weaponNBTKey)) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslatableText("msg.spatialharvesters.weapon_key_bound_weapon"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY));
             CompoundTag weaponNBT = data.getCompound(CustomValues.weaponNBTKey);
             if (!weaponNBT.isEmpty()) {
                 ItemStack weapon = ItemStack.fromTag(weaponNBT);
                 if (!weapon.isEmpty()) {
-                    tooltip.add(weapon.getName());
+                    tooltip.add(weapon.getName().copy().formatted(Formatting.GRAY, Formatting.BOLD));
                 }
             }
         }
         if (data.contains(CustomValues.potionsNBTKey)) {
-            tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
-            tooltip.add(new TranslatableText("msg.spatialharvesters.dimensional_applicator_saved_effects"));
+            tooltip.add(Tools.getDividerText());
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.dimensional_applicator_saved_effects", Formatting.BLUE));
             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                 StatusEffect effect = StatusEffect.byRawId(id);
                 if (effect != null) {
-                    tooltip.add(effect.getName());
+                    tooltip.add(effect.getName().copy().formatted(Formatting.BLUE, Formatting.BOLD));
                 }
             }
         }
-        tooltip.add(new TranslatableText("msg.spatialharvesters.divider"));
+        tooltip.add(Tools.getDividerText());
     }
 }
