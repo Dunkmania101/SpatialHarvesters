@@ -82,4 +82,30 @@ public class StoneHarvesterTE extends SpatialHarvesterTE {
         }
         return CHOSEN_SHARD;
     }
+
+    @Override
+    public ArrayList<ArrayList<String>> getMinTierItems() {
+        return CommonConfig.min_tier_stones;
+    }
+
+    @Override
+    public int getTier(Block block) {
+        int tier = super.getTier(block);
+        if (block == BlockInit.STONE_HARVESTER_2) {
+            tier = 2;
+        } else if (block == BlockInit.STONE_HARVESTER_3) {
+            tier = 3;
+        } else if (block == BlockInit.STONE_HARVESTER_4) {
+            tier = 4;
+        } else if (block == BlockInit.STONE_HARVESTER_5) {
+            tier = 5;
+        } else if (block == BlockInit.STONE_HARVESTER_6) {
+            tier = 6;
+        } else if (block == BlockInit.STONE_HARVESTER_7) {
+            tier = 7;
+        } else if (block == BlockInit.STONE_HARVESTER_8) {
+            tier = 8;
+        }
+        return tier;
+    }
 }

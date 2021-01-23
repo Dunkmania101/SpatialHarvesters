@@ -18,7 +18,7 @@ public class SpatialHarvesters implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public static final ItemGroup SPATIAL_HARVESTERS_GROUP = FabricItemGroupBuilder
-            .build(new Identifier(modid, "items"), () -> new ItemStack(ItemInit.ORE_HARVESTER_1));
+            .build(new Identifier(modid, "spatial_harvesters"), () -> new ItemStack(ItemInit.ORE_HARVESTER_1));
 
     @Override
     public void onInitialize() {

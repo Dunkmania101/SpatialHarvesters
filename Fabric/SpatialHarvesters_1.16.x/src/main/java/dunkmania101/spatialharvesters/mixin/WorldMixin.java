@@ -46,7 +46,7 @@ public class WorldMixin extends ServerWorld {
                     toServerWorld().tickChunk(toServerWorld().getChunk(chunkPos.x, chunkPos.z), toServerWorld().getLevelProperties().getGameRules().getInt(GameRules.RANDOM_TICK_SPEED));
                 } else {
                     if (!data.getDisabledChunks().contains(long_pos)) {
-                        if (toServerWorld().isChunkLoaded(chunkPos.getStartPos())) {
+                        if (toServerWorld().isChunkLoaded(chunkPos.getStartX(), chunkPos.getStartZ())) {
                             toServerWorld().setChunkForced(chunkPos.x, chunkPos.z, false);
                             data.addDisabledChunk(chunkPos);
                         }

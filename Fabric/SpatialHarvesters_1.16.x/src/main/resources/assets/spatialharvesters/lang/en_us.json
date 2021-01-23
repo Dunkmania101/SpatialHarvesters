@@ -75,7 +75,7 @@
   "block.spatialharvesters.invisibility_activator": "Invisibility Activator",
   "block.spatialharvesters.night_vision_activator": "Night Vision Activator",
   "block.spatialharvesters.strength_activator": "Strength Activator",
-  "itemGroup.spatial_harvesters.items": "Spatial Harvesters",
+  "itemGroup.spatialharvesters.spatial_harvesters": "Spatial Harvesters",
   "msg.spatialharvesters.divider": "----------",
   "msg.spatialharvesters.energy_message": "Stored Energy: ",
   "msg.spatialharvesters.counted_ticks_message": "Counted Ticks: ",

@@ -37,9 +37,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     @Override
     public void customTickActions() {
         boolean enableOre = CommonConfig.enable_ore_harvesters;
-        boolean enableBio = CommonConfig.enable_ore_harvesters;
-        boolean enableStone = CommonConfig.enable_ore_harvesters;
-        boolean enableSoil = CommonConfig.enable_ore_harvesters;
+        boolean enableBio = CommonConfig.enable_bio_harvesters;
+        boolean enableStone = CommonConfig.enable_stone_harvesters;
+        boolean enableSoil = CommonConfig.enable_soil_harvesters;
         boolean enableDarkMob = CommonConfig.enable_dark_mob_harvester;
         boolean enableSpecificMob = CommonConfig.enable_specific_mob_harvester;
         if (this instanceof OreHarvesterTE && !enableOre) {
@@ -88,6 +88,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                         ItemStack chosenOutput;
                                         Random rand = getWorld().getRandom();
                                         int shardChance = CommonConfig.harvester_shard_chance;
+                                        if (this instanceof MobHarvesterTE) {
+                                            shardChance = CommonConfig.mob_harvester_mob_shard_chance;
+                                        }
                                         if (rand.nextInt(shardChance) == 1) {
                                             chosenOutput = new ItemStack(getShard(this.thisBlock));
                                         } else {

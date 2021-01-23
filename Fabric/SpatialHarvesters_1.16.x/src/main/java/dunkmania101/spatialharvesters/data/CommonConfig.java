@@ -1,8 +1,8 @@
 package dunkmania101.spatialharvesters.data;
 
-import java.util.ArrayList;
-
 import me.lortseam.completeconfig.api.ConfigGroup;
+
+import java.util.ArrayList;
 
 public class CommonConfig implements ConfigGroup {
     @Override
@@ -363,7 +363,14 @@ public class CommonConfig implements ConfigGroup {
     static {
         ArrayList<String> modTag = new ArrayList<>();
         String mod = "c";
-        String tag = "crops";
+        String tag = "veggies";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_bio_tags.add(modTag);
+
+        mod = "c";
+        tag = "vegetables";
+        modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
@@ -404,7 +411,7 @@ public class CommonConfig implements ConfigGroup {
         custom_bio_tags.add(modTag);
 
         mod = "c";
-        tag = "rods_wooden";
+        tag = "wooden_rods";
         modTag = new ArrayList<>();
         modTag.add(mod);
         modTag.add(tag);
@@ -517,6 +524,11 @@ public class CommonConfig implements ConfigGroup {
     public static ArrayList<String> blacklist_soils_mod = new ArrayList<>();
 
     public static ArrayList<String> blacklist_mobs_mod = new ArrayList<>();
+
+    public static ArrayList<ArrayList<String>> min_tier_ores = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> min_tier_bios = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> min_tier_stones = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> min_tier_soils = new ArrayList<>();
 
     public static int speed_ore_1 = 400;
     public static int speed_ore_2 = 350;

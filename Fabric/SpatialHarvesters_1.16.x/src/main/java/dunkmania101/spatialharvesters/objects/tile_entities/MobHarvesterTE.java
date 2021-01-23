@@ -27,6 +27,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 public class MobHarvesterTE extends SpatialHarvesterTE {
     protected String entity = null;
@@ -139,7 +140,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
             if (getWorld() instanceof ServerWorld) {
                 removePlayer();
                 ServerWorld serverWorld = (ServerWorld) getWorld();
-                this.player = new FakePlayer(serverWorld);
+                UUID uuid = UUID.randomUUID();
+                this.player = new FakePlayer(serverWorld, uuid, uuid.toString());
                 this.player.setSilent(true);
             }
         }

@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 import java.util.UUID;
 
 public class FakePlayer extends PlayerEntity {
-    public FakePlayer(World world) {
-        super(world, BlockPos.ORIGIN, 0, new GameProfile(UUID.randomUUID(), "John Smith"));
+    public FakePlayer(World world, UUID uuid, String name) {
+        super(world, BlockPos.ORIGIN, 0, new GameProfile(uuid, name));
     }
 
     @Override

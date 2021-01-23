@@ -13,7 +13,7 @@
       "tag": "c:iron_ingots"
     },
     "c": {
-      "tag": "c:crops/carrot"
+      "item": "minecraft:carrot"
     },
     "d": {
       "tag": "c:diamonds"
