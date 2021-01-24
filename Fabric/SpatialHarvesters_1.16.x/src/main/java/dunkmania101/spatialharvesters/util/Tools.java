@@ -16,6 +16,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
+import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -165,22 +166,23 @@ public class Tools {
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_ores;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_ores;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_ores_mod;
-        for (Identifier itemRN : Registry.ITEM.getIds()) {
-            if (itemRN != null) {
-                if (!isResourceBanned(itemRN, blacklistItems, blacklistItemsMod)) {
-                    Item checkItem = Registry.ITEM.get(itemRN);
-                    if (configItems.contains(getModResourceArray(itemRN))) {
-                        ITEMS.add(checkItem);
-                    } else {
-                        for (Identifier tagRN : ItemTags.getTagGroup().getTagsFor(checkItem)) {
-                            if (!ITEMS.contains(checkItem)) {
-                                if (customTags.contains(getModResourceArray(tagRN))) {
-                                    ITEMS.add(checkItem);
-                                    break;
-                                }
-                            } else {
-                                break;
-                            }
+        for (ArrayList<String> configItem : configItems) {
+            if (configItem.size() >= 2) {
+                Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
+                Item item = Registry.ITEM.get(itemRN);
+                if (item != Items.AIR && !ITEMS.contains(item)) {
+                    ITEMS.add(item);
+                }
+            }
+        }
+        for (ArrayList<String> customTag : customTags) {
+            if (customTag.size() >= 2) {
+                Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
+                Tag<Item> tag = ItemTags.getTagGroup().getTag(customTagRN);
+                if (tag != null) {
+                    for (Item checkItem : tag.values()) {
+                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.getTranslationKey()), blacklistItems, blacklistItemsMod)) {
+                            ITEMS.add(checkItem);
                         }
                     }
                 }
@@ -195,22 +197,23 @@ public class Tools {
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_bios;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_bios;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_bios_mod;
-        for (Identifier itemRN : Registry.ITEM.getIds()) {
-            if (itemRN != null) {
-                if (!isResourceBanned(itemRN, blacklistItems, blacklistItemsMod)) {
-                    Item checkItem = Registry.ITEM.get(itemRN);
-                    if (configItems.contains(getModResourceArray(itemRN))) {
-                        ITEMS.add(checkItem);
-                    } else {
-                        for (Identifier tagRN : ItemTags.getTagGroup().getTagsFor(checkItem)) {
-                            if (!ITEMS.contains(checkItem)) {
-                                if (customTags.contains(getModResourceArray(tagRN))) {
-                                    ITEMS.add(checkItem);
-                                    break;
-                                }
-                            } else {
-                                break;
-                            }
+        for (ArrayList<String> configItem : configItems) {
+            if (configItem.size() >= 2) {
+                Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
+                Item item = Registry.ITEM.get(itemRN);
+                if (item != Items.AIR && !ITEMS.contains(item)) {
+                    ITEMS.add(item);
+                }
+            }
+        }
+        for (ArrayList<String> customTag : customTags) {
+            if (customTag.size() >= 2) {
+                Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
+                Tag<Item> tag = ItemTags.getTagGroup().getTag(customTagRN);
+                if (tag != null) {
+                    for (Item checkItem : tag.values()) {
+                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.getTranslationKey()), blacklistItems, blacklistItemsMod)) {
+                            ITEMS.add(checkItem);
                         }
                     }
                 }
@@ -225,22 +228,23 @@ public class Tools {
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_stones;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_stones;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_stones_mod;
-        for (Identifier itemRN : Registry.ITEM.getIds()) {
-            if (itemRN != null) {
-                if (!isResourceBanned(itemRN, blacklistItems, blacklistItemsMod)) {
-                    Item checkItem = Registry.ITEM.get(itemRN);
-                    if (configItems.contains(getModResourceArray(itemRN))) {
-                        ITEMS.add(checkItem);
-                    } else {
-                        for (Identifier tagRN : ItemTags.getTagGroup().getTagsFor(checkItem)) {
-                            if (!ITEMS.contains(checkItem)) {
-                                if (customTags.contains(getModResourceArray(tagRN))) {
-                                    ITEMS.add(checkItem);
-                                    break;
-                                }
-                            } else {
-                                break;
-                            }
+        for (ArrayList<String> configItem : configItems) {
+            if (configItem.size() >= 2) {
+                Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
+                Item item = Registry.ITEM.get(itemRN);
+                if (item != Items.AIR && !ITEMS.contains(item)) {
+                    ITEMS.add(item);
+                }
+            }
+        }
+        for (ArrayList<String> customTag : customTags) {
+            if (customTag.size() >= 2) {
+                Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
+                Tag<Item> tag = ItemTags.getTagGroup().getTag(customTagRN);
+                if (tag != null) {
+                    for (Item checkItem : tag.values()) {
+                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.getTranslationKey()), blacklistItems, blacklistItemsMod)) {
+                            ITEMS.add(checkItem);
                         }
                     }
                 }
@@ -251,25 +255,28 @@ public class Tools {
 
     public static ArrayList<Item> getLoadedSoils() {
         ArrayList<Item> ITEMS = new ArrayList<>();
+        ArrayList<ArrayList<String>> customTags = CommonConfig.custom_soil_tags;
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_soils;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_soils;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_soils_mod;
-        for (Block checkBlock : Registry.BLOCK) {
-            Item checkItem = checkBlock.asItem();
-            if (checkItem != Items.AIR) {
-                Identifier itemRN = Identifier.tryParse(checkItem.getTranslationKey());
-                if (itemRN != null) {
-                    if (!isResourceBanned(itemRN, blacklistItems, blacklistItemsMod)) {
-                        ArrayList<ArrayList<String>> customTags = CommonConfig.custom_soil_tags;
-                        if (configItems.contains(getModResourceArray(itemRN))) {
+        for (ArrayList<String> configItem : configItems) {
+            if (configItem.size() >= 2) {
+                Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
+                Item item = Registry.ITEM.get(itemRN);
+                if (item != Items.AIR && !ITEMS.contains(item)) {
+                    ITEMS.add(item);
+                }
+            }
+        }
+        for (ArrayList<String> customTag : customTags) {
+            if (customTag.size() >= 2) {
+                Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
+                Tag<Block> tag = BlockTags.getTagGroup().getTag(customTagRN);
+                if (tag != null) {
+                    for (Block checkBlock : tag.values()) {
+                        Item checkItem = checkBlock.asItem();
+                        if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.getTranslationKey()), blacklistItems, blacklistItemsMod)) {
                             ITEMS.add(checkItem);
-                        } else {
-                            for (Identifier tagRN : BlockTags.getTagGroup().getTagsFor(checkBlock)) {
-                                if (customTags.contains(getModResourceArray(tagRN)) && !ITEMS.contains(checkItem)) {
-                                    ITEMS.add(checkItem);
-                                    break;
-                                }
-                            }
                         }
                     }
                 }

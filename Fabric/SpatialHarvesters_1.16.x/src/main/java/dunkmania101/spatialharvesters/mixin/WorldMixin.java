@@ -1,39 +1,23 @@
 package dunkmania101.spatialharvesters.mixin;
 
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.function.BooleanSupplier;
-
+import dunkmania101.spatialharvesters.data.ChunkLoaderData;
+import dunkmania101.spatialharvesters.data.CommonConfig;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.GameRules;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import dunkmania101.spatialharvesters.data.ChunkLoaderData;
-import dunkmania101.spatialharvesters.data.CommonConfig;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.WorldGenerationProgressListener;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.Spawner;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.level.ServerWorldProperties;
-import net.minecraft.world.level.storage.LevelStorage.Session;
+import java.util.function.BooleanSupplier;
 
 @Mixin(ServerWorld.class)
-public class WorldMixin extends ServerWorld {
-    public WorldMixin(MinecraftServer server, Executor workerExecutor, Session session,
-            ServerWorldProperties properties, RegistryKey<World> registryKey, DimensionType dimensionType,
-            WorldGenerationProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator,
-            boolean debugWorld, long l, List<Spawner> list, boolean bl) {
-        super(server, workerExecutor, session, properties, registryKey, dimensionType, worldGenerationProgressListener,
-                chunkGenerator, debugWorld, l, list, bl);
-    }
+public abstract class WorldMixin {
+    @Shadow
+    public abstract ServerWorld toServerWorld();
 
     @Inject(at = @At("TAIL"), method = "tick")
     public void injectTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
