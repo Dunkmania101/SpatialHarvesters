@@ -37,22 +37,9 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                     resetCountedTicks();
                     setActive(false);
                     if (getEnergyStorage().getEnergyStored() >= getPrice()) {
-                        boolean hasSpaceRipper = false;
-                        for (Direction side : Direction.values()) {
-                            if (getWorld().getBlockState(pos.offset(side)).getBlock() instanceof SpaceRipperBlock) {
-                                hasSpaceRipper = true;
-                                break;
-                            }
-                        }
-                        if (hasSpaceRipper) {
+                        if (getSpaceRippers(getWorld(), getPos()) > 0) {
                             if (getWorld().getServer() != null) {
-                                PlayerEntity player = null;
-                                for (World checkWorld : getWorld().getServer().getWorlds()) {
-                                    player = checkWorld.getPlayerByUuid(this.playerId);
-                                    if (player != null) {
-                                        break;
-                                    }
-                                }
+                                PlayerEntity player = getWorld().getServer().getPlayerList().getPlayerByUUID(this.playerId);
                                 if (player != null) {
                                     ArrayList<EffectInstance> effects = getEffects(getWorld(), getPos());
                                     for (EffectInstance effect : effects) {
