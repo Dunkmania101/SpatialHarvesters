@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -109,73 +110,31 @@ public class Tools {
     }
 
     public static ArrayList<Item> getLoadedOres() {
-        ArrayList<Item> ITEMS = new ArrayList<>();
         ArrayList<ArrayList<String>> customTags = CommonConfig.CUSTOM_ORE_TAGS.get();
         ArrayList<ArrayList<String>> configItems = CommonConfig.CUSTOM_ORES.get();
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.BLACKLIST_ORES.get();
         ArrayList<String> blacklistItemsMod = CommonConfig.BLACKLIST_ORES_MOD.get();
-        for (ArrayList<String> configItem : configItems) {
-            if (configItem.size() >= 2) {
-                ResourceLocation itemRN = new ResourceLocation(configItem.get(0), configItem.get(1));
-                Item item = ForgeRegistries.ITEMS.getValue(itemRN);
-                if (item != Items.AIR && !ITEMS.contains(item)) {
-                    ITEMS.add(item);
-                }
-            }
-        }
-        for (ArrayList<String> customTag : customTags) {
-            if (customTag.size() >= 2) {
-                ResourceLocation customTagRN = new ResourceLocation(customTag.get(0), customTag.get(1));
-                Tags.IOptionalNamedTag<Item> tag = ItemTags.createOptional(customTagRN);
-                if (!tag.isDefaulted()) {
-                    for (Item checkItem : tag.getAllElements()) {
-                        if (!ITEMS.contains(checkItem) && !isResourceBanned(checkItem.getRegistryName(), blacklistItems, blacklistItemsMod)) {
-                            ITEMS.add(checkItem);
-                        }
-                    }
-                }
-            }
-        }
-        return ITEMS;
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
     }
 
     public static ArrayList<Item> getLoadedBios() {
-        ArrayList<Item> ITEMS = new ArrayList<>();
         ArrayList<ArrayList<String>> customTags = CommonConfig.CUSTOM_BIO_TAGS.get();
         ArrayList<ArrayList<String>> configItems = CommonConfig.CUSTOM_BIOS.get();
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.BLACKLIST_BIOS.get();
         ArrayList<String> blacklistItemsMod = CommonConfig.BLACKLIST_BIOS_MOD.get();
-        for (ArrayList<String> configItem : configItems) {
-            if (configItem.size() >= 2) {
-                ResourceLocation itemRN = new ResourceLocation(configItem.get(0), configItem.get(1));
-                Item item = ForgeRegistries.ITEMS.getValue(itemRN);
-                if (item != Items.AIR && !ITEMS.contains(item)) {
-                    ITEMS.add(item);
-                }
-            }
-        }
-        for (ArrayList<String> customTag : customTags) {
-            if (customTag.size() >= 2) {
-                ResourceLocation customTagRN = new ResourceLocation(customTag.get(0), customTag.get(1));
-                Tags.IOptionalNamedTag<Item> tag = ItemTags.createOptional(customTagRN);
-                if (!tag.isDefaulted()) {
-                    for (Item checkItem : tag.getAllElements()) {
-                        if (!ITEMS.contains(checkItem) && !isResourceBanned(checkItem.getRegistryName(), blacklistItems, blacklistItemsMod)) {
-                            ITEMS.add(checkItem);
-                        }
-                    }
-                }
-            }
-        }
-        return ITEMS;
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
     }
 
     public static ArrayList<Item> getLoadedStones() {
-        ArrayList<Item> ITEMS = new ArrayList<>();
         ArrayList<ArrayList<String>> customTags = CommonConfig.CUSTOM_STONE_TAGS.get();
         ArrayList<ArrayList<String>> configItems = CommonConfig.CUSTOM_STONES.get();
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.BLACKLIST_STONES.get();
         ArrayList<String> blacklistItemsMod = CommonConfig.BLACKLIST_STONES_MOD.get();
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
+    }
+
+    public static ArrayList<Item> getLoadedResources(ArrayList<ArrayList<String>> customTags, ArrayList<ArrayList<String>> configItems, ArrayList<ArrayList<String>> blacklistItems, ArrayList<String> blacklistItemsMod) {
+        ArrayList<Item> ITEMS = new ArrayList<>();
         for (ArrayList<String> configItem : configItems) {
             if (configItem.size() >= 2) {
                 ResourceLocation itemRN = new ResourceLocation(configItem.get(0), configItem.get(1));
@@ -188,8 +147,8 @@ public class Tools {
         for (ArrayList<String> customTag : customTags) {
             if (customTag.size() >= 2) {
                 ResourceLocation customTagRN = new ResourceLocation(customTag.get(0), customTag.get(1));
-                Tags.IOptionalNamedTag<Item> tag = ItemTags.createOptional(customTagRN);
-                if (!tag.isDefaulted()) {
+                ITag<Item> tag = ItemTags.getCollection().get(customTagRN);
+                if (tag != null) {
                     for (Item checkItem : tag.getAllElements()) {
                         if (!ITEMS.contains(checkItem) && !isResourceBanned(checkItem.getRegistryName(), blacklistItems, blacklistItemsMod)) {
                             ITEMS.add(checkItem);
@@ -219,8 +178,8 @@ public class Tools {
         for (ArrayList<String> customTag : customTags) {
             if (customTag.size() >= 2) {
                 ResourceLocation customTagRN = new ResourceLocation(customTag.get(0), customTag.get(1));
-                Tags.IOptionalNamedTag<Block> tag = BlockTags.createOptional(customTagRN);
-                if (!tag.isDefaulted()) {
+                ITag<Block> tag = BlockTags.getCollection().get(customTagRN);
+                if (tag != null) {
                     for (Block checkBlock : tag.getAllElements()) {
                         Item checkItem = checkBlock.asItem();
                         if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(checkItem.getRegistryName(), blacklistItems, blacklistItemsMod)) {

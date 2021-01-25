@@ -161,73 +161,31 @@ public class Tools {
     }
 
     public static ArrayList<Item> getLoadedOres() {
-        ArrayList<Item> ITEMS = new ArrayList<>();
         ArrayList<ArrayList<String>> customTags = CommonConfig.custom_ore_tags;
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_ores;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_ores;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_ores_mod;
-        for (ArrayList<String> configItem : configItems) {
-            if (configItem.size() >= 2) {
-                Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
-                Item item = Registry.ITEM.get(itemRN);
-                if (item != Items.AIR && !ITEMS.contains(item)) {
-                    ITEMS.add(item);
-                }
-            }
-        }
-        for (ArrayList<String> customTag : customTags) {
-            if (customTag.size() >= 2) {
-                Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
-                Tag<Item> tag = ItemTags.getTagGroup().getTag(customTagRN);
-                if (tag != null) {
-                    for (Item checkItem : tag.values()) {
-                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.getTranslationKey()), blacklistItems, blacklistItemsMod)) {
-                            ITEMS.add(checkItem);
-                        }
-                    }
-                }
-            }
-        }
-        return ITEMS;
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
     }
 
     public static ArrayList<Item> getLoadedBios() {
-        ArrayList<Item> ITEMS = new ArrayList<>();
         ArrayList<ArrayList<String>> customTags = CommonConfig.custom_bio_tags;
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_bios;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_bios;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_bios_mod;
-        for (ArrayList<String> configItem : configItems) {
-            if (configItem.size() >= 2) {
-                Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
-                Item item = Registry.ITEM.get(itemRN);
-                if (item != Items.AIR && !ITEMS.contains(item)) {
-                    ITEMS.add(item);
-                }
-            }
-        }
-        for (ArrayList<String> customTag : customTags) {
-            if (customTag.size() >= 2) {
-                Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
-                Tag<Item> tag = ItemTags.getTagGroup().getTag(customTagRN);
-                if (tag != null) {
-                    for (Item checkItem : tag.values()) {
-                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.getTranslationKey()), blacklistItems, blacklistItemsMod)) {
-                            ITEMS.add(checkItem);
-                        }
-                    }
-                }
-            }
-        }
-        return ITEMS;
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
     }
 
     public static ArrayList<Item> getLoadedStones() {
-        ArrayList<Item> ITEMS = new ArrayList<>();
         ArrayList<ArrayList<String>> customTags = CommonConfig.custom_stone_tags;
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_stones;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_stones;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_stones_mod;
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
+    }
+
+    public static ArrayList<Item> getLoadedResources(ArrayList<ArrayList<String>> customTags, ArrayList<ArrayList<String>> configItems, ArrayList<ArrayList<String>>  blacklistItems, ArrayList<String> blacklistItemsMod) {
+        ArrayList<Item> ITEMS = new ArrayList<>();
         for (ArrayList<String> configItem : configItems) {
             if (configItem.size() >= 2) {
                 Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
@@ -240,7 +198,7 @@ public class Tools {
         for (ArrayList<String> customTag : customTags) {
             if (customTag.size() >= 2) {
                 Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
-                Tag<Item> tag = ItemTags.getTagGroup().getTag(customTagRN);
+                Tag<Item> tag = ItemTags.getTagGroup().getTagOrEmpty(customTagRN);
                 if (tag != null) {
                     for (Item checkItem : tag.values()) {
                         if (!ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.getTranslationKey()), blacklistItems, blacklistItemsMod)) {
@@ -271,7 +229,7 @@ public class Tools {
         for (ArrayList<String> customTag : customTags) {
             if (customTag.size() >= 2) {
                 Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
-                Tag<Block> tag = BlockTags.getTagGroup().getTag(customTagRN);
+                Tag<Block> tag = BlockTags.getTagGroup().getTagOrEmpty(customTagRN);
                 if (tag != null) {
                     for (Block checkBlock : tag.values()) {
                         Item checkItem = checkBlock.asItem();
