@@ -48,15 +48,15 @@ public class ItemInit implements ModInitializer {
     public static final Item MOB_CRYSTAL = registerItem(new Item(getBaseItemSettings()), "mob_crystal");
 
     // Keys
-    public static final PlayerKeyItem PLAYER_KEY = registerItem(new PlayerKeyItem(getBaseItemSettings()),
+    public static final PlayerKeyItem PLAYER_KEY = registerItem(new PlayerKeyItem(getKeyItemSettings()),
             "player_key");
-    public static final EffectKeyItem EFFECT_KEY = registerItem(new EffectKeyItem(getBaseItemSettings()),
+    public static final EffectKeyItem EFFECT_KEY = registerItem(new EffectKeyItem(getKeyItemSettings()),
             "effect_key");
-    public static final MobKeyItem MOB_KEY = registerItem(new MobKeyItem(getBaseItemSettings()), "mob_key");
-    public static final WeaponKeyItem WEAPON_KEY = registerItem(new WeaponKeyItem(getBaseItemSettings()),
+    public static final MobKeyItem MOB_KEY = registerItem(new MobKeyItem(getKeyItemSettings()), "mob_key");
+    public static final WeaponKeyItem WEAPON_KEY = registerItem(new WeaponKeyItem(getKeyItemSettings()),
             "weapon_key");
     public static final ResourceDisablerKeyItem RESOURCE_DISABLER_KEY = registerItem(
-            new ResourceDisablerKeyItem(getBaseItemSettings()), "resource_disabler_key");
+            new ResourceDisablerKeyItem(getKeyItemSettings()), "resource_disabler_key");
 
     // BlockItems
     // Ore Harvesters
@@ -224,6 +224,10 @@ public class ItemInit implements ModInitializer {
 
     public static FabricItemSettings getBaseItemSettings() {
         return new FabricItemSettings().group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP);
+    }
+
+    public static FabricItemSettings getKeyItemSettings() {
+        return getBaseItemSettings().maxCount(1);
     }
 
     @Override

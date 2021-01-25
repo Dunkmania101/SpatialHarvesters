@@ -27,7 +27,18 @@ public class WorldSaveData {
         return getPersistentState().toTag(new CompoundTag());
     }
 
-    public <P extends PersistentState> P getPersistentState() {
-        return this.thisServerWorld.getPersistentStateManager().getOrCreate(null, this.thisKey);
+    public PersistentState getPersistentState() {
+        return this.thisServerWorld.getPersistentStateManager().getOrCreate(() -> new PersistentState(this.thisKey) {
+            CompoundTag thisTag = new CompoundTag();
+            @Override
+            public void fromTag(CompoundTag tag) {
+                this.thisTag = tag;
+            }
+
+            @Override
+            public CompoundTag toTag(CompoundTag tag) {
+                return thisTag;
+            }
+        }, this.thisKey);
     }
 }
