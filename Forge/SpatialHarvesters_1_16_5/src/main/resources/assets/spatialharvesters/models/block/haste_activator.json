@@ -4,7 +4,7 @@
     "1": "spatialharvesters:block/activator_haste_block",
     "3": "spatialharvesters:dark_machine",
     "4": "spatialharvesters:dark_rough_color",
-    "particle": "spatialharvesters:block/dark_rough_color"
+    "particle": "spatialharvesters:dark_rough_color"
   },
   "elements": [
     {

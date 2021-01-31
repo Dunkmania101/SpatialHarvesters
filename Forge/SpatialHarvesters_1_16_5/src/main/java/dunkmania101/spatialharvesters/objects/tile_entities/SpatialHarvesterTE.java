@@ -43,6 +43,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         boolean enableBio = CommonConfig.ENABLE_ORE_HARVESTERS.get();
         boolean enableStone = CommonConfig.ENABLE_ORE_HARVESTERS.get();
         boolean enableSoil = CommonConfig.ENABLE_ORE_HARVESTERS.get();
+        boolean enableLoot = CommonConfig.ENABLE_LOOT_HARVESTER.get();
         boolean enableDarkMob = CommonConfig.ENABLE_DARK_MOB_HARVESTER.get();
         boolean enableSpecificMob = CommonConfig.ENABLE_SPECIFIC_MOB_HARVESTER.get();
         if (this instanceof OreHarvesterTE && !enableOre) {
@@ -53,6 +54,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             setActive(false);
         } else if (this instanceof SoilHarvesterTE && !enableSoil) {
             setActive(false);
+        } else if (this instanceof LootHarvesterTE && !enableLoot) {
+                setActive(false);
         } else if (this instanceof DarkMobHarvesterTE && !enableDarkMob) {
             setActive(false);
         } else if (this instanceof SpecificMobHarvesterTE && !enableSpecificMob) {
@@ -145,8 +148,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public void filterOutputsMinTier(Block block) {
-        ArrayList<ArrayList<String>> minTierItems = getMinTierItems();
-        for (ArrayList<String> itemTier : minTierItems) {
+        for (ArrayList<String> itemTier : getMinTierItems()) {
             if (itemTier.size() >= 3) {
                 int tier = 0;
                 try {

@@ -1,7 +1,5 @@
 package dunkmania101.spatialharvesters.objects.items;
 
-import java.util.List;
-
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.client.util.ITooltipFlag;
@@ -11,6 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ShardItem extends Item {
     private final int tier;

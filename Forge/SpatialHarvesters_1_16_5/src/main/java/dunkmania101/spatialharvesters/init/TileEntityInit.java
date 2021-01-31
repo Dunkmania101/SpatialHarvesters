@@ -58,6 +58,11 @@ public class TileEntityInit {
                     BlockInit.SOIL_HARVESTER_8.get()
             ).build(null));
 
+    public static final RegistryObject<TileEntityType<LootHarvesterTE>> LOOT_HARVESTER = TILE_ENTITIES.register("loot_harvester",
+            () -> TileEntityType.Builder.create(LootHarvesterTE::new,
+                    BlockInit.LOOT_HARVESTER.get()
+            ).build(null));
+
     public static final RegistryObject<TileEntityType<DarkMobHarvesterTE>> DARK_MOB_HARVESTER = TILE_ENTITIES.register("dark_mob_harvester",
             () -> TileEntityType.Builder.create(DarkMobHarvesterTE::new,
                     BlockInit.DARK_MOB_HARVESTER.get()

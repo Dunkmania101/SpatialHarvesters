@@ -7,16 +7,16 @@
   ],
   "key": {
     "a": {
-      "item": "minecraft:dragon_egg"
+      "tag": "forge:gems/diamond"
     },
     "b": {
-      "tag": "forge:bones"
+      "tag": "forge:ingots/gold"
     },
     "c": {
       "item": "spatialharvesters:base_powder"
     }
   },
   "result": {
-    "item": "spatialharvesters:dark_mob_core"
+    "item": "spatialharvesters:loot_core"
   }
 }

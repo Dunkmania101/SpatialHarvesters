@@ -212,6 +212,11 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
+    public int getTier(Block block) {
+        return 8;
+    }
+
+    @Override
     public CompoundNBT saveSerializedValues() {
         CompoundNBT nbt = super.saveSerializedValues();
         if (!StringUtils.isNullOrEmpty(this.entity)) {

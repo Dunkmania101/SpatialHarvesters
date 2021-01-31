@@ -26,6 +26,7 @@ public class ItemInit implements ModInitializer {
     public static final Item STONE_CORE = registerItem(new Item(getBaseItemSettings()), "stone_core");
     public static final Item SOIL_CORE = registerItem(new Item(getBaseItemSettings()), "soil_core");
     public static final Item MOB_CORE = registerItem(new Item(getBaseItemSettings()), "mob_core");
+    public static final Item DARK_MOB_CORE = registerItem(new Item(getBaseItemSettings()), "dark_mob_core");
 
     // Shards
     public static final ShardItem SHARD_1 = registerItem(new ShardItem(getBaseItemSettings(), 1), "shard_1");

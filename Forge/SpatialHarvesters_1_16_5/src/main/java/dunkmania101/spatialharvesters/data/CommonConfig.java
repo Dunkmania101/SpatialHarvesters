@@ -15,25 +15,28 @@ public class CommonConfig {
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_BIO_TAGS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONE_TAGS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOIL_TAGS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_LOOT_TABLES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> CUSTOM_SOILS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<ArrayList<String>>>> CUSTOM_MOB_DROPS;
-    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> MIN_TIER_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> MIN_TIER_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> MIN_TIER_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> MIN_TIER_SOILS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_BIOS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES;
     public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_SOILS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_MOBS;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_LOOT;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_ORES_MOD;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_BIOS_MOD;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_STONES_MOD;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_SOILS_MOD;
-    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_MOBS;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_MOBS_MOD;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_LOOT_MOD;
     public static ForgeConfigSpec.IntValue ORE_1_SPEED;
     public static ForgeConfigSpec.IntValue ORE_2_SPEED;
     public static ForgeConfigSpec.IntValue ORE_3_SPEED;
@@ -58,6 +61,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue STONE_6_SPEED;
     public static ForgeConfigSpec.IntValue STONE_7_SPEED;
     public static ForgeConfigSpec.IntValue STONE_8_SPEED;
+    public static ForgeConfigSpec.IntValue LOOT_SPEED;
     public static ForgeConfigSpec.IntValue DARK_MOB_SPEED;
     public static ForgeConfigSpec.IntValue SPECIFIC_MOB_SPEED;
     public static ForgeConfigSpec.IntValue SOIL_1_SPEED;
@@ -100,6 +104,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue SOIL_6_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_7_PRICE;
     public static ForgeConfigSpec.IntValue SOIL_8_PRICE;
+    public static ForgeConfigSpec.IntValue LOOT_PRICE;
     public static ForgeConfigSpec.IntValue DARK_MOB_PRICE;
     public static ForgeConfigSpec.IntValue SPECIFIC_MOB_PRICE;
     public static ForgeConfigSpec.IntValue HARVESTER_SHARD_CHANCE;
@@ -126,6 +131,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.BooleanValue ENABLE_BIO_HARVESTERS;
     public static ForgeConfigSpec.BooleanValue ENABLE_STONE_HARVESTERS;
     public static ForgeConfigSpec.BooleanValue ENABLE_SOIL_HARVESTERS;
+    public static ForgeConfigSpec.BooleanValue ENABLE_LOOT_HARVESTER;
     public static ForgeConfigSpec.BooleanValue ENABLE_DARK_MOB_HARVESTER;
     public static ForgeConfigSpec.BooleanValue ENABLE_SPECIFIC_MOB_HARVESTER;
 
@@ -430,6 +436,17 @@ public class CommonConfig {
         CUSTOM_SOILS = BUILDER.comment("Custom outputs for the Soil Harvester.")
                 .define("custom_soils", custom_soils);
 
+        ArrayList<ArrayList<String>> custom_loot_tables = new ArrayList<>();
+        mod = "minecraft";
+        String table = "chests/simple_dungeon";
+        ArrayList<String> modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        CUSTOM_LOOT_TABLES = BUILDER.comment("Custom loot tables for the Loot Harvester.")
+                .define("custom_loot_tables", custom_loot_tables);
+
         ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = new ArrayList<>();
 
         ArrayList<ArrayList<String>> modMobDrop = new ArrayList<>();
@@ -683,6 +700,9 @@ public class CommonConfig {
         ArrayList<ArrayList<String>> blacklist_soils = new ArrayList<>();
         BLACKLIST_SOILS = BUILDER.comment("Blacklist for the Soil Harvesters")
                 .define("blacklist_soils", blacklist_soils);
+        ArrayList<ArrayList<String>> blacklist_loot = new ArrayList<>();
+        BLACKLIST_LOOT = BUILDER.comment("Blacklist for the Loot Harvesters")
+                .define("blacklist_loot", blacklist_loot);
         ArrayList<ArrayList<String>> blacklist_mobs = new ArrayList<>();
         BLACKLIST_MOBS = BUILDER.comment("Blacklist for the Mob Harvesters")
                 .define("blacklist_mobs", blacklist_mobs);
@@ -702,6 +722,9 @@ public class CommonConfig {
         ArrayList<String> blacklist_soils_mod = new ArrayList<>();
         BLACKLIST_SOILS_MOD = BUILDER.comment("Blacklist for the Soil Harvesters (By mod)")
                 .define("blacklist_soils_mod", blacklist_soils_mod);
+        ArrayList<String> blacklist_loot_mod = new ArrayList<>();
+        BLACKLIST_LOOT_MOD = BUILDER.comment("Blacklist for the Loot Harvesters (By mod)")
+                .define("blacklist_loot_mod", blacklist_loot_mod);
         ArrayList<String> blacklist_mobs_mod = new ArrayList<>();
         BLACKLIST_MOBS_MOD = BUILDER.comment("Blacklist for the Mob Harvesters (By mod)")
                 .define("blacklist_mobs_mod", blacklist_mobs_mod);
@@ -787,6 +810,9 @@ public class CommonConfig {
         SOIL_8_SPEED = BUILDER.comment("Speed for the tier 8 Soil Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
                 .defineInRange("speed_soil_8", 5, 0, Integer.MAX_VALUE);
         BUILDER.pop();
+
+        LOOT_SPEED = BUILDER.comment("Speed for the Loot Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
+                .defineInRange("loot_speed", 50, 0, Integer.MAX_VALUE);
 
         BUILDER.push("Mob Harvester Speeds: ");
         DARK_MOB_SPEED = BUILDER.comment("Speed for the Dark Mob Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -885,6 +911,9 @@ public class CommonConfig {
         DIMENSIONAL_APPLICATOR_PRICE = BUILDER.comment("Price for the Dimensional Applicator (in FE per operation)")
                 .defineInRange("price_dimensional_applicator", 1000, 0, Integer.MAX_VALUE);
 
+        LOOT_PRICE = BUILDER.comment("Price for the Loot Harvester (in FE per operation)")
+                .defineInRange("loot_price", 8000, 0, Integer.MAX_VALUE);
+
         BUILDER.push("Mob Harvester Prices: ");
         DARK_MOB_PRICE = BUILDER.comment("Price for the Dark Mob Harvester (in FE per operation)")
                 .defineInRange("dark_mob_price", 8000, 0, Integer.MAX_VALUE);
@@ -925,6 +954,8 @@ public class CommonConfig {
                 .define("enable_stone_harvesters", true);
         ENABLE_SOIL_HARVESTERS = BUILDER.comment("Should the Soil Harvesters have functionality?")
                 .define("enable_soil_harvesters", true);
+        ENABLE_LOOT_HARVESTER = BUILDER.comment("Should the Loot Harvester have functionality?")
+                .define("enable_loot_harvester", true);
         ENABLE_DARK_MOB_HARVESTER = BUILDER.comment("Should the Dark Mob Harvester have functionality?")
                 .define("enable_dark_mob_harvester", true);
         ENABLE_SPECIFIC_MOB_HARVESTER = BUILDER.comment("Should the Specific Mob Harvester have functionality?")
