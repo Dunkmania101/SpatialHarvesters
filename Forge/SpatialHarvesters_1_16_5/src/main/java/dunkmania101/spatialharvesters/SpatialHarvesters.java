@@ -32,9 +32,9 @@ public class SpatialHarvesters {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.CONFIG);
         CommonConfig.init(FMLPaths.CONFIGDIR.get().resolve(SpatialHarvesters.modid + "-common.toml"));
 
-        ItemInit.ITEMS.register(modBus);
         BlockInit.BLOCKS.register(modBus);
         TileEntityInit.TILE_ENTITIES.register(modBus);
+        ItemInit.ITEMS.register(modBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

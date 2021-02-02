@@ -1,8 +1,6 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.init.BlockInit;
-import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
@@ -16,26 +14,22 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public ArrayList<Item> getOutputs() {
-        return Tools.getLoadedOres();
-    }
-
-    @Override
     public int getPrice(Block block) {
+        int tier = getTier(block);
         int price = CommonConfig.ORE_1_PRICE.get();
-        if (block == BlockInit.ORE_HARVESTER_2.get()) {
+        if (tier == 2) {
             price = CommonConfig.ORE_2_PRICE.get();
-        } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
+        } else if (tier == 3) {
             price = CommonConfig.ORE_3_PRICE.get();
-        } else if (block == BlockInit.ORE_HARVESTER_4.get()) {
+        } else if (tier == 4) {
             price = CommonConfig.ORE_4_PRICE.get();
-        } else if (block == BlockInit.ORE_HARVESTER_5.get()) {
+        } else if (tier == 5) {
             price = CommonConfig.ORE_5_PRICE.get();
-        } else if (block == BlockInit.ORE_HARVESTER_6.get()) {
+        } else if (tier == 6) {
             price = CommonConfig.ORE_6_PRICE.get();
-        } else if (block == BlockInit.ORE_HARVESTER_7.get()) {
+        } else if (tier == 7) {
             price = CommonConfig.ORE_7_PRICE.get();
-        } else if (block == BlockInit.ORE_HARVESTER_8.get()) {
+        } else if (tier == 8) {
             price = CommonConfig.ORE_8_PRICE.get();
         }
         return price;
@@ -43,69 +37,33 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
 
     @Override
     public int getSpeed(Block block) {
+        int tier = getTier(block);
         int speed = CommonConfig.ORE_1_SPEED.get();
-        if (block == BlockInit.ORE_HARVESTER_2.get()) {
+        if (tier == 2) {
             speed = CommonConfig.ORE_2_SPEED.get();
-        } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
+        } else if (tier == 3) {
             speed = CommonConfig.ORE_3_SPEED.get();
-        } else if (block == BlockInit.ORE_HARVESTER_4.get()) {
+        } else if (tier == 4) {
             speed = CommonConfig.ORE_4_SPEED.get();
-        } else if (block == BlockInit.ORE_HARVESTER_5.get()) {
+        } else if (tier == 5) {
             speed = CommonConfig.ORE_5_SPEED.get();
-        } else if (block == BlockInit.ORE_HARVESTER_6.get()) {
+        } else if (tier == 6) {
             speed = CommonConfig.ORE_6_SPEED.get();
-        } else if (block == BlockInit.ORE_HARVESTER_7.get()) {
+        } else if (tier == 7) {
             speed = CommonConfig.ORE_7_SPEED.get();
-        } else if (block == BlockInit.ORE_HARVESTER_8.get()) {
+        } else if (tier == 8) {
             speed = CommonConfig.ORE_8_SPEED.get();
         }
         return speed;
     }
 
     @Override
-    public Item getShard(Block block) {
-        Item CHOSEN_SHARD = ItemInit.SHARD_1.get();
-       if (block == BlockInit.ORE_HARVESTER_2.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_2.get();
-        } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_3.get();
-        } else if (block == BlockInit.ORE_HARVESTER_4.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_4.get();
-        } else if (block == BlockInit.ORE_HARVESTER_5.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_5.get();
-        } else if (block == BlockInit.ORE_HARVESTER_6.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_6.get();
-        } else if (block == BlockInit.ORE_HARVESTER_7.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_7.get();
-        } else if (block == BlockInit.ORE_HARVESTER_8.get()) {
-            CHOSEN_SHARD = ItemInit.SHARD_7.get();
-        }
-        return CHOSEN_SHARD;
+    public ArrayList<Item> getOutputs() {
+        return Tools.getLoadedOres();
     }
 
     @Override
     public ArrayList<ArrayList<String>> getMinTierItems() {
         return CommonConfig.MIN_TIER_ORES.get();
-    }
-
-    @Override
-    public int getTier(Block block) {
-        int tier = super.getTier(block);
-        if (block == BlockInit.ORE_HARVESTER_2.get()) {
-            tier = 2;
-        } else if (block == BlockInit.ORE_HARVESTER_3.get()) {
-            tier = 3;
-        } else if (block == BlockInit.ORE_HARVESTER_4.get()) {
-            tier = 4;
-        } else if (block == BlockInit.ORE_HARVESTER_5.get()) {
-            tier = 5;
-        } else if (block == BlockInit.ORE_HARVESTER_6.get()) {
-            tier = 6;
-        } else if (block == BlockInit.ORE_HARVESTER_7.get()) {
-            tier = 7;
-        } else if (block == BlockInit.ORE_HARVESTER_8.get()) {
-            tier = 8;
-        }
-        return tier;
     }
 }

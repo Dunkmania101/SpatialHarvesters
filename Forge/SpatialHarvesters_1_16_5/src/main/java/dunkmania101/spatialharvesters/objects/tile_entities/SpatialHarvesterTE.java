@@ -2,7 +2,9 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
+import dunkmania101.spatialharvesters.objects.blocks.HarvesterBlock;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -62,7 +64,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             setActive(false);
         } else {
             super.customTickActions();
-            if (this.OUTPUTS.isEmpty()) {
+            if (this.OUTPUTS.isEmpty() && !overrideSetOutputs()) {
                 setOutputs(getOutputs());
             }
             if (getWorld() != null && !getWorld().isRemote && this.thisBlock != null) {
@@ -168,6 +170,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public int getTier(Block block) {
+        if (block instanceof HarvesterBlock) {
+            return ((HarvesterBlock) block).getTier();
+        }
         return 1;
     }
 
@@ -199,7 +204,28 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     public Item getShard(Block block) {
-        return ItemInit.SHARD_1.get();
+        int tier = getTier(block);
+        Item CHOSEN_SHARD = ItemInit.SHARD_1.get();
+        if (tier == 2) {
+            CHOSEN_SHARD = ItemInit.SHARD_2.get();
+        } else if (tier == 3) {
+            CHOSEN_SHARD = ItemInit.SHARD_3.get();
+        } else if (tier == 4) {
+            CHOSEN_SHARD = ItemInit.SHARD_4.get();
+        } else if (tier == 5) {
+            CHOSEN_SHARD = ItemInit.SHARD_5.get();
+        } else if (tier == 6) {
+            CHOSEN_SHARD = ItemInit.SHARD_6.get();
+        } else if (tier == 7) {
+            CHOSEN_SHARD = ItemInit.SHARD_7.get();
+        } else if (tier == 8) {
+            CHOSEN_SHARD = ItemInit.SHARD_7.get();
+        }
+        return CHOSEN_SHARD;
+    }
+
+    public boolean overrideSetOutputs() {
+        return false;
     }
 
     @Override
