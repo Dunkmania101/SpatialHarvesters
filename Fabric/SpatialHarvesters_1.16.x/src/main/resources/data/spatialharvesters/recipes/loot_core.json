@@ -10,13 +10,13 @@
       "item": "minecraft:dragon_egg"
     },
     "b": {
-      "tag": "c:bones"
+      "tag": "c:gold_ingots"
     },
     "c": {
       "item": "spatialharvesters:base_powder"
     }
   },
   "result": {
-    "item": "spatialharvesters:dark_mob_core"
+    "item": "spatialharvesters:loot_core"
   }
 }

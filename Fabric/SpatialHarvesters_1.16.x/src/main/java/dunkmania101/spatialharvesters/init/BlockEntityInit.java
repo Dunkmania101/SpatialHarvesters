@@ -38,6 +38,11 @@ public class BlockEntityInit implements ModInitializer {
                                         BlockInit.SOIL_HARVESTER_8).build(null),
                         "soil_harvester");
 
+        public static final BlockEntityType<LootHarvesterTE> LOOT_HARVESTER = registerBlockEntityType(
+                BlockEntityType.Builder.create(LootHarvesterTE::new, BlockInit.LOOT_HARVESTER)
+                        .build(null),
+                "loot_harvester");
+
         public static final BlockEntityType<SpecificMobHarvesterTE> SPECIFIC_MOB_HARVESTER = registerBlockEntityType(
                         BlockEntityType.Builder.create(SpecificMobHarvesterTE::new, BlockInit.SPECIFIC_MOB_HARVESTER)
                                         .build(null),

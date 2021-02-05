@@ -25,6 +25,7 @@ public class ItemInit implements ModInitializer {
     public static final Item BIO_CORE = registerItem(new Item(getBaseItemSettings()), "bio_core");
     public static final Item STONE_CORE = registerItem(new Item(getBaseItemSettings()), "stone_core");
     public static final Item SOIL_CORE = registerItem(new Item(getBaseItemSettings()), "soil_core");
+    public static final Item LOOT_CORE = registerItem(new Item(getBaseItemSettings()), "loot_core");
     public static final Item MOB_CORE = registerItem(new Item(getBaseItemSettings()), "mob_core");
     public static final Item DARK_MOB_CORE = registerItem(new Item(getBaseItemSettings()), "dark_mob_core");
 
@@ -159,6 +160,11 @@ public class ItemInit implements ModInitializer {
 
     public static final MachineBlockItem SOIL_HARVESTER_8 = registerItem(
             new MachineBlockItem(BlockInit.SOIL_HARVESTER_8, getBaseItemSettings()), "soil_harvester_8");
+
+    // Loot Harvester
+    public static final MachineBlockItem LOOT_HARVESTER = registerItem(
+            new MachineBlockItem(BlockInit.LOOT_HARVESTER, getBaseItemSettings()),
+            "loot_harvester");
 
     // Mob Harvesters
     public static final MachineBlockItem SPECIFIC_MOB_HARVESTER = registerItem(

@@ -116,6 +116,10 @@ public class BlockInit implements ModInitializer {
         public static final SoilHarvesterBlock SOIL_HARVESTER_8 = registerBlock(
                         new SoilHarvesterBlock(getMetalBlockSettings()), "soil_harvester_8");
 
+        // Loot Harvester
+        public static final LootHarvesterBlock LOOT_HARVESTER = registerBlock(
+                new LootHarvesterBlock(getMetalBlockSettings()), "loot_harvester");
+
         // Mob Harvesters
         public static final SpecificMobHarvesterBlock SPECIFIC_MOB_HARVESTER = registerBlock(
                         new SpecificMobHarvesterBlock(getMetalBlockSettings()), "specific_mob_harvester");

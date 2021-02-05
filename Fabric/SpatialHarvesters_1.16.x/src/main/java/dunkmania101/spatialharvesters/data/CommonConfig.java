@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.data;
 
 import me.lortseam.completeconfig.api.ConfigGroup;
+import net.minecraft.loot.LootTables;
 
 import java.util.ArrayList;
 
@@ -286,6 +287,16 @@ public class CommonConfig implements ConfigGroup {
         custom_soils.add(modSoil);
     }
 
+    public static ArrayList<ArrayList<String>> custom_loot_tables = new ArrayList<>();
+    static {
+        String mod = "minecraft";
+        String table = "chests/simple_dungeon";
+        ArrayList<String> modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+    }
+
     public static ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = new ArrayList<>();
     static {
         ArrayList<ArrayList<String>> modMobDrop = new ArrayList<>();
@@ -512,17 +523,17 @@ public class CommonConfig implements ConfigGroup {
     public static ArrayList<ArrayList<String>> blacklist_bios = new ArrayList<>();
     public static ArrayList<ArrayList<String>> blacklist_stones = new ArrayList<>();
     public static ArrayList<ArrayList<String>> blacklist_soils = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> blacklist_loot = new ArrayList<>();
     public static ArrayList<ArrayList<String>> blacklist_mobs = new ArrayList<>();
+
     public static ArrayList<String> blacklist_ores_mod = new ArrayList<>();
     public static ArrayList<String> blacklist_bios_mod = new ArrayList<>();
     static {
         blacklist_bios_mod.add("botania");
     }
-
     public static ArrayList<String> blacklist_stones_mod = new ArrayList<>();
-
     public static ArrayList<String> blacklist_soils_mod = new ArrayList<>();
-
+    public static ArrayList<String> blacklist_loot_mod = new ArrayList<>();
     public static ArrayList<String> blacklist_mobs_mod = new ArrayList<>();
 
     public static ArrayList<ArrayList<String>> min_tier_ores = new ArrayList<>();
@@ -565,6 +576,8 @@ public class CommonConfig implements ConfigGroup {
     public static int speed_soil_6 = 150;
     public static int speed_soil_7 = 100;
     public static int speed_soil_8 = 5;
+
+    public static int speed_loot = 50;
 
     public static int speed_dark_mob = 50;
     public static int speed_specific_mob = 50;
@@ -612,6 +625,8 @@ public class CommonConfig implements ConfigGroup {
     public static double price_soil_8 = 8000;
 
     public static double dimensional_applicator_price = 1000;
+
+    public static double price_loot = 8000;
 
     public static double price_dark_mob = 8000;
     public static double price_specific_mob = 8000;
