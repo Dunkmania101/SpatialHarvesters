@@ -15,8 +15,11 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -68,7 +71,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     }
 
     @Override
-    public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
             if (player.isSneaking()) {
                 BlockEntity tile = world.getBlockEntity(pos);
@@ -135,6 +138,6 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                 }
             }
         }
-        super.onBlockBreakStart(state, world, pos, player);
+        return super.onUse(state, world, pos, player, hand, hit);
     }
 }

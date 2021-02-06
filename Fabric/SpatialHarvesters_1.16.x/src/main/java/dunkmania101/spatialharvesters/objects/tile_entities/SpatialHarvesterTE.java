@@ -82,7 +82,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                         if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
                             lastMinuteActions();
                             if (!this.OUTPUTS.isEmpty()) {
-                                filterOutputsMinTier(thisBlock);
+                                filterOutputsMinTier(this.thisBlock);
                                 for (Direction ignored : spaceRippers) {
                                     if (getEnergyStorage().getEnergy() >= price) {
                                         ItemStack chosenOutput;

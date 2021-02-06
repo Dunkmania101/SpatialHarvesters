@@ -53,8 +53,8 @@ public class BlockEntityInit implements ModInitializer {
                                         .build(null),
                         "dark_mob_harvester");
 
-        public static final BlockEntityType<DarkMobHarvesterTE> HEAT_GENERATOR = registerBlockEntityType(
-                        BlockEntityType.Builder.create(DarkMobHarvesterTE::new, BlockInit.HEAT_GENERATOR).build(null),
+        public static final BlockEntityType<HeatGeneratorTE> HEAT_GENERATOR = registerBlockEntityType(
+                        BlockEntityType.Builder.create(HeatGeneratorTE::new, BlockInit.HEAT_GENERATOR).build(null),
                         "heat_generator");
 
         public static final BlockEntityType<DarkMobHarvesterTE> DIMENSIONAL_APPLICATOR = registerBlockEntityType(
