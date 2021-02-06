@@ -2,7 +2,6 @@ package dunkmania101.spatialharvesters;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.ItemInit;
-import me.lortseam.completeconfig.ConfigHandler;
 import me.lortseam.completeconfig.data.Config;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -14,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 public class SpatialHarvesters implements ModInitializer {
     public static final String modid = "spatialharvesters";
-    private static ConfigHandler configHandler;
     public static final Logger LOGGER = LogManager.getLogger();
 
     public static final ItemGroup SPATIAL_HARVESTERS_GROUP = FabricItemGroupBuilder
@@ -22,6 +20,6 @@ public class SpatialHarvesters implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        configHandler = Config.builder(modid).add(new CommonConfig()).build();
+        Config.builder(modid).add(new CommonConfig()).build();
     }
 }
