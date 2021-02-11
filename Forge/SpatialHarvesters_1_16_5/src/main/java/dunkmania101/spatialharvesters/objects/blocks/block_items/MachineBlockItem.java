@@ -49,7 +49,7 @@ public class MachineBlockItem extends BlockItem {
                 for (String key : disabledResources.keySet()) {
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
                     if (item != null && item != Items.AIR) {
-                        tooltip.add(item.getName().copyRaw().mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.BOLD));
+                        tooltip.add(item.getDisplayName(new ItemStack(item)).copyRaw().mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.BOLD));
                     }
                 }
             }

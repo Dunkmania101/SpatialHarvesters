@@ -217,6 +217,16 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
+    public Item getShard(Block block) {
+        return ItemInit.MOB_SHARD.get();
+    }
+
+    @Override
+    public boolean overrideSetOutputs() {
+        return true;
+    }
+
+    @Override
     public CompoundNBT saveSerializedValues() {
         CompoundNBT nbt = super.saveSerializedValues();
         if (!StringUtils.isNullOrEmpty(this.entity)) {
@@ -254,10 +264,5 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     public void remove() {
         super.remove();
         removeAll();
-    }
-
-    @Override
-    public Item getShard(Block block) {
-        return ItemInit.MOB_SHARD.get();
     }
 }

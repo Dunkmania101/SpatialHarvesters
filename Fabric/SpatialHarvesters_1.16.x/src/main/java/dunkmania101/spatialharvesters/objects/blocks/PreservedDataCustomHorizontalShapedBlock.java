@@ -98,7 +98,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             for (String key : disabledResources.getKeys()) {
                                 Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                                 if (item != Items.AIR) {
-                                    player.sendMessage(item.getName().copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD), false);
+                                    player.sendMessage(item.getName(new ItemStack(item)).copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD), false);
                                 }
                             }
                         }

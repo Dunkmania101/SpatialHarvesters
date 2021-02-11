@@ -54,4 +54,9 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
     public int getTier(Block block) {
         return 8;
     }
+
+    @Override
+    public boolean overrideSetOutputs() {
+        return true;
+    }
 }

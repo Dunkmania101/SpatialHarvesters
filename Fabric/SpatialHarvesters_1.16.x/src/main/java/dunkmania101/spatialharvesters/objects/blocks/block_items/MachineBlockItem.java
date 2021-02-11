@@ -47,7 +47,7 @@ public class MachineBlockItem extends BlockItem {
                 for (String key : disabledResources.getKeys()) {
                     Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                     if (item != Items.AIR) {
-                        tooltip.add(item.getName().copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD));
+                        tooltip.add(item.getName(new ItemStack(item)).copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD));
                     }
                 }
             }

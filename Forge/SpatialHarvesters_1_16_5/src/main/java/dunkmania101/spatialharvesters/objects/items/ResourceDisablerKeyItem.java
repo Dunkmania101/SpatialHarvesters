@@ -43,11 +43,8 @@ public class ResourceDisablerKeyItem extends Item {
                 player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resource", TextFormatting.RED), true);
                 itemstack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
             } else {
-                ResourceLocation rn = otherStack.getItem().getRegistryName();
-                if (rn != null) {
-                    player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", TextFormatting.BLUE), true);
-                    itemstack.getOrCreateTag().putString(CustomValues.disabledResourceKey, rn.toString());
-                }
+                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", TextFormatting.BLUE), true);
+                itemstack.getOrCreateTag().putString(CustomValues.disabledResourceKey, otherStack.getTranslationKey());
             }
         }
         return true;
@@ -105,7 +102,7 @@ public class ResourceDisablerKeyItem extends Item {
                 if (!StringUtils.isNullOrEmpty(resource)) {
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(resource));
                     if (item != null) {
-                        tooltip.add(item.getName().copyRaw().mergeStyle(TextFormatting.DARK_PURPLE));
+                        tooltip.add(item.getDisplayName(new ItemStack(item)).copyRaw().mergeStyle(TextFormatting.DARK_PURPLE));
                     }
                 }
             }

@@ -97,7 +97,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             for (String key : disabledResources.keySet()) {
                                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
                                 if (item != null && item != Items.AIR) {
-                                    player.sendStatusMessage(item.getName().copyRaw().mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.BOLD), false);
+                                    player.sendStatusMessage(item.getDisplayName(new ItemStack(item)).copyRaw().mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.BOLD), false);
                                 }
                             }
                         }

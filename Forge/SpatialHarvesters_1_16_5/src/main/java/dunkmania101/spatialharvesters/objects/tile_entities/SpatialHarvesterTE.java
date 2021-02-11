@@ -2,7 +2,6 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.objects.blocks.HarvesterBlock;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
@@ -34,8 +33,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public void tick() {
-        this.thisBlock = getBlockState().getBlock();
-        updateEnergyStorage();
+        if (this.thisBlock == null) {
+            this.thisBlock = getBlockState().getBlock();
+            updateEnergyStorage();
+        }
         super.tick();
     }
 
@@ -101,19 +102,16 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                             chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                         }
                                         if (!chosenOutput.isEmpty()) {
-                                            ResourceLocation itemRN = chosenOutput.getItem().getRegistryName();
-                                            if (itemRN != null) {
-                                                if (this.BLACKLIST.contains(itemRN.toString())) {
+                                            if (this.BLACKLIST.contains(chosenOutput.getTranslationKey())) {
+                                                getEnergyStorage().consumeEnergy(price);
+                                                setActive(true);
+                                            } else {
+                                                int originalCount = chosenOutput.getCount();
+                                                IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
+                                                ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
+                                                if (resultStack.getCount() != originalCount) {
                                                     getEnergyStorage().consumeEnergy(price);
                                                     setActive(true);
-                                                } else {
-                                                    int originalCount = chosenOutput.getCount();
-                                                    IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
-                                                    ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
-                                                    if (resultStack.getCount() != originalCount) {
-                                                        getEnergyStorage().consumeEnergy(price);
-                                                        setActive(true);
-                                                    }
                                                 }
                                             }
                                         }
