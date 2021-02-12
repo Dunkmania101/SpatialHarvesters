@@ -437,9 +437,136 @@ public class CommonConfig {
                 .define("custom_soils", custom_soils);
 
         ArrayList<ArrayList<String>> custom_loot_tables = new ArrayList<>();
+
         mod = "minecraft";
         String table = "chests/simple_dungeon";
         ArrayList<String> modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/buried_treasure";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/desert_pyramid";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/abandoned_mineshaft";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/end_city_treasure";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/igloo_chest";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/jungle_temple";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/nether_bridge";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/pillager_outpost";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/shipwreck_map";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/shipwreck_treasure";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/stronghold_corridor";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/stronghold_corridor";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/stronghold_corridor";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/stronghold_crossing";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/stronghold_library";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/underwater_ruin_big";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/underwater_ruin_small";
+        modTable = new ArrayList<>();
+        modTable.add(mod);
+        modTable.add(table);
+        custom_loot_tables.add(modTable);
+
+        mod = "minecraft";
+        table = "chests/woodland_mansion";
+        modTable = new ArrayList<>();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);

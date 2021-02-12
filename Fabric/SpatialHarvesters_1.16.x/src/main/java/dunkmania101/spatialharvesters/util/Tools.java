@@ -257,10 +257,10 @@ public class Tools {
         return true;
     }
 
-    public static Text getTranslatedFormattedText(String key, Formatting format) {
+    public static Text getTranslatedFormattedText(String key, Formatting...formats) {
         TranslatableText text = new TranslatableText(key);
-        if (format != null) {
-            return text.formatted(format);
+        if (formats != null) {
+            return text.formatted(formats);
         }
         return text;
     }
@@ -269,12 +269,12 @@ public class Tools {
         return new TranslatableText("msg.spatialharvesters.divider").formatted(Formatting.GRAY);
     }
 
-    public static ArrayList<Text> getMultiLineText(String key, Formatting format) {
+    public static ArrayList<Text> getMultiLineText(String key, Formatting...formats) {
         ArrayList<Text> texts = new ArrayList<>();
         for (String txt : new TranslatableText(key).getString().split("\n")) {
             Text text = Text.of(txt);
-            if (format != null) {
-                texts.add(text.copy().formatted(format));
+            if (formats != null) {
+                texts.add(text.copy().formatted(formats));
             } else {
                 texts.add(text);
             }

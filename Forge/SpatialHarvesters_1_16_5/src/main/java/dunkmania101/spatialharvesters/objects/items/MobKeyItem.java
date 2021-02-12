@@ -114,11 +114,11 @@ public class MobKeyItem extends Item {
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", TextFormatting.DARK_RED));
             if (nbt.contains(CustomValues.entityNBTKey)) {
                 String entity = nbt.getString(CustomValues.entityNBTKey);
-                if (entity != null && !entity.isEmpty()) {
+                if (!entity.isEmpty()) {
                     Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
                     if (optionalEntityType.isPresent()) {
                         EntityType<?> entityType = optionalEntityType.get();
-                        tooltip.add(entityType.getName().copyRaw().mergeStyle(TextFormatting.RED));
+                        tooltip.add(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), TextFormatting.RED));
                     }
                 }
             }

@@ -49,7 +49,7 @@ public class MachineBlockItem extends BlockItem {
                 for (String key : disabledResources.keySet()) {
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
                     if (item != null && item != Items.AIR) {
-                        tooltip.add(item.getDisplayName(new ItemStack(item)).copyRaw().mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.BOLD));
+                        tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), TextFormatting.DARK_PURPLE, TextFormatting.BOLD));
                     }
                 }
             }
@@ -62,7 +62,7 @@ public class MachineBlockItem extends BlockItem {
                 Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
                 if (optionalEntityType.isPresent()) {
                     EntityType<?> entityType = optionalEntityType.get();
-                    tooltip.add(entityType.getName().copyRaw().mergeStyle(TextFormatting.RED, TextFormatting.BOLD));
+                    tooltip.add(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), TextFormatting.RED, TextFormatting.BOLD));
                 }
             }
         }
@@ -73,7 +73,7 @@ public class MachineBlockItem extends BlockItem {
             if (!weaponNBT.isEmpty()) {
                 ItemStack weapon = ItemStack.read(weaponNBT);
                 if (!weapon.isEmpty()) {
-                    tooltip.add(weapon.getDisplayName().copyRaw().mergeStyle(TextFormatting.GRAY, TextFormatting.BOLD));
+                    tooltip.add(Tools.getTranslatedFormattedText(weapon.getTranslationKey(), TextFormatting.GRAY, TextFormatting.BOLD));
                 }
             }
         }
@@ -83,7 +83,7 @@ public class MachineBlockItem extends BlockItem {
             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                 Effect effect = Effect.get(id);
                 if (effect != null) {
-                    tooltip.add(effect.getDisplayName().copyRaw().mergeStyle(TextFormatting.BLUE, TextFormatting.BOLD));
+                    tooltip.add(Tools.getTranslatedFormattedText(effect.getName(), effect.getEffectType().getColor(), TextFormatting.BOLD));
                 }
             }
         }

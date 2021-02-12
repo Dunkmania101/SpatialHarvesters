@@ -47,7 +47,7 @@ public class MachineBlockItem extends BlockItem {
                 for (String key : disabledResources.getKeys()) {
                     Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                     if (item != Items.AIR) {
-                        tooltip.add(item.getName(new ItemStack(item)).copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD));
+                        tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), Formatting.DARK_PURPLE, Formatting.BOLD));
                     }
                 }
             }
@@ -60,7 +60,7 @@ public class MachineBlockItem extends BlockItem {
                 Optional<EntityType<?>> optionalEntityType = EntityType.get(entity);
                 if (optionalEntityType.isPresent()) {
                     EntityType<?> entityType = optionalEntityType.get();
-                    tooltip.add(entityType.getName().copy().formatted(Formatting.RED, Formatting.BOLD));
+                    tooltip.add(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), Formatting.RED, Formatting.BOLD));
                 }
             }
         }
@@ -71,7 +71,7 @@ public class MachineBlockItem extends BlockItem {
             if (!weaponNBT.isEmpty()) {
                 ItemStack weapon = ItemStack.fromTag(weaponNBT);
                 if (!weapon.isEmpty()) {
-                    tooltip.add(weapon.getName().copy().formatted(Formatting.GRAY, Formatting.BOLD));
+                    tooltip.add(Tools.getTranslatedFormattedText(weapon.getTranslationKey(), Formatting.GRAY, Formatting.BOLD));
                 }
             }
         }
@@ -81,7 +81,7 @@ public class MachineBlockItem extends BlockItem {
             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                 StatusEffect effect = StatusEffect.byRawId(id);
                 if (effect != null) {
-                    tooltip.add(effect.getName().copy().formatted(Formatting.BLUE, Formatting.BOLD));
+                    tooltip.add(Tools.getTranslatedFormattedText(effect.getTranslationKey(), effect.getType().getFormatting(), Formatting.BOLD));
                 }
             }
         }

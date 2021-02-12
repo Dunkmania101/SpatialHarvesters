@@ -29,9 +29,9 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
                 for (ArrayList<String> rnString : CommonConfig.custom_loot_tables) {
                     if (rnString.size() >= 2) {
                         Identifier rn = new Identifier(rnString.get(0), rnString.get(1));
-                        LootContext ctx = new LootContext.Builder((ServerWorld) getWorld()).build(LootContextTypes.EMPTY);
-                        server.getLootManager().getTable(rn).generateLoot(ctx).stream()
-                                .filter(stack -> !Tools.isResourceBanned(Identifier.tryParse(stack.getItem().getTranslationKey()),
+                        LootContext context = new LootContext.Builder((ServerWorld) getWorld()).build(LootContextTypes.EMPTY);
+                        server.getLootManager().getTable(rn).generateLoot(context).stream()
+                                .filter(stack -> !stack.isEmpty() && !Tools.isResourceBanned(Identifier.tryParse(stack.getItem().getTranslationKey()),
                                         CommonConfig.blacklist_loot,
                                         CommonConfig.blacklist_loot_mod))
                                 .forEach(newOutputs::add);

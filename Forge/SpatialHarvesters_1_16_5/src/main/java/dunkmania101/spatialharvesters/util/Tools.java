@@ -205,10 +205,10 @@ public class Tools {
         return true;
     }
 
-    public static TextComponent getTranslatedFormattedText(String key, TextFormatting format) {
+    public static TextComponent getTranslatedFormattedText(String key, TextFormatting...formats) {
         TranslationTextComponent text = new TranslationTextComponent(key);
-        if (format != null) {
-            return (TextComponent) text.mergeStyle(format);
+        if (formats != null) {
+            return (TextComponent) text.mergeStyle(formats);
         }
         return text;
     }
@@ -218,12 +218,12 @@ public class Tools {
                 .mergeStyle(TextFormatting.GRAY);
     }
 
-    public static ArrayList<TextComponent> getMultiLineText(String key, TextFormatting format) {
+    public static ArrayList<TextComponent> getMultiLineText(String key, TextFormatting...formats) {
         ArrayList<TextComponent> texts = new ArrayList<>();
         for (String txt : new TranslationTextComponent(key).getString().split("\n")) {
             TextComponent text = new StringTextComponent(txt);
-            if (format != null) {
-                texts.add((TextComponent) text.mergeStyle(format));
+            if (formats != null) {
+                texts.add((TextComponent) text.mergeStyle(formats));
             } else {
                 texts.add(text);
             }

@@ -27,9 +27,9 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
                 for (ArrayList<String> rnString : CommonConfig.CUSTOM_LOOT_TABLES.get()) {
                     if (rnString.size() >= 2) {
                         ResourceLocation rn = new ResourceLocation(rnString.get(0), rnString.get(1));
-                        LootContext ctx = new LootContext.Builder((ServerWorld) getWorld()).build(LootParameterSets.EMPTY);
-                        server.getLootTableManager().getLootTableFromLocation(rn).generate(ctx).stream()
-                                .filter(stack -> !Tools.isResourceBanned(stack.getItem().getRegistryName(),
+                        LootContext context = new LootContext.Builder((ServerWorld) getWorld()).build(LootParameterSets.EMPTY);
+                        server.getLootTableManager().getLootTableFromLocation(rn).generate(context).stream()
+                                .filter(stack -> !stack.isEmpty() && !Tools.isResourceBanned(stack.getItem().getRegistryName(),
                                         CommonConfig.BLACKLIST_LOOT.get(),
                                         CommonConfig.BLACKLIST_LOOT_MOD.get()))
                                 .forEach(newOutputs::add);

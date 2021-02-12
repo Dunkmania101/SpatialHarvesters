@@ -69,8 +69,9 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
         }
     }
 
+    @Nonnull
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(@Nonnull BlockState state, World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand handIn, @Nonnull BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
             if (player.isCrouching()) {
                 TileEntity tile = worldIn.getTileEntity(pos);
@@ -97,7 +98,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             for (String key : disabledResources.keySet()) {
                                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
                                 if (item != null && item != Items.AIR) {
-                                    player.sendStatusMessage(item.getDisplayName(new ItemStack(item)).copyRaw().mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.BOLD), false);
+                                    player.sendStatusMessage(Tools.getTranslatedFormattedText(item.getTranslationKey(), TextFormatting.DARK_PURPLE, TextFormatting.BOLD), false);
                                 }
                             }
                         }
@@ -110,7 +111,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             Optional<EntityType<?>> optionalEntityType = EntityType.byKey(mob);
                             if (optionalEntityType.isPresent()) {
                                 EntityType<?> entityType = optionalEntityType.get();
-                                player.sendStatusMessage(entityType.getName().copyRaw().mergeStyle(TextFormatting.RED, TextFormatting.BOLD), false);
+                                player.sendStatusMessage(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), TextFormatting.RED, TextFormatting.BOLD), false);
                             }
                         }
                         player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", TextFormatting.DARK_GRAY), false);
@@ -128,7 +129,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                                 Effect effect = Effect.get(id);
                                 if (effect != null) {
-                                    player.sendStatusMessage(effect.getDisplayName().copyRaw().mergeStyle(TextFormatting.BLUE, TextFormatting.BOLD), false);
+                                    player.sendStatusMessage(Tools.getTranslatedFormattedText(effect.getName(), effect.getEffectType().getColor(), TextFormatting.BOLD), false);
                                 }
                             }
                         }

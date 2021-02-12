@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -116,7 +115,7 @@ public class MobKeyItem extends Item {
                     Optional<EntityType<?>> optionalEntityType = EntityType.get(entity);
                     if (optionalEntityType.isPresent()) {
                         EntityType<?> entityType = optionalEntityType.get();
-                        tooltip.add(entityType.getName().copy().formatted(Formatting.RED, Formatting.BOLD));
+                        tooltip.add(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), Formatting.RED, Formatting.BOLD));
                     }
                 }
             }

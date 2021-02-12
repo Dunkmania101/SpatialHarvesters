@@ -98,7 +98,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             for (String key : disabledResources.getKeys()) {
                                 Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                                 if (item != Items.AIR) {
-                                    player.sendMessage(item.getName(new ItemStack(item)).copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD), false);
+                                    player.sendMessage(Tools.getTranslatedFormattedText(item.getTranslationKey(), Formatting.DARK_PURPLE, Formatting.BOLD), false);
                                 }
                             }
                         }
@@ -111,7 +111,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             Optional<EntityType<?>> optionalEntityType = EntityType.get(mob);
                             if (optionalEntityType.isPresent()) {
                                 EntityType<?> entityType = optionalEntityType.get();
-                                player.sendMessage(entityType.getName().copy().formatted(Formatting.RED, Formatting.BOLD), false);
+                                player.sendMessage(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), Formatting.RED, Formatting.BOLD), false);
                             }
                         }
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY), false);
@@ -119,7 +119,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                         if (!weapon.isEmpty()) {
                             ItemStack weaponStack = ItemStack.fromTag(weapon);
                             if (!weaponStack.isEmpty()) {
-                                player.sendMessage(weaponStack.getName().copy().formatted(Formatting.GRAY, Formatting.BOLD), false);
+                                player.sendMessage(Tools.getTranslatedFormattedText(weaponStack.getTranslationKey(), Formatting.GRAY, Formatting.BOLD), false);
                             }
                         }
                     } else if (tile instanceof DimensionalApplicatorTE) {
@@ -129,7 +129,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                                 StatusEffect effect = StatusEffect.byRawId(id);
                                 if (effect != null) {
-                                    player.sendMessage(effect.getName().copy().formatted(Formatting.BLUE, Formatting.BOLD), false);
+                                    player.sendMessage(Tools.getTranslatedFormattedText(effect.getTranslationKey(), effect.getType().getFormatting(), Formatting.BOLD), false);
                                 }
                             }
                         }

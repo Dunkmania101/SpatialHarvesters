@@ -106,7 +106,7 @@ public class ResourceDisablerKeyItem extends Item {
                 if (resource != null && !resource.isEmpty()) {
                     Item item = Registry.ITEM.get(new Identifier(resource));
                     if (item != Items.AIR) {
-                        tooltip.add(item.getName(new ItemStack(item)).copy().formatted(Formatting.DARK_PURPLE, Formatting.BOLD));
+                        tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), Formatting.DARK_PURPLE, Formatting.BOLD));
                     }
                 }
             }

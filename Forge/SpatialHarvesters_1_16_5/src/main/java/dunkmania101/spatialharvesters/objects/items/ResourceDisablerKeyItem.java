@@ -102,7 +102,7 @@ public class ResourceDisablerKeyItem extends Item {
                 if (!StringUtils.isNullOrEmpty(resource)) {
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(resource));
                     if (item != null) {
-                        tooltip.add(item.getDisplayName(new ItemStack(item)).copyRaw().mergeStyle(TextFormatting.DARK_PURPLE));
+                        tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), TextFormatting.DARK_PURPLE, TextFormatting.BOLD));
                     }
                 }
             }

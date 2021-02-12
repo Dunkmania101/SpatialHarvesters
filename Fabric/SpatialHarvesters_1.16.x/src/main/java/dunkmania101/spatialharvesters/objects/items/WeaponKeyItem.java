@@ -102,7 +102,7 @@ public class WeaponKeyItem extends Item {
                 if (!weaponNBT.isEmpty()) {
                     ItemStack weapon = ItemStack.fromTag(weaponNBT);
                     if (!weapon.isEmpty()) {
-                        tooltip.add(weapon.getName().copy().formatted(Formatting.GRAY, Formatting.BOLD));
+                        tooltip.add(Tools.getTranslatedFormattedText(weapon.getTranslationKey(), Formatting.GRAY, Formatting.BOLD));
                     }
                 }
             }
