@@ -44,8 +44,8 @@ public class ResourceDisablerKeyItem extends Item {
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resource", Formatting.RED), true);
                     stack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
                 } else {
-                    Identifier rn = Identifier.tryParse(otherStack.getItem().getTranslationKey());
-                    if (rn != null) {
+                    Identifier rn = Registry.ITEM.getId(otherStack.getItem());
+                    if (rn != Registry.ITEM.getDefaultId()) {
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", Formatting.BLUE), true);
                         stack.getOrCreateTag().putString(CustomValues.disabledResourceKey, rn.toString());
                     }
@@ -104,9 +104,12 @@ public class ResourceDisablerKeyItem extends Item {
             if (nbt.contains(CustomValues.disabledResourceKey)) {
                 String resource = nbt.getString(CustomValues.disabledResourceKey);
                 if (resource != null && !resource.isEmpty()) {
-                    Item item = Registry.ITEM.get(new Identifier(resource));
-                    if (item != Items.AIR) {
-                        tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), Formatting.DARK_PURPLE, Formatting.BOLD));
+                    Identifier rn = Identifier.tryParse(resource);
+                    if (rn != null) {
+                        Item item = Registry.ITEM.get(rn);
+                        if (item != Items.AIR) {
+                            tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), Formatting.DARK_PURPLE, Formatting.BOLD));
+                        }
                     }
                 }
             }

@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -43,8 +44,11 @@ public class ResourceDisablerKeyItem extends Item {
                 player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resource", TextFormatting.RED), true);
                 itemstack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
             } else {
-                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", TextFormatting.BLUE), true);
-                itemstack.getOrCreateTag().putString(CustomValues.disabledResourceKey, otherStack.getTranslationKey());
+                ResourceLocation rn = otherStack.getItem().getRegistryName();
+                if (rn != null) {
+                    player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", TextFormatting.BLUE), true);
+                    itemstack.getOrCreateTag().putString(CustomValues.disabledResourceKey, rn.toString());
+                }
             }
         }
         return true;
@@ -100,9 +104,12 @@ public class ResourceDisablerKeyItem extends Item {
             if (nbt.contains(CustomValues.disabledResourceKey)) {
                 String resource = nbt.getString(CustomValues.disabledResourceKey);
                 if (!StringUtils.isNullOrEmpty(resource)) {
-                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(resource));
-                    if (item != null) {
-                        tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), TextFormatting.DARK_PURPLE, TextFormatting.BOLD));
+                    ResourceLocation rn = ResourceLocation.tryCreate(resource);
+                    if (rn != null) {
+                        Item item = ForgeRegistries.ITEMS.getValue(rn);
+                        if (item != null && item != Items.AIR) {
+                            tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), TextFormatting.DARK_PURPLE, TextFormatting.BOLD));
+                        }
                     }
                 }
             }
