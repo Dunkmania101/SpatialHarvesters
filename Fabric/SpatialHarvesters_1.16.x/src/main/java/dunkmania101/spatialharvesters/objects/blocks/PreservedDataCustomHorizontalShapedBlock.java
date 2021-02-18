@@ -59,7 +59,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.onPlaced(world, pos, state, placer, stack);
-        if (!world.isClient) {
+        if (!world.isClient()) {
             BlockEntity tile = world.getBlockEntity(pos);
             CompoundTag stackTileNBT = stack.getSubTag(CustomValues.stackTileNBTKey);
             if (tile != null && stackTileNBT != null) {
@@ -72,7 +72,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient) {
+        if (!world.isClient()) {
             if (player.isSneaking()) {
                 BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
@@ -114,6 +114,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                                 player.sendMessage(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), Formatting.RED, Formatting.BOLD), false);
                             }
                         }
+                        player.sendMessage(Tools.getDividerText(), false);
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY), false);
                         CompoundTag weapon = data.getCompound(CustomValues.weaponNBTKey);
                         if (!weapon.isEmpty()) {

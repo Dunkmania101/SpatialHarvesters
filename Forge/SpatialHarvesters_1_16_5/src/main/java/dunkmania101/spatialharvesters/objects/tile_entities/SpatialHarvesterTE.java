@@ -68,7 +68,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             if (this.OUTPUTS.isEmpty() && !overrideSetOutputs()) {
                 setOutputs(getOutputs());
             }
-            if (getWorld() != null && !getWorld().isRemote && this.thisBlock != null) {
+            if (getWorld() != null && !getWorld().isRemote() && this.thisBlock != null) {
                 if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                     resetCountedTicks();
                     setActive(false);

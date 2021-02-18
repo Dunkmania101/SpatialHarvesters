@@ -28,7 +28,7 @@ public class PlayerKeyItem extends Item {
     public @Nonnull
     ActionResultType onItemUse(ItemUseContext context) {
         World world = context.getWorld();
-        if (!world.isRemote) {
+        if (!world.isRemote()) {
             BlockPos pos = context.getPos();
             TileEntity tile = world.getTileEntity(pos);
             if (tile != null) {

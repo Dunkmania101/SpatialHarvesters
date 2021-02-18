@@ -22,7 +22,7 @@ public class ChunkLoaderBlock extends CustomHorizontalShapedBlock {
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
-        if (!world.isClient) {
+        if (!world.isClient()) {
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) world;
                 ChunkPos chunkPos = serverWorld.getChunk(pos).getPos();
@@ -35,7 +35,7 @@ public class ChunkLoaderBlock extends CustomHorizontalShapedBlock {
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
-        if (!world.isClient) {
+        if (!world.isClient()) {
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) world;
                 ChunkPos chunkPos = serverWorld.getChunk(pos).getPos();

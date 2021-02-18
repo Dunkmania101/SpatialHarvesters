@@ -58,7 +58,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     @Override
     public void onBlockPlacedBy(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-        if (!worldIn.isRemote) {
+        if (!worldIn.isRemote()) {
             TileEntity tile = worldIn.getTileEntity(pos);
             CompoundNBT stackTileNBT = stack.getChildTag(CustomValues.stackTileNBTKey);
             if (tile != null && stackTileNBT != null) {
@@ -72,7 +72,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     @Nonnull
     @Override
     public ActionResultType onBlockActivated(@Nonnull BlockState state, World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand handIn, @Nonnull BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
+        if (!worldIn.isRemote()) {
             if (player.isCrouching()) {
                 TileEntity tile = worldIn.getTileEntity(pos);
                 if (tile != null) {
@@ -114,6 +114,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                                 player.sendStatusMessage(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), TextFormatting.RED, TextFormatting.BOLD), false);
                             }
                         }
+                        player.sendStatusMessage(Tools.getDividerText(), false);
                         player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", TextFormatting.DARK_GRAY), false);
                         CompoundNBT weapon = data.getCompound(CustomValues.weaponNBTKey);
                         if (!weapon.isEmpty()) {

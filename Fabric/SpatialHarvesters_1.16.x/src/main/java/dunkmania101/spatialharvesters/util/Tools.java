@@ -266,7 +266,7 @@ public class Tools {
     }
 
     public static Text getDividerText() {
-        return new TranslatableText("msg.spatialharvesters.divider").formatted(Formatting.GRAY);
+        return getTranslatedFormattedText("msg.spatialharvesters.divider", Formatting.GRAY, Formatting.BOLD);
     }
 
     public static ArrayList<Text> getMultiLineText(String key, Formatting...formats) {

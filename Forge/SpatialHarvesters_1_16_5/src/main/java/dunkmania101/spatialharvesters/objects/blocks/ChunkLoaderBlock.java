@@ -23,7 +23,7 @@ public class ChunkLoaderBlock extends CustomHorizontalShapedBlock {
     @Override
     public void onBlockPlacedBy(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-        if (!worldIn.isRemote) {
+        if (!worldIn.isRemote()) {
             if (worldIn instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) worldIn;
                 ChunkPos cpos = serverWorld.getChunk(pos).getPos();
@@ -36,7 +36,7 @@ public class ChunkLoaderBlock extends CustomHorizontalShapedBlock {
     @Override
     public void onBlockHarvested(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull PlayerEntity player) {
         super.onBlockHarvested(worldIn, pos, state, player);
-        if (!worldIn.isRemote) {
+        if (!worldIn.isRemote()) {
             if (worldIn instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) worldIn;
                 ChunkPos cpos = serverWorld.getChunk(pos).getPos();

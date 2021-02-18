@@ -23,32 +23,30 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
 
     @Override
     protected void lastMinuteActions() {
-        if (getWorld() != null && !getWorld().isRemote) {
+        if (getWorld() != null && !getWorld().isRemote()) {
             if (this.MOBS.isEmpty()) {
-                if (getWorld() != null && !getWorld().isRemote) {
-                    for (EntityType<?> entityType : ForgeRegistries.ENTITIES.getValues()) {
-                        try {
-                            if (entityType != null) {
-                                ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
-                                ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
-                                ResourceLocation rn = entityType.getRegistryName();
-                                if (rn != null) {
-                                    if (!Tools.isResourceBanned(rn, blacklist_mobs, blacklist_mobs_mod)) {
-                                        Entity entity = entityType.create(getWorld());
-                                        if (entity != null) {
-                                            if (entity instanceof MobEntity) {
-                                                if (entity.isNonBoss()) {
-                                                    this.MOBS.add(rn.toString());
-                                                }
+                for (EntityType<?> entityType : ForgeRegistries.ENTITIES.getValues()) {
+                    try {
+                        if (entityType != null) {
+                            ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
+                            ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
+                            ResourceLocation rn = entityType.getRegistryName();
+                            if (rn != null) {
+                                if (!Tools.isResourceBanned(rn, blacklist_mobs, blacklist_mobs_mod)) {
+                                    Entity entity = entityType.create(getWorld());
+                                    if (entity != null) {
+                                        if (entity instanceof MobEntity) {
+                                            if (entity.isNonBoss()) {
+                                                this.MOBS.add(rn.toString());
                                             }
-                                            entity.remove();
                                         }
+                                        entity.remove();
                                     }
                                 }
                             }
-                        } catch (Exception error) {
-                            SpatialHarvesters.LOGGER.catching(error);
                         }
+                    } catch (Exception error) {
+                        SpatialHarvesters.LOGGER.catching(error);
                     }
                 }
             }

@@ -34,25 +34,22 @@ public class MobKeyItem extends Item {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker.isSneaking()) {
-            String entityKey = target.getType().getTranslationKey();
-            if (entityKey != null && !entityKey.isEmpty()) {
-                Identifier mobRN = Identifier.tryParse(entityKey);
-                if (mobRN != null) {
-                    ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.blacklist_mobs;
-                    ArrayList<String> blacklist_mobs_mod = CommonConfig.blacklist_mobs_mod;
-                    boolean banned = false;
-                    if (Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
-                        banned = true;
+            Identifier mobRN = EntityType.getId(target.getType());
+            if (mobRN != null) {
+                ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.blacklist_mobs;
+                ArrayList<String> blacklist_mobs_mod = CommonConfig.blacklist_mobs_mod;
+                boolean banned = false;
+                if (Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
+                    banned = true;
+                } else {
+                    stack.getOrCreateTag().putString(CustomValues.entityNBTKey, mobRN.toString());
+                }
+                if (attacker instanceof PlayerEntity) {
+                    PlayerEntity player = (PlayerEntity) attacker;
+                    if (banned) {
+                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity_failed", Formatting.DARK_RED), true);
                     } else {
-                        stack.getOrCreateTag().putString(CustomValues.entityNBTKey, entityKey);
-                    }
-                    if (attacker instanceof PlayerEntity) {
-                        PlayerEntity player = (PlayerEntity) attacker;
-                        if (banned) {
-                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity_failed", Formatting.DARK_RED), true);
-                        } else {
-                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity", Formatting.BLUE), true);
-                        }
+                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity", Formatting.BLUE), true);
                     }
                 }
             }
@@ -65,7 +62,7 @@ public class MobKeyItem extends Item {
         PlayerEntity player = context.getPlayer();
         if (player != null) {
             World world = context.getWorld();
-            if (!world.isClient) {
+            if (!world.isClient()) {
                 BlockPos pos = context.getBlockPos();
                 Block block = world.getBlockState(pos).getBlock();
                 if (block instanceof SpecificMobHarvesterBlock) {
@@ -109,16 +106,18 @@ public class MobKeyItem extends Item {
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", Formatting.DARK_RED));
+            String entityMSG = "msg.spatialharvesters.none";
             if (nbt.contains(CustomValues.entityNBTKey)) {
+                entityMSG = "msg.spatialharvesters.invalid";
                 String entity = nbt.getString(CustomValues.entityNBTKey);
                 if (entity != null && !entity.isEmpty()) {
                     Optional<EntityType<?>> optionalEntityType = EntityType.get(entity);
                     if (optionalEntityType.isPresent()) {
-                        EntityType<?> entityType = optionalEntityType.get();
-                        tooltip.add(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), Formatting.RED, Formatting.BOLD));
+                        entityMSG = optionalEntityType.get().getTranslationKey();
                     }
                 }
             }
+            tooltip.add(Tools.getTranslatedFormattedText(entityMSG, Formatting.RED, Formatting.BOLD));
         }
         tooltip.add(Tools.getDividerText());
     }

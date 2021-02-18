@@ -109,5 +109,7 @@
   "msg.spatialharvesters.clear_weapon_key_weapon": "Cleared Mob Key to weapon!",
   "msg.spatialharvesters.set_mob_harvester": "Set Mob Harvester!",
   "msg.spatialharvesters.set_mob_harvester_failed": "This Key is unbound!",
-  "msg.spatialharvesters.clear_mob_harvester": "Cleared Mob Harvester!"
+  "msg.spatialharvesters.clear_mob_harvester": "Cleared Mob Harvester!",
+  "msg.spatialharvesters.none": "None",
+  "msg.spatialharvesters.invalid": "Invalid"
 }

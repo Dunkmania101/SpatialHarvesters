@@ -60,7 +60,7 @@ public class ResourceDisablerKeyItem extends Item {
         PlayerEntity player = context.getPlayer();
         if (player != null) {
             World world = context.getWorld();
-            if (!world.isRemote) {
+            if (!world.isRemote()) {
                 BlockPos pos = context.getPos();
                 TileEntity tile = world.getTileEntity(pos);
                 if (tile != null) {

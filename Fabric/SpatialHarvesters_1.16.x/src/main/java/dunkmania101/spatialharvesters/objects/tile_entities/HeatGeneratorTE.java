@@ -23,7 +23,7 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
         boolean enabled = CommonConfig.enable_heat_generator;
         if (enabled) {
             super.customTickActions();
-            if (getWorld() != null && !getWorld().isClient) {
+            if (getWorld() != null && !getWorld().isClient()) {
                 setActive(false);
                 ArrayList<EnergyHandler> outBatteries = new ArrayList<>();
                 for (Direction side : Direction.values()) {

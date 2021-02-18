@@ -214,8 +214,7 @@ public class Tools {
     }
 
     public static TextComponent getDividerText() {
-        return (TextComponent) new TranslationTextComponent("msg.spatialharvesters.divider")
-                .mergeStyle(TextFormatting.GRAY);
+        return getTranslatedFormattedText("msg.spatialharvesters.divider", TextFormatting.GRAY, TextFormatting.BOLD);
     }
 
     public static ArrayList<TextComponent> getMultiLineText(String key, TextFormatting...formats) {

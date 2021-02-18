@@ -68,7 +68,7 @@ public class MobKeyItem extends Item {
         PlayerEntity player = context.getPlayer();
         if (player != null) {
             World world = context.getWorld();
-            if (!world.isRemote) {
+            if (!world.isRemote()) {
                 BlockPos pos = context.getPos();
                 Block block = world.getBlockState(pos).getBlock();
                 if (block instanceof SpecificMobHarvesterBlock) {
@@ -112,16 +112,18 @@ public class MobKeyItem extends Item {
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", TextFormatting.DARK_RED));
+            String entityMSG = "msg.spatialharvesters.none";
             if (nbt.contains(CustomValues.entityNBTKey)) {
+                entityMSG = "msg.spatialharvesters.invalid";
                 String entity = nbt.getString(CustomValues.entityNBTKey);
                 if (!entity.isEmpty()) {
                     Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
                     if (optionalEntityType.isPresent()) {
-                        EntityType<?> entityType = optionalEntityType.get();
-                        tooltip.add(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), TextFormatting.RED));
+                        entityMSG = optionalEntityType.get().getTranslationKey();
                     }
                 }
             }
+            tooltip.add(Tools.getTranslatedFormattedText(entityMSG, TextFormatting.RED, TextFormatting.BOLD));
         }
         tooltip.add(Tools.getDividerText());
     }

@@ -31,7 +31,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         boolean enabled = CommonConfig.ENABLE_DIMENSIONAL_APPLICATOR.get();
         if (enabled) {
             super.customTickActions();
-            if (this.playerId != null && getWorld() != null && !getWorld().isRemote) {
+            if (this.playerId != null && getWorld() != null && !getWorld().isRemote()) {
                 double divisor = CommonConfig.DIMENSIONAL_APPLICATOR_DIVISOR.get();
                 if (getCountedTicks() >= (getDuration() / divisor)) {
                     resetCountedTicks();

@@ -25,7 +25,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
 
     @Override
     public void tick() {
-        if (getWorld() != null && !getWorld().isClient) {
+        if (getWorld() != null && !getWorld().isClient()) {
             if (getWorld().isReceivingRedstonePower(pos)) {
                 setActive(false);
                 getWorld().addParticle(DustParticleEffect.RED, getPos().getX(), getPos().getY(), getPos().getZ(), 5, 5, 5);
