@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -32,12 +33,12 @@ public class MachineBlockItem extends BlockItem {
         CompoundTag data = stack.getOrCreateTag().getCompound(CustomValues.stackTileNBTKey);
         tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN));
         int energy = data.getInt(CustomValues.energyStorageKey);
-        tooltip.add(Text.of(Integer.toString(energy)).copy().formatted(Formatting.GREEN, Formatting.BOLD));
+        tooltip.add(new LiteralText(Integer.toString(energy)).copy().formatted(Formatting.GREEN, Formatting.BOLD));
         if (data.contains(CustomValues.countedTicksKey)) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.counted_ticks_message", Formatting.YELLOW));
             int ticks = data.getInt(CustomValues.countedTicksKey);
-            tooltip.add(Text.of(Integer.toString(ticks)).copy().formatted(Formatting.YELLOW, Formatting.BOLD));
+            tooltip.add(new LiteralText(Integer.toString(ticks)).copy().formatted(Formatting.YELLOW, Formatting.BOLD));
         }
         if (data.contains(CustomValues.disabledResourcesKey)) {
             tooltip.add(Tools.getDividerText());

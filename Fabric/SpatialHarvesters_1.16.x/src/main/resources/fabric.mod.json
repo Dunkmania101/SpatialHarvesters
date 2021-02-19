@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "spatialharvesters",
-  "version": "0.11.5",
+  "version": "0.11.5a",
 
   "name": "Spatial Harvesters",
   "description": "Adds harvesters that gather resources from space-time itself!\nInspired by EnvironmentalTech.",

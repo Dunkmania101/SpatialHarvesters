@@ -1,8 +1,5 @@
 package dunkmania101.spatialharvesters.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import net.minecraft.block.Block;
@@ -17,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -28,6 +26,9 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tools {
     public static ItemStack insertItemStacked(Inventory inventory, ItemStack stack) {
@@ -272,7 +273,7 @@ public class Tools {
     public static ArrayList<Text> getMultiLineText(String key, Formatting...formats) {
         ArrayList<Text> texts = new ArrayList<>();
         for (String txt : new TranslatableText(key).getString().split("\n")) {
-            Text text = Text.of(txt);
+            Text text = new LiteralText(txt);
             if (formats != null) {
                 texts.add(text.copy().formatted(formats));
             } else {

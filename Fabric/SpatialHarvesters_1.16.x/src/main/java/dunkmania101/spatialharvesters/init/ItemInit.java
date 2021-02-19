@@ -2,12 +2,7 @@ package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.objects.blocks.block_items.MachineBlockItem;
-import dunkmania101.spatialharvesters.objects.items.EffectKeyItem;
-import dunkmania101.spatialharvesters.objects.items.MobKeyItem;
-import dunkmania101.spatialharvesters.objects.items.PlayerKeyItem;
-import dunkmania101.spatialharvesters.objects.items.ResourceDisablerKeyItem;
-import dunkmania101.spatialharvesters.objects.items.ShardItem;
-import dunkmania101.spatialharvesters.objects.items.WeaponKeyItem;
+import dunkmania101.spatialharvesters.objects.items.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.BlockItem;

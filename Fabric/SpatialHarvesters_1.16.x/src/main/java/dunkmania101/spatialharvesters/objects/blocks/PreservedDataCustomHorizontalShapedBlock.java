@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.Text;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -80,14 +80,14 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                     CompoundTag data = tile.toTag(new CompoundTag());
                     if (tile instanceof CustomEnergyMachineTE) {
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN), false);
-                        player.sendMessage(Text.of(Integer.toString(data.getInt(CustomValues.energyStorageKey))).copy().formatted(Formatting.GREEN, Formatting.BOLD), false);
+                        player.sendMessage(new LiteralText(Integer.toString(data.getInt(CustomValues.energyStorageKey))).copy().formatted(Formatting.GREEN, Formatting.BOLD), false);
                     }
                     if (tile instanceof TickingRedstoneEnergyMachineTE) {
                         if (data.contains(CustomValues.countedTicksKey)) {
                             player.sendMessage(Tools.getDividerText(), false);
                             player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.counted_ticks_message", Formatting.YELLOW), false);
                             int countedTicks = data.getInt(CustomValues.countedTicksKey);
-                            player.sendMessage(Text.of(Integer.toString(countedTicks)).copy().formatted(Formatting.YELLOW, Formatting.BOLD), false);
+                            player.sendMessage(new LiteralText(Integer.toString(countedTicks)).copy().formatted(Formatting.YELLOW, Formatting.BOLD), false);
                         }
                     }
                     if (tile instanceof SpatialHarvesterTE) {
