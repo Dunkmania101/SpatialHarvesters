@@ -3,7 +3,9 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
+import dunkmania101.spatialharvesters.init.ItemInit;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameterSets;
@@ -58,5 +60,28 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
     @Override
     public boolean overrideSetOutputs() {
         return true;
+    }
+
+    @Override
+    public Item getShard(Block block) {
+        if (getWorld() != null && !getWorld().isRemote()) {
+            int i = getWorld().getRandom().nextInt(8);
+            if (i == 0) {
+                return ItemInit.SHARD_1.get();
+            } else if (i == 1) {
+                return ItemInit.SHARD_2.get();
+            } else if (i == 2) {
+                return ItemInit.SHARD_3.get();
+            } else if (i == 3) {
+                return ItemInit.SHARD_4.get();
+            } else if (i == 4) {
+                return ItemInit.SHARD_5.get();
+            } else if (i == 5) {
+                return ItemInit.SHARD_6.get();
+            } else if (i == 6) {
+                return ItemInit.SHARD_7.get();
+            }
+        }
+        return ItemInit.MOB_SHARD.get();
     }
 }

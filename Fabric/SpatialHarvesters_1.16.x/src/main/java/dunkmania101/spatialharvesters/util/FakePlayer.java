@@ -12,6 +12,10 @@ public class FakePlayer extends PlayerEntity {
         super(world, BlockPos.ORIGIN, 0, new GameProfile(uuid, name));
     }
 
+    public FakePlayer(World world) {
+        this(world, UUID.randomUUID(), UUID.randomUUID().toString());
+    }
+
     @Override
     public boolean isSpectator() {
         return false;

@@ -44,11 +44,8 @@ public class ResourceDisablerKeyItem extends Item {
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resource", Formatting.RED), true);
                     stack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
                 } else {
-                    Identifier rn = Registry.ITEM.getId(otherStack.getItem());
-                    if (rn != Registry.ITEM.getDefaultId()) {
-                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", Formatting.BLUE), true);
-                        stack.getOrCreateTag().putString(CustomValues.disabledResourceKey, rn.toString());
-                    }
+                    player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", Formatting.BLUE), true);
+                    stack.getOrCreateTag().putString(CustomValues.disabledResourceKey, otherStack.getItem().toString());
                 }
             }
         }

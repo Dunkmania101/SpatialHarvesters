@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.11.5'
+version = '0.11.6'
 group = 'dunkmania101.spatialharvesters' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'spatialharvesters_forge_1.16.5'
 

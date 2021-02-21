@@ -97,7 +97,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                             chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                         }
                                         if (!chosenOutput.isEmpty()) {
-                                            if (this.BLACKLIST.contains(chosenOutput.getItem().getTranslationKey())) {
+                                            if (this.BLACKLIST.contains(chosenOutput.getItem().toString())) {
                                                 getEnergyStorage().extract(price);
                                                 setActive(true);
                                             } else {
@@ -153,7 +153,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                 }
                 if (getTier(block) < tier) {
                     Identifier itemRN = new Identifier(itemTier.get(0), itemTier.get(1));
-                    this.OUTPUTS.removeIf(stack -> stack.getItem().getTranslationKey() != null && stack.getItem().getTranslationKey().equals(itemRN.toString()));
+                    this.OUTPUTS.removeIf(stack -> stack.getItem().toString() != null && stack.getItem().toString().equals(itemRN.toString()));
                 }
             }
         }
@@ -223,14 +223,14 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             this.BLACKLIST.clear();
             CompoundTag disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
             for (String key : disabledResources.getKeys()) {
-                String airRN = Items.AIR.getTranslationKey();
+                String airRN = Items.AIR.toString();
                 if (!key.equals(airRN) && !this.BLACKLIST.contains(key)) {
                     this.BLACKLIST.add(key);
                 }
             }
         }
         if (nbt.contains(CustomValues.disabledResourceKey)) {
-            String airRN = Items.AIR.getTranslationKey();
+            String airRN = Items.AIR.toString();
             String key = nbt.getString(CustomValues.disabledResourceKey);
             if (!key.equals(airRN) && !this.BLACKLIST.contains(key)) {
                 this.BLACKLIST.add(key);

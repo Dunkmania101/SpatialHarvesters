@@ -4,10 +4,12 @@ import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.util.Tools;
+import dunkmania101.spatialharvesters.init.ItemInit;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -66,5 +68,28 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
     @Override
     public int getSpeed(Block block) {
         return CommonConfig.DARK_MOB_SPEED.get();
+    }
+
+    @Override
+    public Item getShard(Block block) {
+        if (getWorld() != null && !getWorld().isRemote()) {
+            int i = getWorld().getRandom().nextInt(8);
+            if (i == 0) {
+                return ItemInit.SHARD_1.get();
+            } else if (i == 1) {
+                return ItemInit.SHARD_2.get();
+            } else if (i == 2) {
+                return ItemInit.SHARD_3.get();
+            } else if (i == 3) {
+                return ItemInit.SHARD_4.get();
+            } else if (i == 4) {
+                return ItemInit.SHARD_5.get();
+            } else if (i == 5) {
+                return ItemInit.SHARD_6.get();
+            } else if (i == 6) {
+                return ItemInit.SHARD_7.get();
+            }
+        }
+        return ItemInit.MOB_SHARD.get();
     }
 }

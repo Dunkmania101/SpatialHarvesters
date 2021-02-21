@@ -31,7 +31,7 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
                         Identifier rn = new Identifier(rnString.get(0), rnString.get(1));
                         LootContext context = new LootContext.Builder((ServerWorld) getWorld()).build(LootContextTypes.EMPTY);
                         server.getLootManager().getTable(rn).generateLoot(context).stream()
-                                .filter(stack -> !stack.isEmpty() && !Tools.isResourceBanned(Identifier.tryParse(stack.getItem().getTranslationKey()),
+                                .filter(stack -> !stack.isEmpty() && !Tools.isResourceBanned(Identifier.tryParse(stack.getItem().toString()),
                                         CommonConfig.blacklist_loot,
                                         CommonConfig.blacklist_loot_mod))
                                 .forEach(newOutputs::add);
@@ -59,6 +59,24 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
 
     @Override
     public Item getShard(Block block) {
-        return ItemInit.SHARD_7;
+        if (getWorld() != null && !getWorld().isClient()) {
+            int i = getWorld().getRandom().nextInt(8);
+            if (i == 0) {
+                return ItemInit.SHARD_1;
+            } else if (i == 1) {
+                return ItemInit.SHARD_2;
+            } else if (i == 2) {
+                return ItemInit.SHARD_3;
+            } else if (i == 3) {
+                return ItemInit.SHARD_4;
+            } else if (i == 4) {
+                return ItemInit.SHARD_5;
+            } else if (i == 5) {
+                return ItemInit.SHARD_6;
+            } else if (i == 6) {
+                return ItemInit.SHARD_7;
+            }
+        }
+        return ItemInit.MOB_SHARD;
     }
 }

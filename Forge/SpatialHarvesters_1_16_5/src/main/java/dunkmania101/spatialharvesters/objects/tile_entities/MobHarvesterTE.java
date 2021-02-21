@@ -262,7 +262,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     @Override
     public void remove() {
-        super.remove();
         removeAll();
+        super.remove();
     }
 }

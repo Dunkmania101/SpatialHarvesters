@@ -415,6 +415,13 @@ public class CommonConfig {
         modOre.add(ore);
         custom_ores.add(modOre);
 
+        mod = "minecraft";
+        ore = "glowstone";
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        custom_ores.add(modOre);
+
         CUSTOM_ORES = BUILDER.comment("Custom outputs for the Ore Harvester.")
                 .define("custom_ores", custom_ores);
         ArrayList<ArrayList<String>> custom_bios = new ArrayList<>();

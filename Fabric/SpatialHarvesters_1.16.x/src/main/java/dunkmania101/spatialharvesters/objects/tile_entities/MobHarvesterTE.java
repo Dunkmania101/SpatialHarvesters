@@ -228,8 +228,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     @Override
     public void markRemoved() {
-        super.markRemoved();
         removeAll();
+        super.markRemoved();
     }
 
     @Override

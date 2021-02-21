@@ -62,7 +62,7 @@ public class MobKeyItem extends Item {
         PlayerEntity player = context.getPlayer();
         if (player != null) {
             World world = context.getWorld();
-            if (!world.isClient()) {
+            if (world != null && !world.isClient()) {
                 BlockPos pos = context.getBlockPos();
                 Block block = world.getBlockState(pos).getBlock();
                 if (block instanceof SpecificMobHarvesterBlock) {
@@ -88,7 +88,8 @@ public class MobKeyItem extends Item {
                                 } else {
                                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", Formatting.BLUE), true);
                                 }
-                                tile.fromTag(context.getWorld().getBlockState(pos), Tools.correctTileNBT(tile, harvesterNBT));
+                                tile.fromTag(world.getBlockState(pos), Tools.correctTileNBT(tile, harvesterNBT));
+                                return ActionResult.SUCCESS;
                             }
                         }
                     }

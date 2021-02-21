@@ -15,7 +15,6 @@ public class CommonConfig implements ConfigGroup {
         String mod = "appliedenergistics2";
         String ore = "quartz_ore";
         ArrayList<String> modOre = new ArrayList<>();
-
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
@@ -268,6 +267,13 @@ public class CommonConfig implements ConfigGroup {
 
         mod = "gobber2";
         ore = "gobber2_ore_end";
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        custom_ores.add(modOre);
+
+        mod = "minecraft";
+        ore = "glowstone";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);

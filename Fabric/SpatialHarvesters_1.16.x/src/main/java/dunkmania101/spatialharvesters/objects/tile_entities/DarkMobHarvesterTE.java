@@ -3,16 +3,17 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
+import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class DarkMobHarvesterTE extends MobHarvesterTE {
     private final ArrayList<String> MOBS = new ArrayList<>();
@@ -49,8 +50,7 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
                 }
             }
             if (!this.MOBS.isEmpty()) {
-                Random rand = getWorld().getRandom();
-                this.entity = this.MOBS.get(rand.nextInt(this.MOBS.size()));
+                this.entity = this.MOBS.get(getWorld().getRandom().nextInt(this.MOBS.size()));
             }
         }
         super.lastMinuteActions();
@@ -64,5 +64,28 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
     @Override
     public double getSpeed(Block block) {
         return CommonConfig.speed_dark_mob;
+    }
+
+    @Override
+    public Item getShard(Block block) {
+        if (getWorld() != null && !getWorld().isClient()) {
+            int i = getWorld().getRandom().nextInt(8);
+            if (i == 0) {
+                return ItemInit.SHARD_1;
+            } else if (i == 1) {
+                return ItemInit.SHARD_2;
+            } else if (i == 2) {
+                return ItemInit.SHARD_3;
+            } else if (i == 3) {
+                return ItemInit.SHARD_4;
+            } else if (i == 4) {
+                return ItemInit.SHARD_5;
+            } else if (i == 5) {
+                return ItemInit.SHARD_6;
+            } else if (i == 6) {
+                return ItemInit.SHARD_7;
+            }
+        }
+        return ItemInit.MOB_SHARD;
     }
 }
