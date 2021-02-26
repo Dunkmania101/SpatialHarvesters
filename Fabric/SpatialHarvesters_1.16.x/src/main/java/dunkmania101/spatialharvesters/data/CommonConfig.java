@@ -500,6 +500,153 @@ public class CommonConfig implements ConfigGroup {
         modTag.add(mod);
         modTag.add(tag);
         custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "bauxite_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "cinnabar_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "coal_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "diamond_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "emerald_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "galena_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "gold_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "iridium_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "iron_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "lapis_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "lead_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "peridot_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "pyrite_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "redstone_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "ruby_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "sheldonite_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "silver_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "sodalite_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "sphalerite_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "tin_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "tungsten_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
     }
 
     public static ArrayList<ArrayList<String>> custom_bio_tags = new ArrayList<>();
