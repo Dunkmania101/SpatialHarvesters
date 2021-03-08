@@ -15,6 +15,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -97,7 +98,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                             chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                         }
                                         if (!chosenOutput.isEmpty()) {
-                                            if (this.BLACKLIST.contains(chosenOutput.getItem().toString())) {
+                                            if (this.BLACKLIST.contains(Registry.ITEM.getId(chosenOutput.getItem()).toString())) {
                                                 getEnergyStorage().extract(price);
                                                 setActive(true);
                                             } else {
@@ -153,7 +154,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                 }
                 if (getTier(block) < tier) {
                     Identifier itemRN = new Identifier(itemTier.get(0), itemTier.get(1));
-                    this.OUTPUTS.removeIf(stack -> stack.getItem().toString() != null && stack.getItem().toString().equals(itemRN.toString()));
+                    this.OUTPUTS.removeIf(stack -> Registry.ITEM.getId(stack.getItem()).toString().equals(itemRN.toString()));
                 }
             }
         }
@@ -201,14 +202,16 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     @Override
     public CompoundTag saveSerializedValues() {
         CompoundTag nbt = super.saveSerializedValues();
-        CompoundTag disabledResources = new CompoundTag();
-        int i = 0;
-        for (String rn : this.BLACKLIST) {
-            disabledResources.putString(Integer.toString(i), rn);
-            i++;
-        }
-        if (!disabledResources.isEmpty()) {
-            nbt.put(CustomValues.disabledResourcesKey, disabledResources);
+        if (!this.BLACKLIST.isEmpty()) {
+            CompoundTag disabledResources = new CompoundTag();
+            int i = 0;
+            for (String rn : this.BLACKLIST) {
+                disabledResources.putString(Integer.toString(i), rn);
+                i++;
+            }
+            if (!disabledResources.isEmpty()) {
+                nbt.put(CustomValues.disabledResourcesKey, disabledResources);
+            }
         }
         return nbt;
     }
@@ -224,16 +227,17 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             CompoundTag disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
             for (String key : disabledResources.getKeys()) {
                 String airRN = Items.AIR.toString();
-                if (!key.equals(airRN) && !this.BLACKLIST.contains(key)) {
-                    this.BLACKLIST.add(key);
+                String rn = disabledResources.getString(key);
+                if (!key.equals(airRN) && !this.BLACKLIST.contains(rn)) {
+                    this.BLACKLIST.add(rn);
                 }
             }
         }
         if (nbt.contains(CustomValues.disabledResourceKey)) {
             String airRN = Items.AIR.toString();
-            String key = nbt.getString(CustomValues.disabledResourceKey);
-            if (!key.equals(airRN) && !this.BLACKLIST.contains(key)) {
-                this.BLACKLIST.add(key);
+            String rn = nbt.getString(CustomValues.disabledResourceKey);
+            if (!rn.equals(airRN) && !this.BLACKLIST.contains(rn)) {
+                this.BLACKLIST.add(rn);
             }
         }
     }

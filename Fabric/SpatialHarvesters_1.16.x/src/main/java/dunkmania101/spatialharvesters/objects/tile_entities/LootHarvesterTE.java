@@ -12,6 +12,7 @@ import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
                         Identifier rn = new Identifier(rnString.get(0), rnString.get(1));
                         LootContext context = new LootContext.Builder((ServerWorld) getWorld()).build(LootContextTypes.EMPTY);
                         server.getLootManager().getTable(rn).generateLoot(context).stream()
-                                .filter(stack -> !stack.isEmpty() && !Tools.isResourceBanned(Identifier.tryParse(stack.getItem().toString()),
+                                .filter(stack -> !stack.isEmpty() && !Tools.isResourceBanned(Registry.ITEM.getId(stack.getItem()),
                                         CommonConfig.blacklist_loot,
                                         CommonConfig.blacklist_loot_mod))
                                 .forEach(newOutputs::add);

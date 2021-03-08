@@ -58,7 +58,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         } else if (this instanceof SoilHarvesterTE && !enableSoil) {
             setActive(false);
         } else if (this instanceof LootHarvesterTE && !enableLoot) {
-                setActive(false);
+            setActive(false);
         } else if (this instanceof DarkMobHarvesterTE && !enableDarkMob) {
             setActive(false);
         } else if (this instanceof SpecificMobHarvesterTE && !enableSpecificMob) {
@@ -102,16 +102,19 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                             chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
                                         }
                                         if (!chosenOutput.isEmpty()) {
-                                            if (this.BLACKLIST.contains(chosenOutput.getTranslationKey())) {
-                                                getEnergyStorage().consumeEnergy(price);
-                                                setActive(true);
-                                            } else {
-                                                int originalCount = chosenOutput.getCount();
-                                                IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
-                                                ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
-                                                if (resultStack.getCount() != originalCount) {
+                                            ResourceLocation itemRN = chosenOutput.getItem().getRegistryName();
+                                            if (itemRN != null) {
+                                                if (this.BLACKLIST.contains(itemRN.toString())) {
                                                     getEnergyStorage().consumeEnergy(price);
                                                     setActive(true);
+                                                } else {
+                                                    int originalCount = chosenOutput.getCount();
+                                                    IItemHandler inventory = outInventories.get(rand.nextInt(outInventories.size()));
+                                                    ItemStack resultStack = ItemHandlerHelper.insertItemStacked(inventory, chosenOutput, false);
+                                                    if (resultStack.getCount() != originalCount) {
+                                                        getEnergyStorage().consumeEnergy(price);
+                                                        setActive(true);
+                                                    }
                                                 }
                                             }
                                         }

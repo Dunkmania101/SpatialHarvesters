@@ -202,7 +202,7 @@ public class Tools {
                 Tag<Item> tag = ItemTags.getTagGroup().getTagOrEmpty(customTagRN);
                 if (tag != null) {
                     for (Item checkItem : tag.values()) {
-                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.toString()), blacklistItems, blacklistItemsMod)) {
+                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
                             ITEMS.add(checkItem);
                         }
                     }
@@ -234,7 +234,7 @@ public class Tools {
                 if (tag != null) {
                     for (Block checkBlock : tag.values()) {
                         Item checkItem = checkBlock.asItem();
-                        if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(Identifier.tryParse(checkItem.toString()), blacklistItems, blacklistItemsMod)) {
+                        if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
                             ITEMS.add(checkItem);
                         }
                     }
