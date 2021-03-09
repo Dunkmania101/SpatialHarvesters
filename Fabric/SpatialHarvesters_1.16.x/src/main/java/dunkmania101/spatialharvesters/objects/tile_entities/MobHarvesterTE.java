@@ -69,11 +69,13 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                         }
                         updateWeapon();
                         DamageSource playerDamage = DamageSource.player(this.player);
-                        getMobEntity().setAttacking(this.player);
+                        mobEntity.setAttacking(this.player);
                         int lootingLevel = EnchantmentHelper.getLooting(this.player);
                         ((MobEntityMixinCastable) mobEntity).invokeDropLoot(playerDamage, true);
                         ((MobEntityMixinCastable) mobEntity).invokeDropEquipment(playerDamage, lootingLevel, true);
-                        CompoundTag savedDropsData = mobEntity.toTag(new CompoundTag()).getCompound(CustomValues.savedDropsKey);
+                        CompoundTag getDropsTag = new CompoundTag();
+                        getDropsTag.putString(CustomValues.shouldSaveDropsKey, "");
+                        CompoundTag savedDropsData = mobEntity.toTag(getDropsTag).getCompound(CustomValues.savedDropsKey);
                         for (String key : savedDropsData.getKeys()) {
                             CompoundTag stackNBT = savedDropsData.getCompound(key);
                             if (!stackNBT.isEmpty()) {

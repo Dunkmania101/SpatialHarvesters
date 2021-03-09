@@ -16,7 +16,9 @@ public abstract class EntityMixin {
 
     @Inject(at = @At("TAIL"), method = "toTag")
     public void injectToTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
-        tag.put(CustomValues.savedDropsKey, this.SAVED_DROPS);
+        if (tag.contains(CustomValues.shouldSaveDropsKey)) {
+            tag.put(CustomValues.savedDropsKey, this.SAVED_DROPS);
+        }
     }
 
     @Inject(at = @At("TAIL"), method = "dropStack(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/ItemEntity;")
