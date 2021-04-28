@@ -3,6 +3,7 @@ package dunkmania101.spatialharvesters.objects.blocks;
 import dunkmania101.spatialharvesters.data.ChunkLoaderData;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.BlockInit;
+import dunkmania101.spatialharvesters.objects.blocks.base.CustomHorizontalShapedBlock;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;

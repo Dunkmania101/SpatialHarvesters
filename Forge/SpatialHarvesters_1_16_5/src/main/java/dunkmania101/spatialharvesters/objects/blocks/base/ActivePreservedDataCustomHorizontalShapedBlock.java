@@ -1,4 +1,4 @@
-package dunkmania101.spatialharvesters.objects.blocks;
+package dunkmania101.spatialharvesters.objects.blocks.base;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomProperties;

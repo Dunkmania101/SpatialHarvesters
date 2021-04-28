@@ -1,8 +1,7 @@
-package dunkmania101.spatialharvesters.objects.tile_entities;
+package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.blocks.ActivePreservedDataCustomHorizontalShapedBlock;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -35,7 +34,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
                     this.ticks++;
                 }
             }
-            if (getBlockState().getBlock() instanceof ActivePreservedDataCustomHorizontalShapedBlock) {
+            if (getBlockState().hasProperty(CustomProperties.ACTIVE)) {
                 if (getBlockState().get(CustomProperties.ACTIVE) != getActive()) {
                     getWorld().setBlockState(getPos(), getBlockState().with(CustomProperties.ACTIVE, getActive()));
                 }
@@ -46,8 +45,12 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     public void customTickActions() {
     }
 
+    public void setCountedTicks(int ticks) {
+        this.ticks = ticks;
+    }
+
     public void resetCountedTicks() {
-        this.ticks = 0;
+        setCountedTicks(0);
     }
 
     public int getCountedTicks() {
@@ -65,7 +68,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     @Override
     public CompoundNBT saveSerializedValues() {
         CompoundNBT nbt = super.saveSerializedValues();
-        if (countTicks) {
+        if (this.countTicks) {
             nbt.putInt(CustomValues.countedTicksKey, getCountedTicks());
         }
         return nbt;

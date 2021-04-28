@@ -1,4 +1,4 @@
-package dunkmania101.spatialharvesters.objects.tile_entities;
+package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.data.CustomValues;

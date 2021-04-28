@@ -134,6 +134,7 @@ public class CommonConfig {
     public static ForgeConfigSpec.BooleanValue ENABLE_LOOT_HARVESTER;
     public static ForgeConfigSpec.BooleanValue ENABLE_DARK_MOB_HARVESTER;
     public static ForgeConfigSpec.BooleanValue ENABLE_SPECIFIC_MOB_HARVESTER;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> VALID_HEAT_SOURCES;
 
     static {
         BUILDER.push("Spatial Harvesters - Common Config: ");
@@ -164,14 +165,14 @@ public class CommonConfig {
 
         mod = "appliedenergistics2";
         ore = "charged_quartz_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "rftoolsbase";
         ore = "dimensionalshard_overworld";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
@@ -179,245 +180,245 @@ public class CommonConfig {
         mod = "rftoolsbase";
 
         ore = "dimensionalshard_nether";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "rftoolsbase";
         ore = "dimensionalshard_end";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "rhodonite";
         ore = "block_ore_fluorite";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "rhodonite";
         ore = "block_ore_rhodonite";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "exp_ore";
         ore = "block_exp_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "rockcandy";
         ore = "candy_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "lightestlamp";
         ore = "boron_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "zombie_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "blaze_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "ghast_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "magma_cube_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "wither_skeleton_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "zombie_pigman_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "salmon_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "squid_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "cod_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "sheep_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "rabbit_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "pig_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "cow_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "chicken_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "bat_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "witch_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "spider_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "slime_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "phantom_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "skeleton_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "enderman_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "guardian_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "pufferfish_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "funores";
         ore = "creeper_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore_nether";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "gobber2";
         ore = "gobber2_ore_end";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
 
         mod = "minecraft";
         ore = "glowstone";
-        modOre = new ArrayList<>();
+        modOre.clear();
         modOre.add(mod);
         modOre.add(ore);
         custom_ores.add(modOre);
@@ -454,126 +455,126 @@ public class CommonConfig {
 
         mod = "minecraft";
         table = "chests/buried_treasure";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/desert_pyramid";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/abandoned_mineshaft";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/end_city_treasure";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/igloo_chest";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/jungle_temple";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/nether_bridge";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/pillager_outpost";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/shipwreck_map";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/shipwreck_treasure";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/stronghold_corridor";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/stronghold_corridor";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/stronghold_corridor";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/stronghold_crossing";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/stronghold_library";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/underwater_ruin_big";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/underwater_ruin_small";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
 
         mod = "minecraft";
         table = "chests/woodland_mansion";
-        modTable = new ArrayList<>();
+        modTable.clear();
         modTable.add(mod);
         modTable.add(table);
         custom_loot_tables.add(modTable);
@@ -598,46 +599,46 @@ public class CommonConfig {
         modMobDrop.add(modDrop);
         custom_mob_drops.add(modMobDrop);
 
-        modMobDrop = new ArrayList<>();
+        modMobDrop.clear();
         mod = "minecraft";
         mob = "ender_dragon";
-        modMob = new ArrayList<>();
+        modMob.clear();
         modMob.add(mod);
         modMob.add(mob);
         modMobDrop.add(modMob);
         mod = "minecraft";
         mobDrop = "dragon_head";
-        modDrop = new ArrayList<>();
+        modDrop.clear();
         modDrop.add(mod);
         modDrop.add(mobDrop);
         modMobDrop.add(modDrop);
         custom_mob_drops.add(modMobDrop);
 
-        modMobDrop = new ArrayList<>();
+        modMobDrop.clear();
         mod = "minecraft";
         mob = "ender_dragon";
-        modMob = new ArrayList<>();
+        modMob.clear();
         modMob.add(mod);
         modMob.add(mob);
         modMobDrop.add(modMob);
         mod = "minecraft";
         mobDrop = "dragon_egg";
-        modDrop = new ArrayList<>();
+        modDrop.clear();
         modDrop.add(mod);
         modDrop.add(mobDrop);
         modMobDrop.add(modDrop);
         custom_mob_drops.add(modMobDrop);
 
-        modMobDrop = new ArrayList<>();
+        modMobDrop.clear();
         mod = "minecraft";
         mob = "ender_dragon";
-        modMob = new ArrayList<>();
+        modMob.clear();
         modMob.add(mod);
         modMob.add(mob);
         modMobDrop.add(modMob);
         mod = "minecraft";
         mobDrop = "dragon_breath";
-        modDrop = new ArrayList<>();
+        modDrop.clear();
         modDrop.add(mod);
         modDrop.add(mobDrop);
         modMobDrop.add(modDrop);
@@ -664,84 +665,84 @@ public class CommonConfig {
 
         mod = "forge";
         tag = "crops";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "forge";
         tag = "leather";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "forge";
         tag = "feathers";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "forge";
         tag = "seeds";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "forge";
         tag = "dyes";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "forge";
         tag = "bones";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "forge";
         tag = "rods_wooden";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "minecraft";
         tag = "small_flowers";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "minecraft";
         tag = "logs";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "minecraft";
         tag = "planks";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "minecraft";
         tag = "saplings";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
 
         mod = "minecraft";
         tag = "leaves";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_bio_tags.add(modTag);
@@ -753,28 +754,28 @@ public class CommonConfig {
 
         mod = "forge";
         tag = "cobblestone";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_stone_tags.add(modTag);
 
         mod = "forge";
         tag = "sandstone";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_stone_tags.add(modTag);
 
         mod = "forge";
         tag = "end_stones";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_stone_tags.add(modTag);
 
         mod = "forge";
         tag = "netherrack";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_stone_tags.add(modTag);
@@ -786,21 +787,21 @@ public class CommonConfig {
 
         mod = "forge";
         tag = "dirt";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_soil_tags.add(modTag);
 
         mod = "forge";
         tag = "sand";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_soil_tags.add(modTag);
 
         mod = "forge";
         tag = "gravel";
-        modTag = new ArrayList<>();
+        modTag.clear();
         modTag.add(mod);
         modTag.add(tag);
         custom_soil_tags.add(modTag);
@@ -1097,6 +1098,32 @@ public class CommonConfig {
         BUILDER.pop();
 
         BUILDER.push("Misc.: ");
+        ArrayList<ArrayList<String>> valid_heat_sources = new ArrayList<>();
+
+        mod = "minecraft";
+        String heat_source = "magma_block";
+        ArrayList<String> mod_heat_source = new ArrayList<>();
+        mod_heat_source.add(mod);
+        mod_heat_source.add(heat_source);
+        valid_heat_sources.add(mod_heat_source);
+
+        mod = "minecraft";
+        heat_source = "lava";
+        mod_heat_source.clear();
+        mod_heat_source.add(mod);
+        mod_heat_source.add(heat_source);
+        valid_heat_sources.add(mod_heat_source);
+
+        mod = "minecraft";
+        heat_source = "fire";
+        mod_heat_source.clear();
+        mod_heat_source.add(mod);
+        mod_heat_source.add(heat_source);
+        valid_heat_sources.add(mod_heat_source);
+        
+        VALID_HEAT_SOURCES = BUILDER.comment("Valid heat sources for the Heat Generator.")
+                .define("valid_heat_sources", valid_heat_sources);
+
         BLOCK_HARDNESS = BUILDER.comment("Hardness for the blocks (Iron Block is 5.)")
                 .defineInRange("block_hardness", 5.0f, 0, Float.MAX_VALUE);
         BLOCK_RESISTANCE = BUILDER.comment("Resistance for the blocks (Iron Block is 6.)")

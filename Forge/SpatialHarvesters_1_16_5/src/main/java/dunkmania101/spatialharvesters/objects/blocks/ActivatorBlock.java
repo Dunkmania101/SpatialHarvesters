@@ -1,5 +1,6 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
+import dunkmania101.spatialharvesters.objects.blocks.base.CustomShapedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShapes;

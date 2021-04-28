@@ -1,6 +1,7 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.objects.blocks.base.ActivePreservedDataCustomHorizontalShapedBlock;
 import net.minecraft.block.BlockState;
 
 public class HarvesterBlock extends ActivePreservedDataCustomHorizontalShapedBlock {

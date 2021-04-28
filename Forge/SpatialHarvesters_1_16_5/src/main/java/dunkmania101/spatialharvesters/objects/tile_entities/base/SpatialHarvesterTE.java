@@ -1,10 +1,11 @@
-package dunkmania101.spatialharvesters.objects.tile_entities;
+package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.objects.blocks.HarvesterBlock;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
+import dunkmania101.spatialharvesters.objects.tile_entities.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -96,7 +97,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                         ItemStack chosenOutput;
                                         Random rand = getWorld().getRandom();
                                         int shardChance = CommonConfig.HARVESTER_SHARD_CHANCE.get();
-                                        if (rand.nextInt(shardChance) == 1) {
+                                        if (shardChance > 0 && rand.nextInt(shardChance) == 1) {
                                             chosenOutput = new ItemStack(getShard(this.thisBlock));
                                         } else {
                                             chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
