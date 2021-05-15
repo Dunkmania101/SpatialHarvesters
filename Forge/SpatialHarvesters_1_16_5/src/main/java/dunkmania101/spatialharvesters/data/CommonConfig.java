@@ -170,6 +170,13 @@ public class CommonConfig {
         modOre.add(ore);
         custom_ores.add(modOre);
 
+        mod = "routerreborn";
+        ore = "copper_ore";
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        custom_ores.add(modOre);
+
         mod = "rftoolsbase";
         ore = "dimensionalshard_overworld";
         modOre = new ArrayList<>();
@@ -178,7 +185,6 @@ public class CommonConfig {
         custom_ores.add(modOre);
 
         mod = "rftoolsbase";
-
         ore = "dimensionalshard_nether";
         modOre = new ArrayList<>();
         modOre.add(mod);
