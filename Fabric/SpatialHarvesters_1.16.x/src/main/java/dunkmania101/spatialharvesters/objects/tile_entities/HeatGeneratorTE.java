@@ -2,12 +2,12 @@ package dunkmania101.spatialharvesters.objects.tile_entities;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FireBlock;
-import net.minecraft.block.MagmaBlock;
+import dunkmania101.spatialharvesters.objects.tile_entities.base.TickingRedstoneEnergyMachineTE;
+import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import team.reborn.energy.Energy;
 import team.reborn.energy.EnergyHandler;
 
@@ -27,9 +27,9 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
                 setActive(false);
                 ArrayList<EnergyHandler> outBatteries = new ArrayList<>();
                 for (Direction side : Direction.values()) {
-                    Block block = getWorld().getBlockState(pos.offset(side)).getBlock();
-                    if (block instanceof MagmaBlock || block == Blocks.LAVA || block instanceof FireBlock) {
-                        if (getEnergyStorage().getEnergy() < getEnergyStorage().getMaxStored()) {
+                    Identifier blockRN = Registry.BLOCK.getId(getWorld().getBlockState(pos.offset(side)).getBlock());
+                    if (CommonConfig.valid_heat_sources.contains(Tools.getModResourceArray(blockRN))) {
+                        if ((getEnergyStorage().getEnergy() + getSpeed()) <= getEnergyStorage().getMaxStored()) {
                             getEnergyStorage().insert(getSpeed());
                             setActive(true);
                         }

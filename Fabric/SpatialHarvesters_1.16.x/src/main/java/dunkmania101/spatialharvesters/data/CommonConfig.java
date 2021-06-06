@@ -1,15 +1,12 @@
 package dunkmania101.spatialharvesters.data;
 
+import me.lortseam.completeconfig.api.ConfigEntries;
 import me.lortseam.completeconfig.api.ConfigGroup;
 
 import java.util.ArrayList;
 
+@ConfigEntries
 public class CommonConfig implements ConfigGroup {
-    @Override
-    public boolean isConfigPOJO() {
-        return true;
-    }
-
     public static ArrayList<ArrayList<String>> custom_ores = new ArrayList<>();
     static {
         String mod = "appliedenergistics2";
@@ -274,6 +271,13 @@ public class CommonConfig implements ConfigGroup {
 
         mod = "minecraft";
         ore = "glowstone";
+        modOre = new ArrayList<>();
+        modOre.add(mod);
+        modOre.add(ore);
+        custom_ores.add(modOre);
+
+        mod = "routerreborn";
+        ore = "copper_ore";
         modOre = new ArrayList<>();
         modOre.add(mod);
         modOre.add(ore);
@@ -862,6 +866,30 @@ public class CommonConfig implements ConfigGroup {
     public static int speed_specific_mob = 50;
 
     public static int speed_heat_generator = 3;
+
+    public static ArrayList<ArrayList<String>> valid_heat_sources = new ArrayList<>();
+    static {
+        String mod = "minecraft";
+        String heat_source = "magma_block";
+        ArrayList<String> mod_heat_source = new ArrayList<>();
+        mod_heat_source.add(mod);
+        mod_heat_source.add(heat_source);
+        valid_heat_sources.add(mod_heat_source);
+
+        mod = "minecraft";
+        heat_source = "lava";
+        mod_heat_source = new ArrayList<>();
+        mod_heat_source.add(mod);
+        mod_heat_source.add(heat_source);
+        valid_heat_sources.add(mod_heat_source);
+
+        mod = "minecraft";
+        heat_source = "fire";
+        mod_heat_source = new ArrayList<>();
+        mod_heat_source.add(mod);
+        mod_heat_source.add(heat_source);
+        valid_heat_sources.add(mod_heat_source);
+    }
 
     public static int harvester_capacity_multiplier = 100;
     public static int dimensional_applicator_capacity_multiplier = 100;

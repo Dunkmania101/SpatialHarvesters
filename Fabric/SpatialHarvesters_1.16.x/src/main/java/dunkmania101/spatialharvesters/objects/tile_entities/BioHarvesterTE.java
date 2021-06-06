@@ -4,6 +4,7 @@ import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
+import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

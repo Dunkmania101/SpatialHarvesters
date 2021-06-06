@@ -1,5 +1,6 @@
 package dunkmania101.spatialharvesters.objects.blocks;
 
+import dunkmania101.spatialharvesters.objects.blocks.base.ActivePreservedDataCustomHorizontalShapedBlock;
 import dunkmania101.spatialharvesters.objects.tile_entities.HeatGeneratorTE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;

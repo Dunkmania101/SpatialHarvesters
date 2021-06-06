@@ -1,8 +1,8 @@
-package dunkmania101.spatialharvesters.objects.tile_entities;
+package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.blocks.ActivePreservedDataCustomHorizontalShapedBlock;
+import dunkmania101.spatialharvesters.objects.blocks.base.ActivePreservedDataCustomHorizontalShapedBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.DustParticleEffect;

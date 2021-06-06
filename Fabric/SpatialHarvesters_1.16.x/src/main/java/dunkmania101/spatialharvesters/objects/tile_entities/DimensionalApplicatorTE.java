@@ -5,6 +5,7 @@ import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
+import dunkmania101.spatialharvesters.objects.tile_entities.base.TickingRedstoneEnergyMachineTE;
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;

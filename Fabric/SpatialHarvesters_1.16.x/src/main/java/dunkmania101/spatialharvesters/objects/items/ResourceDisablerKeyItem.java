@@ -2,7 +2,7 @@ package dunkmania101.spatialharvesters.objects.items;
 
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.objects.tile_entities.SpatialHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
