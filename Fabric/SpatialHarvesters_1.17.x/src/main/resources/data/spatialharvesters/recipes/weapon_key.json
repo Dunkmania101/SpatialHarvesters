@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  b",
+    " b ",
+    "a  "
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:player_key"
+    },
+    "b": {
+      "tag": "c:iron_nuggets"
+    }
+  },
+  "result": {
+    "item": "spatialharvesters:weapon_key"
+  }
+}
