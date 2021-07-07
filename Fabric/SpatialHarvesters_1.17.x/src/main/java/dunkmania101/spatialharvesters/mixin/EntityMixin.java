@@ -4,7 +4,7 @@ import dunkmania101.spatialharvesters.data.CustomValues;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,10 +12,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    protected CompoundTag SAVED_DROPS = new CompoundTag();
+    protected NbtCompound SAVED_DROPS = new NbtCompound();
 
     @Inject(at = @At("TAIL"), method = "toTag")
-    public void injectToTag(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
+    public void injectToTag(NbtCompound tag, CallbackInfoReturnable<NbtCompound> cir) {
         if (tag.contains(CustomValues.shouldSaveDropsKey)) {
             tag.put(CustomValues.savedDropsKey, this.SAVED_DROPS);
         }
@@ -27,6 +27,6 @@ public abstract class EntityMixin {
         while (this.SAVED_DROPS.getKeys().contains(Integer.toString(i))) {
             i++;
         }
-        this.SAVED_DROPS.put(Integer.toString(i), stack.toTag(new CompoundTag()));
+        this.SAVED_DROPS.put(Integer.toString(i), stack.toTag(new NbtCompound()));
     }
 }

@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.data;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 
@@ -54,7 +54,7 @@ public class ChunkLoaderData extends WorldSaveData {
     }
 
     @Override
-    public void customSaveActions(CompoundTag data) {
+    public void customSaveActions(NbtCompound data) {
         super.customSaveActions(data);
         data.putLongArray(CustomValues.chunkLoaderDataKey, getChunkLoaders());
         if (!CommonConfig.enable_chunk_loader) {

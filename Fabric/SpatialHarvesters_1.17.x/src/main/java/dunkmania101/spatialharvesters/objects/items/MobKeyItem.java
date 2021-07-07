@@ -14,7 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -69,11 +69,11 @@ public class MobKeyItem extends Item {
                     BlockEntity tile = world.getBlockEntity(pos);
                     if (tile != null) {
                         if (tile instanceof SpecificMobHarvesterTE) {
-                            CompoundTag harvesterNBT = new CompoundTag();
+                            NbtCompound harvesterNBT = new NbtCompound();
                             if (player.isSneaking()) {
                                 harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
                             } else {
-                                CompoundTag itemNBT = context.getStack().getTag();
+                                NbtCompound itemNBT = context.getStack().getTag();
                                 if (itemNBT != null) {
                                     if (itemNBT.contains(CustomValues.entityNBTKey)) {
                                         harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
@@ -103,7 +103,7 @@ public class MobKeyItem extends Item {
     public void appendTooltip(ItemStack stack, World worldIn, List<Text> tooltip, TooltipContext flagIn) {
         super.appendTooltip(stack, worldIn, tooltip, flagIn);
         tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.mob_key_description", Formatting.GOLD));
-        CompoundTag nbt = stack.getTag();
+        NbtCompound nbt = stack.getTag();
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", Formatting.DARK_RED));

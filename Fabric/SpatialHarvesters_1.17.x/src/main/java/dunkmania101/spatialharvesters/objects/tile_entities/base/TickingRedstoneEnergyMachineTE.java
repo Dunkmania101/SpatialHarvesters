@@ -4,7 +4,7 @@ import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.blocks.base.ActivePreservedDataCustomHorizontalShapedBlock;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.Tickable;
 
@@ -63,8 +63,8 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     }
 
     @Override
-    public CompoundTag saveSerializedValues() {
-        CompoundTag nbt = super.saveSerializedValues();
+    public NbtCompound saveSerializedValues() {
+        NbtCompound nbt = super.saveSerializedValues();
         if (countTicks) {
             nbt.putInt(CustomValues.countedTicksKey, getCountedTicks());
         }
@@ -72,7 +72,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implem
     }
 
     @Override
-    public void setDeserializedValues(CompoundTag nbt) {
+    public void setDeserializedValues(NbtCompound nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.countedTicksKey)) {
             this.ticks = nbt.getInt(CustomValues.countedTicksKey);

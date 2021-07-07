@@ -11,7 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -37,7 +37,7 @@ public class EffectKeyItem extends Item {
                 if (tile instanceof DimensionalApplicatorTE) {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {
-                        CompoundTag potionsNBT = new CompoundTag();
+                        NbtCompound potionsNBT = new NbtCompound();
                         ArrayList<Integer> effects = new ArrayList<>();
                         boolean doContinue = true;
                         if (player.isSneaking()) {

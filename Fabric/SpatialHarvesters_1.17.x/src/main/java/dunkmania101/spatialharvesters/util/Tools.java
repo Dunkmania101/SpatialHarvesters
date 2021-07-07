@@ -10,7 +10,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
@@ -130,8 +130,8 @@ public class Tools {
         return count;
     }
 
-    public static CompoundTag correctTileNBT(BlockEntity tile, CompoundTag nbt) {
-        CompoundTag newNBT = nbt.copy();
+    public static NbtCompound correctTileNBT(BlockEntity tile, NbtCompound nbt) {
+        NbtCompound newNBT = nbt.copy();
         newNBT.remove("id");
         Identifier id = BlockEntityType.getId(tile.getType());
         if (id != null) {
@@ -147,7 +147,7 @@ public class Tools {
         return newNBT;
     }
 
-    public static List<ItemStack> getPreservedDataBlockDrops(List<ItemStack> drops, BlockState state, CompoundTag tileNBT) {
+    public static List<ItemStack> getPreservedDataBlockDrops(List<ItemStack> drops, BlockState state, NbtCompound tileNBT) {
         if (tileNBT != null) {
             for (ItemStack stack : drops) {
                 if (stack.getItem() == state.getBlock().asItem()) {

@@ -11,7 +11,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -158,8 +158,8 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public CompoundTag saveSerializedValues() {
-        CompoundTag nbt = super.saveSerializedValues();
+    public NbtCompound saveSerializedValues() {
+        NbtCompound nbt = super.saveSerializedValues();
         if (playerId != null) {
             nbt.putUuid(CustomValues.playerNBTKey, playerId);
         }
@@ -170,7 +170,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public void setDeserializedValues(CompoundTag nbt) {
+    public void setDeserializedValues(NbtCompound nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removePlayerNBTKey)) {
             this.playerId = null;

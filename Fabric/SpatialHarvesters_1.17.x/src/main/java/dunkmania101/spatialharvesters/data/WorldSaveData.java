@@ -1,6 +1,6 @@
 package dunkmania101.spatialharvesters.data;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 
@@ -14,29 +14,29 @@ public class WorldSaveData {
     }
 
     public void save() {
-        CompoundTag worldData = getWorldTag();
+        NbtCompound worldData = getWorldTag();
         customSaveActions(worldData);
         getPersistentState().fromTag(worldData);
         getPersistentState().markDirty();
     }
 
-    public void customSaveActions(CompoundTag data) {
+    public void customSaveActions(NbtCompound data) {
     }
 
-    public CompoundTag getWorldTag() {
-        return getPersistentState().toTag(new CompoundTag());
+    public NbtCompound getWorldTag() {
+        return getPersistentState().toTag(new NbtCompound());
     }
 
     public PersistentState getPersistentState() {
         return this.thisServerWorld.getPersistentStateManager().getOrCreate(() -> new PersistentState(this.thisKey) {
-            CompoundTag thisTag = new CompoundTag();
+            NbtCompound thisTag = new NbtCompound();
             @Override
-            public void fromTag(CompoundTag tag) {
+            public void fromTag(NbtCompound tag) {
                 this.thisTag = tag;
             }
 
             @Override
-            public CompoundTag toTag(CompoundTag tag) {
+            public NbtCompound toTag(NbtCompound tag) {
                 return thisTag;
             }
         }, this.thisKey);

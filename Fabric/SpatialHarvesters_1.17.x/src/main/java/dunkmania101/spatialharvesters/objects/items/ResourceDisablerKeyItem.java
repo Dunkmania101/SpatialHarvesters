@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -62,11 +62,11 @@ public class ResourceDisablerKeyItem extends Item {
                 BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
                     if (tile instanceof SpatialHarvesterTE) {
-                        CompoundTag disabledNBT = new CompoundTag();
+                        NbtCompound disabledNBT = new NbtCompound();
                         if (player.isSneaking()) {
                             disabledNBT.putString(CustomValues.removeDisabledNBTKey, "");
                         } else {
-                            CompoundTag itemNBT = context.getStack().getTag();
+                            NbtCompound itemNBT = context.getStack().getTag();
                             if (itemNBT != null) {
                                 if (itemNBT.contains(CustomValues.disabledResourceKey)) {
                                     disabledNBT.putString(CustomValues.disabledResourceKey, itemNBT.getString(CustomValues.disabledResourceKey));
@@ -94,7 +94,7 @@ public class ResourceDisablerKeyItem extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, java.util.List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.resource_disabler_key_description", Formatting.GOLD));
-        CompoundTag nbt = stack.getTag();
+        NbtCompound nbt = stack.getTag();
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resource", Formatting.RED));

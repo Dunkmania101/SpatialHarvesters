@@ -4,7 +4,7 @@ import dunkmania101.spatialharvesters.data.CustomValues;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import team.reborn.energy.*;
 
 public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage {
@@ -28,14 +28,14 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
         return Energy.of(this);
     }
 
-    public CompoundTag saveSerializedValues() {
-        CompoundTag nbt = new CompoundTag();
+    public NbtCompound saveSerializedValues() {
+        NbtCompound nbt = new NbtCompound();
         double energy = getEnergyStorage().getEnergy();
         nbt.putDouble(CustomValues.energyStorageKey, energy);
         return nbt;
     }
 
-    public void setDeserializedValues(CompoundTag nbt) {
+    public void setDeserializedValues(NbtCompound nbt) {
         if (nbt.contains(CustomValues.energyStorageKey)) {
             double energy = nbt.getDouble(CustomValues.energyStorageKey);
             getEnergyStorage().set(energy);
@@ -43,13 +43,13 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        CompoundTag nbt = super.toTag(tag);
+    public NbtCompound toTag(NbtCompound tag) {
+        NbtCompound nbt = super.toTag(tag);
         return nbt.copyFrom(saveSerializedValues());
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
+    public void fromTag(BlockState state, NbtCompound tag) {
         super.fromTag(state, tag);
         setDeserializedValues(tag);
         markDirty();

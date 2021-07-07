@@ -26,6 +26,10 @@ repositories {
     maven {
         url "https://maven.terraformersmc.com/"
     }
+	maven {
+		name = "Modmuss50"
+		url = "https://maven.modmuss50.me/"
+	}
 }
 
 dependencies {
@@ -44,7 +48,7 @@ dependencies {
 
 	//Recommended: Adds Mod Menu to your game, so you can easily open and check your config GUI (see the Mod Menu documentation for more information)
 	//Replace Version with current version
-	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"
+	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 
 	// TeamReborn Energy
 	modApi "teamreborn:energy:${project.reborn_energy_version}"

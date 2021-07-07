@@ -10,7 +10,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -30,7 +30,7 @@ public class MachineBlockItem extends BlockItem {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        CompoundTag data = stack.getOrCreateTag().getCompound(CustomValues.stackTileNBTKey);
+        NbtCompound data = stack.getOrCreateTag().getCompound(CustomValues.stackTileNBTKey);
         tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN));
         int energy = data.getInt(CustomValues.energyStorageKey);
         tooltip.add(new LiteralText(Integer.toString(energy)).copy().formatted(Formatting.GREEN, Formatting.BOLD));
@@ -44,7 +44,7 @@ public class MachineBlockItem extends BlockItem {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resources", Formatting.RED));
             if (data.contains(CustomValues.disabledResourcesKey)) {
-                CompoundTag disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
+                NbtCompound disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                 for (String key : disabledResources.getKeys()) {
                     Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                     if (item != Items.AIR) {
@@ -68,7 +68,7 @@ public class MachineBlockItem extends BlockItem {
         if (data.contains(CustomValues.weaponNBTKey)) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY));
-            CompoundTag weaponNBT = data.getCompound(CustomValues.weaponNBTKey);
+            NbtCompound weaponNBT = data.getCompound(CustomValues.weaponNBTKey);
             if (!weaponNBT.isEmpty()) {
                 ItemStack weapon = ItemStack.fromTag(weaponNBT);
                 if (!weapon.isEmpty()) {

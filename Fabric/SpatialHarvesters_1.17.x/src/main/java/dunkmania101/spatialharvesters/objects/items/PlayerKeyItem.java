@@ -9,7 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -34,7 +34,7 @@ public class PlayerKeyItem extends Item {
                 if (tile instanceof DimensionalApplicatorTE) {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {
-                        CompoundTag nbt = new CompoundTag();
+                        NbtCompound nbt = new NbtCompound();
                         if (player.isSneaking()) {
                             nbt.putString(CustomValues.removePlayerNBTKey, "");
                             player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_dimensional_applicator", Formatting.RED), true);

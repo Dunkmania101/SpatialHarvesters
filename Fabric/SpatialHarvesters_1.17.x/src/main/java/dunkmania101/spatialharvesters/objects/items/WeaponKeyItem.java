@@ -12,7 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -43,7 +43,7 @@ public class WeaponKeyItem extends Item {
                     stack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_weapon_key_weapon", Formatting.RED), true);
                 } else {
-                    stack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.toTag(new CompoundTag()));
+                    stack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.toTag(new NbtCompound()));
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_weapon_key_weapon", Formatting.BLUE), true);
                 }
             }
@@ -61,11 +61,11 @@ public class WeaponKeyItem extends Item {
                 BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
                     if (tile instanceof MobHarvesterTE) {
-                        CompoundTag harvesterNBT = new CompoundTag();
+                        NbtCompound harvesterNBT = new NbtCompound();
                         if (player.isSneaking()) {
                             harvesterNBT.putString(CustomValues.removeWeaponNBTKey, "");
                         } else {
-                            CompoundTag itemNBT = context.getStack().getTag();
+                            NbtCompound itemNBT = context.getStack().getTag();
                             if (itemNBT != null) {
                                 if (itemNBT.contains(CustomValues.weaponNBTKey)) {
                                     harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
@@ -93,12 +93,12 @@ public class WeaponKeyItem extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.weapon_key_description", Formatting.GOLD));
-        CompoundTag nbt = stack.getTag();
+        NbtCompound nbt = stack.getTag();
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY));
             if (nbt.contains(CustomValues.weaponNBTKey)) {
-                CompoundTag weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
+                NbtCompound weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
                 if (!weaponNBT.isEmpty()) {
                     ItemStack weapon = ItemStack.fromTag(weaponNBT);
                     if (!weapon.isEmpty()) {

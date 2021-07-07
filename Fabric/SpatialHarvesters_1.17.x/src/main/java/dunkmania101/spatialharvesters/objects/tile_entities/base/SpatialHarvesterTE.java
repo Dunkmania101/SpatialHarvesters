@@ -13,7 +13,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -201,10 +201,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public CompoundTag saveSerializedValues() {
-        CompoundTag nbt = super.saveSerializedValues();
+    public NbtCompound saveSerializedValues() {
+        NbtCompound nbt = super.saveSerializedValues();
         if (!this.BLACKLIST.isEmpty()) {
-            CompoundTag disabledResources = new CompoundTag();
+            NbtCompound disabledResources = new NbtCompound();
             int i = 0;
             for (String rn : this.BLACKLIST) {
                 disabledResources.putString(Integer.toString(i), rn);
@@ -218,14 +218,14 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public void setDeserializedValues(CompoundTag nbt) {
+    public void setDeserializedValues(NbtCompound nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeDisabledNBTKey)) {
             this.BLACKLIST.clear();
         }
         if (nbt.contains(CustomValues.disabledResourcesKey)) {
             this.BLACKLIST.clear();
-            CompoundTag disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
+            NbtCompound disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
             for (String key : disabledResources.getKeys()) {
                 String airRN = Items.AIR.toString();
                 String rn = disabledResources.getString(key);

@@ -20,7 +20,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -33,7 +33,7 @@ import java.util.UUID;
 public class MobHarvesterTE extends SpatialHarvesterTE {
     protected String entity = null;
     protected PlayerEntity player = null;
-    protected CompoundTag weapon = new CompoundTag();
+    protected NbtCompound weapon = new NbtCompound();
 
     public MobHarvesterTE(BlockEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
@@ -74,11 +74,11 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                         int lootingLevel = EnchantmentHelper.getLooting(this.player);
                         ((MobEntityMixinCastable) mobEntity).invokeDropLoot(playerDamage, true);
                         ((MobEntityMixinCastable) mobEntity).invokeDropEquipment(playerDamage, lootingLevel, true);
-                        CompoundTag getDropsTag = new CompoundTag();
+                        NbtCompound getDropsTag = new NbtCompound();
                         getDropsTag.putString(CustomValues.shouldSaveDropsKey, "");
-                        CompoundTag savedDropsData = mobEntity.toTag(getDropsTag).getCompound(CustomValues.savedDropsKey);
+                        NbtCompound savedDropsData = mobEntity.toTag(getDropsTag).getCompound(CustomValues.savedDropsKey);
                         for (String key : savedDropsData.getKeys()) {
-                            CompoundTag stackNBT = savedDropsData.getCompound(key);
+                            NbtCompound stackNBT = savedDropsData.getCompound(key);
                             if (!stackNBT.isEmpty()) {
                                 ItemStack stack = ItemStack.fromTag(stackNBT);
                                 if (!stack.isEmpty()) {
@@ -153,7 +153,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                     stack = ItemStack.fromTag(this.weapon);
                 }
             }
-            CompoundTag stackNBT = stack.getTag();
+            NbtCompound stackNBT = stack.getTag();
             ItemStack mainHandStack = this.player.getMainHandStack();
             if (!ItemStack.areEqual(mainHandStack, stack)) {
                 this.player.setStackInHand(Hand.MAIN_HAND, stack);
@@ -192,12 +192,12 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     protected void removeWeapon() {
-        this.weapon = new CompoundTag();
+        this.weapon = new NbtCompound();
     }
 
     @Override
-    public CompoundTag saveSerializedValues() {
-        CompoundTag nbt = super.saveSerializedValues();
+    public NbtCompound saveSerializedValues() {
+        NbtCompound nbt = super.saveSerializedValues();
         if (this.entity != null && !this.entity.isEmpty()) {
             nbt.putString(CustomValues.entityNBTKey, this.entity);
         }
@@ -210,7 +210,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public void setDeserializedValues(CompoundTag nbt) {
+    public void setDeserializedValues(NbtCompound nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeEntityNBTKey)) {
             removePlayer();

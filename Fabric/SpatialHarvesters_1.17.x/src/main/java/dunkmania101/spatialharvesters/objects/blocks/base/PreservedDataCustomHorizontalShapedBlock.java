@@ -16,7 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.context.LootContext;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalShapedBlock {
-    private CompoundTag thisTileNBT = new CompoundTag();
+    private NbtCompound thisTileNBT = new NbtCompound();
 
     public PreservedDataCustomHorizontalShapedBlock(Settings settings, VoxelShape shape, Direction frontDirection) {
         super(settings, shape, frontDirection);
@@ -43,7 +43,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     public void onBreak(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         BlockEntity tile = worldIn.getBlockEntity(pos);
         if (tile != null) {
-            this.thisTileNBT = tile.toTag(new CompoundTag());
+            this.thisTileNBT = tile.toTag(new NbtCompound());
         }
         super.onBreak(worldIn, pos, state, player);
     }
@@ -64,7 +64,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
         super.onPlaced(world, pos, state, placer, stack);
         if (!world.isClient()) {
             BlockEntity tile = world.getBlockEntity(pos);
-            CompoundTag stackTileNBT = stack.getSubTag(CustomValues.stackTileNBTKey);
+            NbtCompound stackTileNBT = stack.getSubTag(CustomValues.stackTileNBTKey);
             if (tile != null && stackTileNBT != null) {
                 if (!stackTileNBT.isEmpty()) {
                     tile.fromTag(state, Tools.correctTileNBT(tile, stackTileNBT));
@@ -80,7 +80,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                 BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
                     player.sendMessage(Tools.getDividerText(), false);
-                    CompoundTag data = tile.toTag(new CompoundTag());
+                    NbtCompound data = tile.toTag(new NbtCompound());
                     if (tile instanceof CustomEnergyMachineTE) {
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN), false);
                         player.sendMessage(new LiteralText(Integer.toString(data.getInt(CustomValues.energyStorageKey))).copy().formatted(Formatting.GREEN, Formatting.BOLD), false);
@@ -97,7 +97,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                         player.sendMessage(Tools.getDividerText(), false);
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resources", Formatting.RED), false);
                         if (data.contains(CustomValues.disabledResourcesKey)) {
-                            CompoundTag disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
+                            NbtCompound disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                             for (String key : disabledResources.getKeys()) {
                                 Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                                 if (item != Items.AIR) {
@@ -119,7 +119,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                         }
                         player.sendMessage(Tools.getDividerText(), false);
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY), false);
-                        CompoundTag weapon = data.getCompound(CustomValues.weaponNBTKey);
+                        NbtCompound weapon = data.getCompound(CustomValues.weaponNBTKey);
                         if (!weapon.isEmpty()) {
                             ItemStack weaponStack = ItemStack.fromTag(weapon);
                             if (!weaponStack.isEmpty()) {
