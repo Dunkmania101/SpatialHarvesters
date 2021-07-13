@@ -9,6 +9,7 @@ import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarveste
 import dunkmania101.spatialharvesters.util.FakePlayer;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -24,6 +25,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -35,8 +37,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     protected PlayerEntity player = null;
     protected NbtCompound weapon = new NbtCompound();
 
-    public MobHarvesterTE(BlockEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+    public MobHarvesterTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
+        super(tileEntityTypeIn, pos, state);
     }
 
     @Override
@@ -76,17 +78,17 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                         ((MobEntityMixinCastable) mobEntity).invokeDropEquipment(playerDamage, lootingLevel, true);
                         NbtCompound getDropsTag = new NbtCompound();
                         getDropsTag.putString(CustomValues.shouldSaveDropsKey, "");
-                        NbtCompound savedDropsData = mobEntity.toTag(getDropsTag).getCompound(CustomValues.savedDropsKey);
+                        NbtCompound savedDropsData = mobEntity.writeNbt(getDropsTag).getCompound(CustomValues.savedDropsKey);
                         for (String key : savedDropsData.getKeys()) {
                             NbtCompound stackNBT = savedDropsData.getCompound(key);
                             if (!stackNBT.isEmpty()) {
-                                ItemStack stack = ItemStack.fromTag(stackNBT);
+                                ItemStack stack = ItemStack.fromNbt(stackNBT);
                                 if (!stack.isEmpty()) {
                                     newOutputs.add(stack);
                                 }
                             }
                         }
-                        mobEntity.remove();
+                        mobEntity.discard();
                     }
                 }
             }
@@ -100,8 +102,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         MobEntity mobEntity = null;
         try {
             if (getWorld() != null && this.entity != null && !this.entity.isEmpty()) {
-                if (getWorld() instanceof ServerWorld) {
-                    ServerWorld serverWorld = (ServerWorld) getWorld();
+                if (getWorld() instanceof ServerWorld serverWorld) {
                     Optional<EntityType<?>> optionalEntityType = EntityType.get(this.entity);
                     if (optionalEntityType.isPresent()) {
                         EntityType<?> entityType = optionalEntityType.get();
@@ -120,7 +121,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                                             SpatialHarvesters.LOGGER.catching(error);
                                         }
                                     }
-                                    entity.remove();
+                                    entity.discard();
                                 }
                             }
                         }
@@ -135,9 +136,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     protected void setPlayer() {
         if (getWorld() != null) {
-            if (getWorld() instanceof ServerWorld) {
+            if (getWorld() instanceof ServerWorld serverWorld) {
                 removePlayer();
-                ServerWorld serverWorld = (ServerWorld) getWorld();
                 UUID uuid = UUID.randomUUID();
                 this.player = new FakePlayer(serverWorld, uuid, uuid.toString());
                 this.player.setSilent(true);
@@ -150,7 +150,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
             ItemStack stack = ItemStack.EMPTY;
             if (this.weapon != null) {
                 if (!this.weapon.isEmpty()) {
-                    stack = ItemStack.fromTag(this.weapon);
+                    stack = ItemStack.fromNbt(this.weapon);
                 }
             }
             NbtCompound stackNBT = stack.getTag();
@@ -186,7 +186,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     protected void removePlayer() {
         if (this.player != null) {
-            this.player.remove();
+            this.player.discard();
             this.player = null;
         }
     }

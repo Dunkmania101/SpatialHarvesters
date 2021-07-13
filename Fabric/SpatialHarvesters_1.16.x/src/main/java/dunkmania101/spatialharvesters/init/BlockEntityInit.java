@@ -15,8 +15,8 @@ public class BlockEntityInit implements ModInitializer {
                                         BlockInit.ORE_HARVESTER_8).build(null),
                         "ore_harvester");
 
-        public static final BlockEntityType<OreHarvesterTE> BIO_HARVESTER = registerBlockEntityType(
-                        BlockEntityType.Builder.create(OreHarvesterTE::new, BlockInit.BIO_HARVESTER_1,
+        public static final BlockEntityType<BioHarvesterTE> BIO_HARVESTER = registerBlockEntityType(
+                        BlockEntityType.Builder.create(BioHarvesterTE::new, BlockInit.BIO_HARVESTER_1,
                                         BlockInit.BIO_HARVESTER_2, BlockInit.BIO_HARVESTER_3, BlockInit.BIO_HARVESTER_4,
                                         BlockInit.BIO_HARVESTER_5, BlockInit.BIO_HARVESTER_6, BlockInit.BIO_HARVESTER_7,
                                         BlockInit.BIO_HARVESTER_8).build(null),

@@ -141,6 +141,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                     }
                     player.sendStatusMessage(Tools.getDividerText(), false);
                 }
+                return ActionResultType.SUCCESS;
             }
         }
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);

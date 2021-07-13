@@ -7,13 +7,15 @@ import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
 public class BioHarvesterTE extends SpatialHarvesterTE {
-    public BioHarvesterTE() {
-        super(BlockEntityInit.BIO_HARVESTER);
+    public BioHarvesterTE(BlockPos pos, BlockState state) {
+        super(BlockEntityInit.BIO_HARVESTER, pos, state);
     }
 
     @Override

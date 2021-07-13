@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
 import team.reborn.energy.*;
 
 public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage {
@@ -13,12 +14,12 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
     private boolean setCanExtract = false;
     private boolean setCanReceive = false;
 
-    public CustomEnergyMachineTE(BlockEntityType<?> blockEntityTypeIn) {
-        super(blockEntityTypeIn);
+    public CustomEnergyMachineTE(BlockEntityType<?> blockEntityTypeIn, BlockPos pos, BlockState state) {
+        super(blockEntityTypeIn, pos, state);
     }
 
-    public CustomEnergyMachineTE(BlockEntityType<?> blockEntityTypeIn, boolean canExtract, boolean canReceive) {
-        this(blockEntityTypeIn);
+    public CustomEnergyMachineTE(BlockEntityType<?> blockEntityTypeIn, BlockPos pos, BlockState state, boolean canExtract, boolean canReceive) {
+        this(blockEntityTypeIn, pos, state);
 
         this.setCanExtract = canExtract;
         this.setCanReceive = canReceive;
@@ -43,14 +44,14 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
     }
 
     @Override
-    public NbtCompound toTag(NbtCompound tag) {
-        NbtCompound nbt = super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        NbtCompound nbt = super.writeNbt(tag);
         return nbt.copyFrom(saveSerializedValues());
     }
 
     @Override
-    public void fromTag(BlockState state, NbtCompound tag) {
-        super.fromTag(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
         setDeserializedValues(tag);
         markDirty();
     }

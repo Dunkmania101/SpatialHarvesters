@@ -1,12 +1,19 @@
 package dunkmania101.spatialharvesters.data;
 
-import me.lortseam.completeconfig.api.ConfigEntries;
-import me.lortseam.completeconfig.api.ConfigGroup;
-
 import java.util.ArrayList;
 
+import dunkmania101.spatialharvesters.SpatialHarvesters;
+import me.lortseam.completeconfig.api.ConfigContainer;
+import me.lortseam.completeconfig.api.ConfigEntries;
+import me.lortseam.completeconfig.data.Config;
+
 @ConfigEntries
-public class CommonConfig implements ConfigGroup {
+public class CommonConfig extends Config implements ConfigContainer {
+    public CommonConfig() {
+        super(SpatialHarvesters.modid);
+    }
+
+
     public static ArrayList<ArrayList<String>> custom_ores = new ArrayList<>();
     static {
         String mod = "appliedenergistics2";
@@ -808,6 +815,11 @@ public class CommonConfig implements ConfigGroup {
     public static ArrayList<ArrayList<String>> blacklist_soils = new ArrayList<>();
     public static ArrayList<ArrayList<String>> blacklist_loot = new ArrayList<>();
     public static ArrayList<ArrayList<String>> blacklist_mobs = new ArrayList<>();
+
+    public static ArrayList<ArrayList<String>> blacklist_ores_tag = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> blacklist_bios_tag = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> blacklist_stones_tag = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> blacklist_soils_tag = new ArrayList<>();
 
     public static ArrayList<String> blacklist_ores_mod = new ArrayList<>();
     public static ArrayList<String> blacklist_bios_mod = new ArrayList<>();

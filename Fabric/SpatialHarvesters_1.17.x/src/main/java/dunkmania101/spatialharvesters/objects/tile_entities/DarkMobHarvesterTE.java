@@ -6,11 +6,13 @@ import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -18,8 +20,8 @@ import java.util.ArrayList;
 public class DarkMobHarvesterTE extends MobHarvesterTE {
     private final ArrayList<String> MOBS = new ArrayList<>();
 
-    public DarkMobHarvesterTE() {
-        super(BlockEntityInit.DARK_MOB_HARVESTER);
+    public DarkMobHarvesterTE(BlockPos pos, BlockState state) {
+        super(BlockEntityInit.DARK_MOB_HARVESTER, pos, state);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
                                             this.MOBS.add(rn.toString());
                                         }
                                     }
-                                    entity.remove();
+                                    entity.discard();
                                 }
                             }
                         }

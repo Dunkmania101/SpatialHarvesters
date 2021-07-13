@@ -43,7 +43,7 @@ public class SpatialHarvesters {
     }
 
     public static class SPATIAL_HARVESTERS_GROUP extends ItemGroup {
-        public static final ItemGroup instance = new SPATIAL_HARVESTERS_GROUP(ItemGroup.GROUPS.length, "spatial_harvesters");
+        public static final ItemGroup instance = new SPATIAL_HARVESTERS_GROUP(ItemGroup.GROUPS.length, modid);
 
         private SPATIAL_HARVESTERS_GROUP(int index, String label) {
             super(index, label);

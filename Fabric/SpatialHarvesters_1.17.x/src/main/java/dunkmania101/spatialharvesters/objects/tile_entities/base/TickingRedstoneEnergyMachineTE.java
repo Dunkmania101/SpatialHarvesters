@@ -3,32 +3,36 @@ package dunkmania101.spatialharvesters.objects.tile_entities.base;
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.blocks.base.ActivePreservedDataCustomHorizontalShapedBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implements Tickable {
+public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implements BlockEntityTicker<BlockEntity> {
     private final boolean countTicks;
     protected boolean active = false;
     protected int ticks = 0;
 
-    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive, boolean countTicks) {
-        super(tileEntityTypeIn, canExtract, canReceive);
+    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state, boolean canExtract, boolean canReceive, boolean countTicks) {
+        super(tileEntityTypeIn, pos, state, canExtract, canReceive);
 
         this.countTicks = countTicks;
     }
 
-    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
-        this(tileEntityTypeIn, canExtract, canReceive, false);
+    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state, boolean canExtract, boolean canReceive) {
+        this(tileEntityTypeIn, pos, state, canExtract, canReceive, false);
     }
 
     @Override
-    public void tick() {
+    public void tick(World world, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         if (getWorld() != null && !getWorld().isClient()) {
             if (getWorld().isReceivingRedstonePower(pos)) {
                 setActive(false);
-                getWorld().addParticle(DustParticleEffect.RED, getPos().getX(), getPos().getY(), getPos().getZ(), 5, 5, 5);
+                getWorld().addParticle(DustParticleEffect.DEFAULT, getPos().getX(), getPos().getY(), getPos().getZ(), 5, 5, 5);
             } else {
                 customTickActions();
                 if (this.countTicks) {

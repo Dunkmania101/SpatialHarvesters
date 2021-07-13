@@ -6,6 +6,7 @@ import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
@@ -13,13 +14,14 @@ import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 
 public class LootHarvesterTE extends SpatialHarvesterTE {
-    public LootHarvesterTE() {
-        super(BlockEntityInit.LOOT_HARVESTER);
+    public LootHarvesterTE(BlockPos pos, BlockState state) {
+        super(BlockEntityInit.LOOT_HARVESTER, pos, state);
     }
 
     @Override

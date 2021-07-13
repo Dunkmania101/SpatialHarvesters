@@ -44,8 +44,7 @@ public class MobKeyItem extends Item {
                 } else {
                     stack.getOrCreateTag().putString(CustomValues.entityNBTKey, mobRN.toString());
                 }
-                if (attacker instanceof PlayerEntity) {
-                    PlayerEntity player = (PlayerEntity) attacker;
+                if (attacker instanceof PlayerEntity player) {
                     if (banned) {
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity_failed", Formatting.DARK_RED), true);
                     } else {
@@ -88,7 +87,7 @@ public class MobKeyItem extends Item {
                                 } else {
                                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", Formatting.BLUE), true);
                                 }
-                                tile.fromTag(world.getBlockState(pos), Tools.correctTileNBT(tile, harvesterNBT));
+                                tile.readNbt(Tools.correctTileNBT(tile, harvesterNBT));
                                 return ActionResult.SUCCESS;
                             }
                         }

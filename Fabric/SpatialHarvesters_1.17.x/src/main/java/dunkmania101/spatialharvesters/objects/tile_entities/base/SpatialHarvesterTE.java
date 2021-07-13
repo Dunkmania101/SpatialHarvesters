@@ -7,6 +7,7 @@ import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import dunkmania101.spatialharvesters.objects.tile_entities.*;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventory;
@@ -15,8 +16,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,14 +29,14 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     protected ArrayList<String> BLACKLIST = new ArrayList<>();
     private Block thisBlock = null;
 
-    public SpatialHarvesterTE(BlockEntityType<?> blockEntityType) {
-        super(blockEntityType, true, true, true);
+    public SpatialHarvesterTE(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
+        super(blockEntityType, pos, state, true, true, true);
     }
 
     @Override
-    public void tick() {
+    public void tick(World world, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         this.thisBlock = getCachedState().getBlock();
-        super.tick();
+        super.tick(world, pos, state, blockEntity);
     }
 
     @Override
@@ -74,8 +77,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                             } else {
                                 BlockEntity out = getWorld().getBlockEntity(getPos().offset(side));
                                 if (out != null) {
-                                    if (out instanceof Inventory) {
-                                        Inventory inventory = (Inventory) out;
+                                    if (out instanceof Inventory inventory) {
                                         outInventories.add(inventory);
                                     }
                                 }
@@ -148,14 +150,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
         ArrayList<ArrayList<String>> minTierItems = getMinTierItems();
         for (ArrayList<String> itemTier : minTierItems) {
             if (itemTier.size() >= 3) {
-                int tier = 0;
-                try {
-                    tier = Integer.parseInt(itemTier.get(2));
-                } catch (NumberFormatException | NullPointerException ignored) {
-                }
+                int tier = Integer.getInteger(itemTier.get(2), 0);
                 if (getTier(block) < tier) {
                     Identifier itemRN = new Identifier(itemTier.get(0), itemTier.get(1));
-                    this.OUTPUTS.removeIf(stack -> Registry.ITEM.getId(stack.getItem()).toString().equals(itemRN.toString()));
+                    this.OUTPUTS.removeIf(stack -> Registry.ITEM.getId(stack.getItem()).equals(itemRN));
                 }
             }
         }

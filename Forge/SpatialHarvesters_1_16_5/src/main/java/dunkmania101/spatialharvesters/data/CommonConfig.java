@@ -37,6 +37,10 @@ public class CommonConfig {
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_SOILS_MOD;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_MOBS_MOD;
     public static ForgeConfigSpec.ConfigValue<ArrayList<String>> BLACKLIST_LOOT_MOD;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_ORES_TAG;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_BIOS_TAG;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_STONES_TAG;
+    public static ForgeConfigSpec.ConfigValue<ArrayList<ArrayList<String>>> BLACKLIST_SOILS_TAG;
     public static ForgeConfigSpec.IntValue ORE_1_SPEED;
     public static ForgeConfigSpec.IntValue ORE_2_SPEED;
     public static ForgeConfigSpec.IntValue ORE_3_SPEED;
@@ -806,6 +810,13 @@ public class CommonConfig {
         custom_soil_tags.add(modTag);
 
         mod = "forge";
+        tag = "soul_sand";
+        modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_soil_tags.add(modTag);
+
+        mod = "forge";
         tag = "gravel";
         modTag = new ArrayList<>();
         modTag.add(mod);
@@ -813,7 +824,6 @@ public class CommonConfig {
         custom_soil_tags.add(modTag);
 
         CUSTOM_SOIL_TAGS = BUILDER.comment("Custom tags for the Soil Harvester.")
-                .comment("Note that this one uses block tags, rather than item tags, because most soil-like things are only tagged in their blocks.")
                 .define("custom_soil_tags", custom_soil_tags);
         BUILDER.pop();
 
@@ -849,16 +859,16 @@ public class CommonConfig {
                 .define("blacklist_mobs", blacklist_mobs);
         BUILDER.pop();
 
-        BUILDER.push("Harvester Blacklists (by mod): ");
+        BUILDER.push("Harvester Blacklists (By mod): ");
         ArrayList<String> blacklist_ores_mod = new ArrayList<>();
-        BLACKLIST_ORES_MOD = BUILDER.comment("Blacklist for the Soil Harvesters (By mod)")
+        BLACKLIST_ORES_MOD = BUILDER.comment("Blacklist for the Ore Harvesters (By mod)")
                 .define("blacklist_ores_mod", blacklist_ores_mod);
         ArrayList<String> blacklist_bios_mod = new ArrayList<>();
         blacklist_bios_mod.add("botania");
-        BLACKLIST_BIOS_MOD = BUILDER.comment("Blacklist for the Soil Harvesters (By mod)")
+        BLACKLIST_BIOS_MOD = BUILDER.comment("Blacklist for the Bio Harvesters (By mod)")
                 .define("blacklist_bios_mod", blacklist_bios_mod);
         ArrayList<String> blacklist_stones_mod = new ArrayList<>();
-        BLACKLIST_STONES_MOD = BUILDER.comment("Blacklist for the Soil Harvesters (By mod)")
+        BLACKLIST_STONES_MOD = BUILDER.comment("Blacklist for the Stone Harvesters (By mod)")
                 .define("blacklist_stones_mod", blacklist_stones_mod);
         ArrayList<String> blacklist_soils_mod = new ArrayList<>();
         BLACKLIST_SOILS_MOD = BUILDER.comment("Blacklist for the Soil Harvesters (By mod)")
@@ -871,10 +881,27 @@ public class CommonConfig {
                 .define("blacklist_mobs_mod", blacklist_mobs_mod);
         BUILDER.pop();
 
+        BUILDER.push("Harvester Blacklists (By tag): ");
+        ArrayList<ArrayList<String>> blacklist_ores_tag = new ArrayList<>();
+        BLACKLIST_ORES_TAG = BUILDER.comment("Blacklist for the Ore Harvesters (By tag)")
+                .define("blacklist_ores_tag", blacklist_ores_tag);
+        ArrayList<ArrayList<String>> blacklist_bios_tag = new ArrayList<>();
+        BLACKLIST_BIOS_TAG = BUILDER.comment("Blacklist for the Bio Harvesters (By tag)")
+                .define("blacklist_bios_tag", blacklist_bios_tag);
+        ArrayList<ArrayList<String>> blacklist_stones_tag = new ArrayList<>();
+        BLACKLIST_STONES_TAG = BUILDER.comment("Blacklist for the Stone Harvesters (By tag)")
+                .define("blacklist_stones_tag", blacklist_stones_tag);
+        ArrayList<ArrayList<String>> blacklist_soils_tag = new ArrayList<>();
+        BLACKLIST_SOILS_TAG = BUILDER.comment("Blacklist for the Soil Harvesters (By tag)")
+                .define("blacklist_soils_tag", blacklist_soils_tag);
+        BUILDER.pop();
+
         BUILDER.push("Machine Speeds: ");
 
+        BUILDER.push("Energy Generator Speeds: ");
         HEAT_GENERATOR_SPEED = BUILDER.comment("Speed for the Heat Generator (in FE per tick)")
-                .defineInRange("speed_heat_generator", 3, 0, Integer.MAX_VALUE);
+                .defineInRange("speed_heat_generator", 10, 0, Integer.MAX_VALUE);
+        BUILDER.pop();
 
         BUILDER.push("Ore Harvester Speeds: ");
         ORE_1_SPEED = BUILDER.comment("Speed for the tier 1 Ore Harvester (in ticks, there are 20 in a second. The lower this value, the faster.)")
@@ -1126,7 +1153,7 @@ public class CommonConfig {
         mod_heat_source.add(mod);
         mod_heat_source.add(heat_source);
         valid_heat_sources.add(mod_heat_source);
-        
+
         VALID_HEAT_SOURCES = BUILDER.comment("Valid heat sources for the Heat Generator.")
                 .define("valid_heat_sources", valid_heat_sources);
 

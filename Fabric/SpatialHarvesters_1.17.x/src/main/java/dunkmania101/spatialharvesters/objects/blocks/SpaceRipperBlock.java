@@ -29,6 +29,6 @@ public class SpaceRipperBlock extends CustomShapedBlock {
                         Block.createCuboidShape(11, 1, 4, 12, 12, 6),
                         Block.createCuboidShape(10, 1, 4, 11, 12, 5),
                         Block.createCuboidShape(3, 0, 3, 13, 1, 13)
-                ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get());
+                ).reduce(VoxelShapes::union).get());
     }
 }

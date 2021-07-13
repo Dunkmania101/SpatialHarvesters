@@ -24,7 +24,7 @@ public class CustomHorizontalShapedBlock extends Block {
     public CustomHorizontalShapedBlock(Settings settings, VoxelShape shape, Direction frontDirection) {
         super(settings);
 
-        BlockState thisState = this.getStateManager().getDefaultState();
+        BlockState thisState = this.getStateManager().getDefaultStaTE(pos, state);
         this.setDefaultState(thisState.with(FACING, frontDirection));
 
         this.NORTH_SHAPE = Tools.getRotatedVoxelShape(shape, frontDirection, Direction.NORTH);

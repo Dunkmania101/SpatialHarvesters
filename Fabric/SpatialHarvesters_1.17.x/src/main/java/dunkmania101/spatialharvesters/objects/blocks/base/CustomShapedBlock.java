@@ -25,7 +25,7 @@ public class CustomShapedBlock extends Block {
     public CustomShapedBlock(Settings settings, VoxelShape shape, Direction baseDirection) {
         super(settings);
 
-        BlockState this_state = this.getStateManager().getDefaultState();
+        BlockState this_state = this.getStateManager().getDefaultStaTE(pos, state);
         this.setDefaultState(this_state.with(FACING, baseDirection));
 
         this.NORTH_SHAPE = Tools.getRotatedVoxelShape(shape, baseDirection, Direction.NORTH);

@@ -4,8 +4,10 @@ import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.objects.tile_entities.base.TickingRedstoneEnergyMachineTE;
 import dunkmania101.spatialharvesters.util.Tools;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import team.reborn.energy.Energy;
@@ -14,8 +16,8 @@ import team.reborn.energy.EnergyHandler;
 import java.util.ArrayList;
 
 public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
-    public HeatGeneratorTE() {
-        super(BlockEntityInit.HEAT_GENERATOR, true, true);
+    public HeatGeneratorTE(BlockPos pos, BlockState state) {
+        super(BlockEntityInit.HEAT_GENERATOR, pos, state, true, true);
     }
 
     @Override

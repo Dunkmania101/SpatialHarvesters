@@ -35,15 +35,14 @@ public class WeaponKeyItem extends Item {
 
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (miner instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) miner;
+        if (miner instanceof PlayerEntity player) {
             if (player.isSneaking()) {
                 ItemStack otherStack = player.getOffHandStack();
                 if (otherStack.isEmpty()) {
                     stack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_weapon_key_weapon", Formatting.RED), true);
                 } else {
-                    stack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.toTag(new NbtCompound()));
+                    stack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.writeNbt(new NbtCompound()));
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_weapon_key_weapon", Formatting.BLUE), true);
                 }
             }
@@ -80,7 +79,7 @@ public class WeaponKeyItem extends Item {
                             } else {
                                 player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", Formatting.BLUE), true);
                             }
-                            tile.fromTag(world.getBlockState(pos), Tools.correctTileNBT(tile, harvesterNBT));
+                            tile.readNbt(Tools.correctTileNBT(tile, harvesterNBT));
                         }
                     }
                 }
@@ -100,7 +99,7 @@ public class WeaponKeyItem extends Item {
             if (nbt.contains(CustomValues.weaponNBTKey)) {
                 NbtCompound weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
                 if (!weaponNBT.isEmpty()) {
-                    ItemStack weapon = ItemStack.fromTag(weaponNBT);
+                    ItemStack weapon = ItemStack.fromNbt(weaponNBT);
                     if (!weapon.isEmpty()) {
                         tooltip.add(Tools.getTranslatedFormattedText(weapon.getTranslationKey(), Formatting.GRAY, Formatting.BOLD));
                     }

@@ -1,5 +1,5 @@
 modLoader = "javafml" #mandatory
-loaderVersion = "[35,)" #mandatory
+loaderVersion = "[36,)" #mandatory
 license = '''
 Copyright 2020 Duncan Brasher (Dunkmania101)
 
@@ -12,11 +12,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 issueTrackerURL = "https://github.com/Dunkmania101/SpatialHarvesters/issues" #optional
 [[mods]] #mandatory
 modId = "spatialharvesters" #mandatory
-version = "0.11.10" #mandatory
+version = "0.11.11" #mandatory
 displayName = "Spatial Harvesters" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/spatial-harvesters-forge" #optional
 logoFile = "spatialharvesters-logo.png" #optional
+credits = "Sirdurpsalot - The Texture Overhaul of 0.10.0"
 authors = "Dunkmania101" #optional
 description = '''
 Adds harvesters that gather resources from space-time itself!

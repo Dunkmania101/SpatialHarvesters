@@ -56,7 +56,7 @@ public class EffectKeyItem extends Item {
                         }
                         if (doContinue) {
                             potionsNBT.putIntArray(CustomValues.potionsNBTKey, effects);
-                            tile.fromTag(context.getWorld().getBlockState(pos), Tools.correctTileNBT(tile, potionsNBT));
+                            tile.readNbt(Tools.correctTileNBT(tile, potionsNBT));
                         }
                     }
                 }

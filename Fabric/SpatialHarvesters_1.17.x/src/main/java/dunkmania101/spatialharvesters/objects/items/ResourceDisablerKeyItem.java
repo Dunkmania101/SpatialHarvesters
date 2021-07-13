@@ -36,8 +36,7 @@ public class ResourceDisablerKeyItem extends Item {
 
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (miner instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) miner;
+        if (miner instanceof PlayerEntity player) {
             if (player.isSneaking()) {
                 ItemStack otherStack = player.getOffHandStack();
                 if (otherStack.isEmpty()) {
@@ -81,7 +80,7 @@ public class ResourceDisablerKeyItem extends Item {
                             } else {
                                 player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.add_disabled_resource", Formatting.BLUE), true);
                             }
-                            tile.fromTag(world.getBlockState(pos), Tools.correctTileNBT(tile, disabledNBT));
+                            tile.readNbt(Tools.correctTileNBT(tile, disabledNBT));
                         }
                     }
                 }

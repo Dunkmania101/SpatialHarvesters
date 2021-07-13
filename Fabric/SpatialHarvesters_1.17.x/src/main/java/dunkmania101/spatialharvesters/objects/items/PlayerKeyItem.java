@@ -42,7 +42,7 @@ public class PlayerKeyItem extends Item {
                             nbt.putUuid(CustomValues.playerNBTKey, player.getUuid());
                             player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_dimensional_applicator", Formatting.BLUE), true);
                         }
-                        tile.fromTag(context.getWorld().getBlockState(pos), Tools.correctTileNBT(tile, nbt));
+                        tile.readNbt(Tools.correctTileNBT(tile, nbt));
                     }
                 }
             }

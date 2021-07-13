@@ -26,6 +26,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +122,8 @@ public class Tools {
 
     public static int getBlocksInChunk(World worldIn, ChunkPos chunkPos, Block blockIn) {
         int count = 0;
-        int height = worldIn.getChunk(chunkPos.getStartPos()).getHeight();
+        Chunk chunk = worldIn.getChunk(chunkPos.getStartPos());
+        int height = Math.min(chunk.getHighestNonEmptySectionYOffset() + 16, chunk.getHeight());
         for (BlockPos checkPos : BlockPos.Mutable.iterate(chunkPos.getStartX(), 0, chunkPos.getStartZ(), chunkPos.getEndX(), height, chunkPos.getEndZ())) {
             if (worldIn.getBlockState(checkPos).getBlock() == blockIn) {
                 count++;
@@ -165,59 +167,40 @@ public class Tools {
         ArrayList<ArrayList<String>> customTags = CommonConfig.custom_ore_tags;
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_ores;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_ores;
+        ArrayList<ArrayList<String>> blacklistItemsTag = CommonConfig.blacklist_ores_tag;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_ores_mod;
-        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsTag, blacklistItemsMod);
     }
 
     public static ArrayList<Item> getLoadedBios() {
         ArrayList<ArrayList<String>> customTags = CommonConfig.custom_bio_tags;
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_bios;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_bios;
+        ArrayList<ArrayList<String>> blacklistItemsTag = CommonConfig.blacklist_bios_tag;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_bios_mod;
-        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsTag, blacklistItemsMod);
     }
 
     public static ArrayList<Item> getLoadedStones() {
         ArrayList<ArrayList<String>> customTags = CommonConfig.custom_stone_tags;
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_stones;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_stones;
+        ArrayList<ArrayList<String>> blacklistItemsTag = CommonConfig.blacklist_stones_tag;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_stones_mod;
-        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsMod);
-    }
-
-    public static ArrayList<Item> getLoadedResources(ArrayList<ArrayList<String>> customTags, ArrayList<ArrayList<String>> configItems, ArrayList<ArrayList<String>>  blacklistItems, ArrayList<String> blacklistItemsMod) {
-        ArrayList<Item> ITEMS = new ArrayList<>();
-        for (ArrayList<String> configItem : configItems) {
-            if (configItem.size() >= 2) {
-                Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
-                Item item = Registry.ITEM.get(itemRN);
-                if (item != Items.AIR && !ITEMS.contains(item)) {
-                    ITEMS.add(item);
-                }
-            }
-        }
-        for (ArrayList<String> customTag : customTags) {
-            if (customTag.size() >= 2) {
-                Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
-                Tag<Item> tag = ItemTags.getTagGroup().getTagOrEmpty(customTagRN);
-                if (tag != null) {
-                    for (Item checkItem : tag.values()) {
-                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
-                            ITEMS.add(checkItem);
-                        }
-                    }
-                }
-            }
-        }
-        return ITEMS;
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsTag, blacklistItemsMod);
     }
 
     public static ArrayList<Item> getLoadedSoils() {
-        ArrayList<Item> ITEMS = new ArrayList<>();
         ArrayList<ArrayList<String>> customTags = CommonConfig.custom_soil_tags;
         ArrayList<ArrayList<String>> configItems = CommonConfig.custom_soils;
         ArrayList<ArrayList<String>> blacklistItems = CommonConfig.blacklist_soils;
+        ArrayList<ArrayList<String>> blacklistItemsTag = CommonConfig.blacklist_soils_tag;
         ArrayList<String> blacklistItemsMod = CommonConfig.blacklist_soils_mod;
+        return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsTag, blacklistItemsMod);
+    }
+
+    public static ArrayList<Item> getLoadedResources(ArrayList<ArrayList<String>> customTags, ArrayList<ArrayList<String>> configItems, ArrayList<ArrayList<String>>  blacklistItems, ArrayList<ArrayList<String>> blacklistItemsTag, ArrayList<String> blacklistItemsMod) {
+        ArrayList<Item> ITEMS = new ArrayList<>();
         for (ArrayList<String> configItem : configItems) {
             if (configItem.size() >= 2) {
                 Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
@@ -230,12 +213,42 @@ public class Tools {
         for (ArrayList<String> customTag : customTags) {
             if (customTag.size() >= 2) {
                 Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
-                Tag<Block> tag = BlockTags.getTagGroup().getTagOrEmpty(customTagRN);
-                if (tag != null) {
-                    for (Block checkBlock : tag.values()) {
+                Tag<Item> itemTag = ItemTags.getTagGroup().getTagOrEmpty(customTagRN);
+                if (itemTag != null) {
+                    for (Item checkItem : itemTag.values()) {
+                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
+                            boolean tag_allowed = true;
+                            for (ArrayList<String> bannedTag : blacklistItemsTag) {
+                                Identifier bannedTagRN = new Identifier(bannedTag.get(0), bannedTag.get(1));
+                                Tag<Item> bannedItemTag = ItemTags.getTagGroup().getTagOrEmpty(bannedTagRN);
+                                if (bannedItemTag != null && bannedItemTag.contains(checkItem)) {
+                                    tag_allowed = false;
+                                    break;
+                                }
+                            }
+                            if (tag_allowed) {
+                                ITEMS.add(checkItem);
+                            }
+                        }
+                    }
+                }
+                Tag<Block> blockTag = BlockTags.getTagGroup().getTagOrEmpty(customTagRN);
+                if (blockTag != null) {
+                    for (Block checkBlock : blockTag.values()) {
                         Item checkItem = checkBlock.asItem();
                         if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
-                            ITEMS.add(checkItem);
+                            boolean tag_allowed = true;
+                            for (ArrayList<String> bannedTag : blacklistItemsTag) {
+                                Identifier bannedTagRN = new Identifier(bannedTag.get(0), bannedTag.get(1));
+                                Tag<Block> bannedBlockTag = BlockTags.getTagGroup().getTagOrEmpty(bannedTagRN);
+                                if (bannedBlockTag != null && bannedBlockTag.contains(checkBlock)) {
+                                    tag_allowed = false;
+                                    break;
+                                }
+                            }
+                            if (tag_allowed) {
+                                ITEMS.add(checkItem);
+                            }
                         }
                     }
                 }

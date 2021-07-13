@@ -70,7 +70,7 @@ public class MachineBlockItem extends BlockItem {
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY));
             NbtCompound weaponNBT = data.getCompound(CustomValues.weaponNBTKey);
             if (!weaponNBT.isEmpty()) {
-                ItemStack weapon = ItemStack.fromTag(weaponNBT);
+                ItemStack weapon = ItemStack.fromNbt(weaponNBT);
                 if (!weapon.isEmpty()) {
                     tooltip.add(Tools.getTranslatedFormattedText(weapon.getTranslationKey(), Formatting.GRAY, Formatting.BOLD));
                 }

@@ -4,10 +4,10 @@ import dunkmania101.spatialharvesters.objects.blocks.base.ActivePreservedDataCus
 import dunkmania101.spatialharvesters.objects.tile_entities.HeatGeneratorTE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.function.BooleanBiFunction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -46,11 +46,11 @@ public class HeatGeneratorBlock extends ActivePreservedDataCustomHorizontalShape
                         Block.createCuboidShape(2, 6, 1, 14, 7, 2),
                         Block.createCuboidShape(2, 4, 1, 14, 5, 2),
                         Block.createCuboidShape(7, 2, 15, 9, 4, 16)
-                ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get());
+                ).reduce(VoxelShapes::union).get());
     }
-
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return new HeatGeneratorTE();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new HeatGeneratorTE(pos, state);
     }
 }

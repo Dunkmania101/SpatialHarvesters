@@ -53,7 +53,7 @@ public class CasingBlock extends Block {
             Block.createCuboidShape(1, 2, 14, 2, 14, 15),
             Block.createCuboidShape(14, 2, 14, 15, 14, 15),
             Block.createCuboidShape(14, 2, 1, 15, 14, 2)
-    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
+    ).reduce(VoxelShapes::union).get();
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

@@ -154,11 +154,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     public void filterOutputsMinTier(Block block) {
         for (ArrayList<String> itemTier : getMinTierItems()) {
             if (itemTier.size() >= 3) {
-                int tier = 0;
-                try {
-                    tier = Integer.parseInt(itemTier.get(2));
-                } catch (NumberFormatException | NullPointerException ignored) {
-                }
+                int tier = Integer.getInteger(itemTier.get(2), 0);
                 if (getTier(block) < tier) {
                     ResourceLocation itemRN = new ResourceLocation(itemTier.get(0), itemTier.get(1));
                     this.OUTPUTS.removeIf(stack -> stack.getItem().getRegistryName() != null && stack.getItem().getRegistryName().toString().equals(itemRN.toString()));

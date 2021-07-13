@@ -20,6 +20,10 @@ repositories {
     maven {
         url "https://maven.terraformersmc.com/"
     }
+	maven {
+		name = "Modmuss50"
+		url = "https://maven.modmuss50.me/"
+	}
 }
 
 dependencies {

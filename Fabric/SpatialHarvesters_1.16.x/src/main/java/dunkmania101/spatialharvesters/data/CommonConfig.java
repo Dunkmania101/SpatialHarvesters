@@ -809,6 +809,11 @@ public class CommonConfig implements ConfigGroup {
     public static ArrayList<ArrayList<String>> blacklist_loot = new ArrayList<>();
     public static ArrayList<ArrayList<String>> blacklist_mobs = new ArrayList<>();
 
+    public static ArrayList<ArrayList<String>> blacklist_ores_tag = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> blacklist_bios_tag = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> blacklist_stones_tag = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> blacklist_soils_tag = new ArrayList<>();
+
     public static ArrayList<String> blacklist_ores_mod = new ArrayList<>();
     public static ArrayList<String> blacklist_bios_mod = new ArrayList<>();
     static {

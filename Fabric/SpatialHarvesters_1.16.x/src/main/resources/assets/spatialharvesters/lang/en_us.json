@@ -78,7 +78,7 @@
   "block.spatialharvesters.night_vision_activator": "Night Vision Activator",
   "block.spatialharvesters.strength_activator": "Strength Activator",
   "itemGroup.spatialharvesters.spatialharvesters": "Spatial Harvesters",
-  "msg.spatialharvesters.divider": "----------",
+  "msg.spatialharvesters.divider": "====================",
   "msg.spatialharvesters.energy_message": "Stored Energy: ",
   "msg.spatialharvesters.counted_ticks_message": "Counted Ticks: ",
   "msg.spatialharvesters.shard_description": "Produced by Harvesters of the following tier: ",

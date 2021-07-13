@@ -22,11 +22,11 @@ public class ShardItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        if (this.tier > 0) {
+        if (this == ItemInit.MOB_SHARD) {
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_shard_description", Formatting.RED));
+        } else if (this.tier > 0) {
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.shard_description", Formatting.GOLD));
             tooltip.add(new LiteralText(Integer.toString(this.tier)).copy().formatted(Formatting.BLUE, Formatting.BOLD));
-        } else if (this == ItemInit.MOB_SHARD) {
-            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_shard_description", Formatting.RED));
         }
     }
 }
