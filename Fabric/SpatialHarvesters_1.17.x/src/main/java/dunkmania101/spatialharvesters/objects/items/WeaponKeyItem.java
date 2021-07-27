@@ -39,10 +39,10 @@ public class WeaponKeyItem extends Item {
             if (player.isSneaking()) {
                 ItemStack otherStack = player.getOffHandStack();
                 if (otherStack.isEmpty()) {
-                    stack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
+                    stack.getOrCreateNbt().remove(CustomValues.weaponNBTKey);
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_weapon_key_weapon", Formatting.RED), true);
                 } else {
-                    stack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.writeNbt(new NbtCompound()));
+                    stack.getOrCreateNbt().put(CustomValues.weaponNBTKey, otherStack.writeNbt(new NbtCompound()));
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_weapon_key_weapon", Formatting.BLUE), true);
                 }
             }
@@ -64,7 +64,7 @@ public class WeaponKeyItem extends Item {
                         if (player.isSneaking()) {
                             harvesterNBT.putString(CustomValues.removeWeaponNBTKey, "");
                         } else {
-                            NbtCompound itemNBT = context.getStack().getTag();
+                            NbtCompound itemNBT = context.getStack().getNbt();
                             if (itemNBT != null) {
                                 if (itemNBT.contains(CustomValues.weaponNBTKey)) {
                                     harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
@@ -92,7 +92,7 @@ public class WeaponKeyItem extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.weapon_key_description", Formatting.GOLD));
-        NbtCompound nbt = stack.getTag();
+        NbtCompound nbt = stack.getNbt();
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY));

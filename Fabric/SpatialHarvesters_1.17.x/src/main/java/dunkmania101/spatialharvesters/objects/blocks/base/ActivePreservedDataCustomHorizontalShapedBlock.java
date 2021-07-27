@@ -17,7 +17,7 @@ public class ActivePreservedDataCustomHorizontalShapedBlock extends PreservedDat
     public ActivePreservedDataCustomHorizontalShapedBlock(Settings settings, VoxelShape shape, Direction frontDirection) {
         super(settings, shape, frontDirection);
 
-        BlockState thisState = this.getStateManager().getDefaultStaTE(pos, state);
+        BlockState thisState = this.getStateManager().getDefaultState();
         this.setDefaultState(thisState.with(ACTIVE, false));
     }
 

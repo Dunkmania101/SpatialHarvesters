@@ -30,7 +30,7 @@ public class MachineBlockItem extends BlockItem {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        NbtCompound data = stack.getOrCreateTag().getCompound(CustomValues.stackTileNBTKey);
+        NbtCompound data = stack.getOrCreateNbt().getCompound(CustomValues.stackTileNBTKey);
         tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN));
         int energy = data.getInt(CustomValues.energyStorageKey);
         tooltip.add(new LiteralText(Integer.toString(energy)).copy().formatted(Formatting.GREEN, Formatting.BOLD));

@@ -153,22 +153,22 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                     stack = ItemStack.fromNbt(this.weapon);
                 }
             }
-            NbtCompound stackNBT = stack.getTag();
+            NbtCompound stackNBT = stack.getOrCreateNbt();
             ItemStack mainHandStack = this.player.getMainHandStack();
             if (!ItemStack.areEqual(mainHandStack, stack)) {
                 this.player.setStackInHand(Hand.MAIN_HAND, stack);
                 mainHandStack = this.player.getMainHandStack();
             }
-            if (mainHandStack.getTag() != stackNBT) {
-                mainHandStack.setTag(stackNBT);
+            if (mainHandStack.getOrCreateNbt() != stackNBT) {
+                mainHandStack.setNbt(stackNBT);
             }
             ItemStack offHandStack = this.player.getOffHandStack();
             if (!ItemStack.areEqual(offHandStack, stack)) {
                 this.player.setStackInHand(Hand.OFF_HAND, stack);
                 offHandStack = this.player.getOffHandStack();
             }
-            if (offHandStack.getTag() != stackNBT) {
-                offHandStack.setTag(stackNBT);
+            if (offHandStack.getOrCreateNbt() != stackNBT) {
+                offHandStack.setNbt(stackNBT);
             }
         }
     }

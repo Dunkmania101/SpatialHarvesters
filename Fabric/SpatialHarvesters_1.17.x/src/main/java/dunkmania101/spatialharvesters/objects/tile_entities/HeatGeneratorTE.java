@@ -22,21 +22,21 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public void customTickActions() {
+        super.customTickActions();
         boolean enabled = CommonConfig.enable_heat_generator;
         if (enabled) {
-            super.customTickActions();
             if (getWorld() != null && !getWorld().isClient()) {
                 setActive(false);
                 ArrayList<EnergyHandler> outBatteries = new ArrayList<>();
                 for (Direction side : Direction.values()) {
-                    Identifier blockRN = Registry.BLOCK.getId(getWorld().getBlockState(pos.offset(side)).getBlock());
+                    Identifier blockRN = Registry.BLOCK.getId(getWorld().getBlockState(getPos().offset(side)).getBlock());
                     if (CommonConfig.valid_heat_sources.contains(Tools.getModResourceArray(blockRN))) {
                         if ((getEnergyStorage().getEnergy() + getSpeed()) <= getEnergyStorage().getMaxStored()) {
                             getEnergyStorage().insert(getSpeed());
                             setActive(true);
                         }
                     }
-                    BlockEntity out = getWorld().getBlockEntity(pos.offset(side));
+                    BlockEntity out = getWorld().getBlockEntity(getPos().offset(side));
                     if (out != null) {
                         if (Energy.valid(out)) {
                             outBatteries.add(Energy.of(out));

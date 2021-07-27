@@ -1,9 +1,8 @@
 package dunkmania101.spatialharvesters.objects.blocks.base;
 
 import dunkmania101.spatialharvesters.util.Tools;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -14,7 +13,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public class CustomHorizontalShapedBlock extends Block {
+public class CustomHorizontalShapedBlock extends BlockWithEntity {
     private static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     private final VoxelShape NORTH_SHAPE;
     private final VoxelShape SOUTH_SHAPE;
@@ -24,7 +23,7 @@ public class CustomHorizontalShapedBlock extends Block {
     public CustomHorizontalShapedBlock(Settings settings, VoxelShape shape, Direction frontDirection) {
         super(settings);
 
-        BlockState thisState = this.getStateManager().getDefaultStaTE(pos, state);
+        BlockState thisState = this.getStateManager().getDefaultState();
         this.setDefaultState(thisState.with(FACING, frontDirection));
 
         this.NORTH_SHAPE = Tools.getRotatedVoxelShape(shape, frontDirection, Direction.NORTH);
@@ -38,17 +37,18 @@ public class CustomHorizontalShapedBlock extends Block {
     }
 
     @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
+    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        switch (state.get(FACING)) {
-            default:
-                return NORTH_SHAPE;
-            case SOUTH:
-                return SOUTH_SHAPE;
-            case EAST:
-                return EAST_SHAPE;
-            case WEST:
-                return WEST_SHAPE;
-        }
+        return switch (state.get(FACING)) {
+            default -> NORTH_SHAPE;
+            case SOUTH -> SOUTH_SHAPE;
+            case EAST -> EAST_SHAPE;
+            case WEST -> WEST_SHAPE;
+        };
     }
 
     @Override
@@ -60,5 +60,11 @@ public class CustomHorizontalShapedBlock extends Block {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(FACING);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return null;
     }
 }

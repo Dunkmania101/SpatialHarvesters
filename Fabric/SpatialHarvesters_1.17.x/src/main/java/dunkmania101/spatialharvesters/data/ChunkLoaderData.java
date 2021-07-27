@@ -1,5 +1,6 @@
 package dunkmania101.spatialharvesters.data;
 
+import dunkmania101.spatialharvesters.data.base.WorldSaveData;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
@@ -22,6 +23,8 @@ public class ChunkLoaderData extends WorldSaveData {
                 this.disabledChunks.add(chunkLong);
             }
         }
+
+        System.out.println(this.chunkLoaders);
     }
 
     public ArrayList<Long> getChunkLoaders() {

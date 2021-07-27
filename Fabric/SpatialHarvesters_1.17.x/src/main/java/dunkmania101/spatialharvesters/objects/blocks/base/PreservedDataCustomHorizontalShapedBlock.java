@@ -43,7 +43,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     public void onBreak(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         BlockEntity tile = worldIn.getBlockEntity(pos);
         if (tile != null) {
-            this.thisTileNBT = tile.toTag(new NbtCompound());
+            this.thisTileNBT = tile.writeNbt(new NbtCompound());
         }
         super.onBreak(worldIn, pos, state, player);
     }
@@ -64,10 +64,10 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
         super.onPlaced(world, pos, state, placer, stack);
         if (!world.isClient()) {
             BlockEntity tile = world.getBlockEntity(pos);
-            NbtCompound stackTileNBT = stack.getSubTag(CustomValues.stackTileNBTKey);
+            NbtCompound stackTileNBT = stack.getSubNbt(CustomValues.stackTileNBTKey);
             if (tile != null && stackTileNBT != null) {
                 if (!stackTileNBT.isEmpty()) {
-                    tile.fromTag(state, Tools.correctTileNBT(tile, stackTileNBT));
+                    tile.readNbt(Tools.correctTileNBT(tile, stackTileNBT));
                 }
             }
         }
@@ -80,7 +80,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                 BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
                     player.sendMessage(Tools.getDividerText(), false);
-                    NbtCompound data = tile.toTag(new NbtCompound());
+                    NbtCompound data = tile.writeNbt(new NbtCompound());
                     if (tile instanceof CustomEnergyMachineTE) {
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN), false);
                         player.sendMessage(new LiteralText(Integer.toString(data.getInt(CustomValues.energyStorageKey))).copy().formatted(Formatting.GREEN, Formatting.BOLD), false);
@@ -121,7 +121,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                         player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY), false);
                         NbtCompound weapon = data.getCompound(CustomValues.weaponNBTKey);
                         if (!weapon.isEmpty()) {
-                            ItemStack weaponStack = ItemStack.fromTag(weapon);
+                            ItemStack weaponStack = ItemStack.fromNbt(weapon);
                             if (!weaponStack.isEmpty()) {
                                 player.sendMessage(Tools.getTranslatedFormattedText(weaponStack.getTranslationKey(), Formatting.GRAY, Formatting.BOLD), false);
                             }

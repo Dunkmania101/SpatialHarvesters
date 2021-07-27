@@ -1,8 +1,11 @@
-package dunkmania101.spatialharvesters.data;
+package dunkmania101.spatialharvesters.data.base;
 
+import dunkmania101.spatialharvesters.SpatialHarvesters;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
+
+import java.io.IOException;
 
 public class WorldSaveData {
     private final String thisKey;
@@ -16,7 +19,11 @@ public class WorldSaveData {
     public void save() {
         NbtCompound worldData = getWorldTag();
         customSaveActions(worldData);
-        getPersistentState().fromTag(worldData);
+        try {
+            this.thisServerWorld.getPersistentStateManager().readNbt(this.thisKey, 1343);
+        } catch (IOException e) {
+            SpatialHarvesters.LOGGER.catching(e);
+        }
         getPersistentState().markDirty();
     }
 
@@ -24,21 +31,10 @@ public class WorldSaveData {
     }
 
     public NbtCompound getWorldTag() {
-        return getPersistentState().toTag(new NbtCompound());
+        return getPersistentState().writeNbt(new NbtCompound());
     }
 
     public PersistentState getPersistentState() {
-        return this.thisServerWorld.getPersistentStateManager().getOrCreate(() -> new PersistentState(this.thisKey) {
-            NbtCompound thisTag = new NbtCompound();
-            @Override
-            public void fromTag(NbtCompound tag) {
-                this.thisTag = tag;
-            }
-
-            @Override
-            public NbtCompound toTag(NbtCompound tag) {
-                return thisTag;
-            }
-        }, this.thisKey);
+        return this.thisServerWorld.getPersistentStateManager().getOrCreate(CustomPersistentState::ofNbt, CustomPersistentState::new, this.thisKey);
     }
 }

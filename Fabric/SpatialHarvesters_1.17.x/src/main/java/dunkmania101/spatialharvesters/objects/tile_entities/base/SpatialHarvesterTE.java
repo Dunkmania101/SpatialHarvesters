@@ -27,16 +27,17 @@ import java.util.Random;
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     protected final ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
     protected ArrayList<String> BLACKLIST = new ArrayList<>();
-    private Block thisBlock = null;
+    public Block thisBlock = null;
 
     public SpatialHarvesterTE(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
         super(blockEntityType, pos, state, true, true, true);
     }
 
-    @Override
-    public void tick(World world, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        this.thisBlock = getCachedState().getBlock();
-        super.tick(world, pos, state, blockEntity);
+    public static void tick(World world, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        if (blockEntity instanceof SpatialHarvesterTE) {
+            ((SpatialHarvesterTE) blockEntity).thisBlock = state.getBlock();
+        }
+        TickingRedstoneEnergyMachineTE.tick(world, pos, state, blockEntity);
     }
 
     @Override

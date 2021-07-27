@@ -42,7 +42,7 @@ public class MobKeyItem extends Item {
                 if (Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
                     banned = true;
                 } else {
-                    stack.getOrCreateTag().putString(CustomValues.entityNBTKey, mobRN.toString());
+                    stack.getOrCreateNbt().putString(CustomValues.entityNBTKey, mobRN.toString());
                 }
                 if (attacker instanceof PlayerEntity player) {
                     if (banned) {
@@ -72,7 +72,7 @@ public class MobKeyItem extends Item {
                             if (player.isSneaking()) {
                                 harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
                             } else {
-                                NbtCompound itemNBT = context.getStack().getTag();
+                                NbtCompound itemNBT = context.getStack().getNbt();
                                 if (itemNBT != null) {
                                     if (itemNBT.contains(CustomValues.entityNBTKey)) {
                                         harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
@@ -102,7 +102,7 @@ public class MobKeyItem extends Item {
     public void appendTooltip(ItemStack stack, World worldIn, List<Text> tooltip, TooltipContext flagIn) {
         super.appendTooltip(stack, worldIn, tooltip, flagIn);
         tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.mob_key_description", Formatting.GOLD));
-        NbtCompound nbt = stack.getTag();
+        NbtCompound nbt = stack.getNbt();
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", Formatting.DARK_RED));

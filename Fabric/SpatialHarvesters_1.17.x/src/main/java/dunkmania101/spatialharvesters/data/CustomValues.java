@@ -48,7 +48,7 @@ public class CustomValues {
             Block.createCuboidShape(13, 3, 4, 14, 11, 12),
             Block.createCuboidShape(2, 3, 4, 3, 11, 12),
             Block.createCuboidShape(1, 13, 1, 15, 16, 15)
-    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
+    ).reduce(VoxelShapes::union).get();
 
     public static final String energyStorageKey = SpatialHarvesters.modid + "_energyStorage";
     public static final String countedTicksKey = SpatialHarvesters.modid + "_countedTicks";

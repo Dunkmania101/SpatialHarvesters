@@ -41,10 +41,10 @@ public class ResourceDisablerKeyItem extends Item {
                 ItemStack otherStack = player.getOffHandStack();
                 if (otherStack.isEmpty()) {
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_disabled_resource", Formatting.RED), true);
-                    stack.getOrCreateTag().remove(CustomValues.disabledResourceKey);
+                    stack.getOrCreateNbt().remove(CustomValues.disabledResourceKey);
                 } else {
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", Formatting.BLUE), true);
-                    stack.getOrCreateTag().putString(CustomValues.disabledResourceKey, Registry.ITEM.getId(otherStack.getItem()).toString());
+                    stack.getOrCreateNbt().putString(CustomValues.disabledResourceKey, Registry.ITEM.getId(otherStack.getItem()).toString());
                 }
             }
         }
@@ -65,7 +65,7 @@ public class ResourceDisablerKeyItem extends Item {
                         if (player.isSneaking()) {
                             disabledNBT.putString(CustomValues.removeDisabledNBTKey, "");
                         } else {
-                            NbtCompound itemNBT = context.getStack().getTag();
+                            NbtCompound itemNBT = context.getStack().getNbt();
                             if (itemNBT != null) {
                                 if (itemNBT.contains(CustomValues.disabledResourceKey)) {
                                     disabledNBT.putString(CustomValues.disabledResourceKey, itemNBT.getString(CustomValues.disabledResourceKey));
@@ -93,7 +93,7 @@ public class ResourceDisablerKeyItem extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, java.util.List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.resource_disabler_key_description", Formatting.GOLD));
-        NbtCompound nbt = stack.getTag();
+        NbtCompound nbt = stack.getNbt();
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resource", Formatting.RED));

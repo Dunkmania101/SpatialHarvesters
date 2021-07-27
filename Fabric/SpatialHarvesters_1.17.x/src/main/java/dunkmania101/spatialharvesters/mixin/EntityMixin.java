@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EntityMixin {
     protected NbtCompound SAVED_DROPS = new NbtCompound();
 
-    @Inject(at = @At("TAIL"), method = "toTag")
-    public void injectToTag(NbtCompound tag, CallbackInfoReturnable<NbtCompound> cir) {
+    @Inject(at = @At("TAIL"), method = "writeNbt")
+    public void injectWriteNbt(NbtCompound tag, CallbackInfoReturnable<NbtCompound> cir) {
         if (tag.contains(CustomValues.shouldSaveDropsKey)) {
             tag.put(CustomValues.savedDropsKey, this.SAVED_DROPS);
         }
@@ -27,6 +27,6 @@ public abstract class EntityMixin {
         while (this.SAVED_DROPS.getKeys().contains(Integer.toString(i))) {
             i++;
         }
-        this.SAVED_DROPS.put(Integer.toString(i), stack.toTag(new NbtCompound()));
+        this.SAVED_DROPS.put(Integer.toString(i), stack.getOrCreateNbt());
     }
 }

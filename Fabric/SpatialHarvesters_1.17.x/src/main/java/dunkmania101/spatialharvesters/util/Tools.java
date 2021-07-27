@@ -56,7 +56,7 @@ public class Tools {
     }
 
     private static boolean canCombineStacks(ItemStack one, ItemStack two) {
-        return one.isItemEqual(two) && ItemStack.areTagsEqual(one, two);
+        return one.isItemEqual(two) && ItemStack.areEqual(one, two);
     }
 
     private static void transferStacks(Inventory inventory, ItemStack source, ItemStack target) {
@@ -154,7 +154,7 @@ public class Tools {
             for (ItemStack stack : drops) {
                 if (stack.getItem() == state.getBlock().asItem()) {
                     int i = drops.indexOf(stack);
-                    stack.getOrCreateTag().put(CustomValues.stackTileNBTKey, tileNBT);
+                    stack.getOrCreateNbt().put(CustomValues.stackTileNBTKey, tileNBT);
                     drops.set(i, stack);
                     break;
                 }

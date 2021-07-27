@@ -1098,7 +1098,7 @@ public class CommonConfig {
                 .defineInRange("dimensional_applicator_duration", 240, 0, Integer.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_DIVISOR = BUILDER.comment("How much to divide the Dimensional Applicator's duration by to get it's reapplication frequency (10 makes it every second if the duration is 220, just over if 240).")
                 .comment("This can be less than one to make it take longer than the effect lasts (not recommended, though).")
-                .defineInRange("dimensional_applicator_divisor", 10, 0, Double.MAX_VALUE);
+                .defineInRange("dimensional_applicator_divisor", 20, 0, Double.MAX_VALUE);
         DIMENSIONAL_APPLICATOR_IS_BEACON_EFFECT = BUILDER.comment("Whether the game should think the effects came from a beacon.")
                 .define("dimensional_applicator_is_beacon_effect", true);
         DIMENSIONAL_APPLICATOR_SHOW_PARTICLES = BUILDER.comment("Whether to show the particles of the effects.")
@@ -1130,7 +1130,7 @@ public class CommonConfig {
                 .define("enable_specific_mob_harvester", true);
         BUILDER.pop();
 
-        BUILDER.push("Misc.: ");
+        BUILDER.push("Misc: ");
         ArrayList<ArrayList<String>> valid_heat_sources = new ArrayList<>();
 
         mod = "minecraft";

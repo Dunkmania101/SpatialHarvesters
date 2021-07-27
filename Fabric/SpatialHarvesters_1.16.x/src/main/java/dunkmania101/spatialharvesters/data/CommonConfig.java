@@ -870,7 +870,7 @@ public class CommonConfig implements ConfigGroup {
     public static int speed_dark_mob = 50;
     public static int speed_specific_mob = 50;
 
-    public static int speed_heat_generator = 3;
+    public static int speed_heat_generator = 10;
 
     public static ArrayList<ArrayList<String>> valid_heat_sources = new ArrayList<>();
     static {
@@ -944,8 +944,8 @@ public class CommonConfig implements ConfigGroup {
     public static double price_specific_mob = 8000;
 
     public static int dimensional_applicator_amplifier = 1;
-    public static int dimensional_applicator_duration = 220;
-    public static double dimensional_applicator_divisor = 10;
+    public static int dimensional_applicator_duration = 240;
+    public static double dimensional_applicator_divisor = 20;
 
     public static boolean dimensional_applicator_is_beacon_effect = true;
     public static boolean dimensional_applicator_show_particles = false;
