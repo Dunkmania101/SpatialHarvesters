@@ -23,8 +23,6 @@ public class ChunkLoaderData extends WorldSaveData {
                 this.disabledChunks.add(chunkLong);
             }
         }
-
-        System.out.println(this.chunkLoaders);
     }
 
     public ArrayList<Long> getChunkLoaders() {
