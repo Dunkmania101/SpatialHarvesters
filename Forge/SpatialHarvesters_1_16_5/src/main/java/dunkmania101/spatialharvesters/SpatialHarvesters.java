@@ -43,7 +43,7 @@ public class SpatialHarvesters {
     }
 
     public static class SPATIAL_HARVESTERS_GROUP extends ItemGroup {
-        public static final ItemGroup instance = new SPATIAL_HARVESTERS_GROUP(ItemGroup.GROUPS.length, modid);
+        public static final ItemGroup instance = new SPATIAL_HARVESTERS_GROUP(ItemGroup.TABS.length, modid);
 
         private SPATIAL_HARVESTERS_GROUP(int index, String label) {
             super(index, label);
@@ -51,7 +51,7 @@ public class SpatialHarvesters {
 
         @Nonnull
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ItemInit.ORE_HARVESTER_1.get());
         }
     }

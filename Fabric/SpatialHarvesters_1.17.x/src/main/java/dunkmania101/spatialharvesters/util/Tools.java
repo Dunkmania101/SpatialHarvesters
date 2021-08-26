@@ -46,7 +46,7 @@ public class Tools {
     private static void addToExistingSlot(Inventory inventory, ItemStack stack) {
         for (int i = 0; i < inventory.size(); ++i) {
             ItemStack stackTwo = inventory.getStack(i);
-            if (canCombineStacks(stackTwo, stack)) {
+            if (ItemStack.canCombine(stack, stackTwo)) {
                 transferStacks(inventory, stack, stackTwo);
                 if (stack.isEmpty()) {
                     return;
@@ -55,9 +55,6 @@ public class Tools {
         }
     }
 
-    private static boolean canCombineStacks(ItemStack one, ItemStack two) {
-        return one.isItemEqual(two) && ItemStack.areEqual(one, two);
-    }
 
     private static void transferStacks(Inventory inventory, ItemStack source, ItemStack target) {
         int i = Math.min(inventory.getMaxCountPerStack(), target.getMaxCount());

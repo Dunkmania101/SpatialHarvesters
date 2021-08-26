@@ -76,7 +76,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     @Nonnull
     @Override
     public ActionResultType onBlockActivated(@Nonnull BlockState state, World worldIn, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand handIn, @Nonnull BlockRayTraceResult hit) {
-        if (!worldIn.isRemote()) {
+        if (worldIn.isRemote()) {
             if (player.isCrouching()) {
                 TileEntity tile = worldIn.getTileEntity(pos);
                 if (tile != null) {
