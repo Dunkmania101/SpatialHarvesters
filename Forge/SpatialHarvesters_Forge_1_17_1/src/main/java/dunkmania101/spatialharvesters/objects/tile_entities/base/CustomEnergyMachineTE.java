@@ -2,20 +2,24 @@ package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
 import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
 import dunkmania101.spatialharvesters.data.CustomValues;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CustomEnergyMachineTE extends TileEntity {
+public class CustomEnergyMachineTE extends BlockEntity {
     private final LazyOptional<IEnergyStorage> energy = createEnergy();
     private boolean setCanExtract = false;
     private boolean setCanReceive = false;
     private final CustomEnergyStorage energyStorage = createEnergyStorage(getCapacity(), getMaxInput(), getMaxExtract());
 
-    public CustomEnergyMachineTE(TileEntityType<?> tileEntityTypeIn) {
+    public CustomEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
     }
-    public CustomEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
+    public CustomEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
         this(tileEntityTypeIn);
 
         this.setCanExtract = canExtract;
@@ -27,7 +31,7 @@ public class CustomEnergyMachineTE extends TileEntity {
             @Override
             protected void onEnergyChanged() {
                 super.onEnergyChanged();
-                markDirty();
+                setChanged();
             }
 
             @Override

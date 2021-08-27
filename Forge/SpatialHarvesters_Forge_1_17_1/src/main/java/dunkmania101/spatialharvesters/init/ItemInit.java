@@ -3,6 +3,7 @@ package dunkmania101.spatialharvesters.init;
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.objects.blocks.block_items.MachineBlockItem;
 import dunkmania101.spatialharvesters.objects.items.*;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

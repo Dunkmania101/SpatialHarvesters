@@ -2,28 +2,31 @@ package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.RedstoneParticleData;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
-public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE implements ITickableTileEntity {
+public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE {
     private final boolean countTicks;
     protected boolean active = false;
     protected int ticks = 0;
 
-    public TickingRedstoneEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive, boolean countTicks) {
+    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive, boolean countTicks) {
         super(tileEntityTypeIn, canExtract, canReceive);
 
         this.countTicks = countTicks;
     }
 
-    public TickingRedstoneEnergyMachineTE(TileEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
+    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
         this(tileEntityTypeIn, canExtract, canReceive, false);
     }
 
-    @Override
-    public void tick() {
+    public static void tick(BlockEntity blockEntity) {
+        if (blockEntity instanceof TickingRedstoneEnergyMachineTE) {
+            ((TickingRedstoneEnergyMachineTE) blockEntity).internalTick();
+        }
+    }
+
+    public void internalTick() {
         if (getWorld() != null && !getWorld().isRemote()) {
             if (getWorld().isBlockPowered(pos)) {
                 setActive(false);

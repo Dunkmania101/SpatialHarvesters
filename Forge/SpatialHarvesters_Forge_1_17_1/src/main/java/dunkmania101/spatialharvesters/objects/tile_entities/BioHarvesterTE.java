@@ -4,8 +4,8 @@ import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 

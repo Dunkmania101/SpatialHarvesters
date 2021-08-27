@@ -1,25 +1,26 @@
 package dunkmania101.spatialharvesters.objects.items;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
-import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class WeaponKeyItem extends Item {
     public WeaponKeyItem(Properties properties) {
@@ -33,15 +34,15 @@ public class WeaponKeyItem extends Item {
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
         if (player.isCrouching()) {
-            ItemStack otherStack = player.getHeldItemOffhand();
+            ItemStack otherStack = player.getOffhandItem();
             if (otherStack.isEmpty()) {
                 stack.getOrCreateTag().remove(CustomValues.weaponNBTKey);
-                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_weapon_key_weapon", TextFormatting.RED), true);
+                player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_weapon_key_weapon", ChatFormatting.RED), true);
             } else {
                 stack.getOrCreateTag().put(CustomValues.weaponNBTKey, otherStack.serializeNBT());
-                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_weapon_key_weapon", TextFormatting.BLUE), true);
+                player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_weapon_key_weapon", ChatFormatting.BLUE), true);
             }
         }
         return true;
@@ -49,20 +50,20 @@ public class WeaponKeyItem extends Item {
 
     @Nonnull
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
         if (player != null) {
-            World world = context.getWorld();
-            if (!world.isRemote()) {
-                BlockPos pos = context.getPos();
-                TileEntity tile = world.getTileEntity(pos);
+            Level world = context.getLevel();
+            if (!world.isClientSide()) {
+                BlockPos pos = context.getClickedPos();
+                BlockEntity tile = world.getBlockEntity(pos);
                 if (tile != null) {
                     if (tile instanceof MobHarvesterTE) {
-                        CompoundNBT harvesterNBT = new CompoundNBT();
+                        CompoundTag harvesterNBT = new CompoundTag();
                         if (player.isCrouching()) {
                             harvesterNBT.putString(CustomValues.removeWeaponNBTKey, "");
                         } else {
-                            CompoundNBT itemNBT = context.getItem().getTag();
+                            CompoundTag itemNBT = context.getItemInHand().getTag();
                             if (itemNBT != null) {
                                 if (itemNBT.contains(CustomValues.weaponNBTKey)) {
                                     harvesterNBT.put(CustomValues.weaponNBTKey, itemNBT.getCompound(CustomValues.weaponNBTKey));
@@ -70,36 +71,36 @@ public class WeaponKeyItem extends Item {
                             }
                         }
                         if (harvesterNBT.isEmpty()) {
-                            player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester_failed", TextFormatting.DARK_RED), true);
+                            player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester_failed", ChatFormatting.DARK_RED), true);
                         } else {
                             if (harvesterNBT.contains(CustomValues.removeWeaponNBTKey)) {
-                                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_mob_harvester", TextFormatting.RED), true);
+                                player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_mob_harvester", ChatFormatting.RED), true);
                             } else {
-                                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", TextFormatting.BLUE), true);
+                                player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", ChatFormatting.BLUE), true);
                             }
-                            tile.deserializeNBT(Tools.correctTileNBT(tile, harvesterNBT));
+                            tile.deserializeNBT(Tools.stripTileNBT(harvesterNBT));
                         }
                     }
                 }
             }
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, World worldIn, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.weapon_key_description", TextFormatting.GOLD));
-        CompoundNBT nbt = stack.getTag();
+    public void appendHoverText(@Nonnull ItemStack stack, Level worldIn, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.weapon_key_description", ChatFormatting.GOLD));
+        CompoundTag nbt = stack.getTag();
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
-            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", TextFormatting.DARK_GRAY));
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", ChatFormatting.DARK_GRAY));
             if (nbt.contains(CustomValues.weaponNBTKey)) {
-                CompoundNBT weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
+                CompoundTag weaponNBT = nbt.getCompound(CustomValues.weaponNBTKey);
                 if (!weaponNBT.isEmpty()) {
-                    ItemStack weapon = ItemStack.read(weaponNBT);
+                    ItemStack weapon = ItemStack.of(weaponNBT);
                     if (!weapon.isEmpty()) {
-                        tooltip.add(weapon.getDisplayName().copyRaw().mergeStyle(TextFormatting.GRAY));
+                        tooltip.add(weapon.getDisplayName().copy().withStyle(ChatFormatting.GRAY));
                     }
                 }
             }

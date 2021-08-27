@@ -22,8 +22,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -37,7 +35,7 @@ public class Tools {
             return shape;
         }
 
-        VoxelShape[] buffer = new VoxelShape[]{shape, Shapes.empty()};
+        VoxelShape[] buffer = new VoxelShape[] { shape, Shapes.empty() };
 
         int verticalTimes = 0;
         if (from.get2DDataValue() == -1) {
@@ -51,7 +49,8 @@ public class Tools {
         }
 
         for (int i = 0; i < verticalTimes; i++) {
-            buffer[0].forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = Shapes.or(buffer[1], Shapes.create(minX, 1 - maxZ, minY, maxX, 1 - minZ, maxY)));
+            buffer[0].forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = Shapes.or(buffer[1],
+                    Shapes.create(minX, 1 - maxZ, minY, maxX, 1 - minZ, maxY)));
             if (from.getAxis() == Direction.Axis.Z || from.getAxis() == Direction.Axis.Y) {
                 from = Direction.from3DDataValue(from.get3DDataValue() + 2);
             }
@@ -61,7 +60,8 @@ public class Tools {
 
         int horizontalTimes = (to.get2DDataValue() - from.get2DDataValue() + 4) % 4;
         for (int i = 0; i < horizontalTimes; i++) {
-            buffer[0].forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.or(buffer[1], VoxelShapes.create(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX)));
+            buffer[0].forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = Shapes.or(buffer[1],
+                    Shapes.create(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX)));
             buffer[0] = buffer[1];
             buffer[1] = Shapes.empty();
         }
@@ -72,7 +72,8 @@ public class Tools {
         int count = 0;
         ChunkAccess chunk = worldIn.getChunk(cpos.getWorldPosition());
         int height = Math.min(chunk.getHighestSectionPosition() + 16, chunk.getHeight());
-        for (BlockPos checkPos : BlockPos.betweenClosed(cpos.getMinBlockX(), 0, cpos.getMinBlockZ(), cpos.getMaxBlockX(), height, cpos.getMaxBlockZ())) {
+        for (BlockPos checkPos : BlockPos.betweenClosed(cpos.getMinBlockX(), 0, cpos.getMinBlockZ(),
+                cpos.getMaxBlockX(), height, cpos.getMaxBlockZ())) {
             if (worldIn.getBlockState(checkPos).getBlock() == blockIn) {
                 count++;
             }
@@ -81,29 +82,22 @@ public class Tools {
     }
 
     // NBT
-    public static CompoundTag correctTileNBT(BlockEntity tile, CompoundTag nbt) {
+    public static CompoundTag stripTileNBT(CompoundTag nbt) {
         CompoundTag newNBT = nbt.copy();
         newNBT.remove("id");
-        ResourceLocation id = BlockEntityType.getKey(tile.getType());
-        if (id != null) {
-            newNBT.putString("id", id.toString());
-        }
-        BlockPos pos = tile.getBlockPos();
         newNBT.remove("x");
         newNBT.remove("y");
         newNBT.remove("z");
-        newNBT.putInt("x", pos.getX());
-        newNBT.putInt("y", pos.getY());
-        newNBT.putInt("z", pos.getZ());
         return newNBT;
     }
 
-    public static List<ItemStack> getPreservedDataBlockDrops(List<ItemStack> drops, BlockState state, CompoundTag tileNBT) {
+    public static List<ItemStack> getPreservedDataBlockDrops(List<ItemStack> drops, BlockState state,
+            CompoundTag tileNBT) {
         if (tileNBT != null) {
             for (ItemStack stack : drops) {
                 if (stack.getItem() == state.getBlock().asItem()) {
                     int i = drops.indexOf(stack);
-                    stack.getOrCreateTag().put(CustomValues.stackTileNBTKey, tileNBT);
+                    stack.getOrCreateTag().put(CustomValues.stackTileNBTKey, stripTileNBT(tileNBT));
                     drops.set(i, stack);
                     break;
                 }
@@ -149,7 +143,9 @@ public class Tools {
         return getLoadedResources(customTags, configItems, blacklistItems, blacklistItemsTag, blacklistItemsMod);
     }
 
-    public static ArrayList<Item> getLoadedResources(ArrayList<ArrayList<String>> customTags, ArrayList<ArrayList<String>> configItems, ArrayList<ArrayList<String>> blacklistItems, ArrayList<ArrayList<String>> blacklistItemsTag, ArrayList<String> blacklistItemsMod) {
+    public static ArrayList<Item> getLoadedResources(ArrayList<ArrayList<String>> customTags,
+            ArrayList<ArrayList<String>> configItems, ArrayList<ArrayList<String>> blacklistItems,
+            ArrayList<ArrayList<String>> blacklistItemsTag, ArrayList<String> blacklistItemsMod) {
         ArrayList<Item> ITEMS = new ArrayList<>();
         for (ArrayList<String> configItem : configItems) {
             if (configItem.size() >= 2) {
@@ -166,7 +162,8 @@ public class Tools {
                 Tag<Item> itemTag = ItemTags.getAllTags().getTag(customTagRN);
                 if (itemTag != null) {
                     for (Item checkItem : itemTag.getValues()) {
-                        if (!ITEMS.contains(checkItem) && !isResourceBanned(checkItem.getRegistryName(), blacklistItems, blacklistItemsMod)) {
+                        if (!ITEMS.contains(checkItem)
+                                && !isResourceBanned(checkItem.getRegistryName(), blacklistItems, blacklistItemsMod)) {
                             boolean tag_allowed = true;
                             for (ArrayList<String> bannedTag : blacklistItemsTag) {
                                 ResourceLocation bannedTagRN = new ResourceLocation(bannedTag.get(0), bannedTag.get(1));
@@ -186,7 +183,8 @@ public class Tools {
                 if (blockTag != null) {
                     for (Block checkBlock : blockTag.getValues()) {
                         Item checkItem = checkBlock.asItem();
-                        if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(checkItem.getRegistryName(), blacklistItems, blacklistItemsMod)) {
+                        if (checkItem != Items.AIR && !ITEMS.contains(checkItem)
+                                && !isResourceBanned(checkItem.getRegistryName(), blacklistItems, blacklistItemsMod)) {
                             boolean tag_allowed = true;
                             for (ArrayList<String> bannedTag : blacklistItemsTag) {
                                 ResourceLocation bannedTagRN = new ResourceLocation(bannedTag.get(0), bannedTag.get(1));
@@ -207,6 +205,7 @@ public class Tools {
         return ITEMS;
     }
 
+    // Resource Locations
     public static ArrayList<String> getModResourceArray(ResourceLocation rn) {
         ArrayList<String> modRN = new ArrayList<>();
         modRN.add(rn.getNamespace());
@@ -214,14 +213,16 @@ public class Tools {
         return modRN;
     }
 
-    public static boolean isResourceBanned(ResourceLocation rn, ArrayList<ArrayList<String>> blacklist, ArrayList<String> blacklist_mod) {
+    public static boolean isResourceBanned(ResourceLocation rn, ArrayList<ArrayList<String>> blacklist,
+            ArrayList<String> blacklist_mod) {
         if (rn != null) {
             return blacklist.contains(getModResourceArray(rn)) || blacklist_mod.contains(rn.getNamespace());
         }
         return true;
     }
 
-    public static BaseComponent getTranslatedFormattedText(String key, ChatFormatting...formats) {
+    // Text
+    public static BaseComponent getTranslatedFormattedText(String key, ChatFormatting... formats) {
         BaseComponent text = new TranslatableComponent(key);
         if (formats != null) {
             return (BaseComponent) text.withStyle(formats);
@@ -233,7 +234,7 @@ public class Tools {
         return getTranslatedFormattedText("msg.spatialharvesters.divider", ChatFormatting.GRAY, ChatFormatting.BOLD);
     }
 
-    public static ArrayList<BaseComponent> getMultiLineText(String key, ChatFormatting...formats) {
+    public static ArrayList<BaseComponent> getMultiLineText(String key, ChatFormatting... formats) {
         ArrayList<BaseComponent> texts = new ArrayList<>();
         for (String txt : new TranslatableComponent(key).getString().split("\n")) {
             TextComponent text = new TextComponent(txt);

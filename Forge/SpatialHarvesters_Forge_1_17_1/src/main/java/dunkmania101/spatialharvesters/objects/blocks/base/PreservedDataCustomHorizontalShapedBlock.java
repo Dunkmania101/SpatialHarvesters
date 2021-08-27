@@ -73,7 +73,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
             CompoundTag stackTileNBT = stack.getTagElement(CustomValues.stackTileNBTKey);
             if (tile != null && stackTileNBT != null) {
                 if (!stackTileNBT.isEmpty()) {
-                    tile.deserializeNBT(Tools.correctTileNBT(tile, stackTileNBT));
+                    tile.deserializeNBT(Tools.stripTileNBT(stackTileNBT));
                 }
             }
         }

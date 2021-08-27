@@ -5,11 +5,11 @@ import javax.annotation.Nonnull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import dunkmania101.spatialharvesters.SpatialHarvesters.SPATIAL_HARVESTERS_GROUP;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -43,8 +43,8 @@ public class SpatialHarvesters {
     private void setup(final FMLCommonSetupEvent event) {
     }
 
-    public static class SPATIAL_HARVESTERS_GROUP extends ItemGroup {
-        public static final ItemGroup instance = new SPATIAL_HARVESTERS_GROUP(ItemGroup.GROUPS.length, modid);
+    public static class SPATIAL_HARVESTERS_GROUP extends CreativeModeTab {
+        public static final CreativeModeTab instance = new SPATIAL_HARVESTERS_GROUP(CreativeModeTab.TABS.length, modid);
 
         private SPATIAL_HARVESTERS_GROUP(int index, String label) {
             super(index, label);

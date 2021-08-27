@@ -1,34 +1,38 @@
 package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.objects.blocks.HarvesterBlock;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
-import dunkmania101.spatialharvesters.objects.tile_entities.*;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import dunkmania101.spatialharvesters.objects.tile_entities.BioHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.DarkMobHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.LootHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.OreHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.SoilHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.SpecificMobHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.StoneHarvesterTE;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     protected final ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
     protected final ArrayList<String> BLACKLIST = new ArrayList<>();
     private Block thisBlock = null;
 
-    public SpatialHarvesterTE(TileEntityType<?> tileEntityTypeIn) {
+    public SpatialHarvesterTE(BlockEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn, true, true, true);
     }
 
@@ -76,7 +80,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
             if (this.OUTPUTS.isEmpty() && !overrideSetOutputs()) {
                 setOutputs(getOutputs());
             }
-            if (getWorld() != null && !getWorld().isRemote() && this.thisBlock != null) {
+            if (getLevel() != null && !getLevel().isClientSide() && this.thisBlock != null) {
                 if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                     resetCountedTicks();
                     setActive(false);
@@ -85,10 +89,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                         ArrayList<Direction> spaceRippers = new ArrayList<>();
                         ArrayList<IItemHandler> outInventories = new ArrayList<>();
                         for (Direction side : Direction.values()) {
-                            if (getWorld().getBlockState(getPos().offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                            if (getLevel().getBlockState(getBlockPos().offset(side)).getBlock() instanceof SpaceRipperBlock) {
                                 spaceRippers.add(side);
                             } else {
-                                TileEntity out = getWorld().getTileEntity(getPos().offset(side));
+                                TileEntity out = getLevel().getBlockEntity(getBlockPos().offset(side));
                                 if (out != null) {
                                     LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                                     outCap.ifPresent(outInventories::add);
@@ -102,7 +106,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                 for (Direction ignored : spaceRippers) {
                                     if (getEnergyStorage().getEnergyStored() >= price) {
                                         ItemStack chosenOutput;
-                                        Random rand = getWorld().getRandom();
+                                        Random rand = getLevel().getRandom();
                                         int shardChance = CommonConfig.HARVESTER_SHARD_CHANCE.get();
                                         if (shardChance > 0 && rand.nextInt(shardChance) == 1) {
                                             chosenOutput = new ItemStack(getShard(this.thisBlock));

@@ -2,16 +2,16 @@ package dunkmania101.spatialharvesters.init;
 
 import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.objects.tile_entities.*;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class TileEntityInit {
-    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, SpatialHarvesters.modid);
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, SpatialHarvesters.modid);
 
     public static final RegistryObject<TileEntityType<OreHarvesterTE>> ORE_HARVESTER = TILE_ENTITIES.register("ore_harvester",
-            () -> TileEntityType.Builder.create(OreHarvesterTE::new,
+            () -> BlockEntityType.Builder.of(OreHarvesterTE::new,
                     BlockInit.ORE_HARVESTER_1.get(),
                     BlockInit.ORE_HARVESTER_2.get(),
                     BlockInit.ORE_HARVESTER_3.get(),
@@ -22,8 +22,8 @@ public class TileEntityInit {
                     BlockInit.ORE_HARVESTER_8.get()
             ).build(null));
 
-    public static final RegistryObject<TileEntityType<BioHarvesterTE>> BIO_HARVESTER = TILE_ENTITIES.register("bio_harvester",
-            () -> TileEntityType.Builder.create(BioHarvesterTE::new,
+    public static final RegistryObject<BlockEntityType<BioHarvesterTE>> BIO_HARVESTER = TILE_ENTITIES.register("bio_harvester",
+            () -> BlockEntityType.Builder.of(BioHarvesterTE::new,
                     BlockInit.BIO_HARVESTER_1.get(),
                     BlockInit.BIO_HARVESTER_2.get(),
                     BlockInit.BIO_HARVESTER_3.get(),
@@ -34,8 +34,8 @@ public class TileEntityInit {
                     BlockInit.BIO_HARVESTER_8.get()
             ).build(null));
 
-    public static final RegistryObject<TileEntityType<StoneHarvesterTE>> STONE_HARVESTER = TILE_ENTITIES.register("stone_harvester",
-            () -> TileEntityType.Builder.create(StoneHarvesterTE::new,
+    public static final RegistryObject<BlockEntityType<StoneHarvesterTE>> STONE_HARVESTER = TILE_ENTITIES.register("stone_harvester",
+            () -> BlockEntityType.Builder.of(StoneHarvesterTE::new,
                     BlockInit.STONE_HARVESTER_1.get(),
                     BlockInit.STONE_HARVESTER_2.get(),
                     BlockInit.STONE_HARVESTER_3.get(),
@@ -46,8 +46,8 @@ public class TileEntityInit {
                     BlockInit.STONE_HARVESTER_8.get()
             ).build(null));
 
-    public static final RegistryObject<TileEntityType<SoilHarvesterTE>> SOIL_HARVESTER = TILE_ENTITIES.register("soil_harvester",
-            () -> TileEntityType.Builder.create(SoilHarvesterTE::new,
+    public static final RegistryObject<BlockEntityType<SoilHarvesterTE>> SOIL_HARVESTER = TILE_ENTITIES.register("soil_harvester",
+            () -> BlockEntityType.Builder.of(SoilHarvesterTE::new,
                     BlockInit.SOIL_HARVESTER_1.get(),
                     BlockInit.SOIL_HARVESTER_2.get(),
                     BlockInit.SOIL_HARVESTER_3.get(),
@@ -58,28 +58,28 @@ public class TileEntityInit {
                     BlockInit.SOIL_HARVESTER_8.get()
             ).build(null));
 
-    public static final RegistryObject<TileEntityType<LootHarvesterTE>> LOOT_HARVESTER = TILE_ENTITIES.register("loot_harvester",
-            () -> TileEntityType.Builder.create(LootHarvesterTE::new,
+    public static final RegistryObject<BlockEntityType<LootHarvesterTE>> LOOT_HARVESTER = TILE_ENTITIES.register("loot_harvester",
+            () -> BlockEntityType.Builder.of(LootHarvesterTE::new,
                     BlockInit.LOOT_HARVESTER.get()
             ).build(null));
 
-    public static final RegistryObject<TileEntityType<DarkMobHarvesterTE>> DARK_MOB_HARVESTER = TILE_ENTITIES.register("dark_mob_harvester",
-            () -> TileEntityType.Builder.create(DarkMobHarvesterTE::new,
+    public static final RegistryObject<BlockEntityType<DarkMobHarvesterTE>> DARK_MOB_HARVESTER = TILE_ENTITIES.register("dark_mob_harvester",
+            () -> BlockEntityType.Builder.of(DarkMobHarvesterTE::new,
                     BlockInit.DARK_MOB_HARVESTER.get()
             ).build(null));
 
-    public static final RegistryObject<TileEntityType<SpecificMobHarvesterTE>> SPECIFIC_MOB_HARVESTER = TILE_ENTITIES.register("specific_mob_harvester",
-            () -> TileEntityType.Builder.create(SpecificMobHarvesterTE::new,
+    public static final RegistryObject<BlockEntityType<SpecificMobHarvesterTE>> SPECIFIC_MOB_HARVESTER = TILE_ENTITIES.register("specific_mob_harvester",
+            () -> BlockEntityType.Builder.of(SpecificMobHarvesterTE::new,
                     BlockInit.SPECIFIC_MOB_HARVESTER.get()
             ).build(null));
 
-    public static final RegistryObject<TileEntityType<HeatGeneratorTE>> HEAT_GENERATOR = TILE_ENTITIES.register("heat_generator",
-            () -> TileEntityType.Builder.create(HeatGeneratorTE::new,
+    public static final RegistryObject<BlockEntityType<HeatGeneratorTE>> HEAT_GENERATOR = TILE_ENTITIES.register("heat_generator",
+            () -> BlockEntityType.Builder.of(HeatGeneratorTE::new,
                     BlockInit.HEAT_GENERATOR.get()
             ).build(null));
 
-    public static final RegistryObject<TileEntityType<DimensionalApplicatorTE>> DIMENSIONAL_APPLICATOR = TILE_ENTITIES.register("dimensional_applicator",
-            () -> TileEntityType.Builder.create(DimensionalApplicatorTE::new,
+    public static final RegistryObject<BlockEntityType<DimensionalApplicatorTE>> DIMENSIONAL_APPLICATOR = TILE_ENTITIES.register("dimensional_applicator",
+            () -> BlockEntityType.Builder.of(DimensionalApplicatorTE::new,
                     BlockInit.DIMENSIONAL_APPLICATOR.get()
             ).build(null));
 }

@@ -1,32 +1,32 @@
 package dunkmania101.spatialharvesters.objects.items;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.annotation.Nonnull;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.objects.blocks.SpecificMobHarvesterBlock;
 import dunkmania101.spatialharvesters.objects.tile_entities.SpecificMobHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
-import net.minecraft.block.Block;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class MobKeyItem extends Item {
     public MobKeyItem(Properties properties) {
@@ -34,7 +34,7 @@ public class MobKeyItem extends Item {
     }
 
     @Override
-    public boolean hitEntity(@Nonnull ItemStack stack, @Nonnull LivingEntity target, LivingEntity attacker) {
+    public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, LivingEntity attacker) {
         if (attacker.isCrouching()) {
             ResourceLocation mobRN = target.getType().getRegistryName();
             if (mobRN != null) {
@@ -44,42 +44,42 @@ public class MobKeyItem extends Item {
                 if (Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
                     banned = true;
                 } else {
-                    String id = target.getEntityString();
-                    if (!StringUtils.isNullOrEmpty(id)) {
+                    String id = target.getEncodeId();
+                    if (id != null && !id.isEmpty()) {
                         stack.getOrCreateTag().putString(CustomValues.entityNBTKey, id);
                     }
                 }
-                if (attacker instanceof PlayerEntity) {
-                    PlayerEntity player = (PlayerEntity) attacker;
+                if (attacker instanceof Player) {
+                    Player player = (Player) attacker;
                     if (banned) {
-                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity_failed", TextFormatting.DARK_RED), true);
+                        player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity_failed", ChatFormatting.DARK_RED), true);
                     } else {
-                        player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_key_entity", TextFormatting.BLUE), true);
+                        player.displayClientMessage(getDescription(), banned);
                     }
                 }
             }
         }
-        return super.hitEntity(stack, target, attacker);
+        return super.hurtEnemy(stack, target, attacker);
     }
 
     @Nonnull
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
         if (player != null) {
-            World world = context.getWorld();
-            if (!world.isRemote()) {
-                BlockPos pos = context.getPos();
+            Level world = context.getLevel();
+            if (!world.isClientSide()) {
+                BlockPos pos = context.getClickedPos();
                 Block block = world.getBlockState(pos).getBlock();
                 if (block instanceof SpecificMobHarvesterBlock) {
-                    TileEntity tile = world.getTileEntity(pos);
+                    BlockEntity tile = world.getBlockEntity(pos);
                     if (tile != null) {
                         if (tile instanceof SpecificMobHarvesterTE) {
-                            CompoundNBT harvesterNBT = new CompoundNBT();
-                            if (player.isSneaking()) {
+                            CompoundTag harvesterNBT = new CompoundTag();
+                            if (player.isCrouching()) {
                                 harvesterNBT.putString(CustomValues.removeEntityNBTKey, "");
                             } else {
-                                CompoundNBT itemNBT = context.getItem().getTag();
+                                CompoundTag itemNBT = context.getItemInHand().getTag();
                                 if (itemNBT != null) {
                                     if (itemNBT.contains(CustomValues.entityNBTKey)) {
                                         harvesterNBT.putString(CustomValues.entityNBTKey, itemNBT.getString(CustomValues.entityNBTKey));
@@ -87,43 +87,43 @@ public class MobKeyItem extends Item {
                                 }
                             }
                             if (harvesterNBT.isEmpty()) {
-                                player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester_failed", TextFormatting.DARK_RED), true);
+                                player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester_failed", ChatFormatting.DARK_RED), true);
                             } else {
                                 if (harvesterNBT.contains(CustomValues.removeEntityNBTKey)) {
-                                    player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_mob_harvester", TextFormatting.RED), true);
+                                    player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.clear_mob_harvester", ChatFormatting.RED), true);
                                 } else {
-                                    player.sendStatusMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", TextFormatting.BLUE), true);
+                                    player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_mob_harvester", ChatFormatting.BLUE), true);
                                 }
-                                tile.read(context.getWorld().getBlockState(pos), Tools.correctTileNBT(tile, harvesterNBT));
+                                tile.load(Tools.stripTileNBT(harvesterNBT));
                             }
                         }
                     }
                 }
             }
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, World worldIn, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.mob_key_description", TextFormatting.GOLD));
-        CompoundNBT nbt = stack.getTag();
+    public void appendHoverText(@Nonnull ItemStack stack, Level worldIn, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        tooltip.addAll(Tools.getMultiLineText("msg.spatialharvesters.mob_key_description", ChatFormatting.GOLD));
+        CompoundTag nbt = stack.getTag();
         if (nbt != null) {
             tooltip.add(Tools.getDividerText());
-            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", TextFormatting.DARK_RED));
+            tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", ChatFormatting.DARK_RED));
             String entityMSG = "msg.spatialharvesters.none";
             if (nbt.contains(CustomValues.entityNBTKey)) {
                 entityMSG = "msg.spatialharvesters.invalid";
                 String entity = nbt.getString(CustomValues.entityNBTKey);
                 if (!entity.isEmpty()) {
-                    Optional<EntityType<?>> optionalEntityType = EntityType.byKey(entity);
+                    Optional<EntityType<?>> optionalEntityType = EntityType.byString(entity);
                     if (optionalEntityType.isPresent()) {
-                        entityMSG = optionalEntityType.get().getTranslationKey();
+                        entityMSG = optionalEntityType.get().getDescriptionId();
                     }
                 }
             }
-            tooltip.add(Tools.getTranslatedFormattedText(entityMSG, TextFormatting.RED, TextFormatting.BOLD));
+            tooltip.add(Tools.getTranslatedFormattedText(entityMSG, ChatFormatting.RED, ChatFormatting.BOLD));
         }
         tooltip.add(Tools.getDividerText());
     }
