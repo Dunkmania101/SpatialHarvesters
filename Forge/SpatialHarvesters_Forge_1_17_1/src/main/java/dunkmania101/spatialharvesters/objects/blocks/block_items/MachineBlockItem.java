@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -82,10 +83,10 @@ public class MachineBlockItem extends BlockItem {
         if (data.contains(CustomValues.potionsNBTKey)) {
             tooltip.add(Tools.getDividerText());
             tooltip.add(Tools.getTranslatedFormattedText("msg.spatialharvesters.dimensional_applicator_saved_effects", ChatFormatting.BLUE));
-            for (String id : data.getCompound(CustomValues.potionsNBTKey).getAllKeys()) {
-                Potion effect = Potion.byName(id);
+            for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
+                MobEffect effect = MobEffect.byId(id);
                 if (effect != null) {
-                    tooltip.add(Tools.getTranslatedFormattedText(effect.getName(""), ChatFormatting.BOLD).copy().withStyle(Style.EMPTY.withColor(PotionUtils.getColor(effect))));
+                    tooltip.add(Tools.getTranslatedFormattedText(effect.getDescriptionId(), ChatFormatting.BOLD).copy().withStyle(Style.EMPTY.withColor(effect.getColor())));
                 }
             }
         }

@@ -1,17 +1,19 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import java.util.ArrayList;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-
-import java.util.ArrayList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class SoilHarvesterTE extends SpatialHarvesterTE {
-    public SoilHarvesterTE() {
-        super(TileEntityInit.SOIL_HARVESTER.get());
+    public SoilHarvesterTE(BlockPos pos, BlockState state) {
+        super(TileEntityInit.SOIL_HARVESTER.get(), pos, state);
     }
 
     @Override

@@ -1,14 +1,20 @@
 package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
-import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
-import dunkmania101.spatialharvesters.data.CustomValues;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import dunkmania101.spatialharvesters.data.CustomEnergyStorage;
+import dunkmania101.spatialharvesters.data.CustomValues;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 public class CustomEnergyMachineTE extends BlockEntity {
     private final LazyOptional<IEnergyStorage> energy = createEnergy();
@@ -16,11 +22,11 @@ public class CustomEnergyMachineTE extends BlockEntity {
     private boolean setCanReceive = false;
     private final CustomEnergyStorage energyStorage = createEnergyStorage(getCapacity(), getMaxInput(), getMaxExtract());
 
-    public CustomEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+    public CustomEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
+        super(tileEntityTypeIn, pos, state);
     }
-    public CustomEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
-        this(tileEntityTypeIn);
+    public CustomEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state, boolean canExtract, boolean canReceive) {
+        this(tileEntityTypeIn, pos, state);
 
         this.setCanExtract = canExtract;
         this.setCanReceive = canReceive;
@@ -66,8 +72,8 @@ public class CustomEnergyMachineTE extends BlockEntity {
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         this.energy.invalidate();
     }
 
@@ -84,14 +90,14 @@ public class CustomEnergyMachineTE extends BlockEntity {
         return super.getCapability(cap, side);
     }
 
-    public CompoundNBT saveSerializedValues() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag saveSerializedValues() {
+        CompoundTag nbt = new CompoundTag();
         int energy = getEnergyStorage().getEnergyStored();
         nbt.putInt(CustomValues.energyStorageKey, energy);
         return nbt;
     }
 
-    public void setDeserializedValues(CompoundNBT nbt) {
+    public void setDeserializedValues(CompoundTag nbt) {
         if (nbt.contains(CustomValues.energyStorageKey)) {
             updateEnergyStorage();
             int energy = nbt.getInt(CustomValues.energyStorageKey);
@@ -101,17 +107,17 @@ public class CustomEnergyMachineTE extends BlockEntity {
 
     @Nonnull
     @Override
-    public CompoundNBT write(@Nonnull CompoundNBT compound) {
-        CompoundNBT nbt = super.write(compound);
+    public CompoundTag save(@Nonnull CompoundTag compound) {
+        CompoundTag nbt = super.save(compound);
         nbt.merge(saveSerializedValues());
         return nbt;
     }
 
     @Override
-    public void read(@Nonnull BlockState state, @Nonnull CompoundNBT nbt) {
-        super.read(state, nbt);
+    public void load(@Nonnull CompoundTag nbt) {
+        super.load(nbt);
         setDeserializedValues(nbt);
-        markDirty();
+        setChanged();
     }
 
     protected int getCapacity() {

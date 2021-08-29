@@ -1,30 +1,31 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.BlockInit;
 import dunkmania101.spatialharvesters.init.TileEntityInit;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
 import dunkmania101.spatialharvesters.objects.tile_entities.base.TickingRedstoneEnergyMachineTE;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.UUID;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private UUID playerId = null;
     private final ArrayList<Integer> NBTEffects = new ArrayList<>();
 
-    public DimensionalApplicatorTE() {
-        super(TileEntityInit.DIMENSIONAL_APPLICATOR.get(), true, true, true);
+    public DimensionalApplicatorTE(BlockPos pos, BlockState state) {
+        super(TileEntityInit.DIMENSIONAL_APPLICATOR.get(), pos, state, true, true, true);
     }
 
     @Override
@@ -32,22 +33,22 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         boolean enabled = CommonConfig.ENABLE_DIMENSIONAL_APPLICATOR.get();
         if (enabled) {
             super.customTickActions();
-            if (this.playerId != null && getWorld() != null && !getWorld().isRemote()) {
+            if (this.playerId != null && getLevel() != null && !getLevel().isClientSide()) {
                 double divisor = CommonConfig.DIMENSIONAL_APPLICATOR_DIVISOR.get();
                 if (getCountedTicks() >= (getDuration() / divisor)) {
                     resetCountedTicks();
                     setActive(false);
                     if (getEnergyStorage().getEnergyStored() >= getPrice()) {
-                        if (getSpaceRippers(getWorld(), getPos()) > 0) {
-                            if (getWorld().getServer() != null) {
-                                PlayerEntity player = getWorld().getServer().getPlayerList().getPlayerByUUID(this.playerId);
+                        if (getSpaceRippers(getLevel(), getBlockPos()) > 0) {
+                            if (getLevel().getServer() != null) {
+                                Player player = getLevel().getServer().getPlayerList().getPlayer(this.playerId);
                                 if (player != null) {
-                                    ArrayList<EffectInstance> effects = getEffects(getWorld(), getPos());
-                                    for (EffectInstance effect : effects) {
+                                    ArrayList<MobEffectInstance> effects = getEffects(getLevel(), getBlockPos());
+                                    for (MobEffectInstance effect : effects) {
                                         if (effect != null) {
                                             if (getEnergyStorage().getEnergyStored() >= getPrice()) {
                                                 setActive(true);
-                                                player.addPotionEffect(effect);
+                                                player.addEffect(effect);
                                                 getEnergyStorage().consumeEnergy(getPrice());
                                             }
                                         }
@@ -63,11 +64,11 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         }
     }
 
-    private ArrayList<EffectInstance> getEffects(World worldIn, BlockPos pos) {
-        ArrayList<EffectInstance> effectInstances = new ArrayList<>();
-        ArrayList<Effect> effects = new ArrayList<>();
+    private ArrayList<MobEffectInstance> getEffects(Level worldIn, BlockPos pos) {
+        ArrayList<MobEffectInstance> effectInstances = new ArrayList<>();
+        ArrayList<MobEffect> effects = new ArrayList<>();
         for (int id : this.NBTEffects) {
-            Effect effect = Effect.get(id);
+            MobEffect effect = MobEffect.byId(id);
             if (effect != null) {
                 if (!effects.contains(effect)) {
                     effects.add(effect);
@@ -75,26 +76,26 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             }
         }
         for (Direction check_direction : Direction.values()) {
-            Block block = worldIn.getBlockState(pos.offset(check_direction)).getBlock();
-            Effect effect = null;
+            Block block = worldIn.getBlockState(pos.relative(check_direction)).getBlock();
+            MobEffect effect = null;
             if (block == BlockInit.REGENERATION_ACTIVATOR.get()) {
-                effect = Effects.REGENERATION;
+                effect = MobEffects.REGENERATION;
             } else if (block == BlockInit.RESISTANCE_ACTIVATOR.get()) {
-                effect = Effects.RESISTANCE;
+                effect = MobEffects.DAMAGE_RESISTANCE;
             } else if (block == BlockInit.ABSORPTION_ACTIVATOR.get()) {
-                effect = Effects.ABSORPTION;
+                effect = MobEffects.ABSORPTION;
             } else if (block == BlockInit.HASTE_ACTIVATOR.get()) {
-                effect = Effects.HASTE;
+                effect = MobEffects.DIG_SPEED;
             } else if (block == BlockInit.SPEED_ACTIVATOR.get()) {
-                effect = Effects.SPEED;
+                effect = MobEffects.MOVEMENT_SPEED;
             } else if (block == BlockInit.JUMP_BOOST_ACTIVATOR.get()) {
-                effect = Effects.JUMP_BOOST;
+                effect = MobEffects.JUMP;
             } else if (block == BlockInit.INVISIBILITY_ACTIVATOR.get()) {
-                effect = Effects.INVISIBILITY;
+                effect = MobEffects.INVISIBILITY;
             } else if (block == BlockInit.NIGHT_VISION_ACTIVATOR.get()) {
-                effect = Effects.NIGHT_VISION;
+                effect = MobEffects.NIGHT_VISION;
             } else if (block == BlockInit.STRENGTH_ACTIVATOR.get()) {
-                effect = Effects.STRENGTH;
+                effect = MobEffects.DAMAGE_BOOST;
             }
             if (effect != null) {
                 if (!effects.contains(effect)) {
@@ -106,9 +107,9 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             boolean isBeacon = CommonConfig.DIMENSIONAL_APPLICATOR_IS_BEACON_EFFECT.get();
             boolean showParticles = CommonConfig.DIMENSIONAL_APPLICATOR_SHOW_PARTICLES.get();
             boolean showIcon = CommonConfig.DIMENSIONAL_APPLICATOR_SHOW_ICON.get();
-            for (Effect effect : effects) {
+            for (MobEffect effect : effects) {
                 if (effect != null) {
-                    EffectInstance effectInstance = new EffectInstance(effect, getDuration(), getAmplifier() * getSpaceRippers(world, pos), isBeacon, showParticles, showIcon);
+                    MobEffectInstance effectInstance = new MobEffectInstance(effect, getDuration(), getAmplifier() * getSpaceRippers(worldIn, pos), isBeacon, showParticles, showIcon);
                     if (!effectInstances.contains(effectInstance)) {
                         effectInstances.add(effectInstance);
                     }
@@ -118,10 +119,10 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         return effectInstances;
     }
 
-    protected int getSpaceRippers(World world, BlockPos pos) {
+    protected int getSpaceRippers(Level world, BlockPos pos) {
         int count = 0;
         for (Direction side : Direction.values()) {
-            Block block = world.getBlockState(pos.offset(side)).getBlock();
+            Block block = world.getBlockState(pos.relative(side)).getBlock();
             if (block instanceof SpaceRipperBlock) {
                 count++;
             }
@@ -158,10 +159,10 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public CompoundNBT saveSerializedValues() {
-        CompoundNBT nbt = super.saveSerializedValues();
+    public CompoundTag saveSerializedValues() {
+        CompoundTag nbt = super.saveSerializedValues();
         if (playerId != null) {
-            nbt.putUniqueId(CustomValues.playerNBTKey, playerId);
+            nbt.putUUID(CustomValues.playerNBTKey, playerId);
         }
         if (this.NBTEffects.size() > 0) {
             nbt.putIntArray(CustomValues.potionsNBTKey, this.NBTEffects);
@@ -170,7 +171,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public void setDeserializedValues(CompoundNBT nbt) {
+    public void setDeserializedValues(CompoundTag nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removePlayerNBTKey)) {
             this.playerId = null;
@@ -179,7 +180,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
             this.NBTEffects.clear();
         }
         if (nbt.contains(CustomValues.playerNBTKey)) {
-            this.playerId = nbt.getUniqueId(CustomValues.playerNBTKey);
+            this.playerId = nbt.getUUID(CustomValues.playerNBTKey);
         }
         if (nbt.contains(CustomValues.potionsNBTKey)) {
             this.NBTEffects.clear();

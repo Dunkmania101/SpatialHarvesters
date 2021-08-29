@@ -15,13 +15,17 @@ import dunkmania101.spatialharvesters.objects.tile_entities.OreHarvesterTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.SoilHarvesterTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.SpecificMobHarvesterTE;
 import dunkmania101.spatialharvesters.objects.tile_entities.StoneHarvesterTE;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -32,8 +36,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     protected final ArrayList<String> BLACKLIST = new ArrayList<>();
     private Block thisBlock = null;
 
-    public SpatialHarvesterTE(BlockEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn, true, true, true);
+    public SpatialHarvesterTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
+        super(tileEntityTypeIn, pos, state, true, true, true);
     }
 
     @Override
@@ -89,10 +93,10 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                         ArrayList<Direction> spaceRippers = new ArrayList<>();
                         ArrayList<IItemHandler> outInventories = new ArrayList<>();
                         for (Direction side : Direction.values()) {
-                            if (getLevel().getBlockState(getBlockPos().offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                            if (getLevel().getBlockState(getBlockPos().relative(side)).getBlock() instanceof SpaceRipperBlock) {
                                 spaceRippers.add(side);
                             } else {
-                                TileEntity out = getLevel().getBlockEntity(getBlockPos().offset(side));
+                                BlockEntity out = getLevel().getBlockEntity(getBlockPos().relative(side));
                                 if (out != null) {
                                     LazyOptional<IItemHandler> outCap = out.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
                                     outCap.ifPresent(outInventories::add);
@@ -238,9 +242,9 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public CompoundNBT saveSerializedValues() {
-        CompoundNBT nbt = super.saveSerializedValues();
-        CompoundNBT disabledResources = new CompoundNBT();
+    public CompoundTag saveSerializedValues() {
+        CompoundTag nbt = super.saveSerializedValues();
+        CompoundTag disabledResources = new CompoundTag();
         int i = 0;
         for (String itemRN : this.BLACKLIST) {
             if (itemRN != null) {
@@ -255,15 +259,15 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public void setDeserializedValues(CompoundNBT nbt) {
+    public void setDeserializedValues(CompoundTag nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeDisabledNBTKey)) {
             this.BLACKLIST.clear();
         }
         if (nbt.contains(CustomValues.disabledResourcesKey)) {
             this.BLACKLIST.clear();
-            CompoundNBT disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
-            for (String key : disabledResources.keySet()) {
+            CompoundTag disabledResources = nbt.getCompound(CustomValues.disabledResourcesKey);
+            for (String key : disabledResources.getAllKeys()) {
                 String itemRN = disabledResources.getString(key);
                 ResourceLocation airRN = Items.AIR.getRegistryName();
                 if (airRN != null && !itemRN.equals(airRN.toString()) && !this.BLACKLIST.contains(itemRN)) {

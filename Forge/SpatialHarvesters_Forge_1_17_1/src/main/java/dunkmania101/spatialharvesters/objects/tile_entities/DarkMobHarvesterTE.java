@@ -1,31 +1,33 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
-import dunkmania101.spatialharvesters.SpatialHarvesters;
-import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.init.TileEntityInit;
-import dunkmania101.spatialharvesters.util.Tools;
-import dunkmania101.spatialharvesters.init.ItemInit;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
-
 import java.util.ArrayList;
 import java.util.Random;
+
+import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.data.CommonConfig;
+import dunkmania101.spatialharvesters.init.ItemInit;
+import dunkmania101.spatialharvesters.init.TileEntityInit;
+import dunkmania101.spatialharvesters.util.Tools;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class DarkMobHarvesterTE extends MobHarvesterTE {
     private final ArrayList<String> MOBS = new ArrayList<>();
 
-    public DarkMobHarvesterTE() {
-        super(TileEntityInit.DARK_MOB_HARVESTER.get());
+    public DarkMobHarvesterTE(BlockPos pos, BlockState state) {
+        super(TileEntityInit.DARK_MOB_HARVESTER.get(), pos, state);
     }
 
     @Override
     protected void lastMinuteActions() {
-        if (getWorld() != null && !getWorld().isRemote()) {
+        if (getLevel() != null && !getLevel().isClientSide()) {
             if (this.MOBS.isEmpty()) {
                 for (EntityType<?> entityType : ForgeRegistries.ENTITIES.getValues()) {
                     try {
@@ -35,14 +37,14 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
                             ResourceLocation rn = entityType.getRegistryName();
                             if (rn != null) {
                                 if (!Tools.isResourceBanned(rn, blacklist_mobs, blacklist_mobs_mod)) {
-                                    Entity entity = entityType.create(getWorld());
+                                    Entity entity = entityType.create(getLevel());
                                     if (entity != null) {
-                                        if (entity instanceof MobEntity) {
-                                            if (entity.isNonBoss()) {
+                                        if (entity instanceof Mob) {
+                                            // if (((Mob) entity).isNonBoss()) { // Did they remove that method?
                                                 this.MOBS.add(rn.toString());
-                                            }
+                                            // }
                                         }
-                                        entity.remove();
+                                        entity.onRemovedFromWorld();
                                     }
                                 }
                             }
@@ -53,7 +55,7 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
                 }
             }
             if (!this.MOBS.isEmpty()) {
-                Random rand = getWorld().getRandom();
+                Random rand = getLevel().getRandom();
                 this.entity = this.MOBS.get(rand.nextInt(this.MOBS.size()));
             }
         }
@@ -72,8 +74,8 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
 
     @Override
     public Item getShard(Block block) {
-        if (getWorld() != null && !getWorld().isRemote()) {
-            int i = getWorld().getRandom().nextInt(8);
+        if (getLevel() != null && !getLevel().isClientSide()) {
+            int i = getLevel().getRandom().nextInt(8);
             if (i == 0) {
                 return ItemInit.SHARD_1.get();
             } else if (i == 1) {

@@ -1,46 +1,52 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
-import com.mojang.authlib.GameProfile;
-import dunkmania101.spatialharvesters.SpatialHarvesters;
-import dunkmania101.spatialharvesters.data.CommonConfig;
-import dunkmania101.spatialharvesters.data.CustomValues;
-import dunkmania101.spatialharvesters.init.ItemInit;
-import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
-import dunkmania101.spatialharvesters.util.Tools;
-import net.minecraft.block.Block;
-import net.minecraft.entity.*;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.mojang.authlib.GameProfile;
+
+import dunkmania101.spatialharvesters.SpatialHarvesters;
+import dunkmania101.spatialharvesters.data.CommonConfig;
+import dunkmania101.spatialharvesters.data.CustomValues;
+import dunkmania101.spatialharvesters.init.ItemInit;
+import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
+import dunkmania101.spatialharvesters.util.Tools;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.ForgeRegistries;
+
 public class MobHarvesterTE extends SpatialHarvesterTE {
     protected String entity = null;
-    protected PlayerEntity player = null;
-    protected CompoundNBT weapon = new CompoundNBT();
+    protected Player player = null;
+    protected CompoundTag weapon = new CompoundTag();
 
-    public MobHarvesterTE(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+    public MobHarvesterTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
+        super(tileEntityTypeIn, pos, state);
     }
 
     public static final Method dropLoot;
@@ -57,8 +63,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     protected void lastMinuteActions() {
         ArrayList<ItemStack> newOutputs = new ArrayList<>();
         try {
-            if (!StringUtils.isNullOrEmpty(this.entity)) {
-                MobEntity mobEntity = getMobEntity();
+            if (this.entity != null && !this.entity.isEmpty()) {
+                Mob mobEntity = getMobEntity();
                 if (mobEntity != null) {
                     if (this.player == null) {
                         setPlayer();
@@ -85,7 +91,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                             }
                         }
                         updateWeapon();
-                        DamageSource playerDamage = DamageSource.causePlayerDamage(this.player);
+                        DamageSource playerDamage = DamageSource.playerAttack(this.player);
                         ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
                         mobEntity.captureDrops(new ArrayList<>());
                         int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
@@ -102,7 +108,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                                     .map(ItemEntity::getItem)
                                     .forEach(newOutputs::add);
                         }
-                        mobEntity.remove();
+                        mobEntity.onRemovedFromWorld();
                     }
                 }
             }
@@ -112,13 +118,13 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
         setOutputStacks(newOutputs);
     }
 
-    protected MobEntity getMobEntity() {
-        MobEntity mobEntity = null;
+    protected Mob getMobEntity() {
+        Mob mobEntity = null;
         try {
-            if (getWorld() != null && !StringUtils.isNullOrEmpty(this.entity)) {
-                if (getWorld() instanceof ServerWorld) {
-                    ServerWorld serverWorld = (ServerWorld) getWorld();
-                    Optional<EntityType<?>> optionalEntityType = EntityType.byKey(this.entity);
+            if (getLevel() != null && this.entity != null && !this.entity.isEmpty()) {
+                if (getLevel() instanceof ServerLevel) {
+                    ServerLevel serverWorld = (ServerLevel) getLevel();
+                    Optional<EntityType<?>> optionalEntityType = EntityType.byString(this.entity);
                     if (optionalEntityType.isPresent()) {
                         EntityType<?> entityType = optionalEntityType.get();
                         ResourceLocation mobRN = entityType.getRegistryName();
@@ -128,15 +134,15 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                             if (!Tools.isResourceBanned(mobRN, blacklist_mobs, blacklist_mobs_mod)) {
                                 Entity entity = entityType.create(serverWorld);
                                 if (entity != null) {
-                                    if (entity instanceof MobEntity) {
-                                        mobEntity = (MobEntity) entity;
+                                    if (entity instanceof Mob) {
+                                        mobEntity = (Mob) entity;
                                         try {
-                                            mobEntity.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(getPos()), SpawnReason.NATURAL, null, null);
+                                            mobEntity.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(getBlockPos()), MobSpawnType.NATURAL, null, null);
                                         } catch (Exception error) {
                                             SpatialHarvesters.LOGGER.catching(error);
                                         }
                                     }
-                                    entity.remove();
+                                    entity.onRemovedFromWorld();
                                 }
                             }
                         }
@@ -150,10 +156,10 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     protected void setPlayer() {
-        if (getWorld() != null) {
-            if (getWorld() instanceof ServerWorld) {
+        if (getLevel() != null) {
+            if (getLevel() instanceof ServerLevel) {
                 removePlayer();
-                ServerWorld serverWorld = (ServerWorld) getWorld();
+                ServerLevel serverWorld = (ServerLevel) getLevel();
                 UUID uuid = UUID.randomUUID();
                 GameProfile profile = new GameProfile(uuid, uuid.toString());
                 this.player = FakePlayerFactory.get(serverWorld, profile);
@@ -167,22 +173,22 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
             ItemStack stack = ItemStack.EMPTY;
             if (this.weapon != null) {
                 if (!this.weapon.isEmpty()) {
-                    stack = ItemStack.read(this.weapon);
+                    stack = ItemStack.of(this.weapon);
                 }
             }
-            CompoundNBT stackNBT = stack.getTag();
-            ItemStack mainHandStack = this.player.getHeldItemMainhand();
-            if (!ItemStack.areItemStacksEqual(mainHandStack, stack)) {
-                this.player.setHeldItem(Hand.MAIN_HAND, stack);
-                mainHandStack = this.player.getHeldItemMainhand();
+            CompoundTag stackNBT = stack.getTag();
+            ItemStack mainHandStack = this.player.getMainHandItem();
+            if (!ItemStack.isSame(mainHandStack, stack)) {
+                this.player.setItemInHand(InteractionHand.MAIN_HAND, stack);
+                mainHandStack = this.player.getMainHandItem();
             }
             if (mainHandStack.getTag() != stackNBT) {
                 mainHandStack.deserializeNBT(stackNBT);
             }
-            ItemStack offHandStack = this.player.getHeldItemOffhand();
-            if (!ItemStack.areItemStacksEqual(offHandStack, stack)) {
-                this.player.setHeldItem(Hand.OFF_HAND, stack);
-                offHandStack = this.player.getHeldItemOffhand();
+            ItemStack offHandStack = this.player.getOffhandItem();
+            if (!ItemStack.isSame(offHandStack, stack)) {
+                this.player.setItemInHand(InteractionHand.OFF_HAND, stack);
+                offHandStack = this.player.getOffhandItem();
             }
             if (offHandStack.getTag() != stackNBT) {
                 offHandStack.deserializeNBT(stackNBT);
@@ -203,13 +209,13 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     protected void removePlayer() {
         if (this.player != null) {
-            this.player.remove();
+            this.player.onRemovedFromWorld();
             this.player = null;
         }
     }
 
     protected void removeWeapon() {
-        this.weapon = new CompoundNBT();
+        this.weapon = new CompoundTag();
     }
 
     @Override
@@ -228,9 +234,9 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public CompoundNBT saveSerializedValues() {
-        CompoundNBT nbt = super.saveSerializedValues();
-        if (!StringUtils.isNullOrEmpty(this.entity)) {
+    public CompoundTag saveSerializedValues() {
+        CompoundTag nbt = super.saveSerializedValues();
+        if (this.entity != null && !this.entity.isEmpty()) {
             nbt.putString(CustomValues.entityNBTKey, this.entity);
         }
         if (this.weapon != null) {
@@ -242,7 +248,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public void setDeserializedValues(CompoundNBT nbt) {
+    public void setDeserializedValues(CompoundTag nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.removeEntityNBTKey)) {
             removePlayer();
@@ -262,8 +268,8 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public void remove() {
+    public void setRemoved() {
         removeAll();
-        super.remove();
+        super.setRemoved();
     }
 }

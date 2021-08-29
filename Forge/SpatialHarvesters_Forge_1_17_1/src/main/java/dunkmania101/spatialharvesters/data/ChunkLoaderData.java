@@ -2,8 +2,6 @@ package dunkmania101.spatialharvesters.data;
 
 import java.util.ArrayList;
 
-import javax.annotation.Nonnull;
-
 import dunkmania101.spatialharvesters.data.base.WorldSaveData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -57,7 +55,7 @@ public class ChunkLoaderData extends WorldSaveData {
     }
 
     @Override
-    public void customSaveActions(NbtCompound data) {
+    public void customSaveActions(CompoundTag data) {
         super.customSaveActions(data);
         data.putLongArray(CustomValues.chunkLoaderDataKey, getChunkLoaders());
         if (!CommonConfig.ENABLE_CHUNK_LOADER.get()) {

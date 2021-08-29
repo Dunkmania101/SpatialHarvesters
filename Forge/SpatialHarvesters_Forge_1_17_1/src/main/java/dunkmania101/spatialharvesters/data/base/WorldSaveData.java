@@ -28,7 +28,7 @@ public class WorldSaveData {
     }
 
     public void customSaveActions(CompoundTag data) {
-        this.thisServerLevel.getDataStorage().computeIfAbsent(null, null, thisKey)
+        this.thisServerLevel.getDataStorage().computeIfAbsent(null, null, thisKey);
     }
 
     public CompoundTag getWorldTag() {

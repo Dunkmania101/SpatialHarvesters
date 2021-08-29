@@ -463,7 +463,7 @@ public class ItemInit {
     // Methods
     public static Item.Properties getBaseItemProperties() {
         return new Item.Properties()
-                .group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance);
+                .tab(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP.instance);
     }
 
     public static Item.Properties getNonstackableItemProperties() {

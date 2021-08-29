@@ -8,9 +8,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class TileEntityInit {
-    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, SpatialHarvesters.modid);
+    public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, SpatialHarvesters.modid);
 
-    public static final RegistryObject<TileEntityType<OreHarvesterTE>> ORE_HARVESTER = TILE_ENTITIES.register("ore_harvester",
+    public static final RegistryObject<BlockEntityType<OreHarvesterTE>> ORE_HARVESTER = TILE_ENTITIES.register("ore_harvester",
             () -> BlockEntityType.Builder.of(OreHarvesterTE::new,
                     BlockInit.ORE_HARVESTER_1.get(),
                     BlockInit.ORE_HARVESTER_2.get(),

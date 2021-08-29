@@ -2,35 +2,33 @@ package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
 import dunkmania101.spatialharvesters.data.CustomProperties;
 import dunkmania101.spatialharvesters.data.CustomValues;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE {
     private final boolean countTicks;
     protected boolean active = false;
     protected int ticks = 0;
 
-    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive, boolean countTicks) {
-        super(tileEntityTypeIn, canExtract, canReceive);
+    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state, boolean canExtract, boolean canReceive, boolean countTicks) {
+        super(tileEntityTypeIn, pos, state, canExtract, canReceive);
 
         this.countTicks = countTicks;
     }
 
-    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, boolean canExtract, boolean canReceive) {
-        this(tileEntityTypeIn, canExtract, canReceive, false);
+    public TickingRedstoneEnergyMachineTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state, boolean canExtract, boolean canReceive) {
+        this(tileEntityTypeIn, pos, state, canExtract, canReceive, false);
     }
 
-    public static void tick(BlockEntity blockEntity) {
-        if (blockEntity instanceof TickingRedstoneEnergyMachineTE) {
-            ((TickingRedstoneEnergyMachineTE) blockEntity).internalTick();
-        }
-    }
-
-    public void internalTick() {
-        if (getWorld() != null && !getWorld().isRemote()) {
-            if (getWorld().isBlockPowered(pos)) {
+    public void tick() {
+        if (getLevel() != null && !getLevel().isClientSide()) {
+            if (getBlockState().getOptionalValue(BlockStateProperties.POWERED).orElseGet(() -> false)) {
                 setActive(false);
-                getWorld().addParticle(RedstoneParticleData.REDSTONE_DUST, getPos().getX(), getPos().getY(), getPos().getZ(), 5, 5, 5);
+                getLevel().addParticle(DustParticleOptions.REDSTONE, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), 5, 5, 5);
             } else {
                 customTickActions();
                 if (this.countTicks) {
@@ -38,8 +36,8 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE {
                 }
             }
             if (getBlockState().hasProperty(CustomProperties.ACTIVE)) {
-                if (getBlockState().get(CustomProperties.ACTIVE) != getActive()) {
-                    getWorld().setBlockState(getPos(), getBlockState().with(CustomProperties.ACTIVE, getActive()));
+                if (getBlockState().getValue(CustomProperties.ACTIVE) != getActive()) {
+                    getLevel().setBlockAndUpdate(getBlockPos(), getBlockState().setValue(CustomProperties.ACTIVE, getActive()));
                 }
             }
         }
@@ -69,8 +67,8 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE {
     }
 
     @Override
-    public CompoundNBT saveSerializedValues() {
-        CompoundNBT nbt = super.saveSerializedValues();
+    public CompoundTag saveSerializedValues() {
+        CompoundTag nbt = super.saveSerializedValues();
         if (this.countTicks) {
             nbt.putInt(CustomValues.countedTicksKey, getCountedTicks());
         }
@@ -78,7 +76,7 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE {
     }
 
     @Override
-    public void setDeserializedValues(CompoundNBT nbt) {
+    public void setDeserializedValues(CompoundTag nbt) {
         super.setDeserializedValues(nbt);
         if (nbt.contains(CustomValues.countedTicksKey)) {
             this.ticks = nbt.getInt(CustomValues.countedTicksKey);
