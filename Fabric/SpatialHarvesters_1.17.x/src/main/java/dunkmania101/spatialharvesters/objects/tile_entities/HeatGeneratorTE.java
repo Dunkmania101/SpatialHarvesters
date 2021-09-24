@@ -1,5 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import java.util.ArrayList;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.objects.tile_entities.base.TickingRedstoneEnergyMachineTE;
@@ -10,10 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import team.reborn.energy.Energy;
-import team.reborn.energy.EnergyHandler;
-
-import java.util.ArrayList;
+import team.reborn.energy.api.EnergyStorage;
 
 public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     public HeatGeneratorTE(BlockPos pos, BlockState state) {
@@ -27,30 +26,30 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
         if (enabled) {
             if (getWorld() != null && !getWorld().isClient()) {
                 setActive(false);
-                ArrayList<EnergyHandler> outBatteries = new ArrayList<>();
+                ArrayList<EnergyStorage> outBatteries = new ArrayList<>();
                 for (Direction side : Direction.values()) {
                     Identifier blockRN = Registry.BLOCK.getId(getWorld().getBlockState(getPos().offset(side)).getBlock());
                     if (CommonConfig.valid_heat_sources.contains(Tools.getModResourceArray(blockRN))) {
-                        if ((getEnergyStorage().getEnergy() + getSpeed()) <= getEnergyStorage().getMaxStored()) {
-                            getEnergyStorage().insert(getSpeed());
+                        if ((getAmount() + getSpeed()) <= getCapacity()) {
+                            insert(getSpeed());
                             setActive(true);
                         }
                     }
                     BlockEntity out = getWorld().getBlockEntity(getPos().offset(side));
                     if (out != null) {
-                        if (Energy.valid(out)) {
-                            outBatteries.add(Energy.of(out));
+                        if (out instanceof EnergyStorage) {
+                            outBatteries.add((EnergyStorage) out);
                         }
                     }
                 }
                 if (!outBatteries.isEmpty()) {
-                    for (EnergyHandler outBattery : outBatteries) {
-                        double energy = getEnergyStorage().getEnergy();
+                    for (EnergyStorage outBattery : outBatteries) {
+                        long energy = getAmount();
                         if (energy > 0) {
-                            double outReceived = outBattery.insert(energy);
+                            long outReceived = outBattery.insert(energy, null);
                             if (outReceived > 0) {
                                 setActive(true);
-                                getEnergyStorage().use(outReceived);
+                                extract(outReceived);
                             }
                         }
                     }
@@ -61,23 +60,13 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
         }
     }
 
-    public int getSpeed() {
+    public long getSpeed() {
         return CommonConfig.speed_heat_generator;
     }
 
     @Override
-    public double getMaxStoredPower() {
+    public long getCapacity() {
         int multiplier = CommonConfig.heat_generator_capacity_multiplier;
         return getSpeed() * multiplier;
-    }
-
-    @Override
-    public double getCustomMaxInput() {
-        return getMaxStoredPower();
-    }
-
-    @Override
-    public double getCustomMaxOutput() {
-        return getMaxStoredPower();
     }
 }

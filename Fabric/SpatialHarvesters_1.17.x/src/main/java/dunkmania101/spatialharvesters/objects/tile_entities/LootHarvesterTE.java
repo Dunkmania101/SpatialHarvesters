@@ -1,5 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import java.util.ArrayList;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.init.ItemInit;
@@ -16,8 +18,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-
-import java.util.ArrayList;
 
 public class LootHarvesterTE extends SpatialHarvesterTE {
     public LootHarvesterTE(BlockPos pos, BlockState state) {
@@ -47,12 +47,12 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public double getPrice(Block block) {
+    public long getPrice(Block block) {
         return CommonConfig.price_loot;
     }
 
     @Override
-    public double getSpeed(Block block) {
+    public int getSpeed(Block block) {
         return CommonConfig.speed_loot;
     }
 

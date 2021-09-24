@@ -24,8 +24,8 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public double getPrice(Block block) {
-        double price = CommonConfig.price_ore_1;
+    public long getPrice(Block block) {
+        long price = CommonConfig.price_ore_1;
         if (block == BlockInit.ORE_HARVESTER_2) {
             price = CommonConfig.price_ore_2;
         } else if (block == BlockInit.ORE_HARVESTER_3) {
@@ -45,8 +45,8 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public double getSpeed(Block block) {
-        double speed = CommonConfig.speed_ore_1;
+    public int getSpeed(Block block) {
+        int speed = CommonConfig.speed_ore_1;
         if (block == BlockInit.ORE_HARVESTER_2) {
             speed = CommonConfig.speed_ore_2;
         } else if (block == BlockInit.ORE_HARVESTER_3) {

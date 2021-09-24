@@ -59,12 +59,12 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
     }
 
     @Override
-    public double getPrice(Block block) {
+    public long getPrice(Block block) {
         return CommonConfig.price_dark_mob;
     }
 
     @Override
-    public double getSpeed(Block block) {
+    public int getSpeed(Block block) {
         return CommonConfig.speed_dark_mob;
     }
 

@@ -66,7 +66,12 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     protected int getCapacity() {
-        return getSpeed() * 100;
+        int speed = getSpeed();
+        int multiplier = CommonConfig.HEAT_GENERATOR_CAPACITY_MULTIPLIER.get();
+        if (Integer.MAX_VALUE / multiplier < speed) {
+            return Integer.MAX_VALUE;
+        }
+        return speed * multiplier;
     }
 
     @Override

@@ -144,8 +144,12 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     protected int getCapacity() {
+        int price = getPrice();
         int multiplier = CommonConfig.DIMENSIONAL_APPLICATOR_CAPACITY_MULTIPLIER.get();
-        return getPrice() * multiplier;
+        if (Integer.MAX_VALUE / multiplier < price) {
+            return Integer.MAX_VALUE;
+        }
+        return price * multiplier;
     }
 
     @Override

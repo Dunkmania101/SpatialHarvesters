@@ -1,5 +1,8 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
@@ -16,9 +19,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.UUID;
 
 public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     private UUID playerId = null;
@@ -38,7 +38,7 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                 if (getCountedTicks() >= (getDuration() / divisor)) {
                     resetCountedTicks();
                     setActive(false);
-                    if (getEnergyStorage().getEnergy() >= getPrice()) {
+                    if (getAmount() >= getPrice()) {
                         if (getSpaceRippers(getWorld(), getPos()) > 0) {
                             if (getWorld().getServer() != null) {
                                 PlayerEntity player = getWorld().getServer().getPlayerManager().getPlayer(this.playerId);
@@ -46,10 +46,10 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
                                     ArrayList<StatusEffectInstance> effects = getEffects(getWorld(), getPos());
                                     for (StatusEffectInstance effect : effects) {
                                         if (effect != null) {
-                                            if (getEnergyStorage().getEnergy() >= getPrice()) {
+                                            if (getAmount() >= getPrice()) {
                                                 setActive(true);
                                                 player.addStatusEffect(effect);
-                                                getEnergyStorage().use(getPrice());
+                                                extract(getPrice());
                                             }
                                         }
                                     }
@@ -138,24 +138,14 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
         return CommonConfig.dimensional_applicator_amplifier;
     }
 
-    protected double getPrice() {
+    protected long getPrice() {
         return CommonConfig.dimensional_applicator_price;
     }
 
     @Override
-    public double getMaxStoredPower() {
+    public long getCapacity() {
         int multiplier = CommonConfig.dimensional_applicator_capacity_multiplier;
         return getPrice() * multiplier;
-    }
-
-    @Override
-    public double getCustomMaxInput() {
-        return getMaxStoredPower();
-    }
-
-    @Override
-    public double getCustomMaxOutput() {
-        return getMaxStoredPower();
     }
 
     @Override

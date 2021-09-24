@@ -1,5 +1,7 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
+import java.util.ArrayList;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.init.BlockEntityInit;
 import dunkmania101.spatialharvesters.init.BlockInit;
@@ -10,8 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.ArrayList;
 
 public class BioHarvesterTE extends SpatialHarvesterTE {
     public BioHarvesterTE(BlockPos pos, BlockState state) {
@@ -24,8 +24,8 @@ public class BioHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public double getPrice(Block block) {
-        double price = CommonConfig.price_bio_1;
+    public long getPrice(Block block) {
+        long price = CommonConfig.price_bio_1;
         if (block == BlockInit.BIO_HARVESTER_2) {
             price = CommonConfig.price_bio_2;
         } else if (block == BlockInit.BIO_HARVESTER_3) {
@@ -45,8 +45,8 @@ public class BioHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public double getSpeed(Block block) {
-        double speed = CommonConfig.speed_bio_1;
+    public int getSpeed(Block block) {
+        int speed = CommonConfig.speed_bio_1;
         if (block == BlockInit.BIO_HARVESTER_2) {
             speed = CommonConfig.speed_bio_2;
         } else if (block == BlockInit.BIO_HARVESTER_3) {

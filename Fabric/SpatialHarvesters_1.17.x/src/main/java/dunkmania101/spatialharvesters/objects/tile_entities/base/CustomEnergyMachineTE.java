@@ -1,15 +1,16 @@
 package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
 import dunkmania101.spatialharvesters.data.CustomValues;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
-import team.reborn.energy.*;
+import team.reborn.energy.api.EnergyStorage;
 
 public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage {
-    private double energyStored = 0;
+    private long energyStored = 0;
 
     private boolean setCanExtract = false;
     private boolean setCanReceive = false;
@@ -25,21 +26,17 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
         this.setCanReceive = canReceive;
     }
 
-    protected EnergyHandler getEnergyStorage() {
-        return Energy.of(this);
-    }
-
     public NbtCompound saveSerializedValues() {
         NbtCompound nbt = new NbtCompound();
-        double energy = getEnergyStorage().getEnergy();
-        nbt.putDouble(CustomValues.energyStorageKey, energy);
+        long energy = getAmount();
+        nbt.putLong(CustomValues.energyStorageKey, energy);
         return nbt;
     }
 
     public void setDeserializedValues(NbtCompound nbt) {
         if (nbt.contains(CustomValues.energyStorageKey)) {
-            double energy = nbt.getDouble(CustomValues.energyStorageKey);
-            getEnergyStorage().set(energy);
+            long energy = nbt.getLong(CustomValues.energyStorageKey);
+            setAmount(energy);
         }
     }
 
@@ -56,58 +53,66 @@ public class CustomEnergyMachineTE extends BlockEntity implements EnergyStorage 
         markDirty();
     }
 
-    public double getCustomMaxInput() {
+    public long getCustomMaxInput() {
         return 0;
     }
 
-    public double getCustomMaxOutput() {
-        return 0;
-    }
-
-    @Override
-    public double getMaxInput(EnergySide side) {
-        if (this.setCanReceive) {
-            return getCustomMaxInput();
-        }
+    public long getCustomMaxOutput() {
         return 0;
     }
 
     @Override
-    public double getMaxOutput(EnergySide side) {
-        if (this.setCanExtract) {
-            return getCustomMaxOutput();
-        }
-        return 0;
-    }
-
-    @Override
-    public double getStored(EnergySide energySide) {
+    public long getAmount() {
         return this.energyStored;
     }
 
     protected void onEnergyChanged() {
-        double energy = getStored(EnergySide.UNKNOWN);
-        if (energy > getMaxStoredPower()) {
-            setStored(getMaxStoredPower());
+        long energy = getAmount();
+        if (energy > getCapacity()) {
+            setAmount(getCapacity());
         } else if (energy < 0) {
-            setStored(0);
+            setAmount(0);
         }
         markDirty();
     }
 
-    @Override
-    public void setStored(double energy) {
+    public void setAmount(long energy) {
         this.energyStored = energy;
         onEnergyChanged();
     }
 
     @Override
-    public double getMaxStoredPower() {
-        return Double.MAX_VALUE;
+    public long getCapacity() {
+        return Long.MAX_VALUE;
     }
 
     @Override
-    public EnergyTier getTier() {
-        return null;
+    public boolean supportsInsertion() {
+        return this.setCanReceive;
+    }
+
+    @Override
+    public boolean supportsExtraction() {
+        return this.setCanExtract;
+    }
+
+    public long insert(long maxAmount, TransactionContext context) {
+        long inserted = Math.min(maxAmount, getCapacity() - getAmount());
+        setAmount(getAmount() + inserted);
+        return inserted;
+    }
+
+    public long extract(long maxAmount, TransactionContext context) {
+        long extracted = Math.min(maxAmount, getAmount());
+        setAmount(getAmount() - extracted);
+        return extracted;
+    }
+
+    public long insert(long maxAmount) {
+        return insert(maxAmount, null);
+    }
+
+    public long extract(long maxAmount) {
+        return extract(maxAmount, null);
     }
 }

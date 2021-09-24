@@ -1,10 +1,19 @@
 package dunkmania101.spatialharvesters.objects.tile_entities.base;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
 import dunkmania101.spatialharvesters.objects.blocks.SpaceRipperBlock;
-import dunkmania101.spatialharvesters.objects.tile_entities.*;
+import dunkmania101.spatialharvesters.objects.tile_entities.BioHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.DarkMobHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.MobHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.OreHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.SoilHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.SpecificMobHarvesterTE;
+import dunkmania101.spatialharvesters.objects.tile_entities.StoneHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,9 +29,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     protected final ArrayList<ItemStack> OUTPUTS = new ArrayList<>();
@@ -68,8 +74,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                 if (getCountedTicks() >= getSpeed(this.thisBlock)) {
                     resetCountedTicks();
                     setActive(false);
-                    double price = getPrice(this.thisBlock);
-                    if (getEnergyStorage().getEnergy() >= price) {
+                    long price = getPrice(this.thisBlock);
+                    if (getAmount() >= price) {
                         ArrayList<Direction> spaceRippers = new ArrayList<>();
                         ArrayList<Inventory> outInventories = new ArrayList<>();
                         for (Direction side : Direction.values()) {
@@ -89,7 +95,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                             if (!this.OUTPUTS.isEmpty()) {
                                 filterOutputsMinTier(this.thisBlock);
                                 for (Direction ignored : spaceRippers) {
-                                    if (getEnergyStorage().getEnergy() >= price) {
+                                    if (getAmount() >= price) {
                                         ItemStack chosenOutput;
                                         Random rand = getWorld().getRandom();
                                         int shardChance = CommonConfig.harvester_shard_chance;
@@ -103,14 +109,14 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                         }
                                         if (!chosenOutput.isEmpty()) {
                                             if (this.BLACKLIST.contains(Registry.ITEM.getId(chosenOutput.getItem()).toString())) {
-                                                getEnergyStorage().extract(price);
+                                                extract(price);
                                                 setActive(true);
                                             } else {
                                                 int originalCount = chosenOutput.getCount();
                                                 Inventory inventory = outInventories.get(rand.nextInt(outInventories.size()));
                                                 ItemStack resultStack = Tools.insertItemStacked(inventory, chosenOutput);
                                                 if (resultStack.getCount() != originalCount) {
-                                                    getEnergyStorage().extract(price);
+                                                    extract(price);
                                                     setActive(true);
                                                 }
                                             }
@@ -169,30 +175,20 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
-    public double getMaxStoredPower() {
+    public long getCapacity() {
         if (this.thisBlock != null) {
             int multiplier = CommonConfig.harvester_capacity_multiplier;
             return getPrice(this.thisBlock) * multiplier;
         }
-        return Double.MAX_VALUE;
+        return Long.MAX_VALUE;
     }
 
-    @Override
-    public double getCustomMaxInput() {
-        return getMaxStoredPower();
+    public long getPrice(Block block) {
+        return Long.MAX_VALUE;
     }
 
-    @Override
-    public double getCustomMaxOutput() {
-        return getMaxStoredPower();
-    }
-
-    public double getPrice(Block block) {
-        return Double.MAX_VALUE;
-    }
-
-    public double getSpeed(Block block) {
-        return Double.MAX_VALUE;
+    public int getSpeed(Block block) {
+        return Integer.MAX_VALUE;
     }
 
     public Item getShard(Block block) {

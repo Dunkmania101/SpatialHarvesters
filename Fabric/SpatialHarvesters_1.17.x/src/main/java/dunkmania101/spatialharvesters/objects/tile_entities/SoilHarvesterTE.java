@@ -24,8 +24,8 @@ public class SoilHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public double getPrice(Block block) {
-        double price = CommonConfig.price_soil_1;
+    public long getPrice(Block block) {
+        long price = CommonConfig.price_soil_1;
         if (block == BlockInit.SOIL_HARVESTER_2) {
             price = CommonConfig.price_soil_2;
         } else if (block == BlockInit.SOIL_HARVESTER_3) {
@@ -45,8 +45,8 @@ public class SoilHarvesterTE extends SpatialHarvesterTE {
     }
 
     @Override
-    public double getSpeed(Block block) {
-        double speed = CommonConfig.speed_soil_1;
+    public int getSpeed(Block block) {
+        int speed = CommonConfig.speed_soil_1;
         if (block == BlockInit.SOIL_HARVESTER_2) {
             speed = CommonConfig.speed_soil_2;
         } else if (block == BlockInit.SOIL_HARVESTER_3) {

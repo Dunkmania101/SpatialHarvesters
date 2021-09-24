@@ -192,8 +192,12 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
     @Override
     protected int getCapacity() {
         if (this.thisBlock != null) {
+            int price = getPrice(this.thisBlock);
             int multiplier = CommonConfig.HARVESTER_CAPACITY_MULTIPLIER.get();
-            return getPrice(this.thisBlock) * multiplier;
+            if (Integer.MAX_VALUE / multiplier < price) {
+                return Integer.MAX_VALUE;
+            }
+            return price * multiplier;
         }
         return Integer.MAX_VALUE;
     }

@@ -82,7 +82,7 @@ public class MachineBlockItem extends BlockItem {
             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                 StatusEffect effect = StatusEffect.byRawId(id);
                 if (effect != null) {
-                    tooltip.add(Tools.getTranslatedFormattedText(effect.getTranslationKey(), effect.getType().getFormatting(), Formatting.BOLD));
+                    tooltip.add(Tools.getTranslatedFormattedText(effect.getTranslationKey(), effect.getCategory().getFormatting(), Formatting.BOLD));
                 }
             }
         }

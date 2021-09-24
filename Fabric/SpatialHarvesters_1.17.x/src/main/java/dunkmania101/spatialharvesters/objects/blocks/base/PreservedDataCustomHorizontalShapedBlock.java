@@ -133,7 +133,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                             for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
                                 StatusEffect effect = StatusEffect.byRawId(id);
                                 if (effect != null) {
-                                    player.sendMessage(Tools.getTranslatedFormattedText(effect.getTranslationKey(), effect.getType().getFormatting(), Formatting.BOLD), false);
+                                    player.sendMessage(Tools.getTranslatedFormattedText(effect.getTranslationKey(), effect.getCategory().getFormatting(), Formatting.BOLD), false);
                                 }
                             }
                         }

@@ -907,48 +907,48 @@ public class CommonConfig extends Config implements ConfigContainer {
     public static int dimensional_applicator_capacity_multiplier = 100;
     public static int heat_generator_capacity_multiplier = 100;
 
-    public static double price_ore_1 = 400;
-    public static double price_ore_2 = 600;
-    public static double price_ore_3 = 1000;
-    public static double price_ore_4 = 1500;
-    public static double price_ore_5 = 4000;
-    public static double price_ore_6 = 7000;
-    public static double price_ore_7 = 7500;
-    public static double price_ore_8 = 8000;
+    public static long price_ore_1 = 400;
+    public static long price_ore_2 = 600;
+    public static long price_ore_3 = 1000;
+    public static long price_ore_4 = 1500;
+    public static long price_ore_5 = 4000;
+    public static long price_ore_6 = 7000;
+    public static long price_ore_7 = 7500;
+    public static long price_ore_8 = 8000;
 
-    public static double price_bio_1 = 400;
-    public static double price_bio_2 = 600;
-    public static double price_bio_3 = 1000;
-    public static double price_bio_4 = 1500;
-    public static double price_bio_5 = 4000;
-    public static double price_bio_6 = 7000;
-    public static double price_bio_7 = 7500;
-    public static double price_bio_8 = 8000;
+    public static long price_bio_1 = 400;
+    public static long price_bio_2 = 600;
+    public static long price_bio_3 = 1000;
+    public static long price_bio_4 = 1500;
+    public static long price_bio_5 = 4000;
+    public static long price_bio_6 = 7000;
+    public static long price_bio_7 = 7500;
+    public static long price_bio_8 = 8000;
 
-    public static double price_stone_1 = 400;
-    public static double price_stone_2 = 600;
-    public static double price_stone_3 = 1000;
-    public static double price_stone_4 = 1500;
-    public static double price_stone_5 = 4000;
-    public static double price_stone_6 = 7000;
-    public static double price_stone_7 = 7500;
-    public static double price_stone_8 = 8000;
+    public static long price_stone_1 = 400;
+    public static long price_stone_2 = 600;
+    public static long price_stone_3 = 1000;
+    public static long price_stone_4 = 1500;
+    public static long price_stone_5 = 4000;
+    public static long price_stone_6 = 7000;
+    public static long price_stone_7 = 7500;
+    public static long price_stone_8 = 8000;
 
-    public static double price_soil_1 = 400;
-    public static double price_soil_2 = 600;
-    public static double price_soil_3 = 1000;
-    public static double price_soil_4 = 1500;
-    public static double price_soil_5 = 4000;
-    public static double price_soil_6 = 7000;
-    public static double price_soil_7 = 7500;
-    public static double price_soil_8 = 8000;
+    public static long price_soil_1 = 400;
+    public static long price_soil_2 = 600;
+    public static long price_soil_3 = 1000;
+    public static long price_soil_4 = 1500;
+    public static long price_soil_5 = 4000;
+    public static long price_soil_6 = 7000;
+    public static long price_soil_7 = 7500;
+    public static long price_soil_8 = 8000;
 
-    public static double dimensional_applicator_price = 1000;
+    public static long dimensional_applicator_price = 1000;
 
-    public static double price_loot = 8000;
+    public static long price_loot = 8000;
 
-    public static double price_dark_mob = 8000;
-    public static double price_specific_mob = 8000;
+    public static long price_dark_mob = 8000;
+    public static long price_specific_mob = 8000;
 
     public static int dimensional_applicator_amplifier = 1;
     public static int dimensional_applicator_duration = 240;
