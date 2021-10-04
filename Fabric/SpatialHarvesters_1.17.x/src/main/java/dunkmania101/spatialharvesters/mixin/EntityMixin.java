@@ -23,12 +23,10 @@ public abstract class EntityMixin {
 
     @Inject(at = @At("TAIL"), method = "dropStack(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/ItemEntity;")
     public void injectDropStack(ItemStack stack, float yOffset, CallbackInfoReturnable<ItemEntity> cir) {
-        if (stack.hasNbt()) {
-            int i = 0;
-            while (this.SAVED_DROPS.getKeys().contains(Integer.toString(i))) {
-                i++;
-            }
-            this.SAVED_DROPS.put(Integer.toString(i), stack.getNbt());
+        int i = 0;
+        while (this.SAVED_DROPS.getKeys().contains(Integer.toString(i))) {
+            i++;
         }
+        this.SAVED_DROPS.put(Integer.toString(i), stack.writeNbt(new NbtCompound()));
     }
 }
