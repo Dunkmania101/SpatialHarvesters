@@ -1,8 +1,6 @@
 package dunkmania101.spatialharvesters.objects.tile_entities;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,6 +10,7 @@ import dunkmania101.spatialharvesters.SpatialHarvesters;
 import dunkmania101.spatialharvesters.data.CommonConfig;
 import dunkmania101.spatialharvesters.data.CustomValues;
 import dunkmania101.spatialharvesters.init.ItemInit;
+import dunkmania101.spatialharvesters.mixin.MobEntityMixinCastable;
 import dunkmania101.spatialharvesters.objects.tile_entities.base.SpatialHarvesterTE;
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.core.BlockPos;
@@ -22,10 +21,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,10 +31,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class MobHarvesterTE extends SpatialHarvesterTE {
@@ -47,16 +41,6 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
 
     public MobHarvesterTE(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
         super(tileEntityTypeIn, pos, state);
-    }
-
-    public static final Method dropLoot;
-    public static final Method dropSpecialItems;
-
-    static {
-        dropLoot = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213354_a",
-                DamageSource.class, boolean.class);
-        dropSpecialItems = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213333_a",
-                DamageSource.class, int.class, boolean.class);
     }
 
     @Override
@@ -92,21 +76,22 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                         }
                         updateWeapon();
                         DamageSource playerDamage = DamageSource.playerAttack(this.player);
-                        ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, mobEntity, this.player, "field_70717_bb");
+                        mobEntity.setLastHurtByPlayer(this.player);
                         mobEntity.captureDrops(new ArrayList<>());
                         int lootingLevel = ForgeHooks.getLootingLevel(mobEntity, this.player, playerDamage);
-                        try {
-                            dropLoot.invoke(mobEntity, playerDamage, true);
-                            dropSpecialItems.invoke(mobEntity, playerDamage, lootingLevel, true);
-                        } catch (Exception error) {
-                            SpatialHarvesters.LOGGER.catching(error);
-                        }
-                        Collection<ItemEntity> mobDrops = mobEntity.captureDrops(null);
-                        LivingDropsEvent event = new LivingDropsEvent(mobEntity, playerDamage, mobDrops, lootingLevel, true);
-                        if (!MinecraftForge.EVENT_BUS.post(event)) {
-                            event.getDrops().stream()
-                                    .map(ItemEntity::getItem)
-                                    .forEach(newOutputs::add);
+                        ((MobEntityMixinCastable) mobEntity).invokeDropLootFromTable(playerDamage, true);
+                        ((MobEntityMixinCastable) mobEntity).invokeDropCustomDeathLoot(playerDamage, lootingLevel, true);
+                        CompoundTag getDropsTag = new CompoundTag();
+                        getDropsTag.putString(CustomValues.shouldSaveDropsKey, "");
+                        CompoundTag savedDropsData = mobEntity.saveWithoutId(getDropsTag).getCompound(CustomValues.savedDropsKey);
+                        for (String key : savedDropsData.getAllKeys()) {
+                            CompoundTag stackNBT = savedDropsData.getCompound(key);
+                            if (!stackNBT.isEmpty()) {
+                                ItemStack stack = ItemStack.of(stackNBT);
+                                if (!stack.isEmpty()) {
+                                    newOutputs.add(stack);
+                                }
+                            }
                         }
                         mobEntity.onRemovedFromWorld();
                     }

@@ -24,9 +24,6 @@ public class DimensionalApplicatorBlock extends ActivePreservedDataCustomHorizon
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide()) {
-            return null;
-        }
         return (level1, blockPos, blockState, t) -> {
             if (t instanceof DimensionalApplicatorTE tile) {
                 tile.tick();

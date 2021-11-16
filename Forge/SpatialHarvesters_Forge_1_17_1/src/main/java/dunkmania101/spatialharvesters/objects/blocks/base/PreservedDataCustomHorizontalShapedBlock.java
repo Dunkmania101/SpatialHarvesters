@@ -82,7 +82,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     @Nonnull
     @Override
     public InteractionResult use(@Nonnull BlockState state, Level worldIn, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand handIn, @Nonnull BlockHitResult hit) {
-        if (worldIn.isClientSide()) {
+        if (!worldIn.isClientSide()) {
             if (player.isCrouching()) {
                 BlockEntity tile = worldIn.getBlockEntity(pos);
                 if (tile != null) {
