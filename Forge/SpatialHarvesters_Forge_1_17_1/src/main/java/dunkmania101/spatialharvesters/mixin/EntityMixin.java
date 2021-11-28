@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 public abstract class EntityMixin {
     protected CompoundTag SAVED_DROPS = new CompoundTag();
 
-    @Inject(at = @At("TAIL"), method = "saveWithoutId")
+    @Inject(at = @At("TAIL"), method = "saveWithoutId(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;")
     public void injectSaveWithoutId(CompoundTag tag, CallbackInfoReturnable<CompoundTag> cir) {
         if (tag.contains(CustomValues.shouldSaveDropsKey)) {
             tag.put(CustomValues.savedDropsKey, this.SAVED_DROPS);

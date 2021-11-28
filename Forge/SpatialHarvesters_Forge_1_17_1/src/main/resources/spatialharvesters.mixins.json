@@ -3,6 +3,7 @@
   "minVersion": "0.8",
   "package": "dunkmania101.spatialharvesters.mixin",
   "compatibilityLevel": "JAVA_16",
+  "refmap": "mixins.spatialharvesters.refmap.json",
   "mixins": [
     "EntityMixin",
     "MobEntityMixinCastable",

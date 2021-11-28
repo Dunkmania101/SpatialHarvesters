@@ -45,7 +45,8 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     }
 
     @Override
-    public void playerWillDestroy(Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull Player player) {
+    public void playerWillDestroy(Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state,
+            @Nonnull Player player) {
         BlockEntity tile = worldIn.getBlockEntity(pos);
         if (tile != null) {
             this.thisTileNBT = tile.serializeNBT();
@@ -66,7 +67,8 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     }
 
     @Override
-    public void setPlacedBy(@Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
+    public void setPlacedBy(@Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState state,
+            LivingEntity placer, @Nonnull ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
         if (!worldIn.isClientSide()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
@@ -81,73 +83,96 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
 
     @Nonnull
     @Override
-    public InteractionResult use(@Nonnull BlockState state, Level worldIn, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand handIn, @Nonnull BlockHitResult hit) {
-        if (!worldIn.isClientSide()) {
-            if (player.isCrouching()) {
+    public InteractionResult use(@Nonnull BlockState state, Level worldIn, @Nonnull BlockPos pos,
+            @Nonnull Player player, @Nonnull InteractionHand handIn, @Nonnull BlockHitResult hit) {
+        if (player.isCrouching()) {
+            if (worldIn.isClientSide()) {
+                return InteractionResult.SUCCESS;
+            } else {
                 BlockEntity tile = worldIn.getBlockEntity(pos);
                 if (tile != null) {
                     player.displayClientMessage(Tools.getDividerText(), false);
                     CompoundTag data = tile.serializeNBT();
                     if (tile instanceof CustomEnergyMachineTE) {
-                        player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", ChatFormatting.DARK_GREEN), false);
-                        player.displayClientMessage(new TextComponent(Integer.toString(data.getInt(CustomValues.energyStorageKey))).withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD), false);
+                        player.displayClientMessage(Tools.getTranslatedFormattedText(
+                                "msg.spatialharvesters.energy_message", ChatFormatting.DARK_GREEN), false);
+                        player.displayClientMessage(
+                                new TextComponent(Integer.toString(data.getInt(CustomValues.energyStorageKey)))
+                                        .withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD),
+                                false);
                     }
                     if (tile instanceof TickingRedstoneEnergyMachineTE) {
                         if (data.contains(CustomValues.countedTicksKey)) {
                             player.displayClientMessage(Tools.getDividerText(), false);
-                            player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.counted_ticks_message", ChatFormatting.YELLOW), false);
+                            player.displayClientMessage(Tools.getTranslatedFormattedText(
+                                    "msg.spatialharvesters.counted_ticks_message", ChatFormatting.YELLOW), false);
                             int countedTicks = data.getInt(CustomValues.countedTicksKey);
-                            player.displayClientMessage(new TextComponent(Integer.toString(countedTicks)).withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD), false);
+                            player.displayClientMessage(new TextComponent(Integer.toString(countedTicks))
+                                    .withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD), false);
                         }
                     }
                     if (tile instanceof SpatialHarvesterTE) {
                         player.displayClientMessage(Tools.getDividerText(), false);
-                        player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resources", ChatFormatting.RED), false);
+                        player.displayClientMessage(Tools.getTranslatedFormattedText(
+                                "msg.spatialharvesters.disabled_resources", ChatFormatting.RED), false);
                         if (data.contains(CustomValues.disabledResourcesKey)) {
                             CompoundTag disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                             for (String key : disabledResources.getAllKeys()) {
-                                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(disabledResources.getString(key)));
+                                Item item = ForgeRegistries.ITEMS
+                                        .getValue(new ResourceLocation(disabledResources.getString(key)));
                                 if (item != null && item != Items.AIR) {
-                                    player.displayClientMessage(Tools.getTranslatedFormattedText(item.getDescriptionId(), ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), false);
+                                    player.displayClientMessage(
+                                            Tools.getTranslatedFormattedText(item.getDescriptionId(),
+                                                    ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD),
+                                            false);
                                 }
                             }
                         }
                     }
                     if (tile instanceof MobHarvesterTE) {
                         player.displayClientMessage(Tools.getDividerText(), false);
-                        player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", ChatFormatting.DARK_RED), false);
+                        player.displayClientMessage(Tools.getTranslatedFormattedText(
+                                "msg.spatialharvesters.mob_key_bound_mob", ChatFormatting.DARK_RED), false);
                         String mob = data.getString(CustomValues.entityNBTKey);
                         if (mob != null && !mob.isEmpty()) {
                             Optional<EntityType<?>> optionalEntityType = EntityType.byString(mob);
                             if (optionalEntityType.isPresent()) {
                                 EntityType<?> entityType = optionalEntityType.get();
-                                player.displayClientMessage(Tools.getTranslatedFormattedText(entityType.getDescriptionId(), ChatFormatting.RED, ChatFormatting.BOLD), false);
+                                player.displayClientMessage(Tools.getTranslatedFormattedText(
+                                        entityType.getDescriptionId(), ChatFormatting.RED, ChatFormatting.BOLD), false);
                             }
                         }
                         player.displayClientMessage(Tools.getDividerText(), false);
-                        player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", ChatFormatting.DARK_GRAY), false);
+                        player.displayClientMessage(Tools.getTranslatedFormattedText(
+                                "msg.spatialharvesters.weapon_key_bound_weapon", ChatFormatting.DARK_GRAY), false);
                         CompoundTag weapon = data.getCompound(CustomValues.weaponNBTKey);
                         if (!weapon.isEmpty()) {
                             ItemStack weaponStack = ItemStack.of(weapon);
                             if (!weaponStack.isEmpty()) {
-                                player.displayClientMessage(weaponStack.getDisplayName().copy().withStyle(ChatFormatting.GRAY, ChatFormatting.BOLD), false);
+                                player.displayClientMessage(weaponStack.getDisplayName().copy()
+                                        .withStyle(ChatFormatting.GRAY, ChatFormatting.BOLD), false);
                             }
                         }
                     } else if (tile instanceof DimensionalApplicatorTE) {
                         player.displayClientMessage(Tools.getDividerText(), false);
-                        player.displayClientMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.dimensional_applicator_saved_effects", ChatFormatting.BLUE), false);
+                        player.displayClientMessage(Tools.getTranslatedFormattedText(
+                                "msg.spatialharvesters.dimensional_applicator_saved_effects", ChatFormatting.BLUE),
+                                false);
                         if (data.contains(CustomValues.potionsNBTKey)) {
                             for (String id : data.getCompound(CustomValues.potionsNBTKey).getAllKeys()) {
                                 Potion effect = Potion.byName(id);
                                 if (effect != null) {
-                                    player.displayClientMessage(Tools.getTranslatedFormattedText(effect.getName(""), ChatFormatting.BOLD).copy().withStyle(Style.EMPTY.withColor(PotionUtils.getColor(effect))), false);
+                                    player.displayClientMessage(
+                                            Tools.getTranslatedFormattedText(effect.getName(""), ChatFormatting.BOLD)
+                                                    .copy()
+                                                    .withStyle(Style.EMPTY.withColor(PotionUtils.getColor(effect))),
+                                            false);
                                 }
                             }
                         }
                     }
                     player.displayClientMessage(Tools.getDividerText(), false);
                 }
-                return InteractionResult.SUCCESS;
             }
         }
         return super.use(state, worldIn, pos, player, handIn, hit);

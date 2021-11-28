@@ -2,11 +2,14 @@ buildscript {
     repositories {
         // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public' }
         mavenCentral()
+        maven { url = 'https://maven.parchmentmc.org' }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7.+'
+        classpath "org.parchmentmc:librarian:1.+"
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -14,8 +17,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
-version = '0.11.11b'
+version = '0.11.12'
 group = 'dunkmania101.spatialharvesters' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'spatialharvesters_Forge_1.17.1'
 
@@ -35,7 +39,7 @@ minecraft {
     //
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'official', version: '1.17.1'
+    mappings channel: 'parchment', version: '2021.10.31-1.17.1'
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -44,6 +48,9 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            arg '-mixin.config=spatialharvesters.mixins.json'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
@@ -66,6 +73,9 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            arg '-mixin.config=spatialharvesters.mixins.json'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
@@ -94,12 +104,15 @@ minecraft {
             // "SCAN": For mods scan.
             // "REGISTRIES": For firing of registry events.
             // "REGISTRYDUMP": For getting the contents of all registries.
-            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
 
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'spatialharvesters', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
@@ -130,7 +143,7 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.17.1-37.0.109'
+    minecraft 'net.minecraftforge:forge:1.17.1-37.0.110'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
     // Real mod deobf dependency examples - these get remapped to your current mappings
@@ -162,7 +175,8 @@ jar {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "spatialharvesterssareus",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'MixinConfigs': 'spatialharvesters.mixins.json'
         ])
     }
 }
