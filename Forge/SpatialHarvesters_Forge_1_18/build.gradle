@@ -17,7 +17,7 @@ apply plugin: 'org.spongepowered.mixin'
 
 version = '0.11.12'
 group = 'dunkmania101.spatialharvesters' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'spatialharvesters'
+archivesBaseName = 'spatialharvesters_Forge'
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)

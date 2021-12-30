@@ -74,72 +74,87 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient()) {
-            if (player.isSneaking()) {
-                BlockEntity tile = world.getBlockEntity(pos);
-                if (tile != null) {
-                    player.sendMessage(Tools.getDividerText(), false);
-                    NbtCompound data = tile.writeNbt(new NbtCompound());
-                    if (tile instanceof CustomEnergyMachineTE) {
-                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN), false);
-                        player.sendMessage(new LiteralText(Integer.toString(data.getInt(CustomValues.energyStorageKey))).copy().formatted(Formatting.GREEN, Formatting.BOLD), false);
-                    }
-                    if (tile instanceof TickingRedstoneEnergyMachineTE) {
-                        if (data.contains(CustomValues.countedTicksKey)) {
-                            player.sendMessage(Tools.getDividerText(), false);
-                            player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.counted_ticks_message", Formatting.YELLOW), false);
-                            int countedTicks = data.getInt(CustomValues.countedTicksKey);
-                            player.sendMessage(new LiteralText(Integer.toString(countedTicks)).copy().formatted(Formatting.YELLOW, Formatting.BOLD), false);
-                        }
-                    }
-                    if (tile instanceof SpatialHarvesterTE) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+            BlockHitResult hit) {
+        if (player.isSneaking()) {
+            if (world.isClient()) {
+                return ActionResult.SUCCESS;
+            }
+            BlockEntity t = world.getBlockEntity(pos);
+            if (t instanceof CustomEnergyMachineTE tile) {
+                player.sendMessage(Tools.getDividerText(), false);
+                NbtCompound data = tile.writeNbt(new NbtCompound());
+                player.sendMessage(
+                        Tools.getTranslatedFormattedText("msg.spatialharvesters.energy_message", Formatting.DARK_GREEN),
+                        false);
+                player.sendMessage(new LiteralText(Integer.toString(data.getInt(CustomValues.energyStorageKey))).copy()
+                        .formatted(Formatting.GREEN, Formatting.BOLD), false);
+                if (tile instanceof TickingRedstoneEnergyMachineTE) {
+                    if (data.contains(CustomValues.countedTicksKey)) {
                         player.sendMessage(Tools.getDividerText(), false);
-                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resources", Formatting.RED), false);
-                        if (data.contains(CustomValues.disabledResourcesKey)) {
-                            NbtCompound disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
-                            for (String key : disabledResources.getKeys()) {
-                                Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
-                                if (item != Items.AIR) {
-                                    player.sendMessage(Tools.getTranslatedFormattedText(item.getTranslationKey(), Formatting.DARK_PURPLE, Formatting.BOLD), false);
-                                }
-                            }
-                        }
+                        player.sendMessage(Tools.getTranslatedFormattedText(
+                                "msg.spatialharvesters.counted_ticks_message", Formatting.YELLOW), false);
+                        int countedTicks = data.getInt(CustomValues.countedTicksKey);
+                        player.sendMessage(new LiteralText(Integer.toString(countedTicks)).copy()
+                                .formatted(Formatting.YELLOW, Formatting.BOLD), false);
                     }
-                    if (tile instanceof MobHarvesterTE) {
-                        player.sendMessage(Tools.getDividerText(), false);
-                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob", Formatting.DARK_RED), false);
-                        String mob = data.getString(CustomValues.entityNBTKey);
-                        if (mob != null && !mob.isEmpty()) {
-                            Optional<EntityType<?>> optionalEntityType = EntityType.get(mob);
-                            if (optionalEntityType.isPresent()) {
-                                EntityType<?> entityType = optionalEntityType.get();
-                                player.sendMessage(Tools.getTranslatedFormattedText(entityType.getTranslationKey(), Formatting.RED, Formatting.BOLD), false);
-                            }
-                        }
-                        player.sendMessage(Tools.getDividerText(), false);
-                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon", Formatting.DARK_GRAY), false);
-                        NbtCompound weapon = data.getCompound(CustomValues.weaponNBTKey);
-                        if (!weapon.isEmpty()) {
-                            ItemStack weaponStack = ItemStack.fromNbt(weapon);
-                            if (!weaponStack.isEmpty()) {
-                                player.sendMessage(Tools.getTranslatedFormattedText(weaponStack.getTranslationKey(), Formatting.GRAY, Formatting.BOLD), false);
-                            }
-                        }
-                    } else if (tile instanceof DimensionalApplicatorTE) {
-                        player.sendMessage(Tools.getDividerText(), false);
-                        player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.dimensional_applicator_saved_effects", Formatting.BLUE), false);
-                        if (data.contains(CustomValues.potionsNBTKey)) {
-                            for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
-                                StatusEffect effect = StatusEffect.byRawId(id);
-                                if (effect != null) {
-                                    player.sendMessage(Tools.getTranslatedFormattedText(effect.getTranslationKey(), effect.getCategory().getFormatting(), Formatting.BOLD), false);
-                                }
-                            }
-                        }
-                    }
-                    player.sendMessage(Tools.getDividerText(), false);
                 }
+                if (tile instanceof SpatialHarvesterTE) {
+                    player.sendMessage(Tools.getDividerText(), false);
+                    player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.disabled_resources",
+                            Formatting.RED), false);
+                    if (data.contains(CustomValues.disabledResourcesKey)) {
+                        NbtCompound disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
+                        for (String key : disabledResources.getKeys()) {
+                            Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
+                            if (item != Items.AIR) {
+                                player.sendMessage(Tools.getTranslatedFormattedText(item.getTranslationKey(),
+                                        Formatting.DARK_PURPLE, Formatting.BOLD), false);
+                            }
+                        }
+                    }
+                }
+                if (tile instanceof MobHarvesterTE) {
+                    player.sendMessage(Tools.getDividerText(), false);
+                    player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.mob_key_bound_mob",
+                            Formatting.DARK_RED), false);
+                    String mob = data.getString(CustomValues.entityNBTKey);
+                    if (mob != null && !mob.isEmpty()) {
+                        Optional<EntityType<?>> optionalEntityType = EntityType.get(mob);
+                        if (optionalEntityType.isPresent()) {
+                            EntityType<?> entityType = optionalEntityType.get();
+                            player.sendMessage(Tools.getTranslatedFormattedText(entityType.getTranslationKey(),
+                                    Formatting.RED, Formatting.BOLD), false);
+                        }
+                    }
+                    player.sendMessage(Tools.getDividerText(), false);
+                    player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.weapon_key_bound_weapon",
+                            Formatting.DARK_GRAY), false);
+                    NbtCompound weapon = data.getCompound(CustomValues.weaponNBTKey);
+                    if (!weapon.isEmpty()) {
+                        ItemStack weaponStack = ItemStack.fromNbt(weapon);
+                        if (!weaponStack.isEmpty()) {
+                            player.sendMessage(Tools.getTranslatedFormattedText(weaponStack.getTranslationKey(),
+                                    Formatting.GRAY, Formatting.BOLD), false);
+                        }
+                    }
+                } else if (tile instanceof DimensionalApplicatorTE) {
+                    player.sendMessage(Tools.getDividerText(), false);
+                    player.sendMessage(
+                            Tools.getTranslatedFormattedText(
+                                    "msg.spatialharvesters.dimensional_applicator_saved_effects", Formatting.BLUE),
+                            false);
+                    if (data.contains(CustomValues.potionsNBTKey)) {
+                        for (int id : data.getIntArray(CustomValues.potionsNBTKey)) {
+                            StatusEffect effect = StatusEffect.byRawId(id);
+                            if (effect != null) {
+                                player.sendMessage(Tools.getTranslatedFormattedText(effect.getTranslationKey(),
+                                        effect.getCategory().getFormatting(), Formatting.BOLD), false);
+                            }
+                        }
+                    }
+                }
+                player.sendMessage(Tools.getDividerText(), false);
             }
         }
         return super.onUse(state, world, pos, player, hand, hit);
