@@ -17,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import team.reborn.energy.api.EnergyStorage;
 
@@ -63,7 +64,7 @@ public class BlockEntityInit implements ModInitializer {
                 E blockEntityType = (E) FabricBlockEntityTypeBuilder.create(factory, blocks).build(null);
                 Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(SpatialHarvesters.modid, name),
                                 blockEntityType);
-                if (factory instanceof CustomEnergyMachineTE) {
+                if (factory.create(BlockPos.ORIGIN, blocks[0].getDefaultState()) instanceof CustomEnergyMachineTE) {
                         EnergyStorage.SIDED.registerSelf(blockEntityType);
                 }
                 return blockEntityType;
