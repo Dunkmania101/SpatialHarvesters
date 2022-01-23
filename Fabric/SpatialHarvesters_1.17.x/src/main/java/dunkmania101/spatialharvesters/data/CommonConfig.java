@@ -658,6 +658,13 @@ public class CommonConfig extends Config implements ConfigContainer {
         modTag.add(mod);
         modTag.add(tag);
         custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "nikolite_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
     }
 
     public static ArrayList<ArrayList<String>> custom_bio_tags = new ArrayList<>();

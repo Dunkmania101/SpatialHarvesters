@@ -111,4 +111,9 @@ public class SoilHarvesterTE extends SpatialHarvesterTE {
         }
         return tier;
     }
+
+    @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_soil_harvesters;
+    }
 }

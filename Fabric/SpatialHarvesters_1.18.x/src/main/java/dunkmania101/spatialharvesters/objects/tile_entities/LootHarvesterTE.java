@@ -33,11 +33,12 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
                 for (ArrayList<String> rnString : CommonConfig.custom_loot_tables) {
                     if (rnString.size() >= 2) {
                         Identifier rn = new Identifier(rnString.get(0), rnString.get(1));
-                        LootContext context = new LootContext.Builder((ServerWorld) getWorld()).build(LootContextTypes.EMPTY);
+                        LootContext context = new LootContext.Builder((ServerWorld) getWorld())
+                                .build(LootContextTypes.EMPTY);
                         server.getLootManager().getTable(rn).generateLoot(context).stream()
-                                .filter(stack -> !stack.isEmpty() && !Tools.isResourceBanned(Registry.ITEM.getId(stack.getItem()),
-                                        CommonConfig.blacklist_loot,
-                                        CommonConfig.blacklist_loot_mod))
+                                .filter(stack -> !stack.isEmpty()
+                                        && !Tools.isResourceBanned(Registry.ITEM.getId(stack.getItem()),
+                                                CommonConfig.blacklist_loot, CommonConfig.blacklist_loot_mod))
                                 .forEach(newOutputs::add);
                     }
                 }
@@ -82,5 +83,10 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
             }
         }
         return ItemInit.MOB_SHARD;
+    }
+
+    @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_loot_harvester;
     }
 }

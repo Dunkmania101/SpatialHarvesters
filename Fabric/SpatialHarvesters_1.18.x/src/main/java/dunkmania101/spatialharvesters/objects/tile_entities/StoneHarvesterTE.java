@@ -111,4 +111,9 @@ public class StoneHarvesterTE extends SpatialHarvesterTE {
         }
         return tier;
     }
+
+    @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_stone_harvesters;
+    }
 }

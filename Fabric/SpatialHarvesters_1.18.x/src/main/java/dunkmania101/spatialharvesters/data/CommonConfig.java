@@ -658,6 +658,13 @@ public class CommonConfig extends Config implements ConfigContainer {
         modTag.add(mod);
         modTag.add(tag);
         custom_ore_tags.add(modTag);
+
+        modTag = new ArrayList<>();
+        mod = "c";
+        tag = "nikolite_ores";
+        modTag.add(mod);
+        modTag.add(tag);
+        custom_ore_tags.add(modTag);
     }
 
     public static ArrayList<ArrayList<String>> custom_bio_tags = new ArrayList<>();
@@ -818,14 +825,19 @@ public class CommonConfig extends Config implements ConfigContainer {
 
     public static ArrayList<ArrayList<String>> blacklist_ores_tag = new ArrayList<>();
     public static ArrayList<ArrayList<String>> blacklist_bios_tag = new ArrayList<>();
+    static {
+        String mod = "botania";
+        String tag = "special_flowers";
+        ArrayList<String> modTag = new ArrayList<>();
+        modTag.add(mod);
+        modTag.add(tag);
+        blacklist_bios_tag.add(modTag);
+    }
     public static ArrayList<ArrayList<String>> blacklist_stones_tag = new ArrayList<>();
     public static ArrayList<ArrayList<String>> blacklist_soils_tag = new ArrayList<>();
 
     public static ArrayList<String> blacklist_ores_mod = new ArrayList<>();
     public static ArrayList<String> blacklist_bios_mod = new ArrayList<>();
-    static {
-        blacklist_bios_mod.add("botania");
-    }
     public static ArrayList<String> blacklist_stones_mod = new ArrayList<>();
     public static ArrayList<String> blacklist_soils_mod = new ArrayList<>();
     public static ArrayList<String> blacklist_loot_mod = new ArrayList<>();
@@ -967,6 +979,7 @@ public class CommonConfig extends Config implements ConfigContainer {
     public static boolean enable_soil_harvesters = true;
     public static boolean enable_dark_mob_harvester = true;
     public static boolean enable_specific_mob_harvester = true;
+    public static boolean enable_loot_harvester = true;
 
     public static float block_hardness = 5;
     public static float block_resistance = 6;

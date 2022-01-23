@@ -63,3 +63,6 @@ bin/
 
 run/
 #----------
+#----------
+# General
+src/generated/

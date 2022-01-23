@@ -34,7 +34,10 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE {
 
     public void internalTick(World world, BlockPos pos, BlockState state, BlockEntity ignored) {
         if (world != null && !world.isClient()) {
-            if (world.isReceivingRedstonePower(pos)) {
+            if (!isEnabled()) {
+                setActive(false);
+            }
+            else if (world.isReceivingRedstonePower(pos)) {
                 setActive(false);
                 world.addParticle(DustParticleEffect.DEFAULT, getPos().getX(), getPos().getY(), getPos().getZ(), 5, 5, 5);
             } else {
@@ -68,6 +71,10 @@ public class TickingRedstoneEnergyMachineTE extends CustomEnergyMachineTE {
 
     public boolean getActive() {
         return this.active;
+    }
+
+    protected boolean isEnabled() {
+        return true;
     }
 
     @Override

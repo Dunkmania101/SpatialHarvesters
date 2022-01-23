@@ -111,4 +111,9 @@ public class OreHarvesterTE extends SpatialHarvesterTE {
         }
         return tier;
     }
+
+    @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_ore_harvesters;
+    }
 }

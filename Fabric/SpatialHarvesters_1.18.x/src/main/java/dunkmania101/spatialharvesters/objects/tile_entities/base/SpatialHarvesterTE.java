@@ -48,77 +48,59 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
 
     @Override
     public void customTickActions() {
-        boolean enableOre = CommonConfig.enable_ore_harvesters;
-        boolean enableBio = CommonConfig.enable_bio_harvesters;
-        boolean enableStone = CommonConfig.enable_stone_harvesters;
-        boolean enableSoil = CommonConfig.enable_soil_harvesters;
-        boolean enableDarkMob = CommonConfig.enable_dark_mob_harvester;
-        boolean enableSpecificMob = CommonConfig.enable_specific_mob_harvester;
-        if (this instanceof OreHarvesterTE && !enableOre) {
-            setActive(false);
-        } else if (this instanceof BioHarvesterTE && !enableBio) {
-            setActive(false);
-        } else if (this instanceof StoneHarvesterTE && !enableStone) {
-            setActive(false);
-        } else if (this instanceof SoilHarvesterTE && !enableSoil) {
-            setActive(false);
-        } else if (this instanceof DarkMobHarvesterTE && !enableDarkMob) {
-            setActive(false);
-        } else if (this instanceof SpecificMobHarvesterTE && !enableSpecificMob) {
-            setActive(false);
-        } else {
-            if (this.OUTPUTS.isEmpty()) {
-                setOutputs(getOutputs());
-            }
-            if (getWorld() != null && !getWorld().isClient() && this.thisBlock != null) {
-                if (getCountedTicks() >= getSpeed(this.thisBlock)) {
-                    resetCountedTicks();
-                    setActive(false);
-                    long price = getPrice(this.thisBlock);
-                    if (getAmount() >= price) {
-                        ArrayList<Direction> spaceRippers = new ArrayList<>();
-                        ArrayList<Inventory> outInventories = new ArrayList<>();
-                        for (Direction side : Direction.values()) {
-                            if (getWorld().getBlockState(getPos().offset(side)).getBlock() instanceof SpaceRipperBlock) {
-                                spaceRippers.add(side);
-                            } else {
-                                BlockEntity out = getWorld().getBlockEntity(getPos().offset(side));
-                                if (out != null) {
-                                    if (out instanceof Inventory inventory) {
-                                        outInventories.add(inventory);
-                                    }
+        if (this.OUTPUTS.isEmpty()) {
+            setOutputs(getOutputs());
+        }
+        if (getWorld() != null && !getWorld().isClient() && this.thisBlock != null) {
+            if (getCountedTicks() >= getSpeed(this.thisBlock)) {
+                resetCountedTicks();
+                setActive(false);
+                long price = getPrice(this.thisBlock);
+                if (getAmount() >= price) {
+                    ArrayList<Direction> spaceRippers = new ArrayList<>();
+                    ArrayList<Inventory> outInventories = new ArrayList<>();
+                    for (Direction side : Direction.values()) {
+                        if (getWorld().getBlockState(getPos().offset(side)).getBlock() instanceof SpaceRipperBlock) {
+                            spaceRippers.add(side);
+                        } else {
+                            BlockEntity out = getWorld().getBlockEntity(getPos().offset(side));
+                            if (out != null) {
+                                if (out instanceof Inventory inventory) {
+                                    outInventories.add(inventory);
                                 }
                             }
                         }
-                        if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
-                            lastMinuteActions();
-                            if (!this.OUTPUTS.isEmpty()) {
-                                filterOutputsMinTier(this.thisBlock);
-                                for (Direction ignored : spaceRippers) {
-                                    if (getAmount() >= price) {
-                                        ItemStack chosenOutput;
-                                        Random rand = getWorld().getRandom();
-                                        int shardChance = CommonConfig.harvester_shard_chance;
-                                        if (this instanceof MobHarvesterTE) {
-                                            shardChance = CommonConfig.mob_harvester_mob_shard_chance;
-                                        }
-                                        if (shardChance > 0 && rand.nextInt(shardChance) == 1) {
-                                            chosenOutput = new ItemStack(getShard(this.thisBlock));
+                    }
+                    if (!spaceRippers.isEmpty() && !outInventories.isEmpty()) {
+                        lastMinuteActions();
+                        if (!this.OUTPUTS.isEmpty()) {
+                            filterOutputsMinTier(this.thisBlock);
+                            for (Direction ignored : spaceRippers) {
+                                if (getAmount() >= price) {
+                                    ItemStack chosenOutput;
+                                    Random rand = getWorld().getRandom();
+                                    int shardChance = CommonConfig.harvester_shard_chance;
+                                    if (this instanceof MobHarvesterTE) {
+                                        shardChance = CommonConfig.mob_harvester_mob_shard_chance;
+                                    }
+                                    if (shardChance > 0 && rand.nextInt(shardChance) == 1) {
+                                        chosenOutput = new ItemStack(getShard(this.thisBlock));
+                                    } else {
+                                        chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
+                                    }
+                                    if (!chosenOutput.isEmpty()) {
+                                        if (this.BLACKLIST
+                                                .contains(Registry.ITEM.getId(chosenOutput.getItem()).toString())) {
+                                            extract(price);
+                                            setActive(true);
                                         } else {
-                                            chosenOutput = this.OUTPUTS.get(rand.nextInt(this.OUTPUTS.size())).copy();
-                                        }
-                                        if (!chosenOutput.isEmpty()) {
-                                            if (this.BLACKLIST.contains(Registry.ITEM.getId(chosenOutput.getItem()).toString())) {
+                                            int originalCount = chosenOutput.getCount();
+                                            Inventory inventory = outInventories
+                                                    .get(rand.nextInt(outInventories.size()));
+                                            ItemStack resultStack = Tools.insertItemStacked(inventory, chosenOutput);
+                                            if (resultStack.getCount() != originalCount) {
                                                 extract(price);
                                                 setActive(true);
-                                            } else {
-                                                int originalCount = chosenOutput.getCount();
-                                                Inventory inventory = outInventories.get(rand.nextInt(outInventories.size()));
-                                                ItemStack resultStack = Tools.insertItemStacked(inventory, chosenOutput);
-                                                if (resultStack.getCount() != originalCount) {
-                                                    extract(price);
-                                                    setActive(true);
-                                                }
                                             }
                                         }
                                     }

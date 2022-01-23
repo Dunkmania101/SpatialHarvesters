@@ -149,6 +149,11 @@ public class DimensionalApplicatorTE extends TickingRedstoneEnergyMachineTE {
     }
 
     @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_dimensional_applicator;
+    }
+
+    @Override
     public NbtCompound saveSerializedValues() {
         NbtCompound nbt = super.saveSerializedValues();
         if (playerId != null) {

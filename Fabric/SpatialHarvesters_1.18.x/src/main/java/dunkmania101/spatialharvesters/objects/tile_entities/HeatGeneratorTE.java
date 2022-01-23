@@ -22,42 +22,42 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
     @Override
     public void customTickActions() {
         super.customTickActions();
-        boolean enabled = CommonConfig.enable_heat_generator;
-        if (enabled) {
-            if (getWorld() != null && !getWorld().isClient()) {
-                setActive(false);
-                ArrayList<EnergyStorage> outBatteries = new ArrayList<>();
-                for (Direction side : Direction.values()) {
-                    Identifier blockRN = Registry.BLOCK.getId(getWorld().getBlockState(getPos().offset(side)).getBlock());
-                    if (CommonConfig.valid_heat_sources.contains(Tools.getModResourceArray(blockRN))) {
-                        if ((getAmount() + getSpeed()) <= getCapacity()) {
-                            insert(getSpeed());
-                            setActive(true);
-                        }
-                    }
-                    BlockEntity out = getWorld().getBlockEntity(getPos().offset(side));
-                    if (out != null) {
-                        if (out instanceof EnergyStorage) {
-                            outBatteries.add((EnergyStorage) out);
-                        }
+        if (getWorld() != null && !getWorld().isClient()) {
+            setActive(false);
+            ArrayList<EnergyStorage> outBatteries = new ArrayList<>();
+            for (Direction side : Direction.values()) {
+                Identifier blockRN = Registry.BLOCK.getId(getWorld().getBlockState(getPos().offset(side)).getBlock());
+                if (CommonConfig.valid_heat_sources.contains(Tools.getModResourceArray(blockRN))) {
+                    if ((getAmount() + getSpeed()) <= getCapacity()) {
+                        insert(getSpeed());
+                        setActive(true);
                     }
                 }
-                if (!outBatteries.isEmpty()) {
-                    for (EnergyStorage outBattery : outBatteries) {
-                        long energy = getAmount();
-                        if (energy > 0) {
-                            long outReceived = outBattery.insert(energy, null);
-                            if (outReceived > 0) {
-                                setActive(true);
-                                extract(outReceived);
-                            }
+                BlockEntity out = getWorld().getBlockEntity(getPos().offset(side));
+                if (out != null) {
+                    if (out instanceof EnergyStorage) {
+                        outBatteries.add((EnergyStorage) out);
+                    }
+                }
+            }
+            if (!outBatteries.isEmpty()) {
+                for (EnergyStorage outBattery : outBatteries) {
+                    long energy = getAmount();
+                    if (energy > 0) {
+                        long outReceived = outBattery.insert(energy, null);
+                        if (outReceived > 0) {
+                            setActive(true);
+                            extract(outReceived);
                         }
                     }
                 }
             }
-        } else {
-            setActive(false);
         }
+    }
+
+    @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_heat_generator;
     }
 
     public long getSpeed() {

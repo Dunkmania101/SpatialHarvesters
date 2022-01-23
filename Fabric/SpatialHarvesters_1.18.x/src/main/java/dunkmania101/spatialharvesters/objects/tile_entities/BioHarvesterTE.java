@@ -111,4 +111,9 @@ public class BioHarvesterTE extends SpatialHarvesterTE {
         }
         return tier;
     }
+
+    @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_bio_harvesters;
+    }
 }

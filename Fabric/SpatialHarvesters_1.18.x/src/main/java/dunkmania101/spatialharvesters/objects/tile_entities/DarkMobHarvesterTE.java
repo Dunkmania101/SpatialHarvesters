@@ -90,4 +90,10 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
         }
         return ItemInit.MOB_SHARD;
     }
+
+    @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_dark_mob_harvester;
+    }
+
 }

@@ -20,4 +20,9 @@ public class SpecificMobHarvesterTE extends MobHarvesterTE {
     public int getSpeed(Block block) {
         return CommonConfig.speed_specific_mob;
     }
+
+    @Override
+    protected boolean isEnabled() {
+        return CommonConfig.enable_specific_mob_harvester;
+    }
 }
