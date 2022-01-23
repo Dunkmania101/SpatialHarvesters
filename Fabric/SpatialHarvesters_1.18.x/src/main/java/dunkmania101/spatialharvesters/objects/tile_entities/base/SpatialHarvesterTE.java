@@ -101,7 +101,8 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                             if (resultStack.getCount() != originalCount) {
                                                 extract(price);
                                                 setActive(true);
-                                            } else {
+                                            }
+                                            if (resultStack.getCount() > 0) {
                                                 resultStack.setCount(0);
                                             }
                                         }
