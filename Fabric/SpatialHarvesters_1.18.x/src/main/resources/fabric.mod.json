@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "spatialharvesters",
-  "version": "0.11.13b",
+  "version": "0.11.13c",
 
   "name": "Spatial Harvesters",
   "description": "Adds harvesters that gather resources from space-time itself!\nInspired by EnvironmentalTech.",
@@ -31,9 +31,9 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": ">=0.13.3",
     "fabric": "*",
-    "minecraft": "1.18.x"
+    "minecraft": "^1.18.2"
   },
   "suggests": {
     "flamingo": "*"
