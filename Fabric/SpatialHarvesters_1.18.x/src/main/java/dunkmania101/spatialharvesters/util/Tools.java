@@ -11,9 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.ItemTags;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.*;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -23,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
@@ -210,48 +209,58 @@ public class Tools {
         for (ArrayList<String> customTag : customTags) {
             if (customTag.size() >= 2) {
                 Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
-                Tag<Item> itemTag = ItemTags.getTagGroup().getTagOrEmpty(customTagRN);
-                if (itemTag != null) {
-                    for (Item checkItem : itemTag.values()) {
-                        if (!ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
-                            boolean tag_allowed = true;
-                            for (ArrayList<String> bannedTag : blacklistItemsTag) {
-                                Identifier bannedTagRN = new Identifier(bannedTag.get(0), bannedTag.get(1));
-                                Tag<Item> bannedItemTag = ItemTags.getTagGroup().getTagOrEmpty(bannedTagRN);
-                                if (bannedItemTag != null && bannedItemTag.contains(checkItem)) {
-                                    tag_allowed = false;
-                                    break;
-                                }
+                for (Item checkItem : itemsMatchingId(customTagRN)) {
+                    if (!ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
+                        boolean tag_allowed = true;
+                        for (ArrayList<String> bannedTag : blacklistItemsTag) {
+                            Identifier bannedTagRN = new Identifier(bannedTag.get(0), bannedTag.get(1));
+                            if (itemsMatchingId(bannedTagRN).contains(checkItem)) {
+                                tag_allowed = false;
+                                break;
                             }
-                            if (tag_allowed) {
-                                ITEMS.add(checkItem);
-                            }
+                        }
+                        if (tag_allowed) {
+                            ITEMS.add(checkItem);
                         }
                     }
                 }
-                Tag<Block> blockTag = BlockTags.getTagGroup().getTagOrEmpty(customTagRN);
-                if (blockTag != null) {
-                    for (Block checkBlock : blockTag.values()) {
-                        Item checkItem = checkBlock.asItem();
-                        if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
-                            boolean tag_allowed = true;
-                            for (ArrayList<String> bannedTag : blacklistItemsTag) {
-                                Identifier bannedTagRN = new Identifier(bannedTag.get(0), bannedTag.get(1));
-                                Tag<Block> bannedBlockTag = BlockTags.getTagGroup().getTagOrEmpty(bannedTagRN);
-                                if (bannedBlockTag != null && bannedBlockTag.contains(checkBlock)) {
-                                    tag_allowed = false;
-                                    break;
-                                }
+                for (Block checkBlock : blocksMatchingId(customTagRN)) {
+                    Item checkItem = checkBlock.asItem();
+                    if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
+                        boolean tag_allowed = true;
+                        for (ArrayList<String> bannedTag : blacklistItemsTag) {
+                            Identifier bannedTagRN = new Identifier(bannedTag.get(0), bannedTag.get(1));
+                            if (blocksMatchingId(bannedTagRN).contains(checkBlock)) {
+                                tag_allowed = false;
+                                break;
                             }
-                            if (tag_allowed) {
-                                ITEMS.add(checkItem);
-                            }
+                        }
+                        if (tag_allowed) {
+                            ITEMS.add(checkItem);
                         }
                     }
                 }
             }
         }
         return ITEMS;
+    }
+
+    public static ArrayList<Item> itemsMatchingId(Identifier id) {
+        TagKey<Item> key = TagKey.of(Registry.ITEM_KEY, id);
+        ArrayList<Item> result = new ArrayList<>();
+        for (RegistryEntry<Item> entry : Registry.ITEM.iterateEntries(key)) {
+            result.add(entry.value());
+        }
+        return result;
+    }
+
+    public static ArrayList<Block> blocksMatchingId(Identifier id) {
+        TagKey<Block> key = TagKey.of(Registry.BLOCK_KEY, id);
+        ArrayList<Block> result = new ArrayList<>();
+        for (RegistryEntry<Block> entry : Registry.BLOCK.iterateEntries(key)) {
+            result.add(entry.value());
+        }
+        return result;
     }
 
     public static ArrayList<String> getModResourceArray(Identifier rn) {
