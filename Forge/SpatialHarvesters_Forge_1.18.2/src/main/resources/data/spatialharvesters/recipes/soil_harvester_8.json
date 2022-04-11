@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cec",
+    "bab",
+    "bdb"
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:soil_harvester_7"
+    },
+    "b": {
+      "tag": "forge:ingots/iron"
+    },
+    "c": {
+      "item": "spatialharvesters:base_powder"
+    },
+    "d": {
+      "item": "spatialharvesters:crystal_7"
+    },
+    "e": {
+      "item": "spatialharvesters:soil_core"
+    }
+  },
+  "result": {
+    "item": "spatialharvesters:soil_harvester_8"
+  }
+}
