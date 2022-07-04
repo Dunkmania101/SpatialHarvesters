@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  b",
+    " b ",
+    "a  "
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:player_key"
+    },
+    "b": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "result": {
+    "item": "spatialharvesters:resource_disabler_key"
+  }
+}

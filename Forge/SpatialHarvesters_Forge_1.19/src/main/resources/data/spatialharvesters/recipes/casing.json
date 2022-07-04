@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dad",
+    "cbc",
+    "dad"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:storage_blocks/redstone"
+    },
+    "b": {
+      "item": "spatialharvesters:base_powder"
+    },
+    "c": {
+      "tag": "forge:storage_blocks/coal"
+    },
+    "d": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "result": {
+    "item": "spatialharvesters:casing"
+  }
+}
