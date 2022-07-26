@@ -54,7 +54,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                         setPlayer();
                     }
                     if (this.player != null) {
-                        ResourceLocation entityRN = ForgeRegistries.ENTITIES.getKey(mobEntity.getType());
+                        ResourceLocation entityRN = ForgeRegistries.ENTITY_TYPES.getKey(mobEntity.getType());
                         if (entityRN != null) {
                             ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.CUSTOM_MOB_DROPS.get();
                             String mod = entityRN.getNamespace();
@@ -112,7 +112,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                     Optional<EntityType<?>> optionalEntityType = EntityType.byString(this.entity);
                     if (optionalEntityType.isPresent()) {
                         EntityType<?> entityType = optionalEntityType.get();
-                        ResourceLocation mobRN = ForgeRegistries.ENTITIES.getKey(entityType);
+                        ResourceLocation mobRN = ForgeRegistries.ENTITY_TYPES.getKey(entityType);
                         if (mobRN != null) {
                             ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
                             ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
