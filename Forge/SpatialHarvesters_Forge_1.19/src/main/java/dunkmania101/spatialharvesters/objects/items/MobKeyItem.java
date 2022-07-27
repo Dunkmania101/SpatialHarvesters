@@ -37,7 +37,7 @@ public class MobKeyItem extends Item {
     @Override
     public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, LivingEntity attacker) {
         if (attacker.isCrouching()) {
-            ResourceLocation mobRN = ForgeRegistries.ENTITIES.getKey(target.getType());
+            ResourceLocation mobRN = ForgeRegistries.ENTITY_TYPES.getKey(target.getType());
             if (mobRN != null) {
                 ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
                 ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();

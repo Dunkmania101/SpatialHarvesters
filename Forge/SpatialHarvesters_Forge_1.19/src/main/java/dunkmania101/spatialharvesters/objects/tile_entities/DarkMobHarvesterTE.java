@@ -29,12 +29,12 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
     protected void lastMinuteActions() {
         if (getLevel() != null && !getLevel().isClientSide()) {
             if (this.MOBS.isEmpty()) {
-                for (EntityType<?> entityType : ForgeRegistries.ENTITIES.getValues()) {
+                for (EntityType<?> entityType : ForgeRegistries.ENTITY_TYPES.getValues()) {
                     try {
                         if (entityType != null) {
                             ArrayList<ArrayList<String>> blacklist_mobs = CommonConfig.BLACKLIST_MOBS.get();
                             ArrayList<String> blacklist_mobs_mod = CommonConfig.BLACKLIST_MOBS_MOD.get();
-                            ResourceLocation rn = ForgeRegistries.ENTITIES.getKey(entityType);
+                            ResourceLocation rn = ForgeRegistries.ENTITY_TYPES.getKey(entityType);
                             if (rn != null) {
                                 if (!Tools.isResourceBanned(rn, blacklist_mobs, blacklist_mobs_mod)) {
                                     Entity entity = entityType.create(getLevel());
