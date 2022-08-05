@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 issueTrackerURL = "https://github.com/Dunkmania101/SpatialHarvesters/issues" #optional
 [[mods]] #mandatory
 modId = "spatialharvesters" #mandatory
-version = "0.11.13a" #mandatory
+version = "0.11.13b" #mandatory
 displayName = "Spatial Harvesters" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/spatial-harvesters-forge" #optional
@@ -23,15 +23,15 @@ description = '''
 Adds harvesters that gather resources from space-time itself!
 Inspired by EnvironmentalTech.
 '''
-#[[dependencies.spatialharvesters]] #optional
-#    modId="forge" #mandatory
-#    mandatory=true #mandatory
-#    versionRange="[41,)" #mandatory
-#    ordering="NONE"
-#    side="BOTH"
-#[[dependencies.spatialharvesters]]
-#    modId="minecraft"
-#    mandatory=true
-#    versionRange="[1.19,]"
-#    ordering="NONE"
-#    side="BOTH"
+[[dependencies.spatialharvesters]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="[41,)" #mandatory
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.spatialharvesters]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19,]"
+    ordering="NONE"
+    side="BOTH"
