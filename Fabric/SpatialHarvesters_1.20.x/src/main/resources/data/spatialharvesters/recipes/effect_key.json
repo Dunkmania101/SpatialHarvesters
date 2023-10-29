@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  b",
+    " b ",
+    "a  "
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:player_key"
+    },
+    "b": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
+  "result": {
+    "item": "spatialharvesters:effect_key"
+  }
+}

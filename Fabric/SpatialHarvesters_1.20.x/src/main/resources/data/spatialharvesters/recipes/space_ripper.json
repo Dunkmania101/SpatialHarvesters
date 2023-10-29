@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cdc",
+    "bab",
+    "cdc"
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:casing"
+    },
+    "b": {
+      "tag": "c:iron_ingots"
+    },
+    "c": {
+      "item": "spatialharvesters:base_powder"
+    },
+    "d": {
+      "tag": "c:diamonds"
+    }
+  },
+  "result": {
+    "item": "spatialharvesters:space_ripper"
+  }
+}
