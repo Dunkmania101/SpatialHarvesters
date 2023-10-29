@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class FakePlayer extends PlayerEntity {
     public FakePlayer(World world, UUID uuid, String name) {
-        super(world, BlockPos.ORIGIN, 0F, new GameProfile(uuid, name), null);
+        super(world, BlockPos.ORIGIN, 0F, new GameProfile(uuid, name));
     }
 
     public FakePlayer(World world) {

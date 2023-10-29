@@ -1,10 +1,10 @@
 {
   "credit": "Made by Dunkmania101 with Blockbench",
   "textures": {
-    "1": "spatialharvesters:dark_machine",
-    "2": "spatialharvesters:dark_rough_color",
-    "3": "spatialharvesters:vibrant_green_color",
-    "particle": "spatialharvesters:dark_machine"
+    "1": "spatialharvesters:block/dark_machine",
+    "2": "spatialharvesters:block/dark_rough_color",
+    "3": "spatialharvesters:block/vibrant_green_color",
+    "particle": "spatialharvesters:block/dark_machine"
   },
   "elements": [
     {

@@ -7,8 +7,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class ItemInit implements ModInitializer {
     // Ingredients
@@ -220,12 +221,13 @@ public class ItemInit implements ModInitializer {
 
     // Methods
     public static <I extends Item> I registerItem(I item, String name) {
-        Registry.register(Registry.ITEM, new Identifier(SpatialHarvesters.modid, name), item);
+        Registry.register(Registries.ITEM, new Identifier(SpatialHarvesters.modid, name), item);
+        ItemGroupInit.registerItem(item);
         return item;
     }
 
     public static FabricItemSettings getBaseItemSettings() {
-        return new FabricItemSettings().group(SpatialHarvesters.SPATIAL_HARVESTERS_GROUP);
+        return new FabricItemSettings();
     }
 
     public static FabricItemSettings getKeyItemSettings() {

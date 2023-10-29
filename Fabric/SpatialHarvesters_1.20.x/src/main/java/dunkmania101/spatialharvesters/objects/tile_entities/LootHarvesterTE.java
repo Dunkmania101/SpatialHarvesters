@@ -11,13 +11,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 
 public class LootHarvesterTE extends SpatialHarvesterTE {
     public LootHarvesterTE(BlockPos pos, BlockState state) {
@@ -33,11 +33,11 @@ public class LootHarvesterTE extends SpatialHarvesterTE {
                 for (ArrayList<String> rnString : CommonConfig.custom_loot_tables) {
                     if (rnString.size() >= 2) {
                         Identifier rn = new Identifier(rnString.get(0), rnString.get(1));
-                        LootContext context = new LootContext.Builder((ServerWorld) getWorld())
+                        LootContextParameterSet context = new LootContextParameterSet.Builder((ServerWorld) getWorld())
                                 .build(LootContextTypes.EMPTY);
-                        server.getLootManager().getTable(rn).generateLoot(context).stream()
+                        server.getLootManager().getLootTable(rn).generateLoot(context).stream()
                                 .filter(stack -> !stack.isEmpty()
-                                        && !Tools.isResourceBanned(Registry.ITEM.getId(stack.getItem()),
+                                        && !Tools.isResourceBanned(Registries.ITEM.getId(stack.getItem()),
                                                 CommonConfig.blacklist_loot, CommonConfig.blacklist_loot_mod))
                                 .forEach(newOutputs::add);
                     }

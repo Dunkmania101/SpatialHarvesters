@@ -19,8 +19,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -29,7 +30,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 
@@ -50,7 +50,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
     }
 
     @Override
-    public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
+    public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
         List<ItemStack> drops = super.getDroppedStacks(state, builder);
         if (this.thisTileNBT != null) {
             if (!this.thisTileNBT.isEmpty()) {
@@ -107,7 +107,7 @@ public class PreservedDataCustomHorizontalShapedBlock extends CustomHorizontalSh
                     if (data.contains(CustomValues.disabledResourcesKey)) {
                         NbtCompound disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                         for (String key : disabledResources.getKeys()) {
-                            Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
+                            Item item = Registries.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                             if (item != Items.AIR) {
                                 player.sendMessage(Tools.getTranslatedFormattedText(item.getTranslationKey(),
                                         Formatting.DARK_PURPLE, Formatting.BOLD), false);

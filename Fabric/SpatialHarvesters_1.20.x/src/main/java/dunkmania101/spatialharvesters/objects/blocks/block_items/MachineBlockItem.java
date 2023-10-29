@@ -11,10 +11,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,7 +45,7 @@ public class MachineBlockItem extends BlockItem {
             if (data.contains(CustomValues.disabledResourcesKey)) {
                 NbtCompound disabledResources = data.getCompound(CustomValues.disabledResourcesKey);
                 for (String key : disabledResources.getKeys()) {
-                    Item item = Registry.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
+                    Item item = Registries.ITEM.get(Identifier.tryParse(disabledResources.getString(key)));
                     if (item != Items.AIR) {
                         tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), Formatting.DARK_PURPLE, Formatting.BOLD));
                     }

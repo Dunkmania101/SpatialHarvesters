@@ -8,10 +8,10 @@ import dunkmania101.spatialharvesters.objects.tile_entities.base.TickingRedstone
 import dunkmania101.spatialharvesters.util.Tools;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import team.reborn.energy.api.EnergyStorage;
 
 public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
@@ -26,7 +26,7 @@ public class HeatGeneratorTE extends TickingRedstoneEnergyMachineTE {
             setActive(false);
             ArrayList<EnergyStorage> outBatteries = new ArrayList<>();
             for (Direction side : Direction.values()) {
-                Identifier blockRN = Registry.BLOCK.getId(getWorld().getBlockState(getPos().offset(side)).getBlock());
+                Identifier blockRN = Registries.BLOCK.getId(getWorld().getBlockState(getPos().offset(side)).getBlock());
                 if (CommonConfig.valid_heat_sources.contains(Tools.getModResourceArray(blockRN))) {
                     if ((getAmount() + getSpeed()) <= getCapacity()) {
                         insert(getSpeed());

@@ -11,10 +11,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-
 import java.util.ArrayList;
 
 public class DarkMobHarvesterTE extends MobHarvesterTE {
@@ -28,7 +27,7 @@ public class DarkMobHarvesterTE extends MobHarvesterTE {
     protected void lastMinuteActions() {
         if (getWorld() != null && !getWorld().isClient()) {
             if (this.MOBS.isEmpty()) {
-                for (EntityType<?> entityType : Registry.ENTITY_TYPE) {
+                for (EntityType<?> entityType : Registries.ENTITY_TYPE) {
                     try {
                         if (entityType != null) {
                             Identifier rn = EntityType.getId(entityType);

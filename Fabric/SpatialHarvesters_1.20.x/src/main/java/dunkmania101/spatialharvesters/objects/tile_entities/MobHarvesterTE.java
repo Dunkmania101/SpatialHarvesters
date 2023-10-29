@@ -22,12 +22,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,7 +51,7 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                         setPlayer();
                     }
                     if (this.player != null) {
-                        Identifier entityRN = Registry.ENTITY_TYPE.getId(mobEntity.getType());
+                        Identifier entityRN = Registries.ENTITY_TYPE.getId(mobEntity.getType());
                         ArrayList<ArrayList<ArrayList<String>>> custom_mob_drops = CommonConfig.custom_mob_drops;
                         String mod = entityRN.getNamespace();
                         String path = entityRN.getPath();
@@ -64,14 +63,14 @@ public class MobHarvesterTE extends SpatialHarvesterTE {
                             if (customModMob.containsAll(modMob)) {
                                 ArrayList<String> customMobDrop = modMobDrop.get(1);
                                 Identifier mobDropRN = new Identifier(customMobDrop.get(0), customMobDrop.get(1));
-                                Item drop = Registry.ITEM.get(mobDropRN);
+                                Item drop = Registries.ITEM.get(mobDropRN);
                                 if (drop != Items.AIR) {
                                     newOutputs.add(new ItemStack(drop));
                                 }
                             }
                         }
                         updateWeapon();
-                        DamageSource playerDamage = DamageSource.player(this.player);
+                        DamageSource playerDamage = this.player.getDamageSources().playerAttack(this.player);
                         mobEntity.setAttacking(this.player);
                         int lootingLevel = EnchantmentHelper.getLooting(this.player);
                         ((MobEntityMixinCastable) mobEntity).invokeDropLoot(playerDamage, true);

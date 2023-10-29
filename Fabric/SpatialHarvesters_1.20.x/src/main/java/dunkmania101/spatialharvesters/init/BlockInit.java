@@ -6,10 +6,11 @@ import dunkmania101.spatialharvesters.objects.blocks.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
+import net.minecraft.block.MapColor;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class BlockInit implements ModInitializer {
         private static final float blockHardness = CommonConfig.block_hardness;
@@ -164,12 +165,13 @@ public class BlockInit implements ModInitializer {
 
         // Methods
         public static <B extends Block> B registerBlock(B block, String name) {
-                Registry.register(Registry.BLOCK, new Identifier(SpatialHarvesters.modid, name), block);
+                Registry.register(Registries.BLOCK, new Identifier(SpatialHarvesters.modid, name), block);
                 return block;
         }
 
         public static FabricBlockSettings getMetalBlockSettings() {
-                return FabricBlockSettings.of(Material.METAL)
+                return FabricBlockSettings.create()
+                                .mapColor(MapColor.IRON_GRAY)
                                 .sounds(BlockSoundGroup.METAL)
                                 .strength(blockHardness, blockResistance)
                                 .requiresTool();

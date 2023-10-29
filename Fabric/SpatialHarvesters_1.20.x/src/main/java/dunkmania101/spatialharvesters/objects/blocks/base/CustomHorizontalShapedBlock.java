@@ -53,7 +53,7 @@ public class CustomHorizontalShapedBlock extends BlockWithEntity {
 
     @Override
     public @Nullable BlockState getPlacementState(ItemPlacementContext context) {
-        return this.getDefaultState().with(FACING, context.getPlayerFacing().getOpposite());
+        return this.getDefaultState().with(FACING, context.getHorizontalPlayerFacing().getOpposite());
     }
 
     @Override

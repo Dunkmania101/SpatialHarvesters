@@ -3,9 +3,9 @@
   "textures": {
     "0": "spatialharvesters:block/tier_8_block",
     "1": "spatialharvesters:block/bio_harvester_8_block",
-    "2": "spatialharvesters:dark_machine",
-    "3": "spatialharvesters:dark_rough_color",
-    "particle": "spatialharvesters:dark_rough_color"
+    "2": "spatialharvesters:block/dark_machine",
+    "3": "spatialharvesters:block/dark_rough_color",
+    "particle": "spatialharvesters:block/dark_rough_color"
   },
   "elements": [
     {

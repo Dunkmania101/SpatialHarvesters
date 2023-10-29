@@ -14,15 +14,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
@@ -117,8 +118,9 @@ public class Tools {
     public static int getBlocksInChunk(World worldIn, ChunkPos chunkPos, Block blockIn) {
         int count = 0;
         Chunk chunk = worldIn.getChunk(chunkPos.getStartPos());
+        //noinspection removal
         int height = Math.min(chunk.getHighestNonEmptySectionYOffset() + 16, chunk.getHeight());
-        for (BlockPos checkPos : BlockPos.Mutable.iterate(chunkPos.getStartX(), 0, chunkPos.getStartZ(), chunkPos.getEndX(), height, chunkPos.getEndZ())) {
+        for (BlockPos checkPos : BlockPos.Mutable.iterate(chunkPos.getStartX(), chunk.getBottomY(), chunkPos.getStartZ(), chunkPos.getEndX(), height, chunkPos.getEndZ())) {
             if (worldIn.getBlockState(checkPos).getBlock() == blockIn) {
                 count++;
             }
@@ -198,7 +200,7 @@ public class Tools {
         for (ArrayList<String> configItem : configItems) {
             if (configItem.size() >= 2) {
                 Identifier itemRN = new Identifier(configItem.get(0), configItem.get(1));
-                Item item = Registry.ITEM.get(itemRN);
+                Item item = Registries.ITEM.get(itemRN);
                 if (item != Items.AIR && !ITEMS.contains(item)) {
                     ITEMS.add(item);
                 }
@@ -208,7 +210,7 @@ public class Tools {
             if (customTag.size() >= 2) {
                 Identifier customTagRN = new Identifier(customTag.get(0), customTag.get(1));
                 for (Item checkItem : itemsMatchingId(customTagRN)) {
-                    if (!ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
+                    if (!ITEMS.contains(checkItem) && !isResourceBanned(Registries.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
                         boolean tag_allowed = true;
                         for (ArrayList<String> bannedTag : blacklistItemsTag) {
                             Identifier bannedTagRN = new Identifier(bannedTag.get(0), bannedTag.get(1));
@@ -224,7 +226,7 @@ public class Tools {
                 }
                 for (Block checkBlock : blocksMatchingId(customTagRN)) {
                     Item checkItem = checkBlock.asItem();
-                    if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(Registry.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
+                    if (checkItem != Items.AIR && !ITEMS.contains(checkItem) && !isResourceBanned(Registries.ITEM.getId(checkItem), blacklistItems, blacklistItemsMod)) {
                         boolean tag_allowed = true;
                         for (ArrayList<String> bannedTag : blacklistItemsTag) {
                             Identifier bannedTagRN = new Identifier(bannedTag.get(0), bannedTag.get(1));
@@ -244,18 +246,18 @@ public class Tools {
     }
 
     public static ArrayList<Item> itemsMatchingId(Identifier id) {
-        TagKey<Item> key = TagKey.of(Registry.ITEM_KEY, id);
+        TagKey<Item> key = TagKey.of(RegistryKeys.ITEM, id);
         ArrayList<Item> result = new ArrayList<>();
-        for (RegistryEntry<Item> entry : Registry.ITEM.iterateEntries(key)) {
+        for (RegistryEntry<Item> entry : Registries.ITEM.iterateEntries(key)) {
             result.add(entry.value());
         }
         return result;
     }
 
     public static ArrayList<Block> blocksMatchingId(Identifier id) {
-        TagKey<Block> key = TagKey.of(Registry.BLOCK_KEY, id);
+        TagKey<Block> key = TagKey.of(RegistryKeys.BLOCK, id);
         ArrayList<Block> result = new ArrayList<>();
-        for (RegistryEntry<Block> entry : Registry.BLOCK.iterateEntries(key)) {
+        for (RegistryEntry<Block> entry : Registries.BLOCK.iterateEntries(key)) {
             result.add(entry.value());
         }
         return result;

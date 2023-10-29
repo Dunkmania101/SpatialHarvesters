@@ -17,11 +17,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
@@ -84,7 +84,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                                     }
                                     if (!chosenOutput.isEmpty()) {
                                         if (this.BLACKLIST
-                                                .contains(Registry.ITEM.getId(chosenOutput.getItem()).toString())) {
+                                                .contains(Registries.ITEM.getId(chosenOutput.getItem()).toString())) {
                                             extract(price);
                                             setActive(true);
                                         } else {
@@ -139,7 +139,7 @@ public class SpatialHarvesterTE extends TickingRedstoneEnergyMachineTE {
                 int tier = Integer.getInteger(itemTier.get(2), 0);
                 if (getTier(block) < tier) {
                     Identifier itemRN = new Identifier(itemTier.get(0), itemTier.get(1));
-                    this.OUTPUTS.removeIf(stack -> Registry.ITEM.getId(stack.getItem()).equals(itemRN));
+                    this.OUTPUTS.removeIf(stack -> Registries.ITEM.getId(stack.getItem()).equals(itemRN));
                 }
             }
         }

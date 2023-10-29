@@ -14,12 +14,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +44,7 @@ public class ResourceDisablerKeyItem extends Item {
                     stack.getOrCreateNbt().remove(CustomValues.disabledResourceKey);
                 } else {
                     player.sendMessage(Tools.getTranslatedFormattedText("msg.spatialharvesters.set_disabled_resource", Formatting.BLUE), true);
-                    stack.getOrCreateNbt().putString(CustomValues.disabledResourceKey, Registry.ITEM.getId(otherStack.getItem()).toString());
+                    stack.getOrCreateNbt().putString(CustomValues.disabledResourceKey, Registries.ITEM.getId(otherStack.getItem()).toString());
                 }
             }
         }
@@ -102,7 +102,7 @@ public class ResourceDisablerKeyItem extends Item {
                 if (resource != null && !resource.isEmpty()) {
                     Identifier rn = Identifier.tryParse(resource);
                     if (rn != null) {
-                        Item item = Registry.ITEM.get(rn);
+                        Item item = Registries.ITEM.get(rn);
                         if (item != Items.AIR) {
                             tooltip.add(Tools.getTranslatedFormattedText(item.getTranslationKey(), Formatting.DARK_PURPLE, Formatting.BOLD));
                         }
