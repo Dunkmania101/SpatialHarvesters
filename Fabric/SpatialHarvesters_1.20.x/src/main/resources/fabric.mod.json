@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "spatialharvesters",
+  "version": "0.11.13c",
+
+  "name": "Spatial Harvesters",
+  "description": "Adds harvesters that gather resources from space-time itself!\nInspired by EnvironmentalTech.",
+  "authors": [
+    "Dunkmania101: Author",
+    "Sirdurpsalot: Artist"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/spatial-harvesters-fabric",
+    "sources": "https://github.com/Dunkmania101/SpatialHarvesters"
+  },
+
+  "license": "Copyright 2020 Duncan Brasher (Dunkmania101)\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n",
+  "icon": "spatialharvesters-logo.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dunkmania101.spatialharvesters.SpatialHarvesters",
+      "dunkmania101.spatialharvesters.init.ItemInit",
+      "dunkmania101.spatialharvesters.init.BlockInit",
+      "dunkmania101.spatialharvesters.init.BlockEntityInit"
+    ]
+  },
+  "mixins": [
+    "spatialharvesters.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "fabric": "*",
+    "minecraft": "^1.19"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
