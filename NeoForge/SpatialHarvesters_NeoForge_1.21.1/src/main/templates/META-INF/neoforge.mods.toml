@@ -1,0 +1,47 @@
+modLoader="javafml" #mandatory
+loaderVersion="${loader_version_range}" #mandatory
+
+license='''
+Copyright 2021 Duncan Brasher (Dunkmania101)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+'''
+
+issueTrackerURL="https://github.com/Dunkmania101/SpatialHarvesters/issues"
+
+[[mods]] #mandatory
+modId="${mod_id}" #mandatory
+version="${mod_version}" #mandatory
+displayName="${mod_name}" #mandatory
+displayURL="https://www.curseforge.com/minecraft/mc-mods/spatial-harvesters-forge"
+logoFile="spatialharvesters-logo.png"
+credits="Sirdurpsalot - The Texture Overhaul of 0.10.0"
+authors="Dunkmania101"
+description='''
+Adds harvesters that gather resources from space-time itself!
+Inspired by EnvironmentalTech.
+'''
+
+# Two of the three Forge-era mixins are gone: EntityMixin was replaced by Entity#captureDrops and
+# WorldMixin by LevelTickEvent.Post. Only the drop-pipeline @Invoker remains.
+# No refmap is needed - NeoForge runs on official mappings.
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]] #mandatory
+    modId="neoforge" #mandatory
+    type="required" #mandatory
+    versionRange="[${neo_version},)" #mandatory
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"

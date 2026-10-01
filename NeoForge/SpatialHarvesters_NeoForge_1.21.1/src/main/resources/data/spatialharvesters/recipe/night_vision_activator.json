@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bdb",
+    "cac",
+    "bdb"
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:casing"
+    },
+    "b": {
+      "tag": "c:ingots/iron"
+    },
+    "c": {
+      "item": "minecraft:golden_carrot"
+    },
+    "d": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "result": {
+    "id": "spatialharvesters:night_vision_activator"
+  }
+}

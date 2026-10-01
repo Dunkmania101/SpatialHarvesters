@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "c:sands"
+    },
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:clay"
+    }
+  ],
+  "result": {
+    "id": "spatialharvesters:base_powder",
+    "count": 4
+  }
+}
