@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cbc",
+    "bab",
+    "cbc"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:dragon_egg"
+    },
+    "b": {
+      "tag": "c:ingots/gold"
+    },
+    "c": {
+      "item": "spatialharvesters:base_powder"
+    }
+  },
+  "result": {
+    "id": "spatialharvesters:loot_core"
+  }
+}

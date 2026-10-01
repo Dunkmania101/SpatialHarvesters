@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bdb",
+    "cac",
+    "bdb"
+  ],
+  "key": {
+    "a": {
+      "item": "spatialharvesters:casing"
+    },
+    "b": {
+      "tag": "c:ingots/iron"
+    },
+    "c": {
+      "tag": "c:storage_blocks/iron"
+    },
+    "d": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "result": {
+    "id": "spatialharvesters:resistance_activator"
+  }
+}

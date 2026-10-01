@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "spatialharvesters:block/speed_activator",
+      "x": 180
+    },
+    "facing=down": {
+      "model": "spatialharvesters:block/speed_activator"
+    },
+    "facing=north": {
+      "model": "spatialharvesters:block/speed_activator",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south": {
+      "model": "spatialharvesters:block/speed_activator",
+      "x": 90
+    },
+    "facing=west": {
+      "model": "spatialharvesters:block/speed_activator",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east": {
+      "model": "spatialharvesters:block/speed_activator",
+      "x": 90,
+      "y": 270
+    }
+  }
+}
